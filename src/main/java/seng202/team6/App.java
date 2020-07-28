@@ -17,6 +17,6 @@ public class App
         String jsonString = gson.toJson( myObject );
 
         System.out.println( "myObject = " + myObject );
-        System.out.println( "myObject stringfyied = " + jsonString );
+        System.out.println( "myObject stringfield = " + jsonString );
     }
 }
