@@ -55,4 +55,15 @@ public class AppTest
         assertEquals(3, math);
         
     }
+
+    /**
+     * Rutger's test
+     */
+    public void RutgersTest()
+    {
+        int number = 9 + 10;
+        // Twenny wan
+        assertEquals(19, number);
+
+    }
 }
