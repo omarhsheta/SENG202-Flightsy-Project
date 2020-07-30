@@ -66,4 +66,22 @@ public class AppTest
         assertEquals(19, number);
 
     }
+
+    /**
+     * Omar's test
+     */
+    public void OmarsTest()
+    {
+        int number = 2;
+        assertEquals(2, number);
+    }
+
+    /**
+     * Joseph's test
+     */
+    public void JosephTest()
+    {
+        int number = 100;
+        assertEquals(100, number);
+    }
 }
