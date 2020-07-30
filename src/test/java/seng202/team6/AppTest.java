@@ -35,4 +35,13 @@ public class AppTest
     {
         assertTrue( true );
     }
+
+    /**
+     * Callum's test
+     */
+    public void CallumTest()
+    {
+        int num = 5;
+        assertEquals(5, num);
+    }
 }
