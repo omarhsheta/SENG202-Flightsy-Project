@@ -53,5 +53,6 @@ public class AppTest
         int math = 2 + 2 - 1;
         // Quick math from Big Shaq
         assertEquals(3, math);
+        
     }
 }
