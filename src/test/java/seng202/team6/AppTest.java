@@ -44,4 +44,14 @@ public class AppTest
         int num = 5;
         assertEquals(5, num);
     }
+
+    /**
+     * Fletcher's test
+     */
+    public void FletchersTest()
+    {
+        int math = 2 + 2 - 1;
+        // Quick math from Big Shaq
+        assertEquals(3, math);
+    }
 }
