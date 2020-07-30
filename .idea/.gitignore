@@ -45,3 +45,9 @@ out/
 
 #Maven
 target/
+
+# Default ignored files
+/workspace.xml
+
+# Mac (Because Fletcher)
+.DS_STORE
