@@ -1,0 +1,11 @@
+#IntelliJ
+.idea/
+*.iml
+*.iws
+
+# Mac cause Fletcher
+.DS_STORE
+
+#Maven
+log/
+target/
