@@ -1,4 +1,4 @@
-package seng202.team6.model;
+package seng202.team6.model.entities;
 
 public class Plane {
 
