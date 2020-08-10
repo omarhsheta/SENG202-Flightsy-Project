@@ -9,3 +9,6 @@
 #Maven
 log/
 target/
+
+#Generated files
+dependency-reduced-pom.xml
