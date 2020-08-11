@@ -6,6 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import org.kordamp.bootstrapfx.scene.layout.Panel;
+import seng202.team6.handler.WindowHandler;
 
 public class MainGUI extends Application
 {
@@ -13,8 +14,11 @@ public class MainGUI extends Application
         This is the example BootstrapFX GUI
      */
     @Override
-    public void start(Stage primaryStage) throws Exception
+    public void start(Stage primaryStage)
     {
+        //Initialize WindowHandler singleton with stage.
+        new WindowHandler(primaryStage);
+
         Panel panel = new Panel("This is the title");
         panel.getStyleClass().add("panel-primary");
         BorderPane content = new BorderPane();
