@@ -51,6 +51,15 @@ public class WindowHandler
     }
 
     /**
+     * Get active window
+     * @return Current window object
+     */
+    public Scene GetActiveWindow()
+    {
+        return primaryStage.getScene();
+    }
+
+    /**
      * Set active window for primary stage
      * @param index Index of window to show
      */
