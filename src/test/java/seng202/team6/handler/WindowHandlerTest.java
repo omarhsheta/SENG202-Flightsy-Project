@@ -1,13 +1,11 @@
 package seng202.team6.handler;
 
-import javafx.scene.Group;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
 import org.junit.Before;
 import org.junit.Test;
+import seng202.team6.gui.WindowHandler;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 import static org.junit.Assert.*;
 
@@ -53,20 +51,20 @@ public class WindowHandlerTest
     public void TestIndexOrdering()
     {
         //Establish some scenes.
-        Scene scene = new Scene(new Group());
-        Scene sceneTwo = new Scene(new Group());
-        Scene sceneThree = new Scene(new Group());
+        Pane windowOne = new Pane();
+        Pane windowTwo = new Pane();
+        Pane windowThree = new Pane();
 
         //Add scenes in random order
-        handler.AddWindow(sceneTwo);
-        handler.AddWindow(scene, 0);
-        handler.AddWindow(sceneThree, 0);
+        handler.AddWindow(windowTwo);
+        handler.AddWindow(windowOne, 0);
+        handler.AddWindow(windowThree, 0);
 
         //Put scenes in same order as above
-        ArrayList<Scene> ordering = new ArrayList<>();
-        ordering.add(sceneThree);
-        ordering.add(scene);
-        ordering.add(sceneTwo);
+        ArrayList<Pane> ordering = new ArrayList<>();
+        ordering.add(windowThree);
+        ordering.add(windowOne);
+        ordering.add(windowTwo);
 
         //Check ordering is the same for windowHandler and the above.
         assertEquals(ordering, WindowHandler.GetInstance().GetWindowsList());

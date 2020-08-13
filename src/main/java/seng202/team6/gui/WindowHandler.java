@@ -1,7 +1,7 @@
-package seng202.team6.handler;
+package seng202.team6.gui;
 
-import javafx.scene.Scene;
-import javafx.stage.Stage;
+import javafx.scene.Node;
+import javafx.scene.layout.BorderPane;
 
 import java.util.ArrayList;
 
@@ -30,21 +30,21 @@ public class WindowHandler
         Instance = null;
     }
 
-    private Stage primaryStage;
+    private BorderPane parentPane;
     //List to hold all window GUI components
-    private ArrayList<Scene> windowsList;
+    private ArrayList<Node> windowsList;
 
     /**
      * Constructor to ensure only one object,
      * This ensures singleton pattern not violated.
      * Silently fail if multiple WindowHandlers instantiated.
      */
-    public WindowHandler(Stage primaryStage) {
+    public WindowHandler(BorderPane parent) {
         if (Instance != null) {
             return;
         }
 
-        this.primaryStage = primaryStage;
+        this.parentPane = parent;
         this.windowsList = new ArrayList<>();
 
         Instance = this;
@@ -54,9 +54,9 @@ public class WindowHandler
      * Get active window
      * @return Current window object
      */
-    public Scene GetActiveWindow()
+    public Node GetActiveWindow()
     {
-        return primaryStage.getScene();
+        return this.parentPane.getCenter();
     }
 
     /**
@@ -65,23 +65,23 @@ public class WindowHandler
      */
     public void SetActiveWindow(int index)
     {
-        primaryStage.setScene(this.windowsList.get(index));
+        this.parentPane.setCenter(this.windowsList.get(index));
     }
 
     /**
      * Set active window for primary stage
      * @param window Window to show
      */
-    public void SetActiveWindow(Scene window)
+    public void SetActiveWindow(Node window)
     {
-        primaryStage.setScene(window);
+        this.parentPane.setCenter(window);
     }
 
     /**
      * Get all windows
      * @return List of windows
      */
-    public ArrayList<Scene> GetWindowsList() {
+    public ArrayList<Node> GetWindowsList() {
         return this.windowsList;
     }
 
@@ -89,7 +89,7 @@ public class WindowHandler
      * Add window to the end of the current window list
      * @param window Window to add
      */
-    public void AddWindow(Scene window) {
+    public void AddWindow(Node window) {
         this.windowsList.add(window);
     }
 
@@ -98,7 +98,7 @@ public class WindowHandler
      * @param window Window to add
      * @param index Index of window
      */
-    public void AddWindow(Scene window, int index) {
+    public void AddWindow(Node window, int index) {
         this.windowsList.add(index, window);
     }
 
@@ -106,7 +106,7 @@ public class WindowHandler
      * Remove window object from list
      * @param window Window to remove
      */
-    public void RemoveWindow(Scene window) {
+    public void RemoveWindow(Node window) {
         this.windowsList.remove(window);
     }
 
