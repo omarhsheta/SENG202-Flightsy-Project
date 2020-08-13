@@ -1,5 +1,6 @@
 package seng202.team6.handler;
 
+import com.sun.source.tree.AssertTree;
 import javafx.scene.layout.Pane;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,8 +14,7 @@ import static org.junit.Assert.*;
  * Test file for WindowHandler.java
  */
 
-public class WindowHandlerTest
-{
+public class WindowHandlerTest {
     WindowHandler handler;
 
     @Before
@@ -45,28 +45,33 @@ public class WindowHandlerTest
     }
 
     /**
-     * Test indexing of windowList
+     * Test window dictionary addition
      */
     @Test
-    public void TestIndexOrdering()
+    public void TestHashMapAddition()
     {
-        //Establish some scenes.
-        Pane windowOne = new Pane();
-        Pane windowTwo = new Pane();
-        Pane windowThree = new Pane();
+        Pane dummyPane = new Pane();
+        WindowHandler.GetInstance().AddWindow("Test", dummyPane);
+        WindowHandler.GetInstance().AddWindow("Test2", dummyPane);
 
-        //Add scenes in random order
-        handler.AddWindow(windowTwo);
-        handler.AddWindow(windowOne, 0);
-        handler.AddWindow(windowThree, 0);
+        assertEquals(2, WindowHandler.GetInstance().GetWindowDictionary().keySet().size());
+    }
 
-        //Put scenes in same order as above
-        ArrayList<Pane> ordering = new ArrayList<>();
-        ordering.add(windowThree);
-        ordering.add(windowOne);
-        ordering.add(windowTwo);
+    /**
+     * Test window dictionary removal
+     */
+    @Test
+    public void TestHashMapRemoval()
+    {
+        Pane dummyPane = new Pane();
+        WindowHandler.GetInstance().AddWindow("Test", dummyPane);
+        WindowHandler.GetInstance().AddWindow("Test2", dummyPane);
+        WindowHandler.GetInstance().AddWindow("Test3", dummyPane);
 
-        //Check ordering is the same for windowHandler and the above.
-        assertEquals(ordering, WindowHandler.GetInstance().GetWindowsList());
+        WindowHandler.GetInstance().RemoveWindow("Test2");
+        WindowHandler.GetInstance().RemoveWindow("Something Random");
+        WindowHandler.GetInstance().RemoveWindow("Test");
+
+        assertEquals(1, WindowHandler.GetInstance().GetWindowDictionary().keySet().size());
     }
 }

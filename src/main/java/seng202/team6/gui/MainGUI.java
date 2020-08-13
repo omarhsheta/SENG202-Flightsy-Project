@@ -7,19 +7,21 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import java.io.IOException;
 
-public class MainGUI extends Application
-{
+public class MainGUI extends Application {
     /**
      * Name of the GUI
      */
-    private final String GUI_TITLE = "Flightsy";
+    private final String GUI_TITLE = "Flightsy - Travel Planner";
+    private final int MIN_WIDTH = 900;
+    private final int MIN_HEIGHT = 600;
 
     /**
      * Resources to load
      */
     private final String[] resourceFXML = new String[] {
-            "/main.fxml",
-            "/findroutes.fxml",
+            "main",
+            "findroutes",
+            "test",
     };
 
     /**
@@ -40,8 +42,8 @@ public class MainGUI extends Application
         //Load each FXML class once to have fast response time rather than on the fly.
         //MAYBE CHANGE if loading heavy classes
         for (String resource : this.resourceFXML) {
-            Node source = FXMLLoader.load(getClass().getResource(resource));
-            WindowHandler.GetInstance().AddWindow(source);
+            Node source = FXMLLoader.load(getClass().getResource("/" + resource + ".fxml"));
+            WindowHandler.GetInstance().AddWindow(resource, source);
         }
 
         //Set primaryScene to a new scene with rootPane as main content
@@ -50,11 +52,13 @@ public class MainGUI extends Application
 
         //Set variables
         primaryStage.setTitle(this.GUI_TITLE);
+        primaryStage.setMinWidth(this.MIN_WIDTH);
+        primaryStage.setMinHeight(this.MIN_HEIGHT);
         primaryStage.sizeToScene();
         primaryStage.setScene(primaryScene);
 
-        //Set active window to the first one
-        WindowHandler.GetInstance().SetActiveWindow(0);
+        //Set active window
+        WindowHandler.GetInstance().SetActiveWindow("test");
         primaryStage.show();
     }
 }
