@@ -1,15 +1,10 @@
 package seng202.team6.gui;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.layout.BorderPane;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-import org.kordamp.bootstrapfx.scene.layout.Panel;
-import seng202.team6.handler.WindowHandler;
+
 import java.io.IOException;
 
 public class MainGUI extends Application
@@ -38,9 +33,11 @@ public class MainGUI extends Application
 //        primaryStage.show();
 
         // FXML Way (example from lab)
-        Parent root = FXMLLoader.load(getClass().getResource("/main.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/mainWindow.fxml"));
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add("org/kordamp/bootstrapfx/bootstrapfx.css");
         primaryStage.setTitle("SENG202");
-        primaryStage.setScene(new Scene(root, 600, 400));
+        primaryStage.setScene(scene);
         primaryStage.show();
     }
 }
