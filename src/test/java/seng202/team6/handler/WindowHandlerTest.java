@@ -1,13 +1,12 @@
 package seng202.team6.handler;
 
-import javafx.scene.Group;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import com.sun.source.tree.AssertTree;
+import javafx.scene.layout.Pane;
 import org.junit.Before;
 import org.junit.Test;
+import seng202.team6.gui.WindowHandler;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 import static org.junit.Assert.*;
 
@@ -15,8 +14,7 @@ import static org.junit.Assert.*;
  * Test file for WindowHandler.java
  */
 
-public class WindowHandlerTest
-{
+public class WindowHandlerTest {
     WindowHandler handler;
 
     @Before
@@ -47,28 +45,33 @@ public class WindowHandlerTest
     }
 
     /**
-     * Test indexing of windowList
+     * Test window dictionary addition
      */
     @Test
-    public void TestIndexOrdering()
+    public void TestHashMapAddition()
     {
-        //Establish some scenes.
-        Scene scene = new Scene(new Group());
-        Scene sceneTwo = new Scene(new Group());
-        Scene sceneThree = new Scene(new Group());
+        Pane dummyPane = new Pane();
+        WindowHandler.GetInstance().AddWindow("Test", dummyPane);
+        WindowHandler.GetInstance().AddWindow("Test2", dummyPane);
 
-        //Add scenes in random order
-        handler.AddWindow(sceneTwo);
-        handler.AddWindow(scene, 0);
-        handler.AddWindow(sceneThree, 0);
+        assertEquals(2, WindowHandler.GetInstance().GetWindowDictionary().keySet().size());
+    }
 
-        //Put scenes in same order as above
-        ArrayList<Scene> ordering = new ArrayList<>();
-        ordering.add(sceneThree);
-        ordering.add(scene);
-        ordering.add(sceneTwo);
+    /**
+     * Test window dictionary removal
+     */
+    @Test
+    public void TestHashMapRemoval()
+    {
+        Pane dummyPane = new Pane();
+        WindowHandler.GetInstance().AddWindow("Test", dummyPane);
+        WindowHandler.GetInstance().AddWindow("Test2", dummyPane);
+        WindowHandler.GetInstance().AddWindow("Test3", dummyPane);
 
-        //Check ordering is the same for windowHandler and the above.
-        assertEquals(ordering, WindowHandler.GetInstance().GetWindowsList());
+        WindowHandler.GetInstance().RemoveWindow("Test2");
+        WindowHandler.GetInstance().RemoveWindow("Something Random");
+        WindowHandler.GetInstance().RemoveWindow("Test");
+
+        assertEquals(1, WindowHandler.GetInstance().GetWindowDictionary().keySet().size());
     }
 }
