@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<ToolBar prefHeight="35.0" prefWidth="750.0" style="-fx-background-color: grey;" styleClass="h3" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+    <Pane prefWidth="120.0" styleClass="h3">
+        <Label alignment="CENTER" prefWidth="120.0" styleClass="lbl, lbl-primary" text="Flightsy" textAlignment="CENTER">
+           <font>
+              <Font size="14.0" />
+           </font>
+        </Label>
+    </Pane>
+    <Pane prefHeight="25.0" prefWidth="0.0" visible="false" HBox.hgrow="ALWAYS" />
+    <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="135.0" text="Flight Planner" textAlignment="CENTER">
+     <styleClass>
+        <String fx:value="btn" />
+        <String fx:value="btn-primary" />
+     </styleClass></Button>
+    <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="135.0" text="Trips" textAlignment="CENTER">
+     <styleClass>
+        <String fx:value="btn" />
+        <String fx:value="btn-primary" />
+     </styleClass></Button>
+    <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="135.0" text="Data" textAlignment="CENTER">
+     <styleClass>
+        <String fx:value="btn" />
+        <String fx:value="btn-primary" />
+     </styleClass></Button>
+</ToolBar>

@@ -1,25 +1,64 @@
 package seng202.team6.gui;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
+import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 
-public class MainGUI extends Application
-{
-    /*
-        This is the example BootstrapFX GUI
+public class MainGUI extends Application {
+    /**
+     * Name of the GUI
+     */
+    private final String GUI_TITLE = "Flightsy - Travel Planner";
+    private final int MIN_WIDTH = 900;
+    private final int MIN_HEIGHT = 600;
+
+    /**
+     * Resources to load
+     */
+    private final String[] resourceFXML = new String[] {
+            "main",
+            "findroutes",
+            "test",
+    };
+
+    /**
+     * Main startup of GUI
+     * @param primaryStage Autopassed variable from GUI Constructor
+     * @throws IOException Thrown if .fxml files can't be found
      */
     @Override
     public void start(Stage primaryStage) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/mainWindow.fxml"));
-        Scene scene = new Scene(root);
-        scene.getStylesheets().add("org/kordamp/bootstrapfx/bootstrapfx.css");
-        primaryStage.setTitle("SENG202");
-        primaryStage.setScene(scene);
+        //Root pane is borderpane, top is menubar, center is each pane
+        BorderPane rootPane = new BorderPane();
+        Node menuBar = FXMLLoader.load(getClass().getResource("/menubar.fxml"));
+        rootPane.setTop(menuBar);
+
+        //Instantiate WindowHandler singleton
+        new WindowHandler(rootPane);
+
+        //Load each FXML class once to have fast response time rather than on the fly.
+        //MAYBE CHANGE if loading heavy classes
+        for (String resource : this.resourceFXML) {
+            Node source = FXMLLoader.load(getClass().getResource("/" + resource + ".fxml"));
+            WindowHandler.GetInstance().AddWindow(resource, source);
+        }
+
+        //Set primaryScene to a new scene with rootPane as main content
+        Scene primaryScene = new Scene(rootPane);
+        primaryScene.getStylesheets().add("org/kordamp/bootstrapfx/bootstrapfx.css");
+
+        //Set variables
+        primaryStage.setTitle(this.GUI_TITLE);
+        primaryStage.setMinWidth(this.MIN_WIDTH);
+        primaryStage.setMinHeight(this.MIN_HEIGHT);
         primaryStage.sizeToScene();
+        primaryStage.setScene(primaryScene);
+
+        //Set active window
+        WindowHandler.GetInstance().SetActiveWindow("test");
         primaryStage.show();
     }
 }
