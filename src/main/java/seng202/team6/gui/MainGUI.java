@@ -5,6 +5,8 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+
 import java.io.IOException;
 
 public class MainGUI extends Application {
@@ -12,8 +14,10 @@ public class MainGUI extends Application {
      * Name of the GUI
      */
     private final String GUI_TITLE = "Flightsy - Travel Planner";
-    private final int MIN_WIDTH = 900;
-    private final int MIN_HEIGHT = 600;
+    private final int MIN_WIDTH = 950;
+    private final int MIN_HEIGHT = 650;
+
+    private final String menubarFXML = "menubar";
 
     /**
      * Resources to load
@@ -33,7 +37,7 @@ public class MainGUI extends Application {
     public void start(Stage primaryStage) throws IOException {
         //Root pane is borderpane, top is menubar, center is each pane
         BorderPane rootPane = new BorderPane();
-        Node menuBar = FXMLLoader.load(getClass().getResource("/menubar.fxml"));
+        Node menuBar = FXMLLoader.load(getClass().getResource("/" + this.menubarFXML + ".fxml"));
         rootPane.setTop(menuBar);
 
         //Instantiate WindowHandler singleton
@@ -52,13 +56,17 @@ public class MainGUI extends Application {
 
         //Set variables
         primaryStage.setTitle(this.GUI_TITLE);
-        primaryStage.setMinWidth(this.MIN_WIDTH);
+        primaryStage.initStyle(StageStyle.UTILITY);
+
         primaryStage.setMinHeight(this.MIN_HEIGHT);
-        primaryStage.sizeToScene();
+        primaryStage.setHeight(this.MIN_HEIGHT);
+        primaryStage.setMinWidth(this.MIN_WIDTH);
+        primaryStage.setWidth(this.MIN_WIDTH);
+
         primaryStage.setScene(primaryScene);
 
         //Set active window
-        WindowHandler.GetInstance().SetActiveWindow("main");
+        WindowHandler.GetInstance().SetActiveWindow("test");
         primaryStage.show();
     }
 }
