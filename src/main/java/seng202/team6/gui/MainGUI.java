@@ -58,7 +58,7 @@ public class MainGUI extends Application {
         primaryStage.setScene(primaryScene);
 
         //Set active window
-        WindowHandler.GetInstance().SetActiveWindow("test");
+        WindowHandler.GetInstance().SetActiveWindow("main");
         primaryStage.show();
     }
 }
