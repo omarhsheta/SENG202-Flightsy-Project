@@ -12,27 +12,38 @@ public class Plane {
         ICAO = newICAO;
     }
 
-    public String getName() {
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null || obj.getClass() != this.getClass()) {
+            return false;
+        }
+
+        Plane planeObj = (Plane)obj;
+
+        return this.Name.equals(planeObj.GetName()) && this.IATA.equals(planeObj.GetIATA()) && this.ICAO.equals(planeObj.GetICAO());
+    }
+
+    public String GetName() {
         return Name;
     }
 
-    public void setName(String name) {
+    public void SetName(String name) {
         Name = name;
     }
 
-    public String getIATA() {
+    public String GetIATA() {
         return IATA;
     }
 
-    public void setIATA(String IATA) {
+    public void SetIATA(String IATA) {
         this.IATA = IATA;
     }
 
-    public String getICAO() {
+    public String GetICAO() {
         return ICAO;
     }
 
-    public void setICAO(String ICAO) {
+    public void SetICAO(String ICAO) {
         this.ICAO = ICAO;
     }
 }

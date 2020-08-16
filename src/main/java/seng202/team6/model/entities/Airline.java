@@ -23,67 +23,81 @@ public class Airline {
         Active = newActive;
     }
 
-    public int getAirlineID() {
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null || obj.getClass() != this.getClass()) {
+            return false;
+        }
+
+        Airline airlineObject = (Airline)obj;
+
+        return this.AirlineID == airlineObject.GetAirlineID() && this.Name.equals(airlineObject.GetName())
+                            && this.Alias.equals(airlineObject.GetAlias()) && this.IATA.equals(airlineObject.GetIATA()) &&
+                            this.ICAO.equals(airlineObject.GetICAO()) && this.Callsign.equals(airlineObject.GetCallsign()) &&
+                            this.Country.equals(airlineObject.GetCountry()) && this.Active == airlineObject.GetActive();
+    }
+
+    public int GetAirlineID() {
         return AirlineID;
     }
 
-    public void setAirlineID(int airlineID) {
+    public void SetAirlineID(int airlineID) {
         AirlineID = airlineID;
     }
 
-    public String getName() {
+    public String GetName() {
         return Name;
     }
 
-    public void setName(String name) {
+    public void SetName(String name) {
         Name = name;
     }
 
-    public String getAlias() {
+    public String GetAlias() {
         return Alias;
     }
 
-    public void setAlias(String alias) {
+    public void SetAlias(String alias) {
         Alias = alias;
     }
 
-    public String getIATA() {
+    public String GetIATA() {
         return IATA;
     }
 
-    public void setIATA(String IATA) {
+    public void SetIATA(String IATA) {
         this.IATA = IATA;
     }
 
-    public String getICAO() {
+    public String GetICAO() {
         return ICAO;
     }
 
-    public void setICAO(String ICAO) {
+    public void SetICAO(String ICAO) {
         this.ICAO = ICAO;
     }
 
-    public String getCallsign() {
+    public String GetCallsign() {
         return Callsign;
     }
 
-    public void setCallsign(String callsign) {
+    public void SetCallsign(String callsign) {
         Callsign = callsign;
     }
 
-    public String getCountry() {
+    public String GetCountry() {
         return Country;
     }
 
-    public void setCountry(String country) {
+    public void SetCountry(String country) {
         Country = country;
     }
 
-    public char getActive() {
+    public char GetActive() {
         return Active;
     }
 
-    public void setActive(char active) {
+    public void SetActive(char active) {
         Active = active;
     }
 }
