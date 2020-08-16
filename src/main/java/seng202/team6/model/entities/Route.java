@@ -26,75 +26,75 @@ public class Route {
         Equipment = newEquipment;
     }
 
-    public String getAirlineID() {
+    public String GetAirlineID() {
         return AirlineID;
     }
 
-    public void setAirlineID(String airlineID) {
+    public void SetAirlineID(String airlineID) {
         AirlineID = airlineID;
     }
 
-    public String getAirline() {
+    public String GetAirline() {
         return Airline;
     }
 
-    public void setAirline(String airline) {
+    public void SetAirline(String airline) {
         Airline = airline;
     }
 
-    public String getSourceAirport() {
+    public String GetSourceAirport() {
         return SourceAirport;
     }
 
-    public void setSourceAirport(String sourceAirport) {
+    public void SetSourceAirport(String sourceAirport) {
         SourceAirport = sourceAirport;
     }
 
-    public int getSourceAirportID() {
+    public int GetSourceAirportID() {
         return SourceAirportID;
     }
 
-    public void setSourceAirportID(int sourceAirportID) {
+    public void SetSourceAirportID(int sourceAirportID) {
         SourceAirportID = sourceAirportID;
     }
 
-    public String getDestinationAirport() {
+    public String GetDestinationAirport() {
         return DestinationAirport;
     }
 
-    public void setDestinationAirport(String destinationAirport) {
+    public void SetDestinationAirport(String destinationAirport) {
         DestinationAirport = destinationAirport;
     }
 
-    public int getDestinationAirportID() {
+    public int GetDestinationAirportID() {
         return DestinationAirportID;
     }
 
-    public void setDestinationAirportID(int destinationAirportID) {
+    public void SetDestinationAirportID(int destinationAirportID) {
         DestinationAirportID = destinationAirportID;
     }
 
-    public char getCodeshare() {
+    public char GetCodeshare() {
         return Codeshare;
     }
 
-    public void setCodeshare(char codeshare) {
+    public void SetCodeshare(char codeshare) {
         Codeshare = codeshare;
     }
 
-    public int getStops() {
+    public int GetStops() {
         return Stops;
     }
 
-    public void setStops(int stops) {
+    public void SetStops(int stops) {
         Stops = stops;
     }
 
-    public String getEquipment() {
+    public String GetEquipment() {
         return Equipment;
     }
 
-    public void setEquipment(String equipment) {
+    public void SetEquipment(String equipment) {
         Equipment = equipment;
     }
 }

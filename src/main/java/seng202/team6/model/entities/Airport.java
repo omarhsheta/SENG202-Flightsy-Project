@@ -30,91 +30,91 @@ public class Airport {
         DST = newDST;
     }
 
-    public int getAirportID() {
+    public int GetAirportID() {
         return AirportID;
     }
 
-    public void setAirportID(int airportID) {
+    public void SetAirportID(int airportID) {
         AirportID = airportID;
     }
 
-    public String getName() {
+    public String GetName() {
         return Name;
     }
 
-    public void setName(String name) {
+    public void SetName(String name) {
         Name = name;
     }
 
-    public String getCity() {
+    public String GetCity() {
         return City;
     }
 
-    public void setCity(String city) {
+    public void SetCity(String city) {
         City = city;
     }
 
-    public String getCountry() {
+    public String GetCountry() {
         return Country;
     }
 
-    public void setCountry(String country) {
+    public void SetCountry(String country) {
         Country = country;
     }
 
-    public String getIATA() {
+    public String GetIATA() {
         return IATA;
     }
 
-    public void setIATA(String IATA) {
+    public void SetIATA(String IATA) {
         this.IATA = IATA;
     }
 
-    public String getICAO() {
+    public String GetICAO() {
         return ICAO;
     }
 
-    public void setICAO(String ICAO) {
+    public void SetICAO(String ICAO) {
         this.ICAO = ICAO;
     }
 
-    public float getLatitude() {
+    public float GetLatitude() {
         return Latitude;
     }
 
-    public void setLatitude(float latitude) {
+    public void SetLatitude(float latitude) {
         Latitude = latitude;
     }
 
-    public float getLongitude() {
+    public float GetLongitude() {
         return Longitude;
     }
 
-    public void setLongitude(float longitude) {
+    public void SetLongitude(float longitude) {
         Longitude = longitude;
     }
 
-    public int getAltitude() {
+    public int GetAltitude() {
         return Altitude;
     }
 
-    public void setAltitude(int altitude) {
+    public void SetAltitude(int altitude) {
         Altitude = altitude;
     }
 
-    public float getTimezone() {
+    public float GetTimezone() {
         return Timezone;
     }
 
-    public void setTimezone(int timezone) {
+    public void SetTimezone(int timezone) {
         Timezone = timezone;
     }
 
-    public char getDST() {
+    public char GetDST() {
         return DST;
     }
 
-    public void setDST(char DST) {
+    public void SetDST(char DST) {
         this.DST = DST;
     }
 }
