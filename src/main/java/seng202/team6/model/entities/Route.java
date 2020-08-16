@@ -26,6 +26,23 @@ public class Route {
         Equipment = newEquipment;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null || obj.getClass() != this.getClass()) {
+            return false;
+        }
+
+        Route routeObject = (Route)obj;
+
+        return this.AirlineID.equals(routeObject.GetAirlineID()) && this.Airline.equals(routeObject.GetAirline()) &&
+                this.SourceAirport.equals(routeObject.GetSourceAirport()) &&
+                this.SourceAirportID == routeObject.GetSourceAirportID() &&
+                this.DestinationAirport.equals(routeObject.GetDestinationAirport()) &&
+                this.DestinationAirportID == routeObject.GetDestinationAirportID() &&
+                this.Codeshare == routeObject.GetCodeshare() && this.Stops == routeObject.GetStops() &&
+                this.Equipment.equals(routeObject.GetEquipment());
+    }
+
     public String GetAirlineID() {
         return AirlineID;
     }
