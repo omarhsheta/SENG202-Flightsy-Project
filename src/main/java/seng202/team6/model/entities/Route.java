@@ -2,7 +2,7 @@ package seng202.team6.model.entities;
 
 public class Route {
 
-    int AirlineID;
+    String AirlineID;
     String Airline;
     String SourceAirport;
     int SourceAirportID;
@@ -12,7 +12,7 @@ public class Route {
     int Stops;
     String Equipment;
 
-    public Route(int newAirlineID, String newAirline, String newSourceAirport, int newSourceAirportID,
+    public Route(String newAirlineID, String newAirline, String newSourceAirport, int newSourceAirportID,
                  String newDestinationAirport, int newDestinationAirportID, char newCodeshare, int newStops,
                  String newEquipment) {
         AirlineID = newAirlineID;
@@ -26,11 +26,11 @@ public class Route {
         Equipment = newEquipment;
     }
 
-    public int getAirlineID() {
+    public String getAirlineID() {
         return AirlineID;
     }
 
-    public void setAirlineID(int airlineID) {
+    public void setAirlineID(String airlineID) {
         AirlineID = airlineID;
     }
 

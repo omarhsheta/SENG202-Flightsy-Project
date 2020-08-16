@@ -11,11 +11,11 @@ public class Airport {
     float Latitude;
     float Longitude;
     int Altitude;
-    int Timezone;
+    float Timezone;
     char DST;
 
     public Airport(int newAirportID, String newName, String newCity, String newCountry, String newIATA,
-                   String newICAO, float newLatitude, float newLongitude, int newAltitude, int newTimezone,
+                   String newICAO, float newLatitude, float newLongitude, int newAltitude, float newTimezone,
                    char newDST) {
         AirportID = newAirportID;
         Name = newName;
@@ -102,7 +102,7 @@ public class Airport {
         Altitude = altitude;
     }
 
-    public int getTimezone() {
+    public float getTimezone() {
         return Timezone;
     }
 
