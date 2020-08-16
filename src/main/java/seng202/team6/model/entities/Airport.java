@@ -30,6 +30,22 @@ public class Airport {
         DST = newDST;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null || obj.getClass() != this.getClass()) {
+            return false;
+        }
+
+        Airport airportObject = (Airport)obj;
+
+        return this.AirportID == airportObject.GetAirportID() && this.Name.equals(airportObject.GetName()) &&
+                this.City.equals(airportObject.GetCity()) && this.Country.equals(airportObject.GetCountry()) &&
+                this.IATA.equals(airportObject.GetIATA()) && this.ICAO.equals(airportObject.GetICAO()) &&
+                this.Latitude == airportObject.GetLatitude() && this.Longitude == airportObject.GetLongitude() &&
+                this.Altitude == airportObject.GetAltitude() && this.Timezone == airportObject.GetTimezone() &&
+                this.DST == airportObject.GetDST();
+    }
+
     public int GetAirportID() {
         return AirportID;
     }
