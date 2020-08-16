@@ -11,9 +11,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane prefHeight="507.0" prefWidth="843.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane prefHeight="650.0" prefWidth="950.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <left>
-      <VBox prefWidth="140.0" style="-fx-border-color: black; -fx-border-width: 1;" BorderPane.alignment="CENTER">
+      <VBox prefWidth="158.0" style="-fx-border-color: black; -fx-border-width: 1;" BorderPane.alignment="CENTER">
          <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Find Routes" textAlignment="CENTER" wrappingWidth="215.2408905029297">
                <font>
@@ -60,10 +60,7 @@
                   <Insets left="10.0" top="20.0" />
                </VBox.margin>
             </Text>
-            <Button mnemonicParsing="false" prefHeight="20.0" prefWidth="100.0" text="Search" textAlignment="CENTER">
-               <font>
-                  <Font size="14.0" />
-               </font>
+            <Button mnemonicParsing="false" prefHeight="20.0" prefWidth="100.0" styleClass="h5" text="Search" textAlignment="CENTER">
                <VBox.margin>
                   <Insets left="50.0" right="50.0" top="40.0" />
                </VBox.margin>
@@ -72,7 +69,7 @@
       </VBox>
    </left>
    <center>
-      <VBox prefWidth="140.0" style="-fx-border-color: black; -fx-border-width: 1;" BorderPane.alignment="CENTER">
+      <VBox minWidth="158.0" prefHeight="650.0" prefWidth="278.0" style="-fx-border-color: black; -fx-border-width: 1;" BorderPane.alignment="CENTER">
          <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Results" textAlignment="CENTER" wrappingWidth="215.2408905029297">
                <font>
@@ -82,29 +79,17 @@
                   <Insets bottom="5.0" top="5.0" />
                </VBox.margin>
             </Text>
-            <ScrollPane prefHeight="471.0" prefWidth="132.0" vbarPolicy="ALWAYS">
+            <ScrollPane prefWidth="158.0" vbarPolicy="ALWAYS">
                <content>
-                  <VBox prefHeight="636.0" prefWidth="201.0" spacing="3.0">
+                  <VBox prefHeight="636.0" prefWidth="252.0" spacing="3.0">
                      <children>
-                        <Button mnemonicParsing="false" prefHeight="68.0" prefWidth="219.0" style="-fx-background-color: transparent; -fx-background-radius: 0; -fx-border-color: black; -fx-border-width: 1; -fx-background-insets: 0; -fx-border-radius: 5;">
+                        <Button mnemonicParsing="false" prefHeight="72.0" prefWidth="273.0" style="-fx-background-color: transparent; -fx-background-radius: 0; -fx-border-color: black; -fx-border-width: 1; -fx-background-insets: 0; -fx-border-radius: 5;">
                            <graphic>
                               <VBox prefHeight="200.0" prefWidth="196.0">
                                  <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="AKL to CHC">
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font>
-                                    </Text>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Air New Zealand">
-                                       <font>
-                                          <Font size="14.0" />
-                                       </font>
-                                    </Text>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="465 km">
-                                       <font>
-                                          <Font size="14.0" />
-                                       </font>
-                                    </Text>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="h3" text="AKL to CHC" />
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="h5" text="Air New Zealand" />
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="h5" text="465 km" />
                                  </children>
                               </VBox>
                            </graphic>
@@ -121,13 +106,11 @@
    </center>
    <right>
       <Pane prefWidth="413.0" BorderPane.alignment="CENTER">
-         <children>
-            <Text layoutX="52.0" layoutY="264.0" strokeType="OUTSIDE" strokeWidth="0.0" text="This is a map.">
-               <font>
-                  <Font size="47.0" />
-               </font>
-            </Text>
-         </children>
+         <Text layoutX="52.0" layoutY="264.0" strokeType="OUTSIDE" strokeWidth="0.0" text="This is a map.">
+            <font>
+               <Font size="47.0"/>
+            </font>
+         </Text>
       </Pane>
    </right>
 </BorderPane>
