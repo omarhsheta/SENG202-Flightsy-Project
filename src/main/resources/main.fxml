@@ -19,8 +19,9 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
+<?import javafx.scene.web.WebView?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="580.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.team6.gui.controller.MainController">
    <left>
       <VBox prefHeight="600.0" prefWidth="231.0" BorderPane.alignment="CENTER">
          <children>
@@ -37,7 +38,7 @@
                <content>
                   <VBox alignment="TOP_CENTER" prefWidth="213.0">
                      <children>
-                        <Button mnemonicParsing="false" prefHeight="87.0" prefWidth="203.0" style="-fx-background-color: transparent;">
+                        <Button defaultButton="true" mnemonicParsing="false" prefHeight="87.0" prefWidth="203.0" style="-fx-background-color: transparent;">
                            <graphic>
                               <GridPane>
                                  <columnConstraints>
@@ -320,7 +321,10 @@
         <tabs>
           <Tab text="&lt;HolidayName&gt;">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <WebView fx:id="webView2" prefHeight="576.0" prefWidth="669.0" BorderPane.alignment="CENTER_RIGHT" />
+                     </children></AnchorPane>
             </content>
           </Tab>
           <Tab text="&lt;HolidayName2&gt;">
