@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.web.WebView?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="580.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.team6.gui.controller.MainController">
+   <left>
+      <VBox prefHeight="600.0" prefWidth="231.0" BorderPane.alignment="CENTER">
+         <children>
+            <Pane minHeight="30.0" prefWidth="231.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Holiday's Agenda" textAlignment="CENTER" textOrigin="TOP" wrappingWidth="230.7705078125">
+                     <font>
+                        <Font size="19.0" />
+                     </font>
+                  </Text>
+               </children>
+            </Pane>
+            <ScrollPane hbarPolicy="NEVER" prefHeight="495.0" prefWidth="231.0" vbarPolicy="ALWAYS">
+               <content>
+                  <VBox alignment="TOP_CENTER" prefWidth="213.0">
+                     <children>
+                        <Button defaultButton="true" mnemonicParsing="false" prefHeight="87.0" prefWidth="203.0" style="-fx-background-color: transparent;">
+                           <graphic>
+                              <GridPane>
+                                 <columnConstraints>
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                 </columnConstraints>
+                                 <rowConstraints>
+                                    <RowConstraints maxHeight="39.0" minHeight="0.0" prefHeight="5.0" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="42.0" minHeight="10.0" prefHeight="37.0" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="38.0" minHeight="10.0" prefHeight="18.0" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="26.0" minHeight="10.0" prefHeight="16.0" vgrow="SOMETIMES" />
+                                 </rowConstraints>
+                                 <children>
+                                    <Label text="7:30am" GridPane.columnSpan="2" GridPane.rowIndex="2" />
+                                    <Label text="13 Aug 2020" GridPane.columnSpan="2" GridPane.rowIndex="3" />
+                                    <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="17.0" prefWidth="62.0" text="8:20am" textAlignment="RIGHT" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                                    <Line endX="191.5" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="BASELINE">
+                                       <GridPane.margin>
+                                          <Insets />
+                                       </GridPane.margin>
+                                    </Line>
+                                    <ImageView fitHeight="30.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                                       <image>
+                                          <Image url="@assets/plane.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="h3" text="CHC" textAlignment="CENTER" wrappingWidth="55.01220703125" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="h3" text="AKL" textAlignment="CENTER" wrappingWidth="55.01220703125" GridPane.rowIndex="1" />
+                                 </children>
+                              </GridPane>
+                           </graphic>
+                           <padding>
+                              <Insets top="5.0" />
+                           </padding>
+                        </Button>
+                        <Button mnemonicParsing="false" prefHeight="87.0" prefWidth="203.0" style="-fx-background-color: transparent;">
+                           <graphic>
+                              <GridPane>
+                                 <columnConstraints>
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                 </columnConstraints>
+                                 <rowConstraints>
+                                    <RowConstraints maxHeight="39.0" minHeight="0.0" prefHeight="5.0" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="42.0" minHeight="10.0" prefHeight="37.0" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="38.0" minHeight="10.0" prefHeight="18.0" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="26.0" minHeight="10.0" prefHeight="16.0" vgrow="SOMETIMES" />
+                                 </rowConstraints>
+                                 <children>
+                                    <Label text="7:30am" GridPane.columnSpan="2" GridPane.rowIndex="2" />
+                                    <Label text="15 Aug 2020" GridPane.columnSpan="2" GridPane.rowIndex="3" />
+                                    <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="17.0" prefWidth="62.0" text="8:20am" textAlignment="RIGHT" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                                    <Line endX="184.5" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="BASELINE">
+                                       <GridPane.margin>
+                                          <Insets />
+                                       </GridPane.margin>
+                                    </Line>
+                                    <ImageView fitHeight="33.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                                       <image>
+                                          <Image url="@assets/plane.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="h3" text="WLG" textAlignment="CENTER" wrappingWidth="55.01220703125" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="h3" text="CHC" textAlignment="CENTER" wrappingWidth="55.01220703125" GridPane.rowIndex="1" />
+                                 </children>
+                              </GridPane>
+                           </graphic>
+                           <padding>
+                              <Insets top="5.0" />
+                           </padding>
+                        </Button>
+                        <Button minHeight="90.0" mnemonicParsing="false" prefWidth="203.0" style="-fx-background-color: transparent;">
+                           <graphic>
+                              <GridPane prefHeight="89.0" prefWidth="159.0">
+                                 <columnConstraints>
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="90.0" minWidth="10.0" prefWidth="53.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="112.0" minWidth="10.0" prefWidth="110.0" />
+                                    <ColumnConstraints />
+                                 </columnConstraints>
+                                 <rowConstraints>
+                                    <RowConstraints maxHeight="42.0" minHeight="10.0" prefHeight="22.5" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="41.0" minHeight="18.0" prefHeight="34.0" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="32.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                 </rowConstraints>
+                                 <children>
+                                    <Label text="15 Aug 2020" textAlignment="RIGHT" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
+                                    <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="17.0" prefWidth="115.0" text="1:30pm - 2:30pm" textAlignment="RIGHT" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="TOP" />
+                                    <ImageView fitHeight="73.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                                       <image>
+                                          <Image url="@assets/car.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="123 Short Street" wrappingWidth="158.21875" GridPane.columnSpan="2" />
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Museum of New Zealand Te Papa" wrappingWidth="157.21875" GridPane.columnSpan="2" GridPane.rowIndex="2">
+                                       <GridPane.margin>
+                                          <Insets top="5.0" />
+                                       </GridPane.margin></Text>
+                                    <Line endX="140.0" startX="-48.5" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="BASELINE">
+                                       <GridPane.margin>
+                                          <Insets right="85.0" />
+                                       </GridPane.margin></Line>
+                                 </children>
+                              </GridPane>
+                           </graphic>
+                           <padding>
+                              <Insets top="5.0" />
+                           </padding>
+                        </Button>
+                        <Button minHeight="80.0" mnemonicParsing="false" prefWidth="203.0" style="-fx-background-color: transparent;">
+                           <graphic>
+                              <GridPane>
+                                 <columnConstraints>
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="90.0" minWidth="10.0" prefWidth="53.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="112.0" minWidth="10.0" prefWidth="110.0" />
+                                    <ColumnConstraints />
+                                 </columnConstraints>
+                                 <rowConstraints>
+                                    <RowConstraints maxHeight="42.0" minHeight="10.0" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="39.0" minHeight="18.0" vgrow="SOMETIMES" />
+                                 </rowConstraints>
+                                 <children>
+                                    <Label text="15 Aug 2020" textAlignment="RIGHT" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
+                                    <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="17.0" prefWidth="111.0" text="7:00pm - 9:30pm" textAlignment="RIGHT" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="TOP" />
+                                    <ImageView fitHeight="35.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                                       <image>
+                                          <Image url="@assets/calendar.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="The name of the event" wrappingWidth="158.21875" GridPane.columnSpan="2" />
+                                    <Line endX="190.0" startX="0.5" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="BASELINE">
+                                       <GridPane.margin>
+                                          <Insets right="85.0" />
+                                       </GridPane.margin>
+                                    </Line>
+                                 </children>
+                              </GridPane>
+                           </graphic>
+                           <padding>
+                              <Insets top="5.0" />
+                           </padding>
+                        </Button>
+                        <Button minHeight="80.0" mnemonicParsing="false" prefWidth="203.0" style="-fx-background-color: transparent;">
+                           <graphic>
+                              <GridPane>
+                                 <columnConstraints>
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="90.0" minWidth="10.0" prefWidth="53.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="112.0" minWidth="10.0" prefWidth="110.0" />
+                                    <ColumnConstraints />
+                                 </columnConstraints>
+                                 <rowConstraints>
+                                    <RowConstraints maxHeight="42.0" minHeight="10.0" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="39.0" minHeight="18.0" vgrow="SOMETIMES" />
+                                 </rowConstraints>
+                                 <children>
+                                    <Label text="15 Aug 2020" textAlignment="RIGHT" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
+                                    <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="17.0" prefWidth="111.0" text="7:00pm - 9:30pm" textAlignment="RIGHT" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="TOP" />
+                                    <ImageView fitHeight="35.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                                       <image>
+                                          <Image url="@assets/calendar.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="The name of the event" wrappingWidth="158.21875" GridPane.columnSpan="2" />
+                                    <Line endX="190.0" startX="0.5" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="BASELINE">
+                                       <GridPane.margin>
+                                          <Insets right="85.0" />
+                                       </GridPane.margin>
+                                    </Line>
+                                 </children>
+                              </GridPane>
+                           </graphic>
+                           <padding>
+                              <Insets top="5.0" />
+                           </padding>
+                        </Button>
+                        <Button minHeight="80.0" mnemonicParsing="false" prefWidth="203.0" style="-fx-background-color: transparent;">
+                           <graphic>
+                              <GridPane>
+                                 <columnConstraints>
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="90.0" minWidth="10.0" prefWidth="53.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="112.0" minWidth="10.0" prefWidth="110.0" />
+                                    <ColumnConstraints />
+                                 </columnConstraints>
+                                 <rowConstraints>
+                                    <RowConstraints maxHeight="42.0" minHeight="10.0" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="39.0" minHeight="18.0" vgrow="SOMETIMES" />
+                                 </rowConstraints>
+                                 <children>
+                                    <Label text="15 Aug 2020" textAlignment="RIGHT" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
+                                    <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="17.0" prefWidth="111.0" text="7:00pm - 9:30pm" textAlignment="RIGHT" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="TOP" />
+                                    <ImageView fitHeight="35.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                                       <image>
+                                          <Image url="@assets/calendar.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="The name of the event" wrappingWidth="158.21875" GridPane.columnSpan="2" />
+                                    <Line endX="190.0" startX="0.5" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="BASELINE">
+                                       <GridPane.margin>
+                                          <Insets right="85.0" />
+                                       </GridPane.margin>
+                                    </Line>
+                                 </children>
+                              </GridPane>
+                           </graphic>
+                           <padding>
+                              <Insets top="5.0" />
+                           </padding>
+                        </Button>
+                        <Button minHeight="80.0" mnemonicParsing="false" prefWidth="203.0" style="-fx-background-color: transparent;">
+                           <graphic>
+                              <GridPane>
+                                 <columnConstraints>
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="90.0" minWidth="10.0" prefWidth="53.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="112.0" minWidth="10.0" prefWidth="110.0" />
+                                    <ColumnConstraints />
+                                 </columnConstraints>
+                                 <rowConstraints>
+                                    <RowConstraints maxHeight="42.0" minHeight="10.0" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="39.0" minHeight="18.0" vgrow="SOMETIMES" />
+                                 </rowConstraints>
+                                 <children>
+                                    <Label text="15 Aug 2020" textAlignment="RIGHT" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
+                                    <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="17.0" prefWidth="111.0" text="7:00pm - 9:30pm" textAlignment="RIGHT" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="TOP" />
+                                    <ImageView fitHeight="35.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                                       <image>
+                                          <Image url="@assets/calendar.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="The name of the event" wrappingWidth="158.21875" GridPane.columnSpan="2" />
+                                    <Line endX="190.0" startX="0.5" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="BASELINE">
+                                       <GridPane.margin>
+                                          <Insets right="85.0" />
+                                       </GridPane.margin>
+                                    </Line>
+                                 </children>
+                              </GridPane>
+                           </graphic>
+                           <padding>
+                              <Insets top="5.0" />
+                           </padding>
+                        </Button>
+                     </children>
+                     <padding>
+                        <Insets left="5.0" right="5.0" />
+                     </padding>
+                  </VBox>
+               </content>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </ScrollPane>
+            <VBox alignment="CENTER" prefHeight="70.0" prefWidth="184.0">
+               <children>
+                  <Button mnemonicParsing="false" text="Add event">
+                     <VBox.margin>
+                        <Insets bottom="3.0" top="5.0" />
+                     </VBox.margin>
+                     <styleClass>
+                        <String fx:value="btn" />
+                        <String fx:value="btn-primary" />
+                     </styleClass>
+                  </Button>
+                  <Button mnemonicParsing="false" text="Import Holiday">
+                     <VBox.margin>
+                        <Insets top="3.0" />
+                     </VBox.margin>
+                     <styleClass>
+                        <String fx:value="btn" />
+                        <String fx:value="btn-primary" />
+                     </styleClass>
+                  </Button>
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+   </left>
+   <center>
+      <TabPane prefHeight="200.0" prefWidth="603.0" tabClosingPolicy="UNAVAILABLE" tabMaxHeight="15.0" tabMinWidth="100.0" BorderPane.alignment="CENTER">
+        <tabs>
+          <Tab text="&lt;HolidayName&gt;">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <WebView fx:id="webView2" prefHeight="576.0" prefWidth="669.0" BorderPane.alignment="CENTER_RIGHT" />
+                     </children></AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="&lt;HolidayName2&gt;">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+            </content>
+          </Tab>
+            <Tab text="+">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="484.0" />
+              </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+   </center>
+</BorderPane>
