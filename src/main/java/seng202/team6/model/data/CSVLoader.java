@@ -1,4 +1,4 @@
-package seng202.team6.model;
+package seng202.team6.model.data;
 import seng202.team6.model.entities.Airline;
 import seng202.team6.model.entities.Airport;
 import seng202.team6.model.entities.Plane;
