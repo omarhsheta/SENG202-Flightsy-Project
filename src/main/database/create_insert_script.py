@@ -16,8 +16,8 @@ def airline_encode(lines):
     for line in lines:
         try:
             id_airline, name, alias, iata, icao, callsign, country, active = line.split(",")
-            insert = "insert into airline (id_airline, name, alias, iata, icao, callsign, country, active); "
-            values = "values ({0}, {1}, {2}, {3}, {4}, {5}, {6}, {7})".format(id_airline, name, alias, iata, icao, callsign, country, active)
+            insert = "insert into airline (id_airline, name, alias, iata, icao, callsign, country, active) "
+            values = "values ({0}, {1}, {2}, {3}, {4}, {5}, {6}, {7});".format(id_airline, name, alias, iata, icao, callsign, country, active)
             statements.append(insert + values)
         except:
             pass
@@ -28,8 +28,8 @@ def airport_encode(lines):
     for line in lines:
         try:
             id_airport, name, city, county, iata, icao, latitude, longitude, altitude, timezone, dst, _ = line.split(",")
-            insert = "insert into airport (id_airport, name, city, country, iata, icao, latitude, longitude, altitude, timezone, dst); "
-            values = "values ({0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}, {8}, {9}, {10})".format(id_airport, name, city, county, iata, icao, latitude, longitude, altitude, timezone, dst)
+            insert = "insert into airport (id_airport, name, city, country, iata, icao, latitude, longitude, altitude, timezone, dst) "
+            values = "values ({0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}, {8}, {9}, {10});".format(id_airport, name, city, county, iata, icao, latitude, longitude, altitude, timezone, dst)
             statements.append(insert + values)
         except:
             pass
@@ -39,9 +39,10 @@ def route_encode(lines):
     statements = []
     for line in lines:
         try:
+            line = line.replace('\\N', "NULL")
             airline, id_airline, source_airport, source_airport_id, destination_airport, destination_airport_id, codeshare, stops, equipment = line.split(",")
-            insert = "insert into route (airline, id_airline, source_airport, source_airport_id, destination_airport, destination_airport_id, codeshare, stops, equipment); "
-            values = "values ({0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}, {8})".format(airline, id_airline, source_airport, source_airport_id, destination_airport, destination_airport_id, codeshare, stops, equipment)
+            insert = "insert into route (airline, id_airline, source_airport, source_airport_id, destination_airport, destination_airport_id, codeshare, stops, equipment) "
+            values = f"values (\"{airline}\", {id_airline}, \"{source_airport}\", {source_airport_id}, \"{destination_airport}\", {destination_airport_id}, \"{codeshare}\", {stops}, \"{equipment}\");"
             statements.append(insert + values)
         except:
             pass
@@ -53,9 +54,9 @@ def plane_encode(lines):
 #lines = get_lines("airline.txt")
 #airline_encode(lines)
 
-lines = get_lines("airport.txt")
-airport_encode(lines)
+# lines = get_lines("airport.txt")
+# airport_encode(lines)
 
-#lines = get_lines("route.txt")
-#route_encode(lines)
+lines = get_lines("Route_data.txt")
+route_encode(lines)
     
