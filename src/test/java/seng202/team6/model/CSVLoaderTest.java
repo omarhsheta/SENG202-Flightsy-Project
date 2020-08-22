@@ -2,6 +2,8 @@ package seng202.team6.model;
 
 import org.junit.Test;
 import java.util.ArrayList;
+
+import seng202.team6.model.data.CSVLoader;
 import seng202.team6.model.entities.Airline;
 import seng202.team6.model.entities.Airport;
 import seng202.team6.model.entities.Plane;
