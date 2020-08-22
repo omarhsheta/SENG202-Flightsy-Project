@@ -1,13 +1,13 @@
-package seng202.team6.model;
+package seng202.team6.model.data;
 
 import org.junit.Test;
-import java.util.ArrayList;
-
-import seng202.team6.model.data.CSVLoader;
+import seng202.team6.model.CSVLoader;
 import seng202.team6.model.entities.Airline;
 import seng202.team6.model.entities.Airport;
 import seng202.team6.model.entities.Plane;
 import seng202.team6.model.entities.Route;
+
+import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
 
