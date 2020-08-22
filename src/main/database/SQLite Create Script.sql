@@ -37,7 +37,7 @@ create table route (
   foreign key (airline) references airline(icao),
   foreign key (id_airline) references airline(id_airline),
   foreign key (source_airport) references airport(icao),
-  foreign key (source_airport_id) references airport(id_aiport),
+  foreign key (source_airport_id) references airport(id_airport),
   foreign key (destination_airport) references airport(icao),
   foreign key (destination_airport_id) references airport(id_airport)
 );
