@@ -1,12 +1,11 @@
 package seng202.team6.model;
-import seng202.team6.model.entities.Airline;
-import seng202.team6.model.entities.Airport;
-import seng202.team6.model.entities.Plane;
-import seng202.team6.model.entities.Route;
+import javafx.util.Pair;
+import seng202.team6.model.entities.*;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.ArrayList;
 
 
@@ -180,4 +179,24 @@ public class CSVLoader {
         }
         return result;
     }
+
+    public RoutePath PathLister(String path) {
+        ArrayList<ArrayList<String>> lines = ProcessedFile(path);
+        ArrayList<Pair<Double, Double>> coordinates = new ArrayList<>();
+        int lastInd = lines.size()-1;
+        String source = null;
+        String destination = null;
+        for (ArrayList<String> line : lines) {
+            if (line.indexOf(lines) == 0) {
+                source = line.get(1);
+            } else if (line.indexOf(lines) == lastInd) {
+                destination = line.get(1);
+            }
+            Pair<Double, Double> point = new Pair<Double, Double>(Double.parseDouble(line.get(3)), Double.parseDouble(line.get(4)));
+            coordinates.add(point);
+        }
+        RoutePath result = new RoutePath(source, destination, coordinates);
+        return result;
+    }
+
 }
