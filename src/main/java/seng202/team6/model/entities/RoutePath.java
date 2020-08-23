@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class RoutePath {
     String Source;
     String Destination;
-    ArrayList<Pair<Double, Double>> Coordinates = new ArrayList<>();
+    ArrayList<Pair<Double, Double>> Coordinates;
 
     public RoutePath(String newSource, String newDestination, ArrayList<Pair<Double, Double>> newCoordinates) {
         Source = newSource;
@@ -15,5 +15,15 @@ public class RoutePath {
         Coordinates = newCoordinates;
     }
 
+    public String getSource() {
+        return Source;
+    }
 
+    public String getDestination() {
+        return Destination;
+    }
+
+    public ArrayList<Pair<Double, Double>> getCoordinates() {
+        return Coordinates;
+    }
 }

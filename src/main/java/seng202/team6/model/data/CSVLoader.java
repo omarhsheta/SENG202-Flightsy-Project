@@ -85,6 +85,11 @@ public class CSVLoader {
         ArrayList<ArrayList<String>> lines = ProcessedFile(path);
         ArrayList<Plane> result = new ArrayList<>();
         for (ArrayList<String> line: lines) {
+            if (line.size() != 3) {
+                //Incorrect amount of data
+                //Does not add current Plane as it is invalid
+                continue;
+            }
             String name = line.get(0);
             String IATA = line.get(1);
             String ICAO = line.get(2);
@@ -103,7 +108,20 @@ public class CSVLoader {
         ArrayList<ArrayList<String>> lines = ProcessedFile(path);
         ArrayList<Airline> result = new ArrayList<>();
         for (ArrayList<String> line: lines) {
-            int airlineID = Integer.parseInt(line.get(0));
+            if (line.size() != 8) {
+                //Incorrect amount of data
+                //Does not add current Airline as it is invalid
+                continue;
+            }
+            int airlineID;
+            try {
+                airlineID = Integer.parseInt(line.get(0));
+            }
+            catch (NumberFormatException e1) {
+                //Not a number
+                //Does not add current Airline as it is invalid
+                continue;
+            }
             String name = line.get(1);
             String alias = line.get(2);
             String newIATA = line.get(3);
@@ -126,16 +144,40 @@ public class CSVLoader {
         ArrayList<ArrayList<String>> lines = ProcessedFile(path);
         ArrayList<Airport> result = new ArrayList<>();
         for (ArrayList<String> line: lines) {
-            int airportID = Integer.parseInt(line.get(0));
+            if (line.size() != 14) {
+                //Incorrect amount of data
+                //Does not add current Airport as it is invalid
+                continue;
+            }
+            int airportID;
+            try {
+                airportID = Integer.parseInt(line.get(0));
+            }
+            catch (NumberFormatException e1) {
+                //Not a number
+                //Does not add current Airport as it is invalid
+                continue;
+            }
             String name = line.get(1);
             String city = line.get(2);
             String country = line.get(3);
             String newIATA = line.get(4);
             String newICAO = line.get(5);
-            float newLatitude = Float.parseFloat(line.get(6));
-            float newLongitude = Float.parseFloat(line.get(7));
-            int newAltitude = Integer.parseInt(line.get(8));
-            float newTimezone = Float.parseFloat(line.get(9));
+            float newLatitude;
+            float newLongitude;
+            int newAltitude;
+            float newTimezone;
+            try {
+                newLatitude = Float.parseFloat(line.get(6));
+                newLongitude = Float.parseFloat(line.get(7));
+                newAltitude = Integer.parseInt(line.get(8));
+                newTimezone = Float.parseFloat(line.get(9));
+            }
+            catch (NumberFormatException e1) {
+                //Not a number
+                //Does not add current Airport as it is invalid
+                continue;
+            }
             char newDST = line.get(10).charAt(0);
             Airport temp = new Airport(airportID, name, city, country, newIATA, newICAO, newLatitude, newLongitude,
                     newAltitude, newTimezone, newDST);
@@ -154,29 +196,45 @@ public class CSVLoader {
         ArrayList<Route> result = new ArrayList<>();
         for (ArrayList<String> line : lines) {
             int len = line.size();
-            int airlineID = Integer.parseInt(line.get(0));
+            if (len != 9 && len != 8) {
+                //Incorrect amount of data
+                //Does not add current Route as it is invalid
+                continue;
+            }
+            int airlineID;
+            int sourceID;
+            int destinationID;
+            char codeshare;
+            int stops;
+            try {
+                airlineID = Integer.parseInt(line.get(0));
+                if (line.get(3).contains("N")) {
+                    sourceID = 0;
+                } else {
+                    sourceID = Integer.parseInt(line.get(3));
+                }
+                if (line.get(5).contains("N")) {
+                    destinationID = 0;
+                } else {
+                    destinationID = Integer.parseInt(line.get(5));
+                }
+                if (line.get(6).length() == 0) {
+                    codeshare = 0;
+                } else {
+                    codeshare = line.get(6).charAt(0);
+                }
+                stops = Integer.parseInt(line.get(7));
+            }
+            catch (NumberFormatException e1) {
+                //Not a number
+                //Does not add current Route as it is invalid
+                continue;
+            }
+
             String name = line.get(1);
             String source = line.get(2);
-            int sourceID;
-            if (line.get(3).contains("N")) {
-                sourceID = 0;
-            } else {
-                sourceID = Integer.parseInt(line.get(3));
-            }
             String destination = line.get(4);
-            int destinationID;
-            if (line.get(5).contains("N")) {
-                destinationID = 0;
-            } else {
-                destinationID = Integer.parseInt(line.get(5));
-            }
-            char codeshare;
-            if (line.get(6).length() == 0) {
-                codeshare = 0;
-            } else {
-                codeshare = line.get(6).charAt(0);
-            }
-            int stops = Integer.parseInt(line.get(7));
+
             if (len != 9) {
                 Route temp = new Route(airlineID, name, source, sourceID, destination, destinationID, codeshare,
                         stops, "");
@@ -199,15 +257,33 @@ public class CSVLoader {
         String source = null;
         String destination = null;
         for (ArrayList<String> line : lines) {
-            if (line.indexOf(lines) == 0) {
+            if (line.size() != 5) {
+                //Incorrect amount of data
+                //Does not add current part of the Path as it is invalid
+                continue;
+            }
+            if (lines.indexOf(line) == 0) {
                 source = line.get(1);
-            } else if (line.indexOf(lines) == lastInd) {
+            } else if (lines.indexOf(line) == lastInd) {
                 destination = line.get(1);
             }
-            Pair<Double, Double> point = new Pair<>(Double.parseDouble(line.get(3)), Double.parseDouble(line.get(4)));
+            Pair<Double, Double> point;
+            try {
+                point = new Pair<>(Double.parseDouble(line.get(3)), Double.parseDouble(line.get(4)));
+            }
+            catch (NumberFormatException e1) {
+                //Not a number
+                //Does not add current coordinate as it is invalid
+                continue;
+            }
             coordinates.add(point);
         }
         return new RoutePath(source, destination, coordinates);
     }
 
+    public static void main(String[] args){
+        CSVLoader csvLoader = new CSVLoader();
+        ArrayList <Airport> test = csvLoader.AirportList("src/test/resources/CSVLoader/AirportTest.csv");
+        System.out.println(test);
+    }
 }
