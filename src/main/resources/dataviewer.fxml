@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.team6.gui.controller.DataViewerController">
    <center>
       <VBox prefHeight="600.0" prefWidth="900.0">
         <children>
@@ -94,7 +94,7 @@
                                     </Pane>
                                     <ScrollPane layoutX="232.0" layoutY="15.0" prefHeight="473.0" prefWidth="605.0">
                                        <content>
-                                          <TableView prefHeight="470.0" prefWidth="915.0">
+                                          <TableView fx:id="airport_table" prefHeight="470.0" prefWidth="915.0">
                                             <columns>
                                               <TableColumn prefWidth="70.0" text="ID" />
                                               <TableColumn prefWidth="70.0" text="Name" />
