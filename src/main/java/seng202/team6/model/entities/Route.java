@@ -2,7 +2,7 @@ package seng202.team6.model.entities;
 
 public class Route {
 
-    String AirlineID;
+    int AirlineID;
     String Airline;
     String SourceAirport;
     int SourceAirportID;
@@ -12,7 +12,7 @@ public class Route {
     int Stops;
     String Equipment;
 
-    public Route(String newAirlineID, String newAirline, String newSourceAirport, int newSourceAirportID,
+    public Route(int newAirlineID, String newAirline, String newSourceAirport, int newSourceAirportID,
                  String newDestinationAirport, int newDestinationAirportID, char newCodeshare, int newStops,
                  String newEquipment) {
         AirlineID = newAirlineID;
@@ -34,20 +34,22 @@ public class Route {
 
         Route routeObject = (Route)obj;
 
-        return this.AirlineID.equals(routeObject.GetAirlineID()) && this.Airline.equals(routeObject.GetAirline()) &&
+        return this.AirlineID == routeObject.GetAirlineID() &&
+                this.Airline.equals(routeObject.GetAirline()) &&
                 this.SourceAirport.equals(routeObject.GetSourceAirport()) &&
                 this.SourceAirportID == routeObject.GetSourceAirportID() &&
                 this.DestinationAirport.equals(routeObject.GetDestinationAirport()) &&
                 this.DestinationAirportID == routeObject.GetDestinationAirportID() &&
-                this.Codeshare == routeObject.GetCodeshare() && this.Stops == routeObject.GetStops() &&
+                this.Codeshare == routeObject.GetCodeshare() &&
+                this.Stops == routeObject.GetStops() &&
                 this.Equipment.equals(routeObject.GetEquipment());
     }
 
-    public String GetAirlineID() {
+    public int GetAirlineID() {
         return AirlineID;
     }
 
-    public void SetAirlineID(String airlineID) {
+    public void SetAirlineID(int airlineID) {
         AirlineID = airlineID;
     }
 

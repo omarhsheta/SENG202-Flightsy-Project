@@ -1,5 +1,7 @@
 package seng202.team6.model.data;
 import seng202.team6.model.entities.Airline;
+import seng202.team6.model.entities.Airport;
+import seng202.team6.model.entities.Route;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -39,14 +41,70 @@ public class DataHandler {
         Statement stmt = this.conn.createStatement();
         ResultSet rs = stmt.executeQuery(sql);
 
-        // Loop through the result set
+        // Loop through the result set and create Airline objects from data
         while (rs.next()) {
-            Airline airline = new Airline(rs.getInt("id_airline"), rs.getString("name"),rs.getString("alias"),
+            String active = rs.getString("active");
+            char char_active = (active.length() > 0 ? active.charAt(0) : ' ');
+            Airline airline = new Airline(
+                    rs.getInt("id_airline"), rs.getString("name"),rs.getString("alias"),
                     rs.getString("iata"), rs.getString("icao"), rs.getString("callsign"),
-                    rs.getString("country"), rs.getString("active").charAt(0));
+                    rs.getString("country"), char_active
+            );
             airlines.add(airline);
         }
         return airlines;
+    }
+
+    /**
+     * Select and return all the Airport tuples in the SQLite database.
+     * @return An arraylist containing all Airports in the database
+     */
+    public ArrayList<Airport> FetchAirports() throws SQLException {
+        ArrayList<Airport> airports = new ArrayList<>();
+
+        String sql = "SELECT * FROM airport";
+        Statement stmt = this.conn.createStatement();
+        ResultSet rs = stmt.executeQuery(sql);
+
+        // Loop through the result set and create Airport objects from data
+        while (rs.next()) {
+            String dst = rs.getString("dst");
+            char char_dst = (dst.length() > 0 ? dst.charAt(0) : ' ');
+            Airport airport = new Airport(
+                    rs.getInt("id_airport"), rs.getString("name"), rs.getString("city"),
+                    rs.getString("country"), rs.getString("iata"), rs.getString("icao"),
+                    rs.getFloat("latitude"), rs.getFloat("longitude"), rs.getInt("altitude"),
+                    rs.getInt("timezone"), char_dst
+            );
+            airports.add(airport);
+        }
+        return airports;
+    }
+
+    /**
+     * Select and return all the Airport tuples in the SQLite database.
+     * @return An arraylist containing all Airports in the database
+     */
+    public ArrayList<Route> FetchRoutes() throws SQLException {
+        ArrayList<Route> routes = new ArrayList<>();
+
+        String sql = "SELECT * FROM route";
+        Statement stmt = this.conn.createStatement();
+        ResultSet rs = stmt.executeQuery(sql);
+
+        // Loop through the result set and create Airport objects from data
+        while (rs.next()) {
+            String codeshare = rs.getString("codeshare");
+            char char_codeshare = (codeshare.length() > 0 ? codeshare.charAt(0) : 'N');
+            Route route = new Route(
+                    rs.getInt("id_airline"), rs.getString("airline"), rs.getString("source_airport"),
+                    rs.getInt("source_airport_id"), rs.getString("destination_airport"),
+                    rs.getInt("destination_airport_id"), char_codeshare,
+                    rs.getInt("stops"), rs.getString("equipment")
+            );
+            routes.add(route);
+        }
+        return routes;
     }
 
     /**
@@ -59,10 +117,21 @@ public class DataHandler {
 
         ArrayList<Airline> airlines;
         airlines = database.FetchAirlines();
-
         for (Airline airline : airlines) {
-            System.out.println(airline.GetName());
+            System.out.println(airline.GetActive());
         }
+
+//        ArrayList<Airport> airports;
+//        airports = database.FetchAirports();
+//        for (Airport airport : airports) {
+//            System.out.println(airport.GetDST());
+//        }
+
+//        ArrayList<Route> routes;
+//        routes = database.FetchRoutes();
+//        for (Route route : routes) {
+//            System.out.println(route.GetCodeshare());
+//        }
     }
 
 }

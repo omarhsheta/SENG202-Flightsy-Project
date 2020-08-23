@@ -1,4 +1,4 @@
-package seng202.team6.model;
+package seng202.team6.model.data;
 import javafx.util.Pair;
 import seng202.team6.model.entities.*;
 
@@ -142,7 +142,7 @@ public class CSVLoader {
         ArrayList<Route> result = new ArrayList<>();
         for (ArrayList<String> line : lines) {
             int len = line.size();
-            String airlineID = line.get(0);
+            int airlineID = Integer.parseInt(line.get(0));
             String name = line.get(1);
             String source = line.get(2);
             int sourceID;

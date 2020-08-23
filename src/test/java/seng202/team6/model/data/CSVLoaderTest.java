@@ -1,7 +1,6 @@
 package seng202.team6.model.data;
 
 import org.junit.Test;
-import seng202.team6.model.CSVLoader;
 import seng202.team6.model.entities.Airline;
 import seng202.team6.model.entities.Airport;
 import seng202.team6.model.entities.Plane;
@@ -41,7 +40,7 @@ public class CSVLoaderTest {
     public void TestRouteList() {
         CSVLoader test = new CSVLoader();
         ArrayList<Route> testList = test.RouteList("src/test/resources/CSVLoader/RouteTest.csv");
-        Route testRoute = new Route("69", "Flightsy Airways", "CHC", 420, "TLV", 666, '\u0000', 5, "CR2");
+        Route testRoute = new Route(69, "Flightsy Airways", "CHC", 420, "TLV", 666, '\u0000', 5, "CR2");
         assertEquals(testRoute, testList.get(0));
     }
 
