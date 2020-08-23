@@ -32,24 +32,36 @@ public class CSVLoader {
             //If char is ',' and we're not escaped, then its the end
             if (c == ',' && !isEscaped) {
                 String subseq = line.subSequence(mark, i).toString().replace("\"", "");
-                values.add(subseq);
                 mark = i + 1;
+                values.add(ParseSpecialChar(subseq));
             } else if (i == n - 1) {  //If we're at the end of the line, take the rest
                 String subseq = line.subSequence(mark, i + 1).toString().replace("\"", "");
-                values.add(subseq);
+                values.add(ParseSpecialChar(subseq));
             }
         }
         return values;
     }
 
+    /**
+     * Parse \\N into null
+     * @param str String to check if == \N
+     * @return Original string or null
+     */
+    private String ParseSpecialChar(String str)
+    {
+        if (str != null && str.equals("\\N"))
+            return null;
+        return str;
+    }
+
 
     /**
-     * Processes a spreadsheet file and runs each row through ParseLine method, then returns an ArrayList of ArrayLists
+     * Processes a CSV file and runs each row through ParseLine method, then returns an ArrayList of ArrayLists
      * of Strings
      * @param path the location of the spreadsheet file
      * @return an ArrayList of ArrayLists of rows
      */
-    private ArrayList<ArrayList<String>> ProcessedFile(String path) {
+    public ArrayList<ArrayList<String>> ProcessedFile(String path) {
         ArrayList<ArrayList<String>> valuesList = new ArrayList<>();
         try {
             BufferedReader buffReader = new BufferedReader(new FileReader(path));
@@ -120,10 +132,10 @@ public class CSVLoader {
             String country = line.get(3);
             String newIATA = line.get(4);
             String newICAO = line.get(5);
-            Float newLatitude = Float.parseFloat(line.get(6));
-            Float newLongitude = Float.parseFloat(line.get(7));
+            float newLatitude = Float.parseFloat(line.get(6));
+            float newLongitude = Float.parseFloat(line.get(7));
             int newAltitude = Integer.parseInt(line.get(8));
-            Float newTimezone = Float.parseFloat(line.get(9));
+            float newTimezone = Float.parseFloat(line.get(9));
             char newDST = line.get(10).charAt(0);
             Airport temp = new Airport(airportID, name, city, country, newIATA, newICAO, newLatitude, newLongitude,
                     newAltitude, newTimezone, newDST);
@@ -192,11 +204,10 @@ public class CSVLoader {
             } else if (line.indexOf(lines) == lastInd) {
                 destination = line.get(1);
             }
-            Pair<Double, Double> point = new Pair<Double, Double>(Double.parseDouble(line.get(3)), Double.parseDouble(line.get(4)));
+            Pair<Double, Double> point = new Pair<>(Double.parseDouble(line.get(3)), Double.parseDouble(line.get(4)));
             coordinates.add(point);
         }
-        RoutePath result = new RoutePath(source, destination, coordinates);
-        return result;
+        return new RoutePath(source, destination, coordinates);
     }
 
 }
