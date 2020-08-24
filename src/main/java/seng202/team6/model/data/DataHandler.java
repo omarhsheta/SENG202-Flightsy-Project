@@ -107,6 +107,46 @@ public class DataHandler {
         return routes;
     }
 
+    public void ImportAirlines(ArrayList<Airline> airlines) throws SQLException{
+        Statement stmt = this.conn.createStatement();
+        for(Airline airline: airlines) {
+            String sql = "IMPORT INTO airline (id_airline, name, alias, iata, icao, callsign, country, active)" +
+                    "VALUES (" + airline.GetAirlineID() + ", " + airline.GetName() + ", " + airline.GetAlias() + ", " +
+                    airline.GetIATA() + ", " + airline.GetICAO() + ", " + airline.GetCallsign() + ", " +
+                    airline.GetCountry() + ", " + airline.GetActive() + ")";
+
+            stmt.executeQuery(sql);
+        }
+    }
+
+    public void ImportAirports(ArrayList<Airport> airports) throws SQLException{
+        Statement stmt = this.conn.createStatement();
+        for(Airport airport: airports) {
+            String sql = "IMPORT INTO airport (id_airport, name, city, country, iata, icao, latitude, longitude, altitude, timezone, dst)" +
+                    "VALUES (" + airport.GetAirportID() + ", " + airport.GetName() + ", " + airport.GetCity() + ", " +
+                    airport.GetCountry() + ", " + airport.GetIATA() + ", " + airport.GetICAO() + ", " +
+                    airport.GetLatitude() + ", " + airport.GetLongitude() + ", " + airport.GetAltitude() + ", " +
+                    airport.GetTimezone() + ", " + airport.GetDST() + ")";
+
+            stmt.executeQuery(sql);
+        }
+    }
+
+    public void ImportRoutes(ArrayList<Route> routes) throws SQLException{
+        Statement stmt = this.conn.createStatement();
+        for(Route route: routes) {
+            String sql = "IMPORT INTO airline (airline, id_airline, source_airport, source_airport_id, destination_airport, destination_airport_id, codeshare, stops, equipment)" +
+                    "VALUES (" + route.GetAirline() + ", " + route.GetAirlineID() + ", " + route.GetSourceAirport() + ", " +
+                    route.GetSourceAirportID() + ", " + route.GetDestinationAirport() + ", " + route.GetDestinationAirportID() + ", " +
+                    route.GetCodeshare() + ", " + route.GetStops() + ", " + route.GetEquipment() + ")";
+
+            stmt.executeQuery(sql);
+        }
+    }
+
+
+
+
     /**
      * TEST METHOD
      * @param args no u
