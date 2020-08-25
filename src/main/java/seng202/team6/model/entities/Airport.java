@@ -1,4 +1,5 @@
 package seng202.team6.model.entities;
+import java.lang.*;
 
 public class Airport {
 
@@ -44,6 +45,19 @@ public class Airport {
                 this.Latitude == airportObject.GetLatitude() && this.Longitude == airportObject.GetLongitude() &&
                 this.Altitude == airportObject.GetAltitude() && this.Timezone == airportObject.GetTimezone() &&
                 this.DST == airportObject.GetDST();
+    }
+
+    /**
+     * This method compares the distance between this instance of Airport with 'other' Airport
+     * @param other a different airport
+     * @return
+     */
+    public double GetDistance(Airport other) {
+        float destLat = other.Latitude;
+        float destLong = other.Longitude;
+        float x_pos = Math.abs(this.Latitude) + Math.abs(destLat);
+        float y_pos = Math.abs(this.Longitude) + Math.abs(destLong);
+        return Math.sqrt(Math.pow(x_pos, 2) + Math.pow(y_pos, 2));
     }
 
     public int GetAirportID() {
@@ -133,4 +147,5 @@ public class Airport {
     public void SetDST(char DST) {
         this.DST = DST;
     }
+
 }
