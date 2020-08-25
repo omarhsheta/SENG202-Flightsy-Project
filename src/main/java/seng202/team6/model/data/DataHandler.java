@@ -189,11 +189,11 @@ public class DataHandler {
 //            System.out.println(airport.GetAltitude());
 //        }
 
-//        ArrayList<Route> routes;
-//        routes = database.FetchRoutes();
-//        for (Route route : routes) {
-//            System.out.println(route.GetCodeshare());
-//        }
+        ArrayList<Route> routes;
+        routes = database.FetchRoutes();
+        for (Route route : routes) {
+            System.out.println(route.GetCodeshare());
+        }
     }
 
 }

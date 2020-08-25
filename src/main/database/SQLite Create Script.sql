@@ -1,3 +1,6 @@
+-- The database has had a lot of changes since this initial starting query.
+-- Do not run to re-create the database.
+
 create table airline (
 id_airline integer primary key,
 name varchar(25),
