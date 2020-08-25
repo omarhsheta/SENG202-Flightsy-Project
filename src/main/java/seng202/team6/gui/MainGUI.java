@@ -67,7 +67,7 @@ public class MainGUI extends Application {
         primaryStage.setScene(primaryScene);
 
         //Set active window
-        WindowHandler.GetInstance().SetActiveWindow("dataviewer");
+        WindowHandler.GetInstance().SetActiveWindow("main");
         primaryStage.show();
     }
 }

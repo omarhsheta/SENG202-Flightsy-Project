@@ -3,6 +3,8 @@ package seng202.team6.gui.controller;
 import javafx.concurrent.Worker;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.layout.Background;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import seng202.team6.model.entities.Airport;
@@ -15,6 +17,9 @@ public class MainController implements Initializable
 {
     @FXML
     private WebView webView2;
+
+    @FXML
+    private Button button;
 
     private WebEngine webEngine;
     private final String mapHTML = "/map/main.html";
@@ -42,11 +47,11 @@ public class MainController implements Initializable
     /**
      * Called when WebEngine is finished loading
      */
-    private void OnLoad()
-    {
+    private void OnLoad() {
         ArrayList<Airport> airports = new ArrayList<>();
         airports.add(new Airport(1, "Christchurch International", "Christchurch", "New Zealand",
                 "CHC", "NZCH", -43.4876f, 172.5374f, 37, 12, 'Y'));
         controller.DrawAirportMarks(airports);
     }
+
 }
