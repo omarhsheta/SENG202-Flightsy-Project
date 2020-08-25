@@ -1,14 +1,11 @@
 package seng202.team6.handler;
 
-import com.sun.source.tree.AssertTree;
 import javafx.scene.layout.Pane;
 import org.junit.Before;
 import org.junit.Test;
 import seng202.team6.gui.WindowHandler;
 
-import java.util.ArrayList;
-
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Test file for WindowHandler.java
