@@ -107,22 +107,23 @@ public class DataHandler {
         return routes;
     }
 
-    public void ImportAirlines(ArrayList<Airline> airlines) throws SQLException{
+    public void InsertAirlines(ArrayList<Airline> airlines) throws SQLException{
         Statement stmt = this.conn.createStatement();
         for(Airline airline: airlines) {
-            String sql = "IMPORT INTO airline (id_airline, name, alias, iata, icao, callsign, country, active)" +
-                    "VALUES (" + airline.GetAirlineID() + ", " + airline.GetName() + ", " + airline.GetAlias() + ", " +
-                    airline.GetIATA() + ", " + airline.GetICAO() + ", " + airline.GetCallsign() + ", " +
-                    airline.GetCountry() + ", " + airline.GetActive() + ")";
+            String sql = String.format("INSERT INTO airline (id_airline, name, alias, iata, icao, callsign, country, " +
+                    "active) VALUES (\"%d\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%c\");",
+                    airline.GetAirlineID(), airline.GetName(), airline.GetAlias(), airline.GetIATA(), airline.GetICAO(),
+                    airline.GetCallsign(), airline.GetCountry(), airline.GetActive()
+            );
+            stmt.executeUpdate(sql);
 
-            stmt.executeQuery(sql);
         }
     }
 
-    public void ImportAirports(ArrayList<Airport> airports) throws SQLException{
+    public void InsertAirports(ArrayList<Airport> airports) throws SQLException{
         Statement stmt = this.conn.createStatement();
         for(Airport airport: airports) {
-            String sql = "IMPORT INTO airport (id_airport, name, city, country, iata, icao, latitude, longitude, altitude, timezone, dst)" +
+            String sql = "INSERT INTO airport (id_airport, name, city, country, iata, icao, latitude, longitude, altitude, timezone, dst)" +
                     "VALUES (" + airport.GetAirportID() + ", " + airport.GetName() + ", " + airport.GetCity() + ", " +
                     airport.GetCountry() + ", " + airport.GetIATA() + ", " + airport.GetICAO() + ", " +
                     airport.GetLatitude() + ", " + airport.GetLongitude() + ", " + airport.GetAltitude() + ", " +
@@ -132,10 +133,10 @@ public class DataHandler {
         }
     }
 
-    public void ImportRoutes(ArrayList<Route> routes) throws SQLException{
+    public void InsertRoutes(ArrayList<Route> routes) throws SQLException{
         Statement stmt = this.conn.createStatement();
         for(Route route: routes) {
-            String sql = "IMPORT INTO airline (airline, id_airline, source_airport, source_airport_id, destination_airport, destination_airport_id, codeshare, stops, equipment)" +
+            String sql = "INSERT INTO airline (airline, id_airline, source_airport, source_airport_id, destination_airport, destination_airport_id, codeshare, stops, equipment)" +
                     "VALUES (" + route.GetAirline() + ", " + route.GetAirlineID() + ", " + route.GetSourceAirport() + ", " +
                     route.GetSourceAirportID() + ", " + route.GetDestinationAirport() + ", " + route.GetDestinationAirportID() + ", " +
                     route.GetCodeshare() + ", " + route.GetStops() + ", " + route.GetEquipment() + ")";
@@ -155,16 +156,25 @@ public class DataHandler {
     public static void main(String[] args) throws SQLException {
         DataHandler database = new DataHandler();
 
-        ArrayList<Airline> airlines;
-        airlines = database.FetchAirlines();
-        for (Airline airline : airlines) {
-            System.out.println(airline.GetActive());
-        }
+        ArrayList<Airline> airlines = new ArrayList<>();
+        Airline airline1 = new Airline(10000, "test1", "test", "test", "test", "test", "test", 'Y');
+        Airline airline2 = new Airline(10001, "test2", "test", "test", "test", "test", "test", 'Y');
+        airlines.add(airline1);
+        airlines.add(airline2);
+        database.InsertAirlines(airlines);
+
+
+
+//        ArrayList<Airline> airlines;
+//        airlines = database.FetchAirlines();
+//        for (Airline airline : airlines) {
+//            System.out.println(airline.GetActive());
+//        }
 
 //        ArrayList<Airport> airports;
 //        airports = database.FetchAirports();
 //        for (Airport airport : airports) {
-//            System.out.println(airport.GetDST());
+//            System.out.println(airport.GetAltitude());
 //        }
 
 //        ArrayList<Route> routes;
