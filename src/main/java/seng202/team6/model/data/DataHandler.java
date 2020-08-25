@@ -179,13 +179,13 @@ public class DataHandler {
     public void InsertAirports(ArrayList<Airport> airports) throws SQLException {
         Statement stmt = this.databaseConnection.createStatement();
         for(Airport airport: airports) {
-            String sql = "INSERT INTO airport (id_airport, name, city, country, iata, icao, latitude, longitude, altitude, timezone, dst)" +
-                    "VALUES (" + airport.GetAirportID() + ", " + airport.GetName() + ", " + airport.GetCity() + ", " +
-                    airport.GetCountry() + ", " + airport.GetIATA() + ", " + airport.GetICAO() + ", " +
-                    airport.GetLatitude() + ", " + airport.GetLongitude() + ", " + airport.GetAltitude() + ", " +
-                    airport.GetTimezone() + ", " + airport.GetDST() + ")";
-
-            stmt.executeQuery(sql);
+            String sql = String.format("INSERT INTO airport (id_airport, name, city, country, iata, icao, latitude, longitude, altitude, timezone, dst)" +
+                    "VALUES (\"%d\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%f\", \"%f\", \"%d\", \"%f\", \"%c\");",
+                    airport.GetAirportID(), airport.GetName(), airport.GetCity(), airport.GetCountry(),
+                    airport.GetIATA(), airport.GetICAO(), airport.GetLatitude(), airport.GetLongitude(), airport.GetAltitude(),
+                    airport.GetTimezone(), airport.GetDST()
+            );
+            stmt.executeUpdate(sql);
         }
     }
 
@@ -197,12 +197,14 @@ public class DataHandler {
     public void InsertRoutes(ArrayList<Route> routes) throws SQLException{
         Statement stmt = this.databaseConnection.createStatement();
         for(Route route: routes) {
-            String sql = "INSERT INTO airline (airline, id_airline, source_airport, source_airport_id, destination_airport, destination_airport_id, codeshare, stops, equipment)" +
-                    "VALUES (" + route.GetAirline() + ", " + route.GetAirlineID() + ", " + route.GetSourceAirport() + ", " +
-                    route.GetSourceAirportID() + ", " + route.GetDestinationAirport() + ", " + route.GetDestinationAirportID() + ", " +
-                    route.GetCodeshare() + ", " + route.GetStops() + ", " + route.GetEquipment() + ")";
-
-            stmt.executeQuery(sql);
+            String sql = String.format("INSERT INTO route (airline, id_airline, source_airport, source_airport_id, " +
+                    "destination_airport, destination_airport_id, codeshare, stops, equipment)" +
+                    "VALUES (\"%s\", \"%d\", \"%s\", \"%d\", \"%s\", \"%d\", \"%c\", \"%d\", \"%s\");",
+                    route.GetAirline(), route.GetAirlineID(), route.GetSourceAirport(), route.GetSourceAirportID(),
+                    route.GetDestinationAirport(), route.GetDestinationAirportID(), route.GetCodeshare(),
+                    route.GetStops(), route.GetEquipment()
+            );
+            stmt.executeUpdate(sql);
         }
     }
 }
