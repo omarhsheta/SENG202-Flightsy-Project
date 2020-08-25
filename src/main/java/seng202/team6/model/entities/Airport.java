@@ -1,7 +1,9 @@
 package seng202.team6.model.entities;
+import seng202.team6.model.interfaces.IMapDrawable;
+
 import java.lang.*;
 
-public class Airport {
+public class Airport implements IMapDrawable {
 
     int AirportID;
     String Name;
@@ -50,7 +52,7 @@ public class Airport {
     /**
      * This method compares the distance between this instance of Airport with 'other' Airport
      * @param other a different airport
-     * @return
+     * @return Distance between airports
      */
     public double GetDistance(Airport other) {
         float destLat = other.Latitude;
@@ -58,6 +60,17 @@ public class Airport {
         float x_pos = Math.abs(this.Latitude) + Math.abs(destLat);
         float y_pos = Math.abs(this.Longitude) + Math.abs(destLong);
         return Math.sqrt(Math.pow(x_pos, 2) + Math.pow(y_pos, 2));
+    }
+
+    @Override
+    public String ConvertToJavascriptString() {
+        return String.format("lat: %f, lng: %f, " +
+                        "name: \"%s\", country: \"%s\", city: \"%s\", " +
+                        "iata: \"%s\", icao: \"%s\", alt: %d, tz: %f",
+
+                this.GetLatitude(), this.GetLongitude(), this.GetName(),
+                this.GetCountry(), this.GetCity(), this.GetIATA(), this.GetICAO(),
+                this.GetAltitude(), this.GetTimezone());
     }
 
     public int GetAirportID() {
@@ -147,5 +160,4 @@ public class Airport {
     public void SetDST(char DST) {
         this.DST = DST;
     }
-
 }

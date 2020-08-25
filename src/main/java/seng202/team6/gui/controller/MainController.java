@@ -7,7 +7,10 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.Background;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+import javafx.util.Pair;
 import seng202.team6.model.entities.Airport;
+import seng202.team6.model.entities.RoutePath;
+import seng202.team6.model.interfaces.IMapDrawable;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -47,11 +50,16 @@ public class MainController implements Initializable
     /**
      * Called when WebEngine is finished loading
      */
-    private void OnLoad() {
-        ArrayList<Airport> airports = new ArrayList<>();
+    private void OnLoad()
+    {
+        ArrayList<IMapDrawable> airports = new ArrayList<>();
         airports.add(new Airport(1, "Christchurch International", "Christchurch", "New Zealand",
                 "CHC", "NZCH", -43.4876f, 172.5374f, 37, 12, 'Y'));
         controller.DrawAirportMarks(airports);
-    }
 
+        ArrayList<Pair<Double, Double>> coords = new ArrayList<>();
+        coords.add(new Pair<>(-43.4876d, 172.5374d));
+        coords.add(new Pair<>(-37.6690d, 144.8410d));
+        controller.DrawRoutePath(new RoutePath("CHC", "AKL", coords));
+    }
 }

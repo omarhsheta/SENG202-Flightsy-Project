@@ -280,10 +280,4 @@ public class CSVLoader {
         }
         return new RoutePath(source, destination, coordinates);
     }
-
-    public static void main(String[] args){
-        CSVLoader csvLoader = new CSVLoader();
-        ArrayList <Airport> test = csvLoader.AirportList("src/test/resources/CSVLoader/AirportTest.csv");
-        System.out.println(test);
-    }
 }

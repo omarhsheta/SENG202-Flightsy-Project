@@ -1,6 +1,7 @@
-var googleMap;
+let googleMap;
 
-var airportMarks = [];
+let airportMarks = [];
+let polyLines = [];
 
 function InitializeMap() {
     googleMap = new google.maps.Map(document.getElementById('map'), {
@@ -11,19 +12,33 @@ function InitializeMap() {
 }
 
 function ClearMapMarkers() {
-    for (i = 0; i < airportMarks.length; i++) {
+    for (let i = 0; i < airportMarks.length; i++) {
         airportMarks[i].setMap(null);
+    }
+
+    for (let i = 0; i < polyLines.length; i++) {
+        polyLines[i].setMap(null);
     }
 }
 
 function PlaceAirportMarkers(airportList) {
-    airportMarks = [];
-
-    for (var i = 0; i < airportList.length; i++) {
-        mark = new google.maps.Marker( {
+    for (let i = 0; i < airportList.length; i++) {
+        var mark = new google.maps.Marker( {
             position: airportList[i],
             map: googleMap
         });
         airportMarks.push(mark);
     }
+}
+
+function PlaceRouteLines(lineList) {
+    var line = new google.maps.Polyline( {
+        path: lineList,
+        map: googleMap,
+        geodesic: true,
+        strokeColor: '#ff8b00',
+        strokeOpacity: 1.0,
+        strokeWeight: 2
+    })
+    polyLines.push(line);
 }

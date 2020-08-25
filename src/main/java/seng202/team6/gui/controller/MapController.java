@@ -1,7 +1,10 @@
 package seng202.team6.gui.controller;
 
 import javafx.scene.web.WebEngine;
+import javafx.util.Pair;
 import seng202.team6.model.entities.Airport;
+import seng202.team6.model.entities.RoutePath;
+import seng202.team6.model.interfaces.IMapDrawable;
 
 import java.util.ArrayList;
 
@@ -24,34 +27,43 @@ public class MapController
      * Draw airports on the map
      * @param airports List of airports to draw
      */
-    public void DrawAirportMarks(ArrayList<Airport> airports) {
+    public void DrawAirportMarks(ArrayList<IMapDrawable> airports) {
         String JSFunction = "PlaceAirportMarkers(%s);";
-        String airportString = BuildJavascriptAirportString(airports);
+        String airportString = BuildJavascriptArrayString(airports);
         this.mapEngine.executeScript(String.format(JSFunction, airportString));
     }
 
     /**
-     * Get a Javascript array of airport objects
-     * @param airports Airports
-     * @return String
+     * Draw routes on the map
+     * @param route Route object to draw
      */
-    public String BuildJavascriptAirportString(ArrayList<Airport> airports) {
-        StringBuilder airportString = new StringBuilder();
-        airportString.append('[');
-        for (Airport airport : airports) {
-            airportString.append(
-                    String.format("{lat: %f, lng: %f, " +
-                                    "name: \"%s\", country: \"%s\", city: \"%s\", " +
-                                    "iata: \"%s\", icao: \"%s\", alt: %d, tz: %f},",
+    public void DrawRoutePath(IMapDrawable route) {
+        String JSFunction = "PlaceRouteLines(%s);";
+        String routeString = BuildJavascriptArrayString(route);
+        this.mapEngine.executeScript(String.format(JSFunction, routeString));
+    }
 
-                            airport.GetLatitude(), airport.GetLongitude(), airport.GetName(),
-                            airport.GetCountry(), airport.GetCity(), airport.GetIATA(), airport.GetICAO(),
-                            airport.GetAltitude(), airport.GetTimezone()
-                    )
-            );
+    /**
+     * Turn IMapDrawable objects into javascript array
+     * @param drawableList Objects which implement IMapDrawable interface
+     * @return String Javascript string array representation
+     */
+    public String BuildJavascriptArrayString(ArrayList<IMapDrawable> drawableList) {
+        StringBuilder returnString = new StringBuilder();
+        returnString.append('[');
+        for (IMapDrawable drawable : drawableList) {
+            returnString.append(String.format("{%s},", drawable.ConvertToJavascriptString()));
         }
-        airportString.append(']');
+        returnString.append(']');
+        return returnString.toString();
+    }
 
-        return airportString.toString();
+    /**
+     * Turn IMapDrawable objects into javascript array
+     * @param drawable Object which implement IMapDrawable interface
+     * @return String Javascript string array representation
+     */
+    public String BuildJavascriptArrayString(IMapDrawable drawable) {
+        return String.format("[{%s}]", drawable.ConvertToJavascriptString());
     }
 }
