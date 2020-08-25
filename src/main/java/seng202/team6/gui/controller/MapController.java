@@ -42,11 +42,11 @@ public class MapController
             airportString.append(
                     String.format("{lat: %f, lng: %f, " +
                                     "name: \"%s\", country: \"%s\", city: \"%s\", " +
-                                    "iata: \"%s\", icao: \"%s\", alt: %d, tz: %d},",
+                                    "iata: \"%s\", icao: \"%s\", alt: %d, tz: %f},",
 
-                            airport.getLatitude(), airport.getLongitude(), airport.getName(),
-                            airport.getCountry(), airport.getCity(), airport.getIATA(), airport.getICAO(),
-                            airport.getAltitude(), airport.getTimezone()
+                            airport.GetLatitude(), airport.GetLongitude(), airport.GetName(),
+                            airport.GetCountry(), airport.GetCity(), airport.GetIATA(), airport.GetICAO(),
+                            airport.GetAltitude(), airport.GetTimezone()
                     )
             );
         }

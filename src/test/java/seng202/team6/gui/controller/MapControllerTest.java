@@ -38,9 +38,9 @@ public class MapControllerTest {
                 "NUL", "No", 0f, 0f, 0, 12, 'N'));
 
         assertEquals("[{lat: -43.487598, lng: 172.537292, name: \"Christchurch International\", country: \"New Zealand\", " +
-                                "city: \"Christchurch\", iata: \"CHC\", icao: \"NZCH\", alt: 37, tz: 12}," +
+                                "city: \"Christchurch\", iata: \"CHC\", icao: \"NZCH\", alt: 37, tz: 12.000000}," +
                                 "{lat: 0.000000, lng: 0.000000, name: \"No\", country: \"Null land\", " +
-                                "city: \"Null\", iata: \"NUL\", icao: \"No\", alt: 0, tz: 12},]",
+                                "city: \"Null\", iata: \"NUL\", icao: \"No\", alt: 0, tz: 12.000000},]",
                 controller.BuildJavascriptAirportString(airports));
     }
 }
