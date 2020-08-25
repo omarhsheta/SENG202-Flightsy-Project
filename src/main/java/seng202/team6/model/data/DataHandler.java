@@ -1,6 +1,7 @@
 package seng202.team6.model.data;
 import seng202.team6.model.entities.Airline;
 import seng202.team6.model.entities.Airport;
+import seng202.team6.model.entities.Filter;
 import seng202.team6.model.entities.Route;
 
 import java.sql.*;
@@ -10,8 +11,20 @@ import java.util.ArrayList;
  * Class for connecting to the SQLite database and executing queries.
  */
 public class DataHandler {
+    private static DataHandler Instance;
 
-    private Connection conn;
+    /**
+     * Singleton method to ensure only one connection to the database at one time
+     * @return Single DataHandler object
+     */
+    public static DataHandler GetInstance() {
+        if (Instance == null) {
+            Instance = new DataHandler();
+        }
+        return Instance;
+    }
+
+    private Connection databaseConnection;
 
     /**
      * Constructor class creates the connection to the SQLite database.
@@ -19,10 +32,10 @@ public class DataHandler {
     private DataHandler() {
         // relative url to database
         String url = "jdbc:sqlite:src/main/database/database.sqlite";
-        this.conn = null;
+        this.databaseConnection = null;
         try {
             // Create a connection to the database
-            this.conn = DriverManager.getConnection(url);
+            this.databaseConnection = DriverManager.getConnection(url);
             System.out.println("Successfully connected to SQLite.");
 
         } catch (SQLException e) {
@@ -31,15 +44,43 @@ public class DataHandler {
     }
 
     /**
-     * Select and return all the Airline tuples in the SQLite database.
-     * @return An arraylist containing all Airlines in the database
+     * Extract query from list of filter objects
+     * @param tableName Database table
+     * @param filters List of filters
+     * @return SQL String query.
      */
-    public ArrayList<Airline> FetchAirlines() throws SQLException {
+    public String ExtractQuery(String tableName, ArrayList<Filter> filters) {
+        if (filters == null || filters.size() == 0) {
+            return String.format("SELECT * FROM %s;", tableName);
+        }
+
+        StringBuilder builder = new StringBuilder();
+        builder.append(String.format("SELECT * FROM %s WHERE ", tableName));
+        for (int i = 0; i < filters.size() - 1; i++) {
+            Filter filter = filters.get(i);
+            builder.append(filter.GetFilter());
+            builder.append(" ");
+            builder.append(filter.GetConnection());
+            builder.append(" ");
+        }
+        builder.append(filters.get(filters.size() - 1).GetFilter());
+        builder.append(';');
+
+        return builder.toString();
+    }
+
+    /**
+     * Select and return all the Airline tuples in the SQLite database.
+     * @param filters List of filters to apply to search query
+     * @return List of airline objects
+     * @throws SQLException SQLException
+     */
+    public ArrayList<Airline> FetchAirlines(ArrayList<Filter> filters) throws SQLException {
         ArrayList<Airline> airlines = new ArrayList<>();
 
-        String sql = "SELECT * FROM airline";
-        Statement stmt = this.conn.createStatement();
-        ResultSet rs = stmt.executeQuery(sql);
+        String query = ExtractQuery("airline", filters);
+        Statement stmt = this.databaseConnection.createStatement();
+        ResultSet rs = stmt.executeQuery(query);
 
         // Loop through the result set and create Airline objects from data
         while (rs.next()) {
@@ -57,14 +98,17 @@ public class DataHandler {
 
     /**
      * Select and return all the Airport tuples in the SQLite database.
-     * @return An arraylist containing all Airports in the database
+     * @param filters Query filters
+     * @return All airports that fit the database query
+     * @throws SQLException SQLException
      */
-    public ArrayList<Airport> FetchAirports() throws SQLException {
+    public ArrayList<Airport> FetchAirports(ArrayList<Filter> filters) throws SQLException {
         ArrayList<Airport> airports = new ArrayList<>();
 
-        String sql = "SELECT * FROM airport";
-        Statement stmt = this.conn.createStatement();
-        ResultSet rs = stmt.executeQuery(sql);
+        String query = ExtractQuery("airport", filters);
+
+        Statement stmt = this.databaseConnection.createStatement();
+        ResultSet rs = stmt.executeQuery(query);
 
         // Loop through the result set and create Airport objects from data
         while (rs.next()) {
@@ -83,14 +127,16 @@ public class DataHandler {
 
     /**
      * Select and return all the Airport tuples in the SQLite database.
-     * @return An arraylist containing all Airports in the database
+     * @param filters Query filters
+     * @return All routes that fit the database query
+     * @throws SQLException SQLException
      */
-    public ArrayList<Route> FetchRoutes() throws SQLException {
+    public ArrayList<Route> FetchRoutes(ArrayList<Filter> filters) throws SQLException {
         ArrayList<Route> routes = new ArrayList<>();
 
-        String sql = "SELECT * FROM route";
-        Statement stmt = this.conn.createStatement();
-        ResultSet rs = stmt.executeQuery(sql);
+        String query = ExtractQuery("route", filters);
+        Statement stmt = this.databaseConnection.createStatement();
+        ResultSet rs = stmt.executeQuery(query);
 
         // Loop through the result set and create Airport objects from data
         while (rs.next()) {
@@ -107,8 +153,13 @@ public class DataHandler {
         return routes;
     }
 
-    public void InsertAirlines(ArrayList<Airline> airlines) throws SQLException{
-        Statement stmt = this.conn.createStatement();
+    /**
+     * Insert all airlines into database
+     * @param airlines Airlines to insert
+     * @throws SQLException SQLException
+     */
+    public void InsertAirlines(ArrayList<Airline> airlines) throws SQLException {
+        Statement stmt = this.databaseConnection.createStatement();
         for(Airline airline: airlines) {
             String sql = String.format("INSERT INTO airline (id_airline, name, alias, iata, icao, callsign, country, " +
                     "active) VALUES (\"%d\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%c\");",
@@ -120,80 +171,38 @@ public class DataHandler {
         }
     }
 
-    public void InsertAirports(ArrayList<Airport> airports) throws SQLException{
-        Statement stmt = this.conn.createStatement();
+    /**
+     * Insert all airports into database
+     * @param airports Airports to insert
+     * @throws SQLException SQLException
+     */
+    public void InsertAirports(ArrayList<Airport> airports) throws SQLException {
+        Statement stmt = this.databaseConnection.createStatement();
         for(Airport airport: airports) {
-            String sql = String.format("INSERT INTO airport (id_airport, name, city, country, iata, icao, latitude, longitude, altitude, timezone, dst)" +
-                    "VALUES (\"%d\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%f\", \"%f\", \"%d\", \"%f\", \"%c\");",
-                    airport.GetAirportID(), airport.GetName(), airport.GetCity(), airport.GetCountry(),
-                    airport.GetIATA(), airport.GetICAO(), airport.GetLatitude(), airport.GetLongitude(), airport.GetAltitude(),
-                    airport.GetTimezone(), airport.GetDST()
-            );
+            String sql = "INSERT INTO airport (id_airport, name, city, country, iata, icao, latitude, longitude, altitude, timezone, dst)" +
+                    "VALUES (" + airport.GetAirportID() + ", " + airport.GetName() + ", " + airport.GetCity() + ", " +
+                    airport.GetCountry() + ", " + airport.GetIATA() + ", " + airport.GetICAO() + ", " +
+                    airport.GetLatitude() + ", " + airport.GetLongitude() + ", " + airport.GetAltitude() + ", " +
+                    airport.GetTimezone() + ", " + airport.GetDST() + ")";
 
-            stmt.executeUpdate(sql);
+            stmt.executeQuery(sql);
         }
     }
-
-    public void InsertRoutes(ArrayList<Route> routes) throws SQLException{
-        Statement stmt = this.conn.createStatement();
-        for(Route route: routes) {
-            String sql = String.format("INSERT INTO route (airline, id_airline, source_airport, source_airport_id, " +
-                    "destination_airport, destination_airport_id, codeshare, stops, equipment)" +
-                    "VALUES (\"%s\", \"%d\", \"%s\", \"%d\", \"%s\", \"%d\", \"%c\", \"%d\", \"%s\");",
-                    route.GetAirline(), route.GetAirlineID(), route.GetSourceAirport(), route.GetSourceAirportID(),
-                    route.GetDestinationAirport(), route.GetDestinationAirportID(), route.GetCodeshare(),
-                    route.GetStops(), route.GetEquipment()
-                    );
-
-            stmt.executeUpdate(sql);
-        }
-    }
-
-
-
 
     /**
-     * TEST METHOD
-     * @param args no u
-     * @throws SQLException no u
+     * Insert all routes into database
+     * @param routes Routes to insert
+     * @throws SQLException SQLException
      */
-    public static void main(String[] args) throws SQLException {
-        DataHandler database = new DataHandler();
+    public void InsertRoutes(ArrayList<Route> routes) throws SQLException{
+        Statement stmt = this.databaseConnection.createStatement();
+        for(Route route: routes) {
+            String sql = "INSERT INTO airline (airline, id_airline, source_airport, source_airport_id, destination_airport, destination_airport_id, codeshare, stops, equipment)" +
+                    "VALUES (" + route.GetAirline() + ", " + route.GetAirlineID() + ", " + route.GetSourceAirport() + ", " +
+                    route.GetSourceAirportID() + ", " + route.GetDestinationAirport() + ", " + route.GetDestinationAirportID() + ", " +
+                    route.GetCodeshare() + ", " + route.GetStops() + ", " + route.GetEquipment() + ")";
 
-//        ArrayList<Airline> airlines = new ArrayList<>();
-//        Airline airline1 = new Airline(10000, "test1", "test", "test", "test", "test", "test", 'Y');
-//        Airline airline2 = new Airline(10001, "test2", "test", "test", "test", "test", "test", 'Y');
-//        airlines.add(airline1);
-//        airlines.add(airline2);
-//        database.InsertAirlines(airlines);
-
-//        ArrayList<Airport> airports = new ArrayList<>();
-//        Airport airport = new Airport(10000,"Test","Test","Test","Test","Test",42069,42069,9001,1000, 'Y');
-//        airports.add(airport);
-//        database.InsertAirports(airports);
-
-//        ArrayList<Route> routes = new ArrayList<>();
-//        Route route = new Route(100000, "Test", "Test", 100000, "Test",  100000, 'N', 100000, "Test");
-//        routes.add(route);
-//        database.InsertRoutes(routes);
-
-//        ArrayList<Airline> airlines;
-//        airlines = database.FetchAirlines();
-//        for (Airline airline : airlines) {
-//            System.out.println(airline.GetActive());
-//        }
-
-//        ArrayList<Airport> airports;
-//        airports = database.FetchAirports();
-//        for (Airport airport : airports) {
-//            System.out.println(airport.GetAltitude());
-//        }
-
-        ArrayList<Route> routes;
-        routes = database.FetchRoutes();
-        for (Route route : routes) {
-            System.out.println(route.GetCodeshare());
+            stmt.executeQuery(sql);
         }
     }
-
 }

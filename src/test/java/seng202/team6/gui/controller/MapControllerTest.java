@@ -16,7 +16,7 @@ public class MapControllerTest {
     private MapController controller;
 
     @Before
-    public void Init() {
+    public void InitializeTest() {
         controller = new MapController(null);
     }
 
