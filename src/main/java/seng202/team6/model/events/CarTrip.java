@@ -6,7 +6,7 @@ public class CarTrip extends Event {
     String DestinatioCity;
     String DestinationCountry;
 
-    CarTrip(Integer D, Integer M, Integer Y, String T, String N, String OCity,
+    CarTrip(int D, int M, int Y, String T, String N, String OCity,
             String OCountry, String DCity, String DCountry) {
         super(D, M, Y, T, N);
         OriginCity = OCity;
