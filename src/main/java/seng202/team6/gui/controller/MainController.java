@@ -8,11 +8,15 @@ import javafx.scene.layout.Background;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.util.Pair;
+import seng202.team6.model.data.CSVLoader;
+import seng202.team6.model.data.DataHandler;
 import seng202.team6.model.entities.Airport;
+import seng202.team6.model.entities.Filter;
 import seng202.team6.model.entities.RoutePath;
 import seng202.team6.model.interfaces.IMapDrawable;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -49,17 +53,20 @@ public class MainController implements Initializable
 
     /**
      * Called when WebEngine is finished loading
+     * TEMPORARY
      */
-    private void OnLoad()
-    {
-        ArrayList<IMapDrawable> airports = new ArrayList<>();
-        airports.add(new Airport(1, "Christchurch International", "Christchurch", "New Zealand",
-                "CHC", "NZCH", -43.4876f, 172.5374f, 37, 12, 'Y'));
-        controller.DrawAirportMarks(airports);
+    private void OnLoad() {
+        ArrayList<Filter> filters = new ArrayList<>();
+        filters.add(new Filter("COUNTRY = 'New Zealand'", "OR"));
+        filters.add(new Filter("COUNTRY = 'Australia'", null));
+        try {
+            ArrayList<Airport> airports = DataHandler.GetInstance().FetchAirports(filters);
+            controller.DrawAirportMarks(airports);
+        } catch (SQLException ignored) {
+        }
 
-        ArrayList<Pair<Double, Double>> coords = new ArrayList<>();
-        coords.add(new Pair<>(-43.4876d, 172.5374d));
-        coords.add(new Pair<>(-37.6690d, 144.8410d));
-        controller.DrawRoutePath(new RoutePath("CHC", "AKL", coords));
+        CSVLoader loader = new CSVLoader();
+        RoutePath path = loader.GetCSVRoutePath("src/test/resources/CSVLoader/NZCH-WSSS.csv");
+        controller.DrawRoutePath(path);
     }
 }

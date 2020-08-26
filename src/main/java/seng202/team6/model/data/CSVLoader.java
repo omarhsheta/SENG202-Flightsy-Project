@@ -5,7 +5,6 @@ import seng202.team6.model.entities.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.nio.file.Path;
 import java.util.ArrayList;
 
 
@@ -61,7 +60,7 @@ public class CSVLoader {
      * @param path the location of the spreadsheet file
      * @return an ArrayList of ArrayLists of rows
      */
-    public ArrayList<ArrayList<String>> ProcessedFile(String path) {
+    public ArrayList<ArrayList<String>> ProcessCSVFile(String path) {
         ArrayList<ArrayList<String>> valuesList = new ArrayList<>();
         try {
             BufferedReader buffReader = new BufferedReader(new FileReader(path));
@@ -81,8 +80,8 @@ public class CSVLoader {
      * @param path the location of the CSV/DAT file that contains raw data about Planes
      * @return an ArrayList of Planes
      */
-    public ArrayList<Plane> PlaneList(String path) {
-        ArrayList<ArrayList<String>> lines = ProcessedFile(path);
+    public ArrayList<Plane> GetCSVPlanes(String path) {
+        ArrayList<ArrayList<String>> lines = ProcessCSVFile(path);
         ArrayList<Plane> result = new ArrayList<>();
         for (ArrayList<String> line: lines) {
             if (line.size() != 3) {
@@ -104,8 +103,8 @@ public class CSVLoader {
      * @param path the location of the CSV/DAT file that contains raw data about Airlines
      * @return an ArrayList of Airlines
      */
-    public ArrayList<Airline> AirlineList(String path) {
-        ArrayList<ArrayList<String>> lines = ProcessedFile(path);
+    public ArrayList<Airline> GetCSVAirlineList(String path) {
+        ArrayList<ArrayList<String>> lines = ProcessCSVFile(path);
         ArrayList<Airline> result = new ArrayList<>();
         for (ArrayList<String> line: lines) {
             if (line.size() != 8) {
@@ -140,8 +139,8 @@ public class CSVLoader {
      * @param path the location of the CSV/DAT file that contains raw data about Airports
      * @return an ArrayList of Airports
      */
-    public ArrayList<Airport> AirportList(String path) {
-        ArrayList<ArrayList<String>> lines = ProcessedFile(path);
+    public ArrayList<Airport> GetCSVAirportList(String path) {
+        ArrayList<ArrayList<String>> lines = ProcessCSVFile(path);
         ArrayList<Airport> result = new ArrayList<>();
         for (ArrayList<String> line: lines) {
             if (line.size() != 14) {
@@ -191,8 +190,8 @@ public class CSVLoader {
      * @param path the location of the CSV/DAT file that contains raw data about Routes
      * @return an ArrayList of Routes
      */
-    public ArrayList<Route> RouteList(String path) {
-        ArrayList<ArrayList<String>> lines = ProcessedFile(path);
+    public ArrayList<Route> GetCSVRouteList(String path) {
+        ArrayList<ArrayList<String>> lines = ProcessCSVFile(path);
         ArrayList<Route> result = new ArrayList<>();
         for (ArrayList<String> line : lines) {
             int len = line.size();
@@ -250,10 +249,15 @@ public class CSVLoader {
         return result;
     }
 
-    public RoutePath PathLister(String path) {
-        ArrayList<ArrayList<String>> lines = ProcessedFile(path);
+    /**
+     * Convert CSV file to a RoutePath object
+     * @param path File path to CSV file
+     * @return RoutePath object with coordinate data from file
+     */
+    public RoutePath GetCSVRoutePath(String path) {
+        ArrayList<ArrayList<String>> lines = ProcessCSVFile(path);
         ArrayList<Pair<Double, Double>> coordinates = new ArrayList<>();
-        int lastInd = lines.size()-1;
+        int lastInd = lines.size() - 1;
         String source = null;
         String destination = null;
         for (ArrayList<String> line : lines) {

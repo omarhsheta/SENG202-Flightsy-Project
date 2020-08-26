@@ -3,6 +3,7 @@ package seng202.team6.gui.controller;
 import javafx.scene.web.WebEngine;
 import javafx.util.Pair;
 import seng202.team6.model.entities.Airport;
+import seng202.team6.model.entities.Route;
 import seng202.team6.model.entities.RoutePath;
 import seng202.team6.model.interfaces.IMapDrawable;
 
@@ -27,7 +28,7 @@ public class MapController
      * Draw airports on the map
      * @param airports List of airports to draw
      */
-    public void DrawAirportMarks(ArrayList<IMapDrawable> airports) {
+    public void DrawAirportMarks(ArrayList<Airport> airports) {
         String JSFunction = "PlaceAirportMarkers(%s);";
         String airportString = BuildJavascriptArrayString(airports);
         this.mapEngine.executeScript(String.format(JSFunction, airportString));
@@ -37,7 +38,7 @@ public class MapController
      * Draw routes on the map
      * @param route Route object to draw
      */
-    public void DrawRoutePath(IMapDrawable route) {
+    public void DrawRoutePath(RoutePath route) {
         String JSFunction = "PlaceRouteLines(%s);";
         String routeString = BuildJavascriptArrayString(route);
         this.mapEngine.executeScript(String.format(JSFunction, routeString));
@@ -48,7 +49,7 @@ public class MapController
      * @param drawableList Objects which implement IMapDrawable interface
      * @return String Javascript string array representation
      */
-    public String BuildJavascriptArrayString(ArrayList<IMapDrawable> drawableList) {
+    public String BuildJavascriptArrayString(ArrayList<? extends IMapDrawable> drawableList) {
         StringBuilder returnString = new StringBuilder();
         returnString.append('[');
         for (IMapDrawable drawable : drawableList) {
