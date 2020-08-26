@@ -6,21 +6,12 @@ public class Event {
     Integer Year;
     String Title;
     String Notes;
-    String OriginCity;
-    String OriginCountry;
-    String DestinatioCity;
-    String DestinationCountry;
 
-    Event(Integer D, Integer M, Integer Y, String T, String N, String OCity,
-          String OCountry, String DCity, String DCountry) {
+    Event(Integer D, Integer M, Integer Y, String T, String N) {
         Day = D;
         Month = M;
         Year = Y;
         Title = T;
         Notes = N;
-        OriginCity = OCity;
-        OriginCountry = OCountry;
-        DestinatioCity = DCity;
-        DestinationCountry = DCountry;
     }
 }
