@@ -51,8 +51,11 @@ public class DataViewerController implements Initializable
     private Pane flightFilterPane;
     private final ArrayList<FilterTextField> filterFlightTextFields = new ArrayList<>();
 
+    private DataHandler dataHandler;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        dataHandler = DataHandler.GetInstance();
 
         //Grab all airport text filter components
         for (Node node : airportFilterPane.getChildren()) {
@@ -81,20 +84,85 @@ public class DataViewerController implements Initializable
 //                filterFlightTextFields.add((FilterTextField) node);
 //            }
 //        }
-
-        airportFilterButton.setOnMouseClicked(x -> FilterTable("Airport", filterAirportTextFields));
-        airlineFilterButton.setOnMouseClicked(x -> FilterTable("Airline", filterAirlineTextFields));
-        routeFilterButton.setOnMouseClicked(x -> FilterTable("Route", filterRouteTextFields));
-//        flightFilterButton.setOnMouseClicked(x -> FilterTable("Flight", filterFlightTextFields));
     }
 
     private void FillAirports() {
     }
 
+    /**
+     * FXML button action that takes place when the Filter button is clicked on the Airports data view.
+     * This function takes the filters from the GetFilters method and gets the filtered Airport ArrayList from the DataHandler.
+     * Then it inputs the data into the data viewer table.
+     */
+    @FXML
+    private void OnAirportFilterButtonClicked() {
+        ArrayList<Filter> filters =  GetFilters(filterAirportTextFields);
 
-    private void FilterTable(String table, ArrayList<FilterTextField> filterTextFields) {
-        DataHandler dataHandler = DataHandler.GetInstance();
+        try {
+            ArrayList<Airport> filteredAirports = dataHandler.FetchAirports(filters);
+            //For testing only
+            for(Airport airport: filteredAirports) {
+                System.out.println(String.format("%s      %s", airport.GetName(), airport.GetCountry()));
+            }
+        }
+        catch (Exception ignored) {
+        }
 
+        //Input into table here
+    }
+
+    /**
+     * FXML button action that takes place when the Filter button is clicked on the Airlines data view.
+     * This function takes the filters from the GetFilters method and gets the filtered Airline ArrayList from the DataHandler.
+     * Then it inputs the data into the data viewer table.
+     */
+    @FXML
+    private void OnAirlineFilterButtonClicked() {
+        ArrayList<Filter> filters =  GetFilters(filterAirlineTextFields);
+
+        try {
+            ArrayList<Airline> filteredAirlines = dataHandler.FetchAirlines(filters);
+            //For testing only
+            for(Airline airline: filteredAirlines) {
+                System.out.println(String.format("%s      %s", airline.GetName(), airline.GetCountry()));
+            }
+        }
+        catch (Exception ignored) {
+        }
+
+        //Input into table here
+    }
+
+    /**
+     * FXML button action that takes place when the Filter button is clicked on the Routes data view.
+     * This function takes the filters from the GetFilters method and gets the filtered Route ArrayList from the DataHandler.
+     * Then it inputs the data into the data viewer table.
+     */
+    @FXML
+    private void OnRouteFilterButtonClicked() {
+        ArrayList<Filter> filters =  GetFilters(filterRouteTextFields);
+
+        try {
+            ArrayList<Route> filteredRoutes = dataHandler.FetchRoutes(filters);
+            //For testing only
+            for(Route route: filteredRoutes) {
+                System.out.println(String.format("%s      %s", route.GetSourceAirport(), route.GetDestinationAirport()));
+            }
+        }
+        catch (Exception ignored) {
+        }
+
+        //Input into table here
+    }
+
+    /**
+     * GetFilters method that takes a parameter <code>filterTextFields</code> which is an ArrayList of FilterTextField objects,
+     * and takes the filter formatting and text from the object. It then creates a Filter object from this and adds the
+     * filter to an ArrayList of Filter objects and returns the ArrayList.
+     * @param filterTextFields An ArrayList of FilterTextFields
+     * @return An ArrayList of Filter objects.
+     */
+    private ArrayList<Filter> GetFilters(ArrayList<FilterTextField> filterTextFields) {
         ArrayList<Filter> filters = new ArrayList<>();
 
         for (FilterTextField box : filterTextFields) {
@@ -102,29 +170,7 @@ public class DataViewerController implements Initializable
                 String filterString = String.format(box.GetFilter(), box.getText());
                 filters.add(new Filter(filterString, "AND"));
             }
-
         }
-
-        try {
-            if (table == "Airport") {
-                ArrayList<Airport> filteredAirports = dataHandler.FetchAirports(filters);
-                for(Airport airport: filteredAirports) {
-                    System.out.println(String.format("%s      %s", airport.GetName(), airport.GetCountry()));
-                }
-            } else if (table == "Airline") {
-                ArrayList<Airline> filteredAirlines = dataHandler.FetchAirlines(filters);
-                for(Airline airline: filteredAirlines) {
-                    System.out.println(String.format("%s      %s", airline.GetName(), airline.GetCountry()));
-                }
-            } else if (table == "Route") {
-                ArrayList<Route> filteredRoutes = dataHandler.FetchRoutes(filters);
-                for(Route route: filteredRoutes) {
-                    System.out.println(String.format("%s      %s", route.GetSourceAirport(), route.GetDestinationAirport()));
-                }
-            } else if (table == "Flight") {
-                System.out.println("Not Implemented");
-            }
-        } catch (Exception ignored) {
-        }
+        return filters;
     }
 }

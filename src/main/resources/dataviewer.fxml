@@ -81,7 +81,7 @@
                                                 </Pane>
                                              </content>
                                           </ScrollPane>
-                                          <Button fx:id="airportFilterButton" layoutX="53.0" layoutY="444.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="108.0" text="Apply Filters">
+                                          <Button fx:id="airportFilterButton" layoutX="53.0" layoutY="444.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="108.0" text="Apply Filters" onMouseClicked="#OnAirportFilterButtonClicked">
                                              <styleClass>
                                                 <String fx:value="btn" />
                                                 <String fx:value="btn-sm" />
@@ -149,7 +149,7 @@
                                                 <String fx:value="h5" />
                                              </styleClass>
                                           </Label>
-                                          <Button fx:id="airlineFilterButton" layoutX="53.0" layoutY="444.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="108.0" text="Apply Filters">
+                                          <Button fx:id="airlineFilterButton" layoutX="53.0" layoutY="444.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="108.0" text="Apply Filters" onMouseClicked="#OnAirlineFilterButtonClicked">
                                              <styleClass>
                                                 <String fx:value="btn" />
                                                 <String fx:value="btn-sm" />
@@ -232,7 +232,7 @@
                                                 </Pane>
                                              </content>
                                           </ScrollPane>
-                                          <Button fx:id="routeFilterButton" layoutX="53.0" layoutY="444.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="108.0" text="Apply Filters">
+                                          <Button fx:id="routeFilterButton" layoutX="53.0" layoutY="444.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="108.0" text="Apply Filters" onMouseClicked="#OnRouteFilterButtonClicked">
                                              <styleClass>
                                                 <String fx:value="btn" />
                                                 <String fx:value="btn-sm" />
