@@ -63,6 +63,7 @@ public class FindRoutesController implements Initializable
         }
 
         try {
+            controller.ClearAll();
             controller.DrawAirportMarks(DataHandler.GetInstance().FetchAirports(filters));
         } catch (Exception ignored) {
         }

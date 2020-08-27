@@ -45,6 +45,13 @@ public class MapController
     }
 
     /**
+     * Clear all markers from the map
+     */
+    public void ClearAll() {
+        this.mapEngine.executeScript("ClearMapMarkers();");
+    }
+
+    /**
      * Turn IMapDrawable objects into javascript array
      * @param drawableList Objects which implement IMapDrawable interface
      * @return String Javascript string array representation
