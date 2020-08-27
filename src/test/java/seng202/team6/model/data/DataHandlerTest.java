@@ -2,7 +2,6 @@ package seng202.team6.model.data;
 
 import org.junit.Before;
 import org.junit.Test;
-import seng202.team6.model.entities.Filter;
 
 import java.util.ArrayList;
 

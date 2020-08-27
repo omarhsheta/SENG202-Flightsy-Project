@@ -4,16 +4,13 @@ import javafx.concurrent.Worker;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.layout.Background;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
-import javafx.util.Pair;
 import seng202.team6.model.data.CSVLoader;
 import seng202.team6.model.data.DataHandler;
 import seng202.team6.model.entities.Airport;
-import seng202.team6.model.entities.Filter;
+import seng202.team6.model.data.Filter;
 import seng202.team6.model.entities.RoutePath;
-import seng202.team6.model.interfaces.IMapDrawable;
 
 import java.net.URL;
 import java.sql.SQLException;

@@ -23,9 +23,8 @@ public class MainGUI extends Application {
      * Resources to load
      */
     private final String[] resourceFXML = new String[] {
-            "main",
-            "findroutes",
-            "test",
+            "holidayview",
+            "routefinderview",
             "dataviewer"
     };
 
@@ -67,7 +66,7 @@ public class MainGUI extends Application {
         primaryStage.setScene(primaryScene);
 
         //Set active window
-        WindowHandler.GetInstance().SetActiveWindow("main");
+        WindowHandler.GetInstance().SetActiveWindow("routefinderview");
         primaryStage.show();
     }
 }
