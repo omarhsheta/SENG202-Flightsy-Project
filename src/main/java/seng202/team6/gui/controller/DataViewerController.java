@@ -3,19 +3,23 @@ package seng202.team6.gui.controller;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TextFormatter;
+import javafx.scene.control.*;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.stage.FileChooser;
 import seng202.team6.gui.components.FilterTextField;
+import seng202.team6.model.data.CSVLoader;
 import seng202.team6.model.data.DataHandler;
 import seng202.team6.model.data.Filter;
 import seng202.team6.model.entities.Airport;
 import seng202.team6.model.entities.Airline;
 import seng202.team6.model.entities.Route;
+import seng202.team6.model.entities.RoutePath;
 
+import java.io.File;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.ResourceBundle;
 
@@ -23,6 +27,15 @@ import java.util.ArrayList;
 
 public class DataViewerController implements Initializable
 {
+    @FXML
+    private BorderPane borderPane;
+
+    @FXML
+    private MenuItem rowImportMenuItem;
+
+    @FXML
+    private MenuItem fileImportMenuItem;
+
     @FXML
     private TableView airport_table;
 
@@ -51,12 +64,18 @@ public class DataViewerController implements Initializable
     private Pane flightFilterPane;
     private final ArrayList<FilterTextField> filterFlightTextFields = new ArrayList<>();
 
+    private CSVLoader csvLoader;
     private DataHandler dataHandler;
+
+
+
+    public DataViewerController() {
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         dataHandler = DataHandler.GetInstance();
-
+        csvLoader = new CSVLoader();
         //Grab all airport text filter components
         for (Node node : airportFilterPane.getChildren()) {
             if (node != null && node.getClass() == FilterTextField.class) {
@@ -172,5 +191,80 @@ public class DataViewerController implements Initializable
             }
         }
         return filters;
+    }
+
+
+    /**
+     * Opens native file explorer for user to select a CSV file to import to the database
+     * @return File object of the selected file for import
+     */
+    public File SelectFile() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Import File");
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("CSV File", "*.csv"),
+                new FileChooser.ExtensionFilter("DAT File", "*.dat"));
+
+        File selectedFile = fileChooser.showOpenDialog(borderPane.getScene().getWindow());
+
+        return selectedFile;
+    }
+
+
+    /**
+     * Gets Airport data file, passes to CSVLoader to get Airport objects, then passes objects to DataHandler to add to database
+     */
+    @FXML
+    public void AirportFileImport() throws SQLException {
+        File selectedFile = SelectFile();
+        if (selectedFile != null){
+            ArrayList<Airport> airports = csvLoader.GetCSVAirportList(selectedFile.getAbsolutePath());
+            if (airports.size() != 0) {
+                dataHandler.InsertAirports(airports);
+            }
+        }
+    }
+
+
+    /**
+     * Gets Airline data file, passes to CSVLoader to get Airline objects, then passes objects to DataHandler to add to database
+     */
+    @FXML
+    public void AirlineFileImport() throws SQLException {
+        File selectedFile = SelectFile();
+        if (selectedFile != null){
+            ArrayList<Airline> airlines = csvLoader.GetCSVAirlineList(selectedFile.getAbsolutePath());
+            if (airlines.size() != 0) {
+                dataHandler.InsertAirlines(airlines);
+            }
+        }
+    }
+
+
+    /**
+     * Gets Route data file, passes to CSVLoader to get Route objects, then passes objects to DataHandler to add to database
+     */
+    @FXML
+    public void RouteFileImport() throws SQLException {
+        File selectedFile = SelectFile();
+        if (selectedFile != null) {
+            ArrayList<Route> routes = csvLoader.GetCSVRouteList(selectedFile.getAbsolutePath());
+            if (routes.size() != 0) {
+                dataHandler.InsertRoutes(routes);
+            }
+        }
+    }
+
+
+    /**
+     * Gets Flight data file, passes to CSVLoader to get RoutePath object, then passes object to DataHandler to add to database
+     */
+    @FXML
+    public void FlightFileImport() throws SQLException {
+//        File selectedFile = SelectFile();
+//        RoutePath routePath = csvLoader.GetCSVRoutePath(selectedFile.getAbsolutePath());
+//        if (routePath != null) {
+//            dataHandler.InsertRoutePath(routePath);
+//        }
     }
 }

@@ -18,21 +18,13 @@
 
 <?import seng202.team6.gui.components.FilterTextField?>
 
-<BorderPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.team6.gui.controller.DataViewerController">
+<BorderPane fx:id="borderPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.team6.gui.controller.DataViewerController">
    <center>
       <VBox prefHeight="600.0" prefWidth="900.0">
         <children>
             <Pane prefHeight="600.0" prefWidth="900.0">
                <children>
-                  <Button fx:id="addRowButton" layoutX="578.0" layoutY="538.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="88.0" text="Add Row">
-                     <styleClass>
-                        <String fx:value="btn" />
-                        <String fx:value="btn-sm" />
-                        <String fx:value="btn-primary" />
-                     </styleClass>
-                  </Button>
-                  <Button fx:id="editButton" layoutX="676.0" layoutY="538.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="88.0" text="Edit Row">
-                     <styleClass>
+                   <Button fx:id="editButton" layoutX="538.0" layoutY="538.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="88.0" text="Edit Row">                     <styleClass>
                         <String fx:value="btn" />
                         <String fx:value="btn-sm" />
                         <String fx:value="btn-primary" />
@@ -296,11 +288,26 @@
                         </Tab>
                     </tabs>
                   </TabPane>
-                  <SplitMenuButton fx:id="importMenuButton" layoutX="774.0" layoutY="538.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="88.0" text="Import">
-                    <items>
-                      <MenuItem mnemonicParsing="false" text="Action 1" />
-                      <MenuItem mnemonicParsing="false" text="Action 2" />
-                    </items>
+                   <SplitMenuButton fx:id="importMenuButton" layoutX="754.0" layoutY="538.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="108.0" text="Import File">
+                       <items>
+                           <MenuItem fx:id="airportFileMenuItem" mnemonicParsing="false" onAction="#AirportFileImport" text="Airport" />
+                           <MenuItem fx:id="airlineFileMenuItem" mnemonicParsing="false" onAction="#AirlineFileImport" text="Airline" />
+                           <MenuItem fx:id="routeFileMenuItem" mnemonicParsing="false" onAction="#RouteFileImport" text="Route" />
+                           <MenuItem fx:id="flightFileMenuItem" mnemonicParsing="false" onAction="#FlightFileImport" text="Flight" />
+                       </items>
+                       <styleClass>
+                           <String fx:value="split-menu-btn-sm" />
+                           <String fx:value="split-menu-btn-primary" />
+                           <String fx:value="split-menu-btn" />
+                       </styleClass>
+                   </SplitMenuButton>
+                   <SplitMenuButton fx:id="addRowButton" layoutX="636.0" layoutY="538.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="108.0" text="Add Row">
+                       <items>
+                           <MenuItem fx:id="airportRowMenuItem" mnemonicParsing="false" text="Airport" />
+                           <MenuItem fx:id="airlineRowMenuItem" mnemonicParsing="false" text="Airline" />
+                           <MenuItem fx:id="routeRowMenuItem" mnemonicParsing="false" text="Route" />
+                           <MenuItem fx:id="flightRowMenuItem" mnemonicParsing="false" text="Flight" />
+                       </items>
                      <styleClass>
                         <String fx:value="split-menu-btn-sm" />
                         <String fx:value="split-menu-btn-primary" />
