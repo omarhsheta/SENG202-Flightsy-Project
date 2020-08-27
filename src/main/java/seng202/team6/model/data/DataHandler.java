@@ -153,6 +153,56 @@ public class DataHandler {
     }
 
     /**
+     * Extract a SQL query string list of airport IATAs
+     * @param airports Airport list
+     * @return String of IATAs in SQL List form
+     */
+    private String GetAirportIATAList(ArrayList<Airport> airports) {
+        StringBuilder list = new StringBuilder();
+        for (int i = 0; i < airports.size() - 1; i++) {
+            list.append(String.format("'%s', ", airports.get(i).GetIATA()));
+        }
+        list.append(String.format("'%s'", airports.get(airports.size() - 1).GetIATA()));
+
+        return list.toString();
+    }
+
+    /**
+     * Select and return all the Route tuples in the SQLite database.
+     * @param sourceAirports Source airport list
+     * @param destinationAirports Destination airport list
+     * @return All routes that fit the database query
+     * @throws SQLException SQLException
+     */
+    public ArrayList<Route> FetchRoutes(ArrayList<Airport> sourceAirports, ArrayList<Airport> destinationAirports) throws SQLException {
+        ArrayList<Route> routes = new ArrayList<>();
+
+        //This is big oof query, joining two tables
+        String query = String.format("SELECT * FROM route " +
+                        "CROSS JOIN airport " +
+                        "WHERE airport.iata = route.source_airport " +
+                        "AND route.source_airport in (%s) AND route.destination_airport in (%s);",
+                GetAirportIATAList(sourceAirports), GetAirportIATAList(destinationAirports));
+
+        Statement stmt = this.databaseConnection.createStatement();
+        ResultSet rs = stmt.executeQuery(query);
+
+        // Loop through the result set and create Airport objects from data
+        while (rs.next()) {
+            String codeshare = rs.getString("codeshare");
+            char char_codeshare = (codeshare.length() > 0 ? codeshare.charAt(0) : 'N');
+            Route route = new Route(
+                    rs.getInt("id_airline"), rs.getString("airline"), rs.getString("source_airport"),
+                    rs.getInt("source_airport_id"), rs.getString("destination_airport"),
+                    rs.getInt("destination_airport_id"), char_codeshare,
+                    rs.getInt("stops"), rs.getString("equipment")
+            );
+            routes.add(route);
+        }
+        return routes;
+    }
+
+    /**
      * Insert all airlines into database
      * @param airlines Airlines to insert
      * @throws SQLException SQLException
