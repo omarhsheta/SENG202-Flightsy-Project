@@ -16,6 +16,8 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
+<?import seng202.team6.gui.components.FilterTextField?>
+
 <BorderPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.team6.gui.controller.DataViewerController">
    <center>
       <VBox prefHeight="600.0" prefWidth="900.0">
@@ -41,7 +43,7 @@
                         <content>
                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="850.0">
                                  <children>
-                                    <Pane fx:id="filterPane" layoutY="15.0" prefHeight="470.0" prefWidth="214.0">
+                                    <Pane layoutY="15.0" prefHeight="470.0" prefWidth="214.0">
                                        <children>
                                           <Label alignment="CENTER" prefHeight="25.0" prefWidth="213.0" text="Filters">
                                              <styleClass>
@@ -51,34 +53,30 @@
                                           </Label>
                                           <ScrollPane layoutY="27.0" prefHeight="402.0" prefWidth="214.0">
                                              <content>
-                                                <Pane prefHeight="900.0" prefWidth="198.0">
+                                                <Pane fx:id="airportFilterPane" prefHeight="900.0" prefWidth="198.0">
                                                    <children>
-                                                      <TextField fx:id="airportIDText" layoutX="25.0" layoutY="38.0" />
+                                                      <FilterTextField filter="ID_AIRPORT = '%s'" layoutX="25.0" layoutY="38.0" />
                                                       <Label layoutX="25.0" layoutY="13.0" prefHeight="25.0" prefWidth="148.0" text="ID" />
-                                                      <TextField fx:id="airportNameText" layoutX="25.0" layoutY="98.0" />
+                                                      <FilterTextField filter="NAME = '%s'" layoutX="25.0" layoutY="98.0" />
                                                       <Label layoutX="25.0" layoutY="73.0" prefHeight="25.0" prefWidth="148.0" text="Name" />
-                                                      <TextField fx:id="airportCityText" layoutX="25.0" layoutY="158.0" />
+                                                      <FilterTextField filter="CITY = '%s'" layoutX="25.0" layoutY="158.0" />
                                                       <Label layoutX="25.0" layoutY="133.0" prefHeight="25.0" prefWidth="148.0" text="City" />
-                                                      <TextField fx:id="airportCountryText" layoutX="25.0" layoutY="218.0" />
+                                                      <FilterTextField filter="COUNTRY = '%s'" layoutX="25.0" layoutY="218.0" />
                                                       <Label layoutX="25.0" layoutY="193.0" prefHeight="25.0" prefWidth="148.0" text="Country" />
-                                                      <TextField fx:id="airportIATAText" layoutX="25.0" layoutY="278.0" />
+                                                      <FilterTextField filter="IATA = '%s'" layoutX="25.0" layoutY="278.0" />
                                                       <Label layoutX="25.0" layoutY="253.0" prefHeight="25.0" prefWidth="148.0" text="IATA" />
-                                                      <TextField fx:id="airportICAOText" layoutX="25.0" layoutY="338.0" />
+                                                      <FilterTextField filter="ICAO = '%s'" layoutX="25.0" layoutY="338.0" />
                                                       <Label layoutX="25.0" layoutY="313.0" prefHeight="25.0" prefWidth="148.0" text="ICAO" />
-                                                      <TextField fx:id="airportLatitudeText" layoutX="25.0" layoutY="398.0" />
+                                                      <FilterTextField filter="LATITUDE = %s" layoutX="25.0" layoutY="398.0" />
                                                       <Label layoutX="25.0" layoutY="373.0" prefHeight="25.0" prefWidth="148.0" text="Latitude" />
-                                                      <TextField fx:id="airportLongitudeText" layoutX="25.0" layoutY="458.0" />
+                                                      <FilterTextField filter="LONGITUDE = %s" layoutX="25.0" layoutY="458.0" />
                                                       <Label layoutX="25.0" layoutY="433.0" prefHeight="25.0" prefWidth="148.0" text="Longitude" />
-                                                      <TextField fx:id="aiportAltitudeText" layoutX="25.0" layoutY="518.0" />
+                                                      <FilterTextField filter="ALTITUDE = %s" layoutX="25.0" layoutY="518.0" />
                                                       <Label layoutX="25.0" layoutY="493.0" prefHeight="25.0" prefWidth="148.0" text="Altitude" />
-                                                      <TextField fx:id="airportTimezoneText" layoutX="24.0" layoutY="578.0" />
+                                                      <FilterTextField filter="TIMEZONE = '%s'" layoutX="24.0" layoutY="578.0" />
                                                       <Label layoutX="24.0" layoutY="553.0" prefHeight="25.0" prefWidth="148.0" text="Timezone" />
-                                                      <TextField fx:id="airportDSTText" layoutX="24.0" layoutY="638.0" />
+                                                      <FilterTextField filter="DST = %s" layoutX="24.0" layoutY="638.0" />
                                                       <Label layoutX="24.0" layoutY="613.0" prefHeight="25.0" prefWidth="148.0" text="DST" />
-                                                      <TextField fx:id="airportTzText" layoutX="24.0" layoutY="698.0" />
-                                                      <Label layoutX="24.0" layoutY="673.0" prefHeight="25.0" prefWidth="148.0" text="Tz" />
-                                                      <TextField fx:id="airportTypeText" layoutX="24.0" layoutY="758.0" />
-                                                      <Label layoutX="24.0" layoutY="733.0" prefHeight="25.0" prefWidth="148.0" text="Type" />
                                                    </children>
                                                 </Pane>
                                              </content>
@@ -107,8 +105,6 @@
                                                 <TableColumn prefWidth="70.0" text="Altitude" />
                                                 <TableColumn prefWidth="70.0" text="Timezone" />
                                                 <TableColumn prefWidth="70.0" text="DST" />
-                                                <TableColumn prefWidth="70.0" text="Tz" />
-                                                <TableColumn prefWidth="70.0" text="Type" />
                                             </columns>
                                           </TableView>
                                        </content>
@@ -121,27 +117,27 @@
                         <content>
                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <Pane fx:id="filterPane1" layoutY="15.0" prefHeight="470.0" prefWidth="214.0">
+                                    <Pane layoutY="15.0" prefHeight="470.0" prefWidth="214.0">
                                        <children>
                                           <ScrollPane layoutY="27.0" prefHeight="402.0" prefWidth="214.0">
                                              <content>
-                                                <Pane prefHeight="510.0" prefWidth="198.0">
+                                                <Pane fx:id="airlineFilterPane" prefHeight="510.0" prefWidth="198.0">
                                                    <children>
-                                                      <TextField fx:id="airlineIDText" layoutX="25.0" layoutY="39.0" />
+                                                      <FilterTextField filter="ID_AIRLINE = '%s'" layoutX="25.0" layoutY="39.0" />
                                                       <Label layoutX="25.0" layoutY="14.0" prefHeight="25.0" prefWidth="148.0" text="ID" />
-                                                      <TextField fx:id="airlineNameText" layoutX="25.0" layoutY="99.0" />
+                                                      <FilterTextField filter="NAME = '%s'" layoutX="25.0" layoutY="99.0" />
                                                       <Label layoutX="25.0" layoutY="74.0" prefHeight="25.0" prefWidth="148.0" text="Name" />
-                                                      <TextField fx:id="airlineAliasText" layoutX="25.0" layoutY="158.0" />
+                                                      <FilterTextField filter="ALIAS = '%s'" layoutX="25.0" layoutY="158.0" />
                                                       <Label layoutX="25.0" layoutY="133.0" prefHeight="25.0" prefWidth="148.0" text="Alias" />
-                                                      <TextField fx:id="airlineIATAText" layoutX="25.0" layoutY="218.0" />
+                                                      <FilterTextField filter="IATA = '%s'" layoutX="25.0" layoutY="218.0" />
                                                       <Label layoutX="25.0" layoutY="193.0" prefHeight="25.0" prefWidth="148.0" text="IATA" />
-                                                      <TextField fx:id="airlineICAOText" layoutX="25.0" layoutY="278.0" />
+                                                      <FilterTextField filter="ICAO = '%s'" layoutX="25.0" layoutY="278.0" />
                                                       <Label layoutX="25.0" layoutY="253.0" prefHeight="25.0" prefWidth="148.0" text="ICAO" />
-                                                      <TextField fx:id="airlineCallsignText" layoutX="25.0" layoutY="338.0" />
+                                                      <FilterTextField filter="CALLSIGN = '%s'" layoutX="25.0" layoutY="338.0" />
                                                       <Label layoutX="25.0" layoutY="313.0" prefHeight="25.0" prefWidth="148.0" text="Callsign" />
-                                                      <TextField fx:id="airlineCountryText" layoutX="25.0" layoutY="398.0" />
+                                                      <FilterTextField filter="COUNTRY = '%s'" layoutX="25.0" layoutY="398.0" />
                                                       <Label layoutX="25.0" layoutY="373.0" prefHeight="25.0" prefWidth="148.0" text="Country" />
-                                                      <TextField fx:id="airlineActiveText" layoutX="25.0" layoutY="458.0" />
+                                                      <FilterTextField filter="ACTIVE = '%s'" layoutX="25.0" layoutY="458.0" />
                                                       <Label layoutX="25.0" layoutY="433.0" prefHeight="25.0" prefWidth="148.0" text="Active" />
                                                    </children>
                                                 </Pane>
@@ -202,7 +198,7 @@
                                           </TableView>
                                        </content>
                                     </ScrollPane>
-                                    <Pane fx:id="filterPane2" layoutY="15.0" prefHeight="470.0" prefWidth="214.0">
+                                    <Pane layoutY="15.0" prefHeight="470.0" prefWidth="214.0">
                                        <children>
                                           <Label alignment="CENTER" prefHeight="25.0" prefWidth="213.0" text="Filters">
                                              <styleClass>
@@ -212,25 +208,25 @@
                                           </Label>
                                           <ScrollPane layoutY="27.0" prefHeight="402.0" prefWidth="214.0">
                                              <content>
-                                                <Pane prefHeight="600.0" prefWidth="198.0">
+                                                <Pane fx:id="routeFilterPane" prefHeight="600.0" prefWidth="198.0">
                                                    <children>
-                                                      <TextField fx:id="routeAirlineText" layoutX="25.0" layoutY="39.0" />
+                                                      <FilterTextField filter="AIRLINE = '%s'" layoutX="25.0" layoutY="39.0" />
                                                       <Label layoutX="25.0" layoutY="14.0" prefHeight="25.0" prefWidth="148.0" text="Airline" />
-                                                      <TextField fx:id="routeAirlineIDText" layoutX="25.0" layoutY="99.0" />
+                                                      <FilterTextField filter="ID_AIRLINE = '%s'" layoutX="25.0" layoutY="99.0" />
                                                       <Label layoutX="25.0" layoutY="74.0" prefHeight="25.0" prefWidth="148.0" text="Airline ID" />
-                                                      <TextField fx:id="routeSourceText" layoutX="25.0" layoutY="158.0" />
+                                                      <FilterTextField filter="SOURCE_AIRPORT = '%s'" layoutX="25.0" layoutY="158.0" />
                                                       <Label layoutX="25.0" layoutY="133.0" prefHeight="25.0" prefWidth="148.0" text="Source" />
-                                                      <TextField fx:id="routeSourceIDText" layoutX="25.0" layoutY="218.0" />
+                                                      <FilterTextField filter="SOURCE_AIRPORT_ID = '%s'" layoutX="25.0" layoutY="218.0" />
                                                       <Label layoutX="25.0" layoutY="193.0" prefHeight="25.0" prefWidth="148.0" text="Source ID" />
-                                                      <TextField fx:id="routeDestText" layoutX="25.0" layoutY="278.0" />
+                                                      <FilterTextField filter="DESTINATION_AIRPORT = '%s'" layoutX="25.0" layoutY="278.0" />
                                                       <Label layoutX="25.0" layoutY="253.0" prefHeight="25.0" prefWidth="148.0" text="Destination" />
-                                                      <TextField fx:id="routeDestIDText" layoutX="25.0" layoutY="338.0" />
+                                                      <FilterTextField filter="DESTINATION_AIRPORT_ID = '%s'" layoutX="25.0" layoutY="338.0" />
                                                       <Label layoutX="25.0" layoutY="313.0" prefHeight="25.0" prefWidth="148.0" text="Destinaton ID" />
-                                                      <TextField fx:id="routeCodeshareText" layoutX="25.0" layoutY="398.0" />
+                                                      <FilterTextField filter="CODESHARE = '%s'" layoutX="25.0" layoutY="398.0" />
                                                       <Label layoutX="25.0" layoutY="373.0" prefHeight="25.0" prefWidth="148.0" text="Codeshare" />
-                                                      <TextField fx:id="routeStopsText" layoutX="25.0" layoutY="458.0" />
+                                                      <FilterTextField filter="STOPS = '%s'" layoutX="25.0" layoutY="458.0" />
                                                       <Label layoutX="25.0" layoutY="433.0" prefHeight="25.0" prefWidth="148.0" text="Stops" />
-                                                      <TextField fx:id="routeEquipText" layoutX="25.0" layoutY="518.0" />
+                                                      <FilterTextField filter="EQUIPMENT = '%s'" layoutX="25.0" layoutY="518.0" />
                                                       <Label layoutX="25.0" layoutY="493.0" prefHeight="25.0" prefWidth="148.0" text="Equipment" />
                                                    </children>
                                                 </Pane>
@@ -252,7 +248,7 @@
                           <content>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="455.0">
                                  <children>
-                                    <Pane fx:id="filterPane12" layoutY="15.0" prefHeight="470.0" prefWidth="214.0">
+                                    <Pane layoutY="15.0" prefHeight="470.0" prefWidth="214.0">
                                        <children>
                                           <Label alignment="CENTER" prefHeight="25.0" prefWidth="213.0" text="Filters">
                                              <styleClass>
@@ -260,6 +256,21 @@
                                                 <String fx:value="h5" />
                                              </styleClass>
                                           </Label>
+                                           <ScrollPane layoutY="27.0" prefHeight="402.0" prefWidth="214.0">
+                                               <content>
+                                                   <Pane fx:id="flightsFilterPane" prefHeight="600.0" prefWidth="198.0">
+                                                       <children>
+
+                                                       </children>
+                                                   </Pane>
+                                               </content>
+                                           </ScrollPane>
+                                           <Button fx:id="flightFilterButton" layoutX="53.0" layoutY="444.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="108.0" text="Apply Filters">
+                                               <styleClass>
+                                                   <String fx:value="btn" />
+                                                   <String fx:value="btn-sm" />
+                                                   <String fx:value="btn-primary" />
+                                               </styleClass></Button>
                                        </children>
                                     </Pane>
                                     <ScrollPane layoutX="232.0" layoutY="15.0">

@@ -47,12 +47,12 @@
                            <Label layoutX="25.0" layoutY="373.0" prefHeight="25.0" prefWidth="148.0" text="Latitude" />
                            <FilterTextField filter="LONGITUDE = %s" layoutX="25.0" layoutY="458.0" />
                            <Label layoutX="25.0" layoutY="433.0" prefHeight="25.0" prefWidth="148.0" text="Longitude" />
-                           <FilterTextField filter="TIMEZONE = %s" layoutX="25.0" layoutY="524.0" />
-                           <Label layoutX="25.0" layoutY="499.0" prefHeight="25.0" prefWidth="148.0" text="Timezone" />
-                           <FilterTextField filter="DST = '%s'" layoutX="25.0" layoutY="584.0" />
-                           <Label layoutX="25.0" layoutY="559.0" prefHeight="25.0" prefWidth="148.0" text="DST" />
-                           <FilterTextField filter="TIMEZONE = %s" layoutX="25.0" layoutY="644.0" />
-                           <Label layoutX="25.0" layoutY="619.0" prefHeight="25.0" prefWidth="148.0" text="Tz" />
+                           <FilterTextField filter="ALTITUDE = %s" layoutX="25.0" layoutY="524.0" />
+                           <Label layoutX="25.0" layoutY="499.0" prefHeight="25.0" prefWidth="148.0" text="Altitude" />
+                           <FilterTextField filter="TIMEZONE = '%s'" layoutX="25.0" layoutY="584.0" />
+                           <Label layoutX="25.0" layoutY="559.0" prefHeight="25.0" prefWidth="148.0" text="Timezone" />
+                           <FilterTextField filter="DST = %s" layoutX="25.0" layoutY="644.0" />
+                           <Label layoutX="25.0" layoutY="619.0" prefHeight="25.0" prefWidth="148.0" text="DST" />
                         </children>
                      </Pane>
                   </content>
