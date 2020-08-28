@@ -24,4 +24,21 @@ public class Filter {
     public String GetConnection() {
         return this.connection;
     }
+
+    /**
+     * Check whether two filter objects are the same
+     * @param obj Object to compare
+     * @return Boolean whether two objects the same
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        } else if (obj.getClass() != this.getClass()) {
+            return false;
+        }
+
+        Filter filterObject = (Filter) obj;
+        return this.filter.equals(filterObject.GetFilter()) && this.connection.equals(filterObject.GetConnection());
+    }
 }

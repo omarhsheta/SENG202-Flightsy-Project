@@ -19,7 +19,6 @@ public class AirportTest {
     @Test
     public void GetDistanceTest() {
         double result = airport1.GetDistance(airport2);
-        System.out.println(Math.floor(result));
         assertEquals(98, Math.floor(result), 1e-15);
     }
 }

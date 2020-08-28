@@ -1,4 +1,5 @@
 package seng202.team6.model.data;
+
 import seng202.team6.model.entities.Airline;
 import seng202.team6.model.entities.Airport;
 import seng202.team6.model.entities.Route;
@@ -69,90 +70,6 @@ public class DataHandler {
     }
 
     /**
-     * Select and return all the Airline tuples in the SQLite database.
-     * @param filters List of filters to apply to search query
-     * @return List of airline objects
-     * @throws SQLException SQLException
-     */
-    public ArrayList<Airline> FetchAirlines(ArrayList<Filter> filters) throws SQLException {
-        ArrayList<Airline> airlines = new ArrayList<>();
-
-        String query = ExtractQuery("airline", filters);
-        Statement stmt = this.databaseConnection.createStatement();
-        ResultSet rs = stmt.executeQuery(query);
-
-        // Loop through the result set and create Airline objects from data
-        while (rs.next()) {
-            String active = rs.getString("active");
-            char char_active = (active.length() > 0 ? active.charAt(0) : ' ');
-            Airline airline = new Airline(
-                    rs.getInt("id_airline"), rs.getString("name"),rs.getString("alias"),
-                    rs.getString("iata"), rs.getString("icao"), rs.getString("callsign"),
-                    rs.getString("country"), char_active
-            );
-            airlines.add(airline);
-        }
-        return airlines;
-    }
-
-    /**
-     * Select and return all the Airport tuples in the SQLite database.
-     * @param filters Query filters
-     * @return All airports that fit the database query
-     * @throws SQLException SQLException
-     */
-    public ArrayList<Airport> FetchAirports(ArrayList<Filter> filters) throws SQLException {
-        ArrayList<Airport> airports = new ArrayList<>();
-
-        String query = ExtractQuery("airport", filters);
-
-        Statement stmt = this.databaseConnection.createStatement();
-        ResultSet rs = stmt.executeQuery(query);
-
-        // Loop through the result set and create Airport objects from data
-        while (rs.next()) {
-            String dst = rs.getString("dst");
-            char char_dst = (dst.length() > 0 ? dst.charAt(0) : ' ');
-            Airport airport = new Airport(
-                    rs.getInt("id_airport"), rs.getString("name"), rs.getString("city"),
-                    rs.getString("country"), rs.getString("iata"), rs.getString("icao"),
-                    rs.getFloat("latitude"), rs.getFloat("longitude"), rs.getInt("altitude"),
-                    rs.getInt("timezone"), char_dst
-            );
-            airports.add(airport);
-        }
-        return airports;
-    }
-
-    /**
-     * Select and return all the Airport tuples in the SQLite database.
-     * @param filters Query filters
-     * @return All routes that fit the database query
-     * @throws SQLException SQLException
-     */
-    public ArrayList<Route> FetchRoutes(ArrayList<Filter> filters) throws SQLException {
-        ArrayList<Route> routes = new ArrayList<>();
-
-        String query = ExtractQuery("route", filters);
-        Statement stmt = this.databaseConnection.createStatement();
-        ResultSet rs = stmt.executeQuery(query);
-
-        // Loop through the result set and create Airport objects from data
-        while (rs.next()) {
-            String codeshare = rs.getString("codeshare");
-            char char_codeshare = (codeshare.length() > 0 ? codeshare.charAt(0) : 'N');
-            Route route = new Route(
-                    rs.getInt("id_airline"), rs.getString("airline"), rs.getString("source_airport"),
-                    rs.getInt("source_airport_id"), rs.getString("destination_airport"),
-                    rs.getInt("destination_airport_id"), char_codeshare,
-                    rs.getInt("stops"), rs.getString("equipment")
-            );
-            routes.add(route);
-        }
-        return routes;
-    }
-
-    /**
      * Extract a SQL query string list of airport IATAs
      * @param airports Airport list
      * @return String of IATAs in SQL List form
@@ -168,38 +85,142 @@ public class DataHandler {
     }
 
     /**
-     * Select and return all the Route tuples in the SQLite database.
-     * @param sourceAirports Source airport list
-     * @param destinationAirports Destination airport list
-     * @return All routes that fit the database query
+     * Extract list of airlines from result set
+     * @param resultSet Results from query
+     * @return List of airlines
      * @throws SQLException SQLException
      */
-    public ArrayList<Route> FetchRoutes(ArrayList<Airport> sourceAirports, ArrayList<Airport> destinationAirports) throws SQLException {
-        ArrayList<Route> routes = new ArrayList<>();
+    private ArrayList<Airline> ExtractAirlines(ResultSet resultSet) throws SQLException {
+        ArrayList<Airline> airlines = new ArrayList<>();
+        // Loop through the result set and create Airline objects from data
+        while (resultSet.next()) {
+            String active = resultSet.getString("active");
+            char char_active = (active.length() > 0 ? active.charAt(0) : ' ');
+            Airline airline = new Airline(
+                    resultSet.getInt("id_airline"), resultSet.getString("name"), resultSet.getString("alias"),
+                    resultSet.getString("iata"), resultSet.getString("icao"), resultSet.getString("callsign"),
+                    resultSet.getString("country"), char_active
+            );
+            airlines.add(airline);
+        }
 
-        //This is big oof query, joining two tables
-        String query = String.format("SELECT * FROM route " +
-                        "CROSS JOIN airport " +
-                        "WHERE airport.iata = route.source_airport " +
-                        "AND route.source_airport in (%s) AND route.destination_airport in (%s);",
-                GetAirportIATAList(sourceAirports), GetAirportIATAList(destinationAirports));
+        return airlines;
+    }
 
-        Statement stmt = this.databaseConnection.createStatement();
-        ResultSet rs = stmt.executeQuery(query);
-
+    /**
+     * Extract list of airports from result set
+     * @param resultSet Results from query
+     * @return List of airports
+     * @throws SQLException SQLException
+     */
+    private ArrayList<Airport> ExtractAirports(ResultSet resultSet) throws SQLException {
+        ArrayList<Airport> airports = new ArrayList<>();
         // Loop through the result set and create Airport objects from data
-        while (rs.next()) {
-            String codeshare = rs.getString("codeshare");
+        while (resultSet.next()) {
+            String dst = resultSet.getString("dst");
+            char char_dst = (dst.length() > 0 ? dst.charAt(0) : ' ');
+            Airport airport = new Airport(
+                    resultSet.getInt("id_airport"), resultSet.getString("name"), resultSet.getString("city"),
+                    resultSet.getString("country"), resultSet.getString("iata"), resultSet.getString("icao"),
+                    resultSet.getFloat("latitude"), resultSet.getFloat("longitude"), resultSet.getInt("altitude"),
+                    resultSet.getInt("timezone"), char_dst
+            );
+            airports.add(airport);
+        }
+        return airports;
+    }
+
+    /**
+     * Extract list of routes from result set
+     * @param resultSet Results from query
+     * @return List of routes
+     * @throws SQLException SQLException
+     */
+    private ArrayList<Route> ExtractRoutes(ResultSet resultSet) throws SQLException {
+        ArrayList<Route> routes = new ArrayList<>();
+        // Loop through the result set and create Airport objects from data
+        while (resultSet.next()) {
+            String codeshare = resultSet.getString("codeshare");
             char char_codeshare = (codeshare.length() > 0 ? codeshare.charAt(0) : 'N');
             Route route = new Route(
-                    rs.getInt("id_airline"), rs.getString("airline"), rs.getString("source_airport"),
-                    rs.getInt("source_airport_id"), rs.getString("destination_airport"),
-                    rs.getInt("destination_airport_id"), char_codeshare,
-                    rs.getInt("stops"), rs.getString("equipment")
+                    resultSet.getInt("id_airline"), resultSet.getString("airline"), resultSet.getString("source_airport"),
+                    resultSet.getInt("source_airport_id"), resultSet.getString("destination_airport"),
+                    resultSet.getInt("destination_airport_id"), char_codeshare,
+                    resultSet.getInt("stops"), resultSet.getString("equipment")
             );
             routes.add(route);
         }
         return routes;
+    }
+
+    /**
+     * Select and return all the Airline tuples in the SQLite database.
+     * @param filters List of filters to apply to search query
+     * @return List of airline objects
+     */
+    public ArrayList<Airline> FetchAirlines(ArrayList<Filter> filters) {
+        String query = ExtractQuery("airline", filters);
+        try {
+            Statement stmt = this.databaseConnection.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            return ExtractAirlines(rs);
+        } catch (Exception ignored) {
+            return null;
+        }
+    }
+
+    /**
+     * Select and return all the Airport tuples in the SQLite database.
+     * @param filters Query filters
+     * @return All airports that fit the database query
+     */
+    public ArrayList<Airport> FetchAirports(ArrayList<Filter> filters) {
+        String query = ExtractQuery("airport", filters);
+        try {
+            Statement stmt = this.databaseConnection.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            return ExtractAirports(rs);
+        } catch (Exception ignored) {
+            return null;
+        }
+    }
+
+    /**
+     * Select and return all the Route tuples in the SQLite database.
+     * @param filters Query filters
+     * @return All routes that fit the database query
+     */
+    public ArrayList<Route> FetchRoutes(ArrayList<Filter> filters) {
+        String query = ExtractQuery("route", filters);
+        try {
+            Statement stmt = this.databaseConnection.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            return ExtractRoutes(rs);
+        } catch (Exception ignored) {
+            return null;
+        }
+    }
+
+    /**
+     * Select and return all the Route tuples in the SQLite database.
+     * @param sourceAirports Source airport list
+     * @param destinationAirports Destination airport list
+     * @return All routes that fit the database query
+     */
+    public ArrayList<Route> FetchRoutes(ArrayList<Airport> sourceAirports, ArrayList<Airport> destinationAirports) {
+        //This is big oof query, joining two tables
+        String query = String.format("SELECT * FROM route " +
+                        "JOIN (SELECT airport.iata FROM airport) " +
+                        "WHERE iata = route.source_airport " +
+                        "AND route.source_airport in (%s) AND route.destination_airport in (%s);",
+                GetAirportIATAList(sourceAirports), GetAirportIATAList(destinationAirports));
+        try {
+            Statement stmt = this.databaseConnection.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            return ExtractRoutes(rs);
+        } catch (Exception ignored) {
+            return null;
+        }
     }
 
     /**

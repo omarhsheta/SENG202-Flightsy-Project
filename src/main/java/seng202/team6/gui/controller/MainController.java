@@ -56,11 +56,8 @@ public class MainController implements Initializable
         ArrayList<Filter> filters = new ArrayList<>();
         filters.add(new Filter("COUNTRY = 'New Zealand'", "OR"));
         filters.add(new Filter("COUNTRY = 'Australia'", null));
-        try {
-            ArrayList<Airport> airports = DataHandler.GetInstance().FetchAirports(filters);
-            controller.DrawAirportMarks(airports);
-        } catch (SQLException ignored) {
-        }
+        ArrayList<Airport> airports = DataHandler.GetInstance().FetchAirports(filters);
+        controller.DrawAirportMarks(airports);
 
         CSVLoader loader = new CSVLoader();
         RoutePath path = loader.GetCSVRoutePath("src/test/resources/CSVLoader/NZCH-WSSS.csv");

@@ -3,10 +3,8 @@ package seng202.team6.gui.controller;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextArea;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
@@ -108,11 +106,8 @@ public class FindRoutesController implements Initializable
     @FXML
     private void OnAirportFilterButtonClicked() {
         ArrayList<Filter> filters = ExtractFilters(this.airportFilterTextFields);
-        try {
-            controller.ClearAll();
-            controller.DrawAirportMarks(DataHandler.GetInstance().FetchAirports(filters));
-        } catch (Exception ignored) {
-        }
+        controller.ClearAll();
+        controller.DrawAirportMarks(DataHandler.GetInstance().FetchAirports(filters));
     }
 
     /**
@@ -127,31 +122,17 @@ public class FindRoutesController implements Initializable
         ArrayList<Airport> sourceAirports;
         ArrayList<Airport> destinationAirports;
 
-        try {
-            sourceAirports = DataHandler.GetInstance().FetchAirports(originFilters);
-            destinationAirports = DataHandler.GetInstance().FetchAirports(destinationFilters);
-            routes = DataHandler.GetInstance().FetchRoutes(sourceAirports, destinationAirports);
-        } catch (Exception ignored) {
-            return;
-        }
+        sourceAirports = DataHandler.GetInstance().FetchAirports(originFilters);
+        destinationAirports = DataHandler.GetInstance().FetchAirports(destinationFilters);
+        routes = DataHandler.GetInstance().FetchRoutes(sourceAirports, destinationAirports);
 
         //VERY TEMPORARY TO TEST
-        ArrayList<Airport> airportsToDraw = new ArrayList<>();
-        sourceAirports.addAll(destinationAirports);
         resultsPane.getChildren().clear();
         for (Route route : routes) {
-            for (Airport airport : sourceAirports) {
-                if (airport.GetIATA().equals(route.GetSourceAirport()) || airport.GetIATA().equals(route.GetDestinationAirport())) {
-                    airportsToDraw.add(airport);
-
-                    TextArea text = new TextArea();
-                    text.setText(String.format("%s --> %s", route.GetSourceAirport(), route.GetDestinationAirport()));
-                    resultsPane.getChildren().add(text);
-                }
-            }
+            TextArea text = new TextArea();
+            text.setText(String.format("%s --> %s", route.GetSourceAirport(), route.GetDestinationAirport()));
+            resultsPane.getChildren().add(text);
         }
-        controller.ClearAll();
-        controller.DrawAirportMarks(airportsToDraw);
         //END TEMPORARY
     }
 
