@@ -212,59 +212,80 @@ public class DataViewerController implements Initializable
 
 
     /**
-     * Gets Airport data file, passes to CSVLoader to get Airport objects, then passes objects to DataHandler to add to database
+     * Gets Airport data file, passes to CSVLoader to get Airport objects,
+     * then passes objects to DataHandler to add to database
      */
     @FXML
-    public void AirportFileImport() throws SQLException {
+    public void AirportFileImport() {
         File selectedFile = SelectFile();
         if (selectedFile != null){
             ArrayList<Airport> airports = csvLoader.GetCSVAirportList(selectedFile.getAbsolutePath());
             if (airports.size() != 0) {
-                dataHandler.InsertAirports(airports);
+                try {
+                    dataHandler.InsertAirports(airports);
+                } catch (SQLException exception) {
+                    System.out.println(exception.toString());
+                }
             }
         }
     }
 
 
     /**
-     * Gets Airline data file, passes to CSVLoader to get Airline objects, then passes objects to DataHandler to add to database
+     * Gets Airline data file, passes to CSVLoader to get Airline objects,
+     * then passes objects to DataHandler to add to database
      */
     @FXML
-    public void AirlineFileImport() throws SQLException {
+    public void AirlineFileImport() {
         File selectedFile = SelectFile();
         if (selectedFile != null){
             ArrayList<Airline> airlines = csvLoader.GetCSVAirlineList(selectedFile.getAbsolutePath());
             if (airlines.size() != 0) {
-                dataHandler.InsertAirlines(airlines);
+                try {
+                    dataHandler.InsertAirlines(airlines);
+                } catch (SQLException exception) {
+                    System.out.println(exception.toString());
+                }
             }
         }
     }
 
 
     /**
-     * Gets Route data file, passes to CSVLoader to get Route objects, then passes objects to DataHandler to add to database
+     * Gets Route data file, passes to CSVLoader to get Route objects,
+     * then passes objects to DataHandler to add to database
      */
     @FXML
-    public void RouteFileImport() throws SQLException {
+    public void RouteFileImport() {
         File selectedFile = SelectFile();
         if (selectedFile != null) {
             ArrayList<Route> routes = csvLoader.GetCSVRouteList(selectedFile.getAbsolutePath());
             if (routes.size() != 0) {
-                dataHandler.InsertRoutes(routes);
+                try {
+                    dataHandler.InsertRoutes(routes);
+                } catch (SQLException exception) {
+                    System.out.println(exception.toString());
+                }
             }
         }
     }
 
 
     /**
-     * Gets Flight data file, passes to CSVLoader to get RoutePath object, then passes object to DataHandler to add to database
+     * Gets Flight data file, passes to CSVLoader to get RoutePath object,
+     * then passes object to DataHandler to add to database
      */
+    //TODO create method in DataHandler to add RoutePath object to database
     @FXML
-    public void FlightFileImport() throws SQLException {
+    public void FlightFileImport() {
 //        File selectedFile = SelectFile();
 //        RoutePath routePath = csvLoader.GetCSVRoutePath(selectedFile.getAbsolutePath());
 //        if (routePath != null) {
-//            dataHandler.InsertRoutePath(routePath);
+//            try {
+//                dataHandler.InsertRoutePath(routePath);
+//            } catch (SQLException exception) {
+//                System.out.println(exception.toString());
+//            }
 //        }
     }
 }
