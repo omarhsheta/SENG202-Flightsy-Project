@@ -115,41 +115,124 @@ public class DataViewerController implements Initializable
      */
     @FXML
     private void OnAirportFilterButtonClicked() {
-        ArrayList<Filter> filters =  GetFilters(filterAirportTextFields);
+        ArrayList<Filter> filters = GetFilters(filterAirportTextFields);
 
         try {
             ArrayList<Airport> filteredAirports = dataHandler.FetchAirports(filters);
-            //For testing only
-            for(Airport airport: filteredAirports) {
-                System.out.println(String.format("%s      %s", airport.GetName(), airport.GetCountry()));
-            }
-        }
-        catch (Exception ignored) {
-        }
 
-        //Input into table here
+            for (int i = 0; i < filteredAirports.size(); i++) {
+
+
+                for (int j = 0; j < 11; j++) {
+                    TableColumn tableColumn = new TableColumn<>();
+                    tableColumn.setText("1");
+                    airport_table.getColumns().add(tableColumn);
+                }
+
+            }
+
+            for (Airport airport : filteredAirports) {
+                int AirportID = airport.GetAirportID();
+                String Name = airport.GetName();
+                String City = airport.GetCity();
+                String Country = airport.GetCountry();
+                String IATA = airport.GetIATA();
+                String ICAO = airport.GetICAO();
+                float Latitude = airport.GetLatitude();
+                float Longitude = airport.GetLongitude();
+                int Altitude = airport.GetAltitude();
+                float Timezone = airport.GetTimezone();
+                char DST = airport.GetDST();
+
+                //textPanel.setRow(0) = AirportID;
+                //textPanel.setRow(1) = Name;
+                //textPanel.setRow(2) = City;
+                //textPanel.setRow(3) = Country;
+                //textPanel.setRow(4) = IATA;
+                //textPanel.setRow(5) = ICAO;
+                //textPanel.setRow(6) = Latitude;
+                //textPanel.setRow(7) = Longitude;
+                //textPanel.setRow(8) = Altitude;
+                //textPanel.setRow(9) = Timezone;
+                //textPanel.setRow(10) = DST;
+            }
+        } catch (Exception ignored) {
+            System.out.println("Error");
+        }
     }
 
     /**
      * FXML button action that takes place when the Filter button is clicked on the Airlines data view.
-     * This function takes the filters from the GetFilters method and gets the filtered Airline ArrayList from the DataHandler.
+     * This function takes the filters from the GetFilters method and gets the filtered Airlines ArrayList from the DataHandler.
      * Then it inputs the data into the data viewer table.
      */
     @FXML
     private void OnAirlineFilterButtonClicked() {
-        ArrayList<Filter> filters =  GetFilters(filterAirlineTextFields);
+        ArrayList<Filter> filters = GetFilters(filterRouteTextFields);
 
         try {
             ArrayList<Airline> filteredAirlines = dataHandler.FetchAirlines(filters);
-            //For testing only
-            for(Airline airline: filteredAirlines) {
-                System.out.println(String.format("%s      %s", airline.GetName(), airline.GetCountry()));
-            }
-        }
-        catch (Exception ignored) {
-        }
 
-        //Input into table here
+            for (Airline airline : filteredAirlines) {
+                int AirlineID = airline.GetAirlineID();
+                String Name = airline.GetName();
+                String Alias = airline.GetAlias();
+                String IATA = airline.GetIATA();
+                String ICAO = airline.GetICAO();
+                String Callsign = airline.GetCallsign();
+                String Country = airline.GetCallsign();
+                char Active = airline.GetActive();
+
+                //textPanel.setRow(0) = AirlineID;
+                //textPanel.setRow(1) = Name;
+                //textPanel.setRow(2) = Alias;
+                //textPanel.setRow(3) = IATA
+                //textPanel.setRow(4) = ICAO;
+                //textPanel.setRow(5) = Callsign;
+                //textPanel.setRow(6) = Country;
+                //textPanel.setRow(7) = Active;
+            }
+        } catch (Exception ignored) {
+            System.out.println("Error");
+        }
+    }
+
+    /**
+     * FXML button action that takes place when the Filter button is clicked on the Airlines data view.
+     * This function takes the filters from the GetFilters method and gets the filtered Airlines ArrayList from the DataHandler.
+     * Then it inputs the data into the data viewer table.
+     */
+    @FXML
+    private void OnRoutesFilterButtonClicked() {
+        ArrayList<Filter> filters = GetFilters(filterAirlineTextFields);
+
+        try {
+            ArrayList<Route> filteredRoutes = dataHandler.FetchRoutes(filters);
+
+            for (Route route : filteredRoutes) {
+                int AirlineID = route.GetAirlineID();
+                String Airline = route.GetAirline();
+                String SourceAirport = route.GetSourceAirport();
+                int SourceAirportID = route.GetSourceAirportID();
+                String DestinationAirport = route.GetDestinationAirport();
+                int DestinationAirportID = route.GetDestinationAirportID();
+                char Codeshare = route.GetCodeshare();
+                int Stops = route.GetStops();
+                String Equipment = route.GetEquipment();
+
+                //textPanel.setRow(0) = AirlineID;
+                //textPanel.setRow(1) = Airline;
+                //textPanel.setRow(2) = SourceAirport;
+                //textPanel.setRow(3) = SourceAirportID;
+                //textPanel.setRow(4) = DestinationAirport;
+                //textPanel.setRow(5) = DestinationAirportID;
+                //textPanel.setRow(6) = Codeshare;
+                //textPanel.setRow(7) = Stops;
+                //textPanel.setRow(8) = Equipment;
+            }
+        } catch (Exception ignored) {
+            System.out.println("Error");
+        }
     }
 
     /**
