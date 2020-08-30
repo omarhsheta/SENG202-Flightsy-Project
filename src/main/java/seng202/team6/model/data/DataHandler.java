@@ -1,5 +1,6 @@
 package seng202.team6.model.data;
 
+import javafx.util.Pair;
 import seng202.team6.model.entities.Airline;
 import seng202.team6.model.entities.Airport;
 import seng202.team6.model.entities.Route;
@@ -41,47 +42,6 @@ public class DataHandler {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-    }
-
-    /**
-     * Extract query from list of filter objects
-     * @param tableName Database table
-     * @param filters List of filters
-     * @return SQL String query.
-     */
-    public String ExtractQuery(String tableName, ArrayList<Filter> filters) {
-        if (filters == null || filters.size() == 0) {
-            return String.format("SELECT * FROM %s;", tableName);
-        }
-
-        StringBuilder builder = new StringBuilder();
-        builder.append(String.format("SELECT * FROM %s WHERE ", tableName));
-        for (int i = 0; i < filters.size() - 1; i++) {
-            Filter filter = filters.get(i);
-            builder.append(filter.GetFilter());
-            builder.append(" ");
-            builder.append(filter.GetConnection());
-            builder.append(" ");
-        }
-        builder.append(filters.get(filters.size() - 1).GetFilter());
-        builder.append(';');
-
-        return builder.toString();
-    }
-
-    /**
-     * Extract a SQL query string list of airport IATAs
-     * @param airports Airport list
-     * @return String of IATAs in SQL List form
-     */
-    private String GetAirportIATAList(ArrayList<Airport> airports) {
-        StringBuilder list = new StringBuilder();
-        for (int i = 0; i < airports.size() - 1; i++) {
-            list.append(String.format("'%s', ", airports.get(i).GetIATA()));
-        }
-        list.append(String.format("'%s'", airports.get(airports.size() - 1).GetIATA()));
-
-        return list.toString();
     }
 
     /**
@@ -159,7 +119,7 @@ public class DataHandler {
      * @return List of airline objects
      */
     public ArrayList<Airline> FetchAirlines(ArrayList<Filter> filters) {
-        String query = ExtractQuery("airline", filters);
+        String query = SQLHelper.ExtractQuery("airline", filters);
         try {
             Statement stmt = this.databaseConnection.createStatement();
             ResultSet rs = stmt.executeQuery(query);
@@ -174,9 +134,8 @@ public class DataHandler {
      * @param filters Query filters
      * @param sortType Type of sort required, either "ASC" or "DESC"
      * @return All airports that fit the database query
-     * @throws SQLException SQLException
      */
-    public ArrayList<Airport> FetchAirports(ArrayList<Filter> filters, String sortType) throws SQLException {
+    public ArrayList<Airport> FetchAirports(ArrayList<Filter> filters, String sortType) {
         ArrayList<Airport> airports = new ArrayList<>();
 
         StringBuilder builder = new StringBuilder();
@@ -217,7 +176,7 @@ public class DataHandler {
      * @return All airports that fit the database query
      */
     public ArrayList<Airport> FetchAirports(ArrayList<Filter> filters) {
-        String query = ExtractQuery("airport", filters);
+        String query = SQLHelper.ExtractQuery("airport", filters);
         try {
             Statement stmt = this.databaseConnection.createStatement();
             ResultSet rs = stmt.executeQuery(query);
@@ -233,7 +192,7 @@ public class DataHandler {
      * @return All routes that fit the database query
      */
     public ArrayList<Route> FetchRoutes(ArrayList<Filter> filters) {
-        String query = ExtractQuery("route", filters);
+        String query = SQLHelper.ExtractQuery("route", filters);
         try {
             Statement stmt = this.databaseConnection.createStatement();
             ResultSet rs = stmt.executeQuery(query);
@@ -255,7 +214,7 @@ public class DataHandler {
                         "JOIN (SELECT airport.iata FROM airport) " +
                         "WHERE iata = route.source_airport " +
                         "AND route.source_airport in (%s) AND route.destination_airport in (%s);",
-                GetAirportIATAList(sourceAirports), GetAirportIATAList(destinationAirports));
+                SQLHelper.GetAirportIATAList(sourceAirports), SQLHelper.GetAirportIATAList(destinationAirports));
         try {
             Statement stmt = this.databaseConnection.createStatement();
             ResultSet rs = stmt.executeQuery(query);

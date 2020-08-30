@@ -1,31 +1,20 @@
 package seng202.team6.model.data;
 
-import org.junit.Before;
 import org.junit.Test;
+import seng202.team6.model.entities.Airport;
 
 import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
 
-public class DataHandlerTest
-{
-    private DataHandler handler;
-
-    /**
-     * Initialize singleton database connection
-     */
-    @Before
-    public void InitializeTest() {
-        handler = DataHandler.GetInstance();
-    }
-
+public class SQLHelperTest {
     /**
      * Test no filter query
      */
     @Test
     public void TestNoFilterQuery() {
         String expected = "SELECT * FROM test;";
-        String query = handler.ExtractQuery("test", null);
+        String query = SQLHelper.ExtractQuery("test", null);
         assertEquals(expected, query);
     }
 
@@ -37,7 +26,7 @@ public class DataHandlerTest
         String expected = "SELECT * FROM test WHERE power > 9000;";
         ArrayList<Filter> testFilters = new ArrayList<>();
         testFilters.add(new Filter("power > 9000", "AND"));
-        String query = handler.ExtractQuery("test", testFilters);
+        String query = SQLHelper.ExtractQuery("test", testFilters);
         assertEquals(expected, query);
     }
 
@@ -52,7 +41,33 @@ public class DataHandlerTest
         testFilters.add(new Filter("filterone = 'hello'", "AND"));
         testFilters.add(new Filter("filtertwo = 'world'", "OR"));
         testFilters.add(new Filter("filterthree = '!!'", "OR"));
-        String query = handler.ExtractQuery("test", testFilters);
+        String query = SQLHelper.ExtractQuery("test", testFilters);
         assertEquals(expected, query);
+    }
+
+    /**
+     * Test airport IATA to SQL list
+     */
+    @Test
+    public void TestIATAMultiple() {
+        ArrayList<Airport> airports = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            Airport testPort = new Airport(0, null, null, null, "test",
+                    null, 0, 0, 0, 0, 'T');
+            airports.add(testPort);
+        }
+
+        String result = SQLHelper.GetAirportIATAList(airports);
+        assertEquals("'test', 'test', 'test', 'test', 'test'", result);
+    }
+
+    /**
+     * Test airport IATA to SQL list
+     */
+    @Test
+    public void TestIATANone() {
+        ArrayList<Airport> airports = new ArrayList<>();
+        String result = SQLHelper.GetAirportIATAList(airports);
+        assertEquals("", result);
     }
 }

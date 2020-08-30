@@ -14,6 +14,7 @@ import seng202.team6.model.data.Filter;
 import seng202.team6.model.entities.Airport;
 import seng202.team6.model.entities.Route;
 
+import java.lang.reflect.Array;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -118,20 +119,29 @@ public class FindRoutesController implements Initializable
         ArrayList<Filter> originFilters = ExtractFilters(this.flightFilterOriginTextFields);
         ArrayList<Filter> destinationFilters = ExtractFilters(this.flightFilterDestinationTextFields);
 
-        ArrayList<Route> routes;
-        ArrayList<Airport> sourceAirports;
-        ArrayList<Airport> destinationAirports;
+        ArrayList<Airport> sourceAirports = DataHandler.GetInstance().FetchAirports(originFilters);
+        ArrayList<Airport> destinationAirports = DataHandler.GetInstance().FetchAirports(destinationFilters);
 
-        sourceAirports = DataHandler.GetInstance().FetchAirports(originFilters);
-        destinationAirports = DataHandler.GetInstance().FetchAirports(destinationFilters);
-        routes = DataHandler.GetInstance().FetchRoutes(sourceAirports, destinationAirports);
+        ArrayList<Route> routes = DataHandler.GetInstance().FetchRoutes(sourceAirports, destinationAirports);
 
         //VERY TEMPORARY TO TEST
+        StringBuilder query = new StringBuilder();
+
         resultsPane.getChildren().clear();
         for (Route route : routes) {
             TextArea text = new TextArea();
             text.setText(String.format("%s --> %s", route.GetSourceAirport(), route.GetDestinationAirport()));
             resultsPane.getChildren().add(text);
+
+            query.append(String.format("'%s', '%s', ", route.GetSourceAirport(), route.GetDestinationAirport()));
+        }
+        if (query.length() > 2) {
+            controller.ClearAll();
+            query.delete(query.length() - 2, query.length() - 1);
+
+            ArrayList<Filter> filters = new ArrayList<>();
+            filters.add(new Filter(String.format("IATA in (%s)", query.toString()), ""));
+            controller.DrawAirportMarks(DataHandler.GetInstance().FetchAirports(filters));
         }
         //END TEMPORARY
     }
