@@ -170,6 +170,48 @@ public class DataHandler {
     }
 
     /**
+     * Select and return all the Airport tuples in the SQLite database with additional sorting based on number of routes.
+     * @param filters Query filters
+     * @param sortType Type of sort required, either "ASC" or "DESC"
+     * @return All airports that fit the database query
+     * @throws SQLException SQLException
+     */
+    public ArrayList<Airport> FetchAirports(ArrayList<Filter> filters, String sortType) throws SQLException {
+        ArrayList<Airport> airports = new ArrayList<>();
+
+        StringBuilder builder = new StringBuilder();
+        builder.append("SELECT count(a.id_airport), a.id_airport, a.name, a.city, a.country, a.iata, a.icao, " +
+                "a.latitude, a.longitude, a.altitude, a.timezone, a.dst\n" +
+                "FROM airport a join route r on a.id_airport = r.source_airport_id\n");
+
+        //If there are filters
+        if (filters != null && filters.size() != 0) {
+            builder.append("WHERE ");
+            for (int i = 0; i < filters.size() - 1; i++) {
+                Filter filter = filters.get(i);
+                builder.append(filter.GetFilter());
+                builder.append(" ");
+                builder.append(filter.GetConnection());
+                builder.append(" ");
+            }
+            builder.append(filters.get(filters.size() - 1).GetFilter());
+            builder.append("\n");
+        }
+
+        builder.append(String.format("GROUP BY a.id_airport\nORDER BY count(a.id_airport) %s;", sortType));
+
+        String query = builder.toString();
+
+        try {
+            Statement stmt = this.databaseConnection.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            return ExtractAirports(rs);
+        } catch (Exception ignored) {
+            return null;
+        }
+    }
+
+    /**
      * Select and return all the Airport tuples in the SQLite database.
      * @param filters Query filters
      * @return All airports that fit the database query

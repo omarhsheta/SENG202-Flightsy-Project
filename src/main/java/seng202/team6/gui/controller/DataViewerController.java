@@ -67,7 +67,8 @@ public class DataViewerController implements Initializable
     private CSVLoader csvLoader;
     private DataHandler dataHandler;
 
-
+    @FXML
+    ChoiceBox sortChoiceBox;
 
     public DataViewerController() {
     }
@@ -117,14 +118,33 @@ public class DataViewerController implements Initializable
     private void OnAirportFilterButtonClicked() {
         ArrayList<Filter> filters =  GetFilters(filterAirportTextFields);
 
+        String sortValue = (String) sortChoiceBox.getValue();
+
+        int numRowsLeftOut = 0;
+
         try {
-            ArrayList<Airport> filteredAirports = dataHandler.FetchAirports(filters);
+            ArrayList<Airport> filteredAirports = new ArrayList<>();
+            if (sortValue.equals("Sort by most routes")) {
+                filteredAirports = dataHandler.FetchAirports(filters, "DESC");
+                numRowsLeftOut = dataHandler.FetchAirports(filters).size() - filteredAirports.size();
+
+            } else if (sortValue.equals("Sort by least routes")) {
+                filteredAirports = dataHandler.FetchAirports(filters, "ASC");
+                numRowsLeftOut = filteredAirports.size() - dataHandler.FetchAirports(filters).size();
+            } else {
+                filteredAirports = dataHandler.FetchAirports(filters);
+            }
             //For testing only
             for(Airport airport: filteredAirports) {
                 System.out.println(String.format("%s      %s", airport.GetName(), airport.GetCountry()));
             }
         }
         catch (Exception ignored) {
+        }
+
+        if (numRowsLeftOut != 0) {
+            Alert alert = new Alert(Alert.AlertType.WARNING, String.format("%d airports left out as they have no routes departing", numRowsLeftOut), ButtonType.OK);
+            alert.showAndWait();
         }
 
         //Input into table here
