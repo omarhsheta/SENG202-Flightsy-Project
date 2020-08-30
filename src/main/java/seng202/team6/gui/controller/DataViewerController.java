@@ -4,29 +4,25 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.*;
-import javafx.scene.layout.Border;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
-import seng202.team6.gui.WindowHandler;
+import javafx.util.Pair;
 import seng202.team6.gui.components.FilterTextField;
 import seng202.team6.model.data.CSVLoader;
 import seng202.team6.model.data.DataHandler;
 import seng202.team6.model.data.Filter;
-import seng202.team6.model.entities.Airport;
 import seng202.team6.model.entities.Airline;
+import seng202.team6.model.entities.Airport;
 import seng202.team6.model.entities.Route;
-import seng202.team6.model.entities.RoutePath;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.Arrays;
-import java.util.ResourceBundle;
-
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 
 public class DataViewerController implements Initializable
 {
@@ -42,32 +38,18 @@ public class DataViewerController implements Initializable
     @FXML
     private TabPane tabbedPane;
 
-    @FXML
-    Button airlineFilterButton;
-    @FXML
-    private Pane airlineFilterPane;
-    private final ArrayList<FilterTextField> filterAirlineTextFields = new ArrayList<>();
-
-    @FXML
-    Button routeFilterButton;
-    @FXML
-    private Pane routeFilterPane;
-    private final ArrayList<FilterTextField> filterRouteTextFields = new ArrayList<>();
-
-    @FXML
-    Button flightFilterButton;
-    //@FXML
-    //private Pane flightFilterPane;
-    private final ArrayList<FilterTextField> filterFlightTextFields = new ArrayList<>();
-
     private CSVLoader csvLoader;
     private DataHandler dataHandler;
 
     /**
      * Resources to load
      */
-    private final String[] resourceFXML = new String[] {
-            "airporttab",
+    private final ArrayList<Pair<String, String>> resourceFXML = new ArrayList<>() {
+        {
+            add(new Pair<>("Airports", "airporttab"));
+            add(new Pair<>("Airlines", "airlinetab"));
+            add(new Pair<>("Routes", "routetab"));
+        }
     };
 
     @Override
@@ -75,9 +57,9 @@ public class DataViewerController implements Initializable
 
         try {
             //Load each FXML tab
-            for (String resource : this.resourceFXML) {
-                Node source = FXMLLoader.load(getClass().getResource("/dataviewer/" + resource + ".fxml"));
-                Tab newTab = new Tab(resource, source);
+            for (Pair<String, String> resourcePair : this.resourceFXML) {
+                Node source = FXMLLoader.load(getClass().getResource("/dataviewer/" + resourcePair.getValue() + ".fxml"));
+                Tab newTab = new Tab(resourcePair.getKey(), source);
                 tabbedPane.getTabs().add(newTab);
             }
         } catch (Exception e) {
@@ -86,162 +68,13 @@ public class DataViewerController implements Initializable
 
         dataHandler = DataHandler.GetInstance();
         csvLoader = new CSVLoader();
-
-        /*
-        //Grab all airport text filter components
-        for (Node node : airportFilterPane.getChildren()) {
-            if (node != null && node.getClass() == FilterTextField.class) {
-                filterAirportTextFields.add((FilterTextField) node);
-            }
-        }
-
-        //Grab all airline text filter components
-        for (Node node : airlineFilterPane.getChildren()) {
-            if (node != null && node.getClass() == FilterTextField.class) {
-                filterAirlineTextFields.add((FilterTextField) node);
-            }
-        }
-
-        //Grab all airline text filter components
-        for (Node node : routeFilterPane.getChildren()) {
-            if (node != null && node.getClass() == FilterTextField.class) {
-                filterRouteTextFields.add((FilterTextField) node);
-            }
-        }
-
-//        //Grab all airline text filter components
-//        for (Node node : flightFilterPane.getChildren()) {
-//            if (node != null && node.getClass() == FilterTextField.class) {
-//                filterFlightTextFields.add((FilterTextField) node);
-//            }
-//        }
-         */
     }
-
-    private void FillAirports() {
-    }
-
-    /**
-     * FXML button action that takes place when the Filter button is clicked on the Airlines data view.
-     * This function takes the filters from the GetFilters method and gets the filtered Airlines ArrayList from the DataHandler.
-     * Then it inputs the data into the data viewer table.
-     */
-    @FXML
-    private void OnAirlineFilterButtonClicked() {
-        ArrayList<Filter> filters = GetFilters(filterRouteTextFields);
-
-        try {
-            ArrayList<Airline> filteredAirlines = dataHandler.FetchAirlines(filters);
-
-            for (Airline airline : filteredAirlines) {
-                int AirlineID = airline.GetAirlineID();
-                String Name = airline.GetName();
-                String Alias = airline.GetAlias();
-                String IATA = airline.GetIATA();
-                String ICAO = airline.GetICAO();
-                String Callsign = airline.GetCallsign();
-                String Country = airline.GetCallsign();
-                char Active = airline.GetActive();
-
-                //textPanel.setRow(0) = AirlineID;
-                //textPanel.setRow(1) = Name;
-                //textPanel.setRow(2) = Alias;
-                //textPanel.setRow(3) = IATA
-                //textPanel.setRow(4) = ICAO;
-                //textPanel.setRow(5) = Callsign;
-                //textPanel.setRow(6) = Country;
-                //textPanel.setRow(7) = Active;
-            }
-        } catch (Exception ignored) {
-            System.out.println("Error");
-        }
-    }
-
-    /**
-     * FXML button action that takes place when the Filter button is clicked on the Airlines data view.
-     * This function takes the filters from the GetFilters method and gets the filtered Airlines ArrayList from the DataHandler.
-     * Then it inputs the data into the data viewer table.
-     */
-    @FXML
-    private void OnRoutesFilterButtonClicked() {
-        ArrayList<Filter> filters = GetFilters(filterAirlineTextFields);
-
-        try {
-            ArrayList<Route> filteredRoutes = dataHandler.FetchRoutes(filters);
-
-            for (Route route : filteredRoutes) {
-                int AirlineID = route.GetAirlineID();
-                String Airline = route.GetAirline();
-                String SourceAirport = route.GetSourceAirport();
-                int SourceAirportID = route.GetSourceAirportID();
-                String DestinationAirport = route.GetDestinationAirport();
-                int DestinationAirportID = route.GetDestinationAirportID();
-                char Codeshare = route.GetCodeshare();
-                int Stops = route.GetStops();
-                String Equipment = route.GetEquipment();
-
-                //textPanel.setRow(0) = AirlineID;
-                //textPanel.setRow(1) = Airline;
-                //textPanel.setRow(2) = SourceAirport;
-                //textPanel.setRow(3) = SourceAirportID;
-                //textPanel.setRow(4) = DestinationAirport;
-                //textPanel.setRow(5) = DestinationAirportID;
-                //textPanel.setRow(6) = Codeshare;
-                //textPanel.setRow(7) = Stops;
-                //textPanel.setRow(8) = Equipment;
-            }
-        } catch (Exception ignored) {
-            System.out.println("Error");
-        }
-    }
-
-    /**
-     * FXML button action that takes place when the Filter button is clicked on the Routes data view.
-     * This function takes the filters from the GetFilters method and gets the filtered Route ArrayList from the DataHandler.
-     * Then it inputs the data into the data viewer table.
-     */
-    @FXML
-    private void OnRouteFilterButtonClicked() {
-        ArrayList<Filter> filters =  GetFilters(filterRouteTextFields);
-
-        try {
-            ArrayList<Route> filteredRoutes = dataHandler.FetchRoutes(filters);
-            //For testing only
-            for(Route route: filteredRoutes) {
-                System.out.println(String.format("%s      %s", route.GetSourceAirport(), route.GetDestinationAirport()));
-            }
-        }
-        catch (Exception ignored) {
-        }
-
-        //Input into table here
-    }
-
-    /**
-     * GetFilters method that takes a parameter <code>filterTextFields</code> which is an ArrayList of FilterTextField objects,
-     * and takes the filter formatting and text from the object. It then creates a Filter object from this and adds the
-     * filter to an ArrayList of Filter objects and returns the ArrayList.
-     * @param filterTextFields An ArrayList of FilterTextFields
-     * @return An ArrayList of Filter objects.
-     */
-    private ArrayList<Filter> GetFilters(ArrayList<FilterTextField> filterTextFields) {
-        ArrayList<Filter> filters = new ArrayList<>();
-
-        for (FilterTextField box : filterTextFields) {
-            if (!box.getText().equals("")) {
-                String filterString = String.format(box.GetFilter(), box.getText());
-                filters.add(new Filter(filterString, "AND"));
-            }
-        }
-        return filters;
-    }
-
 
     /**
      * Opens native file explorer for user to select a CSV file to import to the database
      * @return File object of the selected file for import
      */
-    public File SelectFile() {
+    private File SelectFile() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Import File");
         fileChooser.getExtensionFilters().addAll(

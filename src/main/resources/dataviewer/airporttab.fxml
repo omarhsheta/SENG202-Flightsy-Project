@@ -4,19 +4,13 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
 <?import seng202.team6.gui.components.FilterTextField?>
 
 <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="595.0" prefWidth="987.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.team6.gui.controller.dataviewer.AirportTabController">
-   <center>
-      <ScrollPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="473.0" prefWidth="605.0" BorderPane.alignment="CENTER">
-         <content>
-            <TableView fx:id="airportTable" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="593.0" prefWidth="771.0" />
-         </content>
-      </ScrollPane>
-   </center>
    <left>
       <Pane prefHeight="470.0" prefWidth="214.0" BorderPane.alignment="CENTER">
          <children>
@@ -66,4 +60,21 @@
          </children>
       </Pane>
    </left>
+   <center>
+      <TableView fx:id="airportTable" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="593.0" prefWidth="771.0" BorderPane.alignment="CENTER">
+         <columns>
+            <TableColumn fx:id="columnID" prefWidth="70.0" text="ID" />
+            <TableColumn fx:id="columnName" prefWidth="70.0" text="Name" />
+            <TableColumn fx:id="columnCity" prefWidth="70.0" text="City" />
+            <TableColumn fx:id="columnCountry" prefWidth="70.0" text="Country" />
+            <TableColumn fx:id="columnIATA" prefWidth="70.0" text="IATA" />
+            <TableColumn fx:id="columnICAO" prefWidth="70.0" text="ICAO" />
+            <TableColumn fx:id="columnLat" prefWidth="70.0" text="Latitude" />
+            <TableColumn fx:id="columnLng" prefWidth="70.0" text="Longitude" />
+            <TableColumn fx:id="columnAlt" prefWidth="70.0" text="Altitude" />
+            <TableColumn fx:id="columnTZ" prefWidth="70.0" text="Timezone" />
+            <TableColumn fx:id="columnDST" prefWidth="70.0" text="DST" />
+         </columns>
+      </TableView>
+   </center>
 </BorderPane>
