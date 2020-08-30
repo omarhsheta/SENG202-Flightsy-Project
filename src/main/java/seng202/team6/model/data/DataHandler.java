@@ -233,7 +233,7 @@ public class DataHandler {
         Statement stmt = this.databaseConnection.createStatement();
         for(Airline airline: airlines) {
             String sql = String.format("INSERT INTO airline (id_airline, name, alias, iata, icao, callsign, country, " +
-                    "active) VALUES (\"%d\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%c\");",
+                    "active) VALUES (\"%d\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\");",
                     airline.GetAirlineID(), airline.GetName(), airline.GetAlias(), airline.GetIATA(), airline.GetICAO(),
                     airline.GetCallsign(), airline.GetCountry(), airline.GetActive()
             );

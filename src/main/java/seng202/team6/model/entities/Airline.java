@@ -9,10 +9,10 @@ public class Airline {
     String ICAO;
     String Callsign;
     String Country;
-    char Active;
+    Character Active;
 
     public Airline(int newAirlineID, String newName, String newAlias, String newIATA, String newICAO,
-                   String newCallsign, String newCountry, char newActive) {
+                   String newCallsign, String newCountry, Character newActive) {
         AirlineID = newAirlineID;
         Name = newName;
         Alias = newAlias;
@@ -93,7 +93,7 @@ public class Airline {
         Country = country;
     }
 
-    public char GetActive() {
+    public Character GetActive() {
         return Active;
     }
 
