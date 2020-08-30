@@ -10,12 +10,10 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
-
 <?import seng202.team6.gui.components.FilterTextField?>
 
 <BorderPane fx:id="borderPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.team6.gui.controller.DataViewerController">
@@ -24,87 +22,15 @@
         <children>
             <Pane prefHeight="600.0" prefWidth="900.0">
                <children>
-                   <Button fx:id="editButton" layoutX="538.0" layoutY="538.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="88.0" text="Edit Row">                     <styleClass>
+                   <Button fx:id="editButton" layoutX="538.0" layoutY="538.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="88.0" text="Edit Row">
+                     <styleClass>
                         <String fx:value="btn" />
                         <String fx:value="btn-sm" />
                         <String fx:value="btn-primary" />
                      </styleClass></Button>
-                  <TabPane layoutX="25.0" prefHeight="527.0" prefWidth="850.0" tabClosingPolicy="UNAVAILABLE">
+                  <TabPane fx:id="tabbedPane" layoutX="25.0" prefHeight="527.0" prefWidth="850.0" tabClosingPolicy="UNAVAILABLE">
                     <tabs>
-                      <Tab text="Airport">
-                        <content>
-                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="850.0">
-                                 <children>
-                                    <Pane layoutY="15.0" prefHeight="470.0" prefWidth="214.0">
-                                       <children>
-                                          <Label alignment="CENTER" prefHeight="25.0" prefWidth="213.0" text="Filters">
-                                             <styleClass>
-                                                <String fx:value="text-primary" />
-                                                <String fx:value="h5" />
-                                             </styleClass>
-                                          </Label>
-                                          <ScrollPane layoutY="27.0" prefHeight="402.0" prefWidth="214.0">
-                                             <content>
-                                                <Pane fx:id="airportFilterPane" prefHeight="900.0" prefWidth="198.0">
-                                                   <children>
-                                                      <FilterTextField filter="ID_AIRPORT = '%s'" layoutX="25.0" layoutY="38.0" />
-                                                      <Label layoutX="25.0" layoutY="13.0" prefHeight="25.0" prefWidth="148.0" text="ID" />
-                                                      <FilterTextField filter="NAME = '%s'" layoutX="25.0" layoutY="98.0" />
-                                                      <Label layoutX="25.0" layoutY="73.0" prefHeight="25.0" prefWidth="148.0" text="Name" />
-                                                      <FilterTextField filter="CITY = '%s'" layoutX="25.0" layoutY="158.0" />
-                                                      <Label layoutX="25.0" layoutY="133.0" prefHeight="25.0" prefWidth="148.0" text="City" />
-                                                      <FilterTextField filter="COUNTRY = '%s'" layoutX="25.0" layoutY="218.0" />
-                                                      <Label layoutX="25.0" layoutY="193.0" prefHeight="25.0" prefWidth="148.0" text="Country" />
-                                                      <FilterTextField filter="IATA = '%s'" layoutX="25.0" layoutY="278.0" />
-                                                      <Label layoutX="25.0" layoutY="253.0" prefHeight="25.0" prefWidth="148.0" text="IATA" />
-                                                      <FilterTextField filter="ICAO = '%s'" layoutX="25.0" layoutY="338.0" />
-                                                      <Label layoutX="25.0" layoutY="313.0" prefHeight="25.0" prefWidth="148.0" text="ICAO" />
-                                                      <FilterTextField filter="LATITUDE = %s" layoutX="25.0" layoutY="398.0" />
-                                                      <Label layoutX="25.0" layoutY="373.0" prefHeight="25.0" prefWidth="148.0" text="Latitude" />
-                                                      <FilterTextField filter="LONGITUDE = %s" layoutX="25.0" layoutY="458.0" />
-                                                      <Label layoutX="25.0" layoutY="433.0" prefHeight="25.0" prefWidth="148.0" text="Longitude" />
-                                                      <FilterTextField filter="ALTITUDE = %s" layoutX="25.0" layoutY="518.0" />
-                                                      <Label layoutX="25.0" layoutY="493.0" prefHeight="25.0" prefWidth="148.0" text="Altitude" />
-                                                      <FilterTextField filter="TIMEZONE = '%s'" layoutX="24.0" layoutY="578.0" />
-                                                      <Label layoutX="24.0" layoutY="553.0" prefHeight="25.0" prefWidth="148.0" text="Timezone" />
-                                                      <FilterTextField filter="DST = %s" layoutX="24.0" layoutY="638.0" />
-                                                      <Label layoutX="24.0" layoutY="613.0" prefHeight="25.0" prefWidth="148.0" text="DST" />
-                                                   </children>
-                                                </Pane>
-                                             </content>
-                                          </ScrollPane>
-                                          <Button fx:id="airportFilterButton" layoutX="53.0" layoutY="444.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="108.0" text="Apply Filters" onMouseClicked="#OnAirportFilterButtonClicked">
-                                             <styleClass>
-                                                <String fx:value="btn" />
-                                                <String fx:value="btn-sm" />
-                                                <String fx:value="btn-primary" />
-                                             </styleClass>
-                                          </Button>
-                                       </children>
-                                    </Pane>
-                                    <ScrollPane layoutX="232.0" layoutY="15.0" prefHeight="473.0" prefWidth="605.0">
-                                       <content>
-                                          <TableView fx:id="airport_table" prefHeight="470.0" prefWidth="915.0">
-                                            <columns>
-                                              <TableColumn prefWidth="70.0" text="ID" />
-                                              <TableColumn prefWidth="70.0" text="Name" />
-                                                <TableColumn prefWidth="70.0" text="City" />
-                                                <TableColumn prefWidth="70.0" text="Country" />
-                                                <TableColumn prefWidth="70.0" text="IATA" />
-                                                <TableColumn prefWidth="70.0" text="ICAO" />
-                                                <TableColumn prefWidth="70.0" text="Latitude" />
-                                                <TableColumn prefWidth="70.0" text="Longitude" />
-                                                <TableColumn prefWidth="70.0" text="Altitude" />
-                                                <TableColumn prefWidth="70.0" text="Timezone" />
-                                                <TableColumn prefWidth="70.0" text="DST" />
-                                            </columns>
-                                          </TableView>
-                                       </content>
-                                    </ScrollPane>
-                                 </children>
-                              </AnchorPane>
-                        </content>
-                      </Tab>
+                      <Tab text="Airport" />
                       <Tab text="Airline">
                         <content>
                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
@@ -141,7 +67,7 @@
                                                 <String fx:value="h5" />
                                              </styleClass>
                                           </Label>
-                                          <Button fx:id="airlineFilterButton" layoutX="53.0" layoutY="444.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="108.0" text="Apply Filters" onMouseClicked="#OnAirlineFilterButtonClicked">
+                                          <Button fx:id="airlineFilterButton" layoutX="53.0" layoutY="444.0" mnemonicParsing="false" onMouseClicked="#OnAirlineFilterButtonClicked" prefHeight="25.0" prefWidth="108.0" text="Apply Filters">
                                              <styleClass>
                                                 <String fx:value="btn" />
                                                 <String fx:value="btn-sm" />
@@ -224,7 +150,7 @@
                                                 </Pane>
                                              </content>
                                           </ScrollPane>
-                                          <Button fx:id="routeFilterButton" layoutX="53.0" layoutY="444.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="108.0" text="Apply Filters" onMouseClicked="#OnRouteFilterButtonClicked">
+                                          <Button fx:id="routeFilterButton" layoutX="53.0" layoutY="444.0" mnemonicParsing="false" onMouseClicked="#OnRouteFilterButtonClicked" prefHeight="25.0" prefWidth="108.0" text="Apply Filters">
                                              <styleClass>
                                                 <String fx:value="btn" />
                                                 <String fx:value="btn-sm" />

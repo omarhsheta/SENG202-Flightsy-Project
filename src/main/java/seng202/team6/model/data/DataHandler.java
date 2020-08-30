@@ -77,9 +77,9 @@ public class DataHandler {
     private String GetAirportIATAList(ArrayList<Airport> airports) {
         StringBuilder list = new StringBuilder();
         for (int i = 0; i < airports.size() - 1; i++) {
-            list.append(String.format("'%s', ", airports.get(i).GetIATA()));
+            list.append(String.format("'%s', ", airports.get(i).getIATA()));
         }
-        list.append(String.format("'%s'", airports.get(airports.size() - 1).GetIATA()));
+        list.append(String.format("'%s'", airports.get(airports.size() - 1).getIATA()));
 
         return list.toString();
     }
@@ -251,9 +251,9 @@ public class DataHandler {
         for(Airport airport: airports) {
             String sql = String.format("INSERT INTO airport (id_airport, name, city, country, iata, icao, latitude, longitude, altitude, timezone, dst)" +
                     "VALUES (\"%d\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%f\", \"%f\", \"%d\", \"%f\", \"%c\");",
-                    airport.GetAirportID(), airport.GetName(), airport.GetCity(), airport.GetCountry(),
-                    airport.GetIATA(), airport.GetICAO(), airport.GetLatitude(), airport.GetLongitude(), airport.GetAltitude(),
-                    airport.GetTimezone(), airport.GetDST()
+                    airport.getAirportID(), airport.getName(), airport.getCity(), airport.getCountry(),
+                    airport.getIATA(), airport.getICAO(), airport.getLatitude(), airport.getLongitude(), airport.getAltitude(),
+                    airport.getTimezone(), airport.getDST()
             );
             stmt.executeUpdate(sql);
         }

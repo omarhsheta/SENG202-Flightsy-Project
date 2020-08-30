@@ -1,6 +1,7 @@
 package seng202.team6.gui.controller;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -8,6 +9,7 @@ import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
+import seng202.team6.gui.WindowHandler;
 import seng202.team6.gui.components.FilterTextField;
 import seng202.team6.model.data.CSVLoader;
 import seng202.team6.model.data.DataHandler;
@@ -18,6 +20,7 @@ import seng202.team6.model.entities.Route;
 import seng202.team6.model.entities.RoutePath;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.Arrays;
@@ -37,14 +40,7 @@ public class DataViewerController implements Initializable
     private MenuItem fileImportMenuItem;
 
     @FXML
-    private TableView airport_table;
-
-
-    @FXML
-    Button airportFilterButton;
-    @FXML
-    private Pane airportFilterPane;
-    private final ArrayList<FilterTextField> filterAirportTextFields = new ArrayList<>();
+    private TabPane tabbedPane;
 
     @FXML
     Button airlineFilterButton;
@@ -60,22 +56,38 @@ public class DataViewerController implements Initializable
 
     @FXML
     Button flightFilterButton;
-    @FXML
-    private Pane flightFilterPane;
+    //@FXML
+    //private Pane flightFilterPane;
     private final ArrayList<FilterTextField> filterFlightTextFields = new ArrayList<>();
 
     private CSVLoader csvLoader;
     private DataHandler dataHandler;
 
-
-
-    public DataViewerController() {
-    }
+    /**
+     * Resources to load
+     */
+    private final String[] resourceFXML = new String[] {
+            "airporttab",
+    };
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        try {
+            //Load each FXML tab
+            for (String resource : this.resourceFXML) {
+                Node source = FXMLLoader.load(getClass().getResource("/dataviewer/" + resource + ".fxml"));
+                Tab newTab = new Tab(resource, source);
+                tabbedPane.getTabs().add(newTab);
+            }
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+
         dataHandler = DataHandler.GetInstance();
         csvLoader = new CSVLoader();
+
+        /*
         //Grab all airport text filter components
         for (Node node : airportFilterPane.getChildren()) {
             if (node != null && node.getClass() == FilterTextField.class) {
@@ -103,62 +115,10 @@ public class DataViewerController implements Initializable
 //                filterFlightTextFields.add((FilterTextField) node);
 //            }
 //        }
+         */
     }
 
     private void FillAirports() {
-    }
-
-    /**
-     * FXML button action that takes place when the Filter button is clicked on the Airports data view.
-     * This function takes the filters from the GetFilters method and gets the filtered Airport ArrayList from the DataHandler.
-     * Then it inputs the data into the data viewer table.
-     */
-    @FXML
-    private void OnAirportFilterButtonClicked() {
-        ArrayList<Filter> filters = GetFilters(filterAirportTextFields);
-
-        try {
-            ArrayList<Airport> filteredAirports = dataHandler.FetchAirports(filters);
-
-            for (int i = 0; i < filteredAirports.size(); i++) {
-
-
-                for (int j = 0; j < 11; j++) {
-                    TableColumn tableColumn = new TableColumn<>();
-                    tableColumn.setText("1");
-                    airport_table.getColumns().add(tableColumn);
-                }
-
-            }
-
-            for (Airport airport : filteredAirports) {
-                int AirportID = airport.GetAirportID();
-                String Name = airport.GetName();
-                String City = airport.GetCity();
-                String Country = airport.GetCountry();
-                String IATA = airport.GetIATA();
-                String ICAO = airport.GetICAO();
-                float Latitude = airport.GetLatitude();
-                float Longitude = airport.GetLongitude();
-                int Altitude = airport.GetAltitude();
-                float Timezone = airport.GetTimezone();
-                char DST = airport.GetDST();
-
-                //textPanel.setRow(0) = AirportID;
-                //textPanel.setRow(1) = Name;
-                //textPanel.setRow(2) = City;
-                //textPanel.setRow(3) = Country;
-                //textPanel.setRow(4) = IATA;
-                //textPanel.setRow(5) = ICAO;
-                //textPanel.setRow(6) = Latitude;
-                //textPanel.setRow(7) = Longitude;
-                //textPanel.setRow(8) = Altitude;
-                //textPanel.setRow(9) = Timezone;
-                //textPanel.setRow(10) = DST;
-            }
-        } catch (Exception ignored) {
-            System.out.println("Error");
-        }
     }
 
     /**
@@ -288,9 +248,7 @@ public class DataViewerController implements Initializable
                 new FileChooser.ExtensionFilter("CSV File", "*.csv"),
                 new FileChooser.ExtensionFilter("DAT File", "*.dat"));
 
-        File selectedFile = fileChooser.showOpenDialog(borderPane.getScene().getWindow());
-
-        return selectedFile;
+        return fileChooser.showOpenDialog(borderPane.getScene().getWindow());
     }
 
 

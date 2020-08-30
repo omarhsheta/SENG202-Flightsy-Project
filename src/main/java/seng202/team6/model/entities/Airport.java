@@ -41,12 +41,12 @@ public class Airport implements IMapDrawable {
 
         Airport airportObject = (Airport)obj;
 
-        return this.AirportID == airportObject.GetAirportID() && this.Name.equals(airportObject.GetName()) &&
-                this.City.equals(airportObject.GetCity()) && this.Country.equals(airportObject.GetCountry()) &&
-                this.IATA.equals(airportObject.GetIATA()) && this.ICAO.equals(airportObject.GetICAO()) &&
-                this.Latitude == airportObject.GetLatitude() && this.Longitude == airportObject.GetLongitude() &&
-                this.Altitude == airportObject.GetAltitude() && this.Timezone == airportObject.GetTimezone() &&
-                this.DST == airportObject.GetDST();
+        return this.AirportID == airportObject.getAirportID() && this.Name.equals(airportObject.getName()) &&
+                this.City.equals(airportObject.getCity()) && this.Country.equals(airportObject.getCountry()) &&
+                this.IATA.equals(airportObject.getIATA()) && this.ICAO.equals(airportObject.getICAO()) &&
+                this.Latitude == airportObject.getLatitude() && this.Longitude == airportObject.getLongitude() &&
+                this.Altitude == airportObject.getAltitude() && this.Timezone == airportObject.getTimezone() &&
+                this.DST == airportObject.getDST();
     }
 
     /**
@@ -68,12 +68,12 @@ public class Airport implements IMapDrawable {
                         "name: \"%s\", country: \"%s\", city: \"%s\", " +
                         "iata: \"%s\", icao: \"%s\", alt: %d, tz: %f",
 
-                this.GetLatitude(), this.GetLongitude(), this.GetName(),
-                this.GetCountry(), this.GetCity(), this.GetIATA(), this.GetICAO(),
-                this.GetAltitude(), this.GetTimezone());
+                this.getLatitude(), this.getLongitude(), this.getName(),
+                this.getCountry(), this.getCity(), this.getIATA(), this.getICAO(),
+                this.getAltitude(), this.getTimezone());
     }
 
-    public int GetAirportID() {
+    public int getAirportID() {
         return AirportID;
     }
 
@@ -81,7 +81,7 @@ public class Airport implements IMapDrawable {
         AirportID = airportID;
     }
 
-    public String GetName() {
+    public String getName() {
         return Name;
     }
 
@@ -89,7 +89,7 @@ public class Airport implements IMapDrawable {
         Name = name;
     }
 
-    public String GetCity() {
+    public String getCity() {
         return City;
     }
 
@@ -97,7 +97,7 @@ public class Airport implements IMapDrawable {
         City = city;
     }
 
-    public String GetCountry() {
+    public String getCountry() {
         return Country;
     }
 
@@ -105,7 +105,7 @@ public class Airport implements IMapDrawable {
         Country = country;
     }
 
-    public String GetIATA() {
+    public String getIATA() {
         return IATA;
     }
 
@@ -113,7 +113,7 @@ public class Airport implements IMapDrawable {
         this.IATA = IATA;
     }
 
-    public String GetICAO() {
+    public String getICAO() {
         return ICAO;
     }
 
@@ -121,7 +121,7 @@ public class Airport implements IMapDrawable {
         this.ICAO = ICAO;
     }
 
-    public float GetLatitude() {
+    public float getLatitude() {
         return Latitude;
     }
 
@@ -129,7 +129,7 @@ public class Airport implements IMapDrawable {
         Latitude = latitude;
     }
 
-    public float GetLongitude() {
+    public float getLongitude() {
         return Longitude;
     }
 
@@ -137,7 +137,7 @@ public class Airport implements IMapDrawable {
         Longitude = longitude;
     }
 
-    public int GetAltitude() {
+    public int getAltitude() {
         return Altitude;
     }
 
@@ -145,7 +145,7 @@ public class Airport implements IMapDrawable {
         Altitude = altitude;
     }
 
-    public float GetTimezone() {
+    public float getTimezone() {
         return Timezone;
     }
 
@@ -153,7 +153,7 @@ public class Airport implements IMapDrawable {
         Timezone = timezone;
     }
 
-    public char GetDST() {
+    public char getDST() {
         return DST;
     }
 
