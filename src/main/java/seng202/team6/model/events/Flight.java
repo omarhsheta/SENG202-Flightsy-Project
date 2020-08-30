@@ -1,5 +1,7 @@
 package seng202.team6.model.events;
 
+import javax.lang.model.util.Elements;
+
 /**
  * This class is for flight plans
  */
@@ -9,7 +11,7 @@ public class Flight extends Event {
     String DestinationAirport;
     String OriginCity;
     String OriginCountry;
-    String DestinatioCity;
+    String DestinationCity;
     String DestinationCountry;
 
     /**
@@ -35,7 +37,39 @@ public class Flight extends Event {
         DestinationAirport = DAirport;
         OriginCity = OCity;
         OriginCountry = OCountry;
-        DestinatioCity = DCity;
+        DestinationCity = DCity;
         DestinationCountry = DCountry;
+    }
+
+    /**
+     *
+     * @return The origin city
+     */
+    public String getOCity() {
+        return OriginCity;
+    }
+
+    /**
+     *
+     * @return The destination city
+     */
+    public String getDCity() {
+        return DestinationCity;
+    }
+
+    /**
+     *
+     * @return The origin Airport
+     */
+    public String getOAirport() {
+        return OriginAirport;
+    }
+
+    /**
+     *
+     * @return The destination Airport
+     */
+    public String getDAirport() {
+        return DestinationAirport;
     }
 }

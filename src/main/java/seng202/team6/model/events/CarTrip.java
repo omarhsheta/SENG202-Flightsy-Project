@@ -6,7 +6,7 @@ package seng202.team6.model.events;
 public class CarTrip extends Event {
     String OriginCity;
     String OriginCountry;
-    String DestinatioCity;
+    String DestinationCity;
     String DestinationCountry;
 
     /**
@@ -26,7 +26,23 @@ public class CarTrip extends Event {
         super(D, M, Y, T, N);
         OriginCity = OCity;
         OriginCountry = OCountry;
-        DestinatioCity = DCity;
+        DestinationCity = DCity;
         DestinationCountry = DCountry;
+    }
+
+    /**
+     *
+     * @return The origin city
+     */
+    public String getOCity() {
+        return OriginCity;
+    }
+
+    /**
+     *
+     * @return The destination city
+     */
+    public String getDCity() {
+        return DestinationCity;
     }
 }
