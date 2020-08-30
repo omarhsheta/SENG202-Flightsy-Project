@@ -13,12 +13,12 @@ public class Airport implements IMapDrawable {
     String ICAO;
     float Latitude;
     float Longitude;
-    int Altitude;
-    float Timezone;
+    Integer Altitude;
+    Integer Timezone;
     char DST;
 
     public Airport(int newAirportID, String newName, String newCity, String newCountry, String newIATA,
-                   String newICAO, float newLatitude, float newLongitude, int newAltitude, float newTimezone,
+                   String newICAO, float newLatitude, float newLongitude, Integer newAltitude, Integer newTimezone,
                    char newDST) {
         AirportID = newAirportID;
         Name = newName;
@@ -33,6 +33,7 @@ public class Airport implements IMapDrawable {
         DST = newDST;
     }
 
+
     @Override
     public boolean equals(Object obj) {
         if (obj == null || obj.getClass() != this.getClass()) {
@@ -45,7 +46,7 @@ public class Airport implements IMapDrawable {
                 this.City.equals(airportObject.GetCity()) && this.Country.equals(airportObject.GetCountry()) &&
                 this.IATA.equals(airportObject.GetIATA()) && this.ICAO.equals(airportObject.GetICAO()) &&
                 this.Latitude == airportObject.GetLatitude() && this.Longitude == airportObject.GetLongitude() &&
-                this.Altitude == airportObject.GetAltitude() && this.Timezone == airportObject.GetTimezone() &&
+                this.Altitude.equals(airportObject.GetAltitude()) && this.Timezone.equals(airportObject.GetTimezone()) &&
                 this.DST == airportObject.GetDST();
     }
 
@@ -66,7 +67,7 @@ public class Airport implements IMapDrawable {
     public String ConvertToJavascriptString() {
         return String.format("lat: %f, lng: %f, " +
                         "name: \"%s\", country: \"%s\", city: \"%s\", " +
-                        "iata: \"%s\", icao: \"%s\", alt: %d, tz: %f",
+                        "iata: \"%s\", icao: \"%s\", alt: %d, tz: %d",
 
                 this.GetLatitude(), this.GetLongitude(), this.GetName(),
                 this.GetCountry(), this.GetCity(), this.GetIATA(), this.GetICAO(),
@@ -121,35 +122,35 @@ public class Airport implements IMapDrawable {
         this.ICAO = ICAO;
     }
 
-    public float GetLatitude() {
+    public Float GetLatitude() {
         return Latitude;
     }
 
-    public void SetLatitude(float latitude) {
+    public void SetLatitude(Float latitude) {
         Latitude = latitude;
     }
 
-    public float GetLongitude() {
+    public Float GetLongitude() {
         return Longitude;
     }
 
-    public void SetLongitude(float longitude) {
+    public void SetLongitude(Float longitude) {
         Longitude = longitude;
     }
 
-    public int GetAltitude() {
+    public Integer GetAltitude() {
         return Altitude;
     }
 
-    public void SetAltitude(int altitude) {
+    public void SetAltitude(Integer altitude) {
         Altitude = altitude;
     }
 
-    public float GetTimezone() {
+    public Integer GetTimezone() {
         return Timezone;
     }
 
-    public void SetTimezone(int timezone) {
+    public void SetTimezone(Integer timezone) {
         Timezone = timezone;
     }
 

@@ -165,12 +165,12 @@ public class CSVLoader {
             float newLatitude;
             float newLongitude;
             int newAltitude;
-            float newTimezone;
+            int newTimezone;
             try {
                 newLatitude = Float.parseFloat(line.get(6));
                 newLongitude = Float.parseFloat(line.get(7));
                 newAltitude = Integer.parseInt(line.get(8));
-                newTimezone = Float.parseFloat(line.get(9));
+                newTimezone = Integer.parseInt(line.get(9));
             }
             catch (NumberFormatException e1) {
                 //Not a number

@@ -251,7 +251,7 @@ public class DataHandler {
         Statement stmt = this.databaseConnection.createStatement();
         for(Airport airport: airports) {
             String sql = String.format("INSERT INTO airport (id_airport, name, city, country, iata, icao, latitude, longitude, altitude, timezone, dst)" +
-                    "VALUES (\"%d\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%f\", \"%f\", \"%d\", \"%f\", \"%c\");",
+                    "VALUES (\"%d\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%f\", \"%f\", \"%d\", \"%d\", \"%c\");",
                     airport.GetAirportID(), airport.GetName(), airport.GetCity(), airport.GetCountry(),
                     airport.GetIATA(), airport.GetICAO(), airport.GetLatitude(), airport.GetLongitude(), airport.GetAltitude(),
                     airport.GetTimezone(), airport.GetDST()

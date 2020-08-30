@@ -10,6 +10,7 @@ import javafx.scene.text.Text;
 import seng202.team6.gui.WindowHandler;
 import seng202.team6.model.data.DataHandler;
 import seng202.team6.model.entities.Airline;
+import seng202.team6.model.entities.Airport;
 
 import java.io.Console;
 import java.net.URL;
@@ -17,33 +18,22 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 public class AddRowController implements Initializable
 {
     // Airline input fields
     @FXML
-    private TextField airIdField;
-
-    @FXML
-    private TextField airNameField;
-
-    @FXML
-    private TextField airAliasField;
-
-    @FXML
-    private TextField AirIataField;
-
-    @FXML
-    private TextField AirIcaoField;
-
-    @FXML
-    private TextField AirCallsignField;
-
-    @FXML
-    private TextField AirCountryField;
+    private TextField airIdField, airNameField, airAliasField, AirIataField, AirIcaoField, AirCallsignField,
+            AirCountryField;
 
     @FXML
     private ComboBox AirActiveField;
+
+    // Airport input fields
+    @FXML
+    private TextField airpId, airpName, airpCity, airpCountry, airpIata, airpIcao, airpLat, airpLon, airpAlt, airpTim,
+            airpDst;
 
 
     @FXML
@@ -51,14 +41,14 @@ public class AddRowController implements Initializable
 
     private DataHandler dataHandler;
 
-    private int successfullyAdded;
+    private int airlinesAdded, airportsAdded;
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
     {
         dataHandler = DataHandler.GetInstance();
-        successfullyAdded = 0;
+        airlinesAdded = airportsAdded = 0;
     }
 
     private void ShowMessage(boolean error, String message) {
@@ -69,6 +59,72 @@ public class AddRowController implements Initializable
         }
         InfoText.setText(message);
         InfoText.setVisible(true);
+    }
+
+    private Airport CheckAirport(String airpId, String airpName, String airpCity, String airpCountry, String airpIata,
+                                 String airpIcao, String airpLat, String airpLon, String airpAlt, String airpTim,
+                                 String airpDst) {
+        Airport airport = null;
+
+        int airportId;
+        try {  // Check if airport id input is valid
+            airportId = Integer.parseInt(airpId);
+        } catch (Exception e) {
+            ShowMessage(true, "Check the Airport ID field and try again");
+            return airport;
+        }
+
+        Float latitude = null;
+        if (airpLat != "") {
+            try {  // Check if latitude input is valid
+                latitude = Float.parseFloat(airpLat);
+            } catch (Exception e) {
+                ShowMessage(true, "Check the latitude field and try again");
+                return airport;
+            }
+        }
+
+        Float longitude = null;
+        if (airpLon != "") {
+            try {  // Check if latitude and longitude inputs are valid
+                longitude = Float.parseFloat(airpLon);
+            } catch (Exception e) {
+                ShowMessage(true, "Check the longitude field and try again");
+                return airport;
+            }
+        }
+
+        Integer altitude = null;
+        if (airpAlt != "") {
+            try {  // Check if altitude input is valid
+                altitude = Integer.parseInt(airpAlt);
+            } catch (Exception e) {
+                ShowMessage(true, "Check the Altitude field and try again");
+                return airport;
+            }
+        }
+
+        Integer timeZone = null;
+        if (airpTim != "") {
+            try {  // Check if the time zone input is valid
+                timeZone = Integer.parseInt(airpTim);
+            } catch (Exception e) {
+                ShowMessage(true, "Check the Time Zone field and try again");
+                return airport;
+            }
+        }
+
+        char dst;
+        Set<String> validValues = Set.of("e", "a", "s", "o", "z", "n");
+        if (validValues.contains(airpDst.toLowerCase())) {
+            dst = airpDst.toUpperCase().charAt(0);
+        } else {
+            dst = 'U';  // Unknown Daylight savings value
+        }
+
+        airport = new Airport(airportId, airpName, airpCity, airpCountry, airpIata, airpIcao, latitude, longitude,
+                altitude, timeZone, dst);
+        return airport;
     }
 
     private Airline CheckAirline(String airlineID, String name, String alias, String iata, String icao,
@@ -109,18 +165,42 @@ public class AddRowController implements Initializable
     }
 
     @FXML
+    public void AddAirport() {
+        Airport airport = CheckAirport(airpId.getText(), airpName.getText(), airpCity.getText(), airpCountry.getText(),
+                airpIata.getText(), airpIcao.getText(), airpLat.getText(), airpLon.getText(), airpAlt.getText(),
+                airpTim.getText(), airpDst.getText());
+        if (airport != null) {
+            ArrayList<Airport> airportArrayList = new ArrayList<>() {{
+                add(airport);
+            }};
+
+            try {
+                dataHandler.InsertAirports(airportArrayList);
+                String message = String.format("Successfully added %d airline", ++airportsAdded);
+                if (airportsAdded > 1) {
+                    message += "s";
+                }
+                ShowMessage(false, message);
+            } catch (SQLException e) {
+                ShowMessage(true, "There was a problem when saving the airport");
+            }
+        }
+    }
+
+    @FXML
     public void AddAirline() {
         Airline airline = CheckAirline(airIdField.getText(), airNameField.getText(), airAliasField.getText(),
                 AirIataField.getText(), AirIcaoField.getText(), AirCallsignField.getText(), AirCountryField.getText(),
                 (String) AirActiveField.getValue());
         if (airline != null) {
-            ArrayList<Airline> airlineArrayList = new ArrayList<>();
-            airlineArrayList.add(airline);
+            ArrayList<Airline> airlineArrayList = new ArrayList<>() {{
+                add(airline);
+            }};
 
             try {
                 dataHandler.InsertAirlines(airlineArrayList);
-                String message = String.format("Successfully added %d airline", ++successfullyAdded);;
-                if (successfullyAdded > 1) {
+                String message = String.format("Successfully added %d airline", ++airlinesAdded);
+                if (airlinesAdded > 1) {
                     message += "s";
                 }
                 ShowMessage(false, message);
