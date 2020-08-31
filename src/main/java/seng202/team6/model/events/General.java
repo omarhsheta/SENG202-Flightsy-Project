@@ -18,7 +18,7 @@ public class General extends Event {
      * @param nCity The city where the general event is taking place
      * @param nCountry The country where the general event is taking place
      */
-    General(int D, int M, int Y, String T, String N, String nCity, String nCountry) {
+    public General(int D, int M, int Y, String T, String N, String nCity, String nCountry) {
         super(D, M, Y, T, N);
         City = nCity;
         Country = nCountry;
