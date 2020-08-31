@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
@@ -11,6 +12,7 @@ import seng202.team6.gui.WindowHandler;
 import seng202.team6.model.data.DataHandler;
 import seng202.team6.model.entities.Airline;
 import seng202.team6.model.entities.Airport;
+import seng202.team6.model.entities.Route;
 
 import java.io.Console;
 import java.net.URL;
@@ -35,20 +37,30 @@ public class AddRowController implements Initializable
     private TextField airpId, airpName, airpCity, airpCountry, airpIata, airpIcao, airpLat, airpLon, airpAlt, airpTim,
             airpDst;
 
+    // Route input fields
+    @FXML
+    private TextField rouAir, rouAirId, rouSouAir, rouSouAirId, rouDesAir, rouDesAirId, rouEqp;
+
+    @FXML
+    private ComboBox rouCod;
+
+    @FXML
+    private Slider rouStp;
+
 
     @FXML
     private Text InfoText;
 
     private DataHandler dataHandler;
 
-    private int airlinesAdded, airportsAdded;
+    private int airlinesAdded, airportsAdded, routesAdded;
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
     {
         dataHandler = DataHandler.GetInstance();
-        airlinesAdded = airportsAdded = 0;
+        airlinesAdded = airportsAdded = routesAdded = 0;
     }
 
     private void ShowMessage(boolean error, String message) {
@@ -152,16 +164,65 @@ public class AddRowController implements Initializable
         return airline;
     }
 
+    private Route CheckRoute(String rouAir, String rouAirId, String rouSouAir, String rouSouAirId, String rouDesAir,
+                             String rouDesAirId, String rouCod, int rouStp, String rouEqp) {
+        Route route = null;
+
+        int airId;
+        try {  // Check if airline id input is valid
+            airId = Integer.parseInt(rouAirId);
+        } catch (Exception e) {
+            ShowMessage(true, "Check the Airline ID field and try again");
+            return route;
+        }
+
+        int srcAirId;
+        try {  // Check if source airline id input is valid
+            srcAirId = Integer.parseInt(rouSouAirId);
+        } catch (Exception e) {
+            ShowMessage(true, "Check the Source Airline ID field and try again");
+            return route;
+        }
+
+        int desAirId;
+        try {  // Check if destination airline id input is valid
+            desAirId = Integer.parseInt(rouDesAirId);
+        } catch (Exception e) {
+            ShowMessage(true, "Check the Destination Airline ID field and try again");
+            return route;
+        }
+
+        Character codeShare = null;  // Parse combo box result
+        if (rouCod != null) {
+            if (rouCod.equals("Yes")) {
+                codeShare = 'Y';
+            } else if (rouCod.equals("No")) {
+                codeShare = 'N';
+            }
+        }
+
+        route = new Route(airId, rouAir, rouSouAir, srcAirId, rouDesAir, desAirId, codeShare, rouStp, rouEqp);
+        return route;
+    }
+
     @FXML
     public void ClearFields() {
-        airIdField.clear();
-        airNameField.clear();
-        airAliasField.clear();
-        AirIataField.clear();
-        AirIcaoField.clear();
-        AirCallsignField.clear();
-        AirCountryField.clear();
-        AirActiveField.getSelectionModel().clearSelection();
+        TextField[] textFields = {
+                airIdField, airNameField, airAliasField, AirIataField, AirIcaoField, AirCallsignField, AirCountryField,
+                airpId, airpName, airpCity, airpCountry, airpIata, airpIcao, airpLat, airpLon, airpAlt, airpTim,
+                airpDst, rouAir, rouAirId, rouSouAir, rouSouAirId, rouDesAir, rouDesAirId, rouEqp
+        };
+        for (TextField textField : textFields) {
+            textField.clear();
+        }
+        ComboBox[] comboBoxes = {
+                AirActiveField, rouCod
+        };
+        for (ComboBox comboBox : comboBoxes) {
+            comboBox.getSelectionModel().clearSelection();
+        }
+
+        rouStp.setValue(rouStp.getMin());
     }
 
     @FXML
@@ -206,6 +267,29 @@ public class AddRowController implements Initializable
                 ShowMessage(false, message);
             } catch (SQLException e) {
                 ShowMessage(true, "There was a problem when saving the airline");
+            }
+        }
+    }
+
+    @FXML
+    public void AddRoute() {
+        Route route = CheckRoute(rouAir.getText(), rouAirId.getText(), rouSouAir.getText(), rouSouAirId.getText(),
+                rouDesAir.getText(), rouDesAirId.getText(), (String) rouCod.getValue(), (int) rouStp.getValue(),
+                rouEqp.getText());
+        if (route != null) {
+            ArrayList<Route> routeArrayList = new ArrayList<>() {{
+                add(route);
+            }};
+
+            try {
+                dataHandler.InsertRoutes(routeArrayList);
+                String message = String.format("Successfully added %d route", ++routesAdded);
+                if (routesAdded > 1) {
+                    message += "s";
+                }
+                ShowMessage(false, message);
+            } catch (SQLException e) {
+                ShowMessage(true, "There was a problem when saving the route");
             }
         }
     }

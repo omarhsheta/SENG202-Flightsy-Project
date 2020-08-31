@@ -329,8 +329,11 @@ public class DataViewerController implements Initializable
                         getClass().getClassLoader().getResource("addrow.fxml")
                 )
         );
-        Scene dialogScene = new Scene(root);
-        popUp.setScene(dialogScene);
+        Scene popUpScene = new Scene(root);
+        //Set variables
+        popUp.setTitle("Add Row");
+        popUpScene.getStylesheets().add("org/kordamp/bootstrapfx/bootstrapfx.css");
+        popUp.setScene(popUpScene);
         popUp.show();
     }
 }

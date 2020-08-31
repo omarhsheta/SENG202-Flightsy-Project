@@ -8,12 +8,12 @@ public class Route {
     int SourceAirportID;
     String DestinationAirport;
     int DestinationAirportID;
-    char Codeshare;
+    Character Codeshare;
     int Stops;
     String Equipment;
 
     public Route(int newAirlineID, String newAirline, String newSourceAirport, int newSourceAirportID,
-                 String newDestinationAirport, int newDestinationAirportID, char newCodeshare, int newStops,
+                 String newDestinationAirport, int newDestinationAirportID, Character newCodeshare, int newStops,
                  String newEquipment) {
         AirlineID = newAirlineID;
         Airline = newAirline;
@@ -93,11 +93,9 @@ public class Route {
         DestinationAirportID = destinationAirportID;
     }
 
-    public char GetCodeshare() {
-        return Codeshare;
-    }
+    public Character GetCodeshare() { return Codeshare; }
 
-    public void SetCodeshare(char codeshare) {
+    public void SetCodeshare(Character codeshare) {
         Codeshare = codeshare;
     }
 
