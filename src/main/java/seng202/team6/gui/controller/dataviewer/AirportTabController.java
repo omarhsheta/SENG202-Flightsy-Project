@@ -66,7 +66,7 @@ public class AirportTabController implements Initializable
         columnLng.setCellValueFactory(new PropertyValueFactory<>("longitude"));
         columnAlt.setCellValueFactory(new PropertyValueFactory<>("altitude"));
         columnTZ.setCellValueFactory(new PropertyValueFactory<>("timezone"));
-        columnDST.setCellValueFactory(new PropertyValueFactory<>("timezone"));
+        columnDST.setCellValueFactory(new PropertyValueFactory<>("DST"));
 
         ArrayList<Filter> filters = new ArrayList<>();
         filters.add(new Filter("COUNTRY = 'New Zealand'", null));

@@ -27,13 +27,13 @@ public class RouteTabController implements Initializable
     @FXML
     private TableColumn<Route, ?> columnAirline;
     @FXML
-    private TableColumn<Route, ?> columnSourceAirport;
+    private TableColumn<Route, ?> columnSrc;
     @FXML
-    private TableColumn<Route, ?> columnSourceAirportID;
+    private TableColumn<Route, ?> columnSrcID;
     @FXML
-    private TableColumn<Route, ?> columnDestinationAirport;
+    private TableColumn<Route, ?> columnDst;
     @FXML
-    private TableColumn<Route, ?> columnDestinationAirportID;
+    private TableColumn<Route, ?> columnDstID;
     @FXML
     private TableColumn<Route, ?> columnCodeshare;
     @FXML
@@ -54,16 +54,16 @@ public class RouteTabController implements Initializable
 
         columnID.setCellValueFactory(new PropertyValueFactory<>("airlineID"));
         columnAirline.setCellValueFactory(new PropertyValueFactory<>("airline"));
-        columnSourceAirport.setCellValueFactory(new PropertyValueFactory<>("sourceAirport"));
-        columnSourceAirportID.setCellValueFactory(new PropertyValueFactory<>("sourceAirportID"));
-        columnDestinationAirport.setCellValueFactory(new PropertyValueFactory<>("destinationAirport"));
-        columnDestinationAirportID.setCellValueFactory(new PropertyValueFactory<>("destinationAirportID"));
+        columnSrc.setCellValueFactory(new PropertyValueFactory<>("sourceAirport"));
+        columnSrcID.setCellValueFactory(new PropertyValueFactory<>("sourceAirportID"));
+        columnDst.setCellValueFactory(new PropertyValueFactory<>("destinationAirport"));
+        columnDstID.setCellValueFactory(new PropertyValueFactory<>("destinationAirportID"));
         columnCodeshare.setCellValueFactory(new PropertyValueFactory<>("codeshare"));
         columnStops.setCellValueFactory(new PropertyValueFactory<>("stops"));
         columnEquipment.setCellValueFactory(new PropertyValueFactory<>("equipment"));
 
         ArrayList<Filter> filters = new ArrayList<>();
-        filters.add(new Filter("", null));
+        filters.add(new Filter("SOURCE_AIRPORT = 'AKL'", null));
         ArrayList<Route> filteredRoutes = DataHandler.GetInstance().FetchRoutes(filters);
         routeTable.getItems().addAll(filteredRoutes);
     }

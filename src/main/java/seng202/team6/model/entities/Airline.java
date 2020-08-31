@@ -31,13 +31,13 @@ public class Airline {
 
         Airline airlineObject = (Airline)obj;
 
-        return this.AirlineID == airlineObject.GetAirlineID() && this.Name.equals(airlineObject.GetName())
-                            && this.Alias.equals(airlineObject.GetAlias()) && this.IATA.equals(airlineObject.GetIATA()) &&
-                            this.ICAO.equals(airlineObject.GetICAO()) && this.Callsign.equals(airlineObject.GetCallsign()) &&
-                            this.Country.equals(airlineObject.GetCountry()) && this.Active == airlineObject.GetActive();
+        return this.AirlineID == airlineObject.getAirlineID() && this.Name.equals(airlineObject.getName())
+                            && this.Alias.equals(airlineObject.getAlias()) && this.IATA.equals(airlineObject.getIATA()) &&
+                            this.ICAO.equals(airlineObject.getICAO()) && this.Callsign.equals(airlineObject.getCallsign()) &&
+                            this.Country.equals(airlineObject.getCountry()) && this.Active == airlineObject.getActive();
     }
 
-    public int GetAirlineID() {
+    public int getAirlineID() {
         return AirlineID;
     }
 
@@ -45,7 +45,7 @@ public class Airline {
         AirlineID = airlineID;
     }
 
-    public String GetName() {
+    public String getName() {
         return Name;
     }
 
@@ -53,7 +53,7 @@ public class Airline {
         Name = name;
     }
 
-    public String GetAlias() {
+    public String getAlias() {
         return Alias;
     }
 
@@ -61,7 +61,7 @@ public class Airline {
         Alias = alias;
     }
 
-    public String GetIATA() {
+    public String getIATA() {
         return IATA;
     }
 
@@ -69,7 +69,7 @@ public class Airline {
         this.IATA = IATA;
     }
 
-    public String GetICAO() {
+    public String getICAO() {
         return ICAO;
     }
 
@@ -77,7 +77,7 @@ public class Airline {
         this.ICAO = ICAO;
     }
 
-    public String GetCallsign() {
+    public String getCallsign() {
         return Callsign;
     }
 
@@ -85,7 +85,7 @@ public class Airline {
         Callsign = callsign;
     }
 
-    public String GetCountry() {
+    public String getCountry() {
         return Country;
     }
 
@@ -93,7 +93,7 @@ public class Airline {
         Country = country;
     }
 
-    public char GetActive() {
+    public char getActive() {
         return Active;
     }
 

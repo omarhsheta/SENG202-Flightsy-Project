@@ -114,7 +114,7 @@ public class FindRoutesController implements Initializable
         resultsPane.getChildren().clear();
         for (Route route : routes) {
             TextArea text = new TextArea();
-            text.setText(String.format("%s --> %s", route.GetSourceAirport(), route.GetDestinationAirport()));
+            text.setText(String.format("%s --> %s", route.getSourceAirport(), route.getDestinationAirport()));
             resultsPane.getChildren().add(text);
         }
         //END TEMPORARY

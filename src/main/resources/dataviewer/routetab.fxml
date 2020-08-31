@@ -11,7 +11,7 @@
 <?import seng202.team6.gui.components.FilterTextField?>
 
 
-<BorderPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.team6.gui.controller.dataviewer.RouteTabController">
    <left>
       <Pane prefHeight="470.0" prefWidth="214.0" BorderPane.alignment="CENTER">
          <children>
@@ -58,7 +58,7 @@
       </Pane>
    </left>
    <center>
-      <TableView prefHeight="470.0" prefWidth="700.0" BorderPane.alignment="CENTER">
+      <TableView fx:id="routeTable" prefHeight="470.0" prefWidth="700.0" BorderPane.alignment="CENTER">
          <columns>
             <TableColumn fx:id="columnAirline" prefWidth="70.0" text="Airline" />
             <TableColumn fx:id="columnID" prefWidth="70.0" text="Airline ID" />

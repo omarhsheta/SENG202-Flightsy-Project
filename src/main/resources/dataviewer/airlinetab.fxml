@@ -11,7 +11,7 @@
 <?import seng202.team6.gui.components.FilterTextField?>
 
 
-<BorderPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.team6.gui.controller.dataviewer.AirlineTabController">
    <left>
       <Pane prefHeight="470.0" prefWidth="214.0" BorderPane.alignment="CENTER">
          <children>
@@ -56,14 +56,14 @@
       </Pane>
    </left>
    <center>
-      <TableView prefHeight="480.0" prefWidth="590.0" BorderPane.alignment="CENTER">
+      <TableView fx:id="airlineTable" prefHeight="480.0" prefWidth="590.0" BorderPane.alignment="CENTER">
          <columns>
             <TableColumn fx:id="columnID" prefWidth="70.0" text="ID" />
             <TableColumn fx:id="columnName" prefWidth="70.0" text="Name" />
             <TableColumn fx:id="columnAlias" prefWidth="70.0" text="Alias" />
             <TableColumn fx:id="columnIATA" prefWidth="70.0" text="IATA" />
             <TableColumn fx:id="columnICAO" prefWidth="70.0" text="ICAO" />
-            <TableColumn fx:id="columnSign" prefWidth="70.0" text="Callsign" />
+            <TableColumn fx:id="columnCallsign" prefWidth="70.0" text="Callsign" />
             <TableColumn fx:id="columnCountry" prefWidth="70.0" text="Country" />
             <TableColumn fx:id="columnActive" prefWidth="70.0" text="Active" />
          </columns>

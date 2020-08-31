@@ -34,18 +34,18 @@ public class Route {
 
         Route routeObject = (Route)obj;
 
-        return this.AirlineID == routeObject.GetAirlineID() &&
-                this.Airline.equals(routeObject.GetAirline()) &&
-                this.SourceAirport.equals(routeObject.GetSourceAirport()) &&
-                this.SourceAirportID == routeObject.GetSourceAirportID() &&
-                this.DestinationAirport.equals(routeObject.GetDestinationAirport()) &&
-                this.DestinationAirportID == routeObject.GetDestinationAirportID() &&
-                this.Codeshare == routeObject.GetCodeshare() &&
-                this.Stops == routeObject.GetStops() &&
-                this.Equipment.equals(routeObject.GetEquipment());
+        return this.AirlineID == routeObject.getAirlineID() &&
+                this.Airline.equals(routeObject.getAirline()) &&
+                this.SourceAirport.equals(routeObject.getSourceAirport()) &&
+                this.SourceAirportID == routeObject.getSourceAirportID() &&
+                this.DestinationAirport.equals(routeObject.getDestinationAirport()) &&
+                this.DestinationAirportID == routeObject.getDestinationAirportID() &&
+                this.Codeshare == routeObject.getCodeshare() &&
+                this.Stops == routeObject.getStops() &&
+                this.Equipment.equals(routeObject.getEquipment());
     }
 
-    public int GetAirlineID() {
+    public int getAirlineID() {
         return AirlineID;
     }
 
@@ -53,7 +53,7 @@ public class Route {
         AirlineID = airlineID;
     }
 
-    public String GetAirline() {
+    public String getAirline() {
         return Airline;
     }
 
@@ -61,7 +61,7 @@ public class Route {
         Airline = airline;
     }
 
-    public String GetSourceAirport() {
+    public String getSourceAirport() {
         return SourceAirport;
     }
 
@@ -69,7 +69,7 @@ public class Route {
         SourceAirport = sourceAirport;
     }
 
-    public int GetSourceAirportID() {
+    public int getSourceAirportID() {
         return SourceAirportID;
     }
 
@@ -77,7 +77,7 @@ public class Route {
         SourceAirportID = sourceAirportID;
     }
 
-    public String GetDestinationAirport() {
+    public String getDestinationAirport() {
         return DestinationAirport;
     }
 
@@ -85,7 +85,7 @@ public class Route {
         DestinationAirport = destinationAirport;
     }
 
-    public int GetDestinationAirportID() {
+    public int getDestinationAirportID() {
         return DestinationAirportID;
     }
 
@@ -93,7 +93,7 @@ public class Route {
         DestinationAirportID = destinationAirportID;
     }
 
-    public char GetCodeshare() {
+    public char getCodeshare() {
         return Codeshare;
     }
 
@@ -101,7 +101,7 @@ public class Route {
         Codeshare = codeshare;
     }
 
-    public int GetStops() {
+    public int getStops() {
         return Stops;
     }
 
@@ -109,7 +109,7 @@ public class Route {
         Stops = stops;
     }
 
-    public String GetEquipment() {
+    public String getEquipment() {
         return Equipment;
     }
 

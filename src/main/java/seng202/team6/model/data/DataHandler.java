@@ -233,8 +233,8 @@ public class DataHandler {
         for(Airline airline: airlines) {
             String sql = String.format("INSERT INTO airline (id_airline, name, alias, iata, icao, callsign, country, " +
                     "active) VALUES (\"%d\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%c\");",
-                    airline.GetAirlineID(), airline.GetName(), airline.GetAlias(), airline.GetIATA(), airline.GetICAO(),
-                    airline.GetCallsign(), airline.GetCountry(), airline.GetActive()
+                    airline.getAirlineID(), airline.getName(), airline.getAlias(), airline.getIATA(), airline.getICAO(),
+                    airline.getCallsign(), airline.getCountry(), airline.getActive()
             );
             stmt.executeUpdate(sql);
 
@@ -270,9 +270,9 @@ public class DataHandler {
             String sql = String.format("INSERT INTO route (airline, id_airline, source_airport, source_airport_id, " +
                     "destination_airport, destination_airport_id, codeshare, stops, equipment)" +
                     "VALUES (\"%s\", \"%d\", \"%s\", \"%d\", \"%s\", \"%d\", \"%c\", \"%d\", \"%s\");",
-                    route.GetAirline(), route.GetAirlineID(), route.GetSourceAirport(), route.GetSourceAirportID(),
-                    route.GetDestinationAirport(), route.GetDestinationAirportID(), route.GetCodeshare(),
-                    route.GetStops(), route.GetEquipment()
+                    route.getAirline(), route.getAirlineID(), route.getSourceAirport(), route.getSourceAirportID(),
+                    route.getDestinationAirport(), route.getDestinationAirportID(), route.getCodeshare(),
+                    route.getStops(), route.getEquipment()
             );
             stmt.executeUpdate(sql);
         }
