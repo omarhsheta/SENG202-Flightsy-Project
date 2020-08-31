@@ -319,7 +319,10 @@ public class DataViewerController implements Initializable
 //        }
     }
 
-
+    /**
+     * A function that creates a new stage for the user to manually add a row into the database
+     * @throws IOException
+     */
     @FXML
     public void OpenPopUp() throws IOException {
         final Stage popUp = new Stage();
