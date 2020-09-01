@@ -5,9 +5,7 @@ import java.time.*;
  * The Abstract class event has three subclasses; General, Flight, and CarTrip
  */
 public abstract class Event {
-    int Day;
-    int Month;
-    int Year;
+    LocalDate date;
     String Title;
     String Notes;
 
@@ -20,10 +18,32 @@ public abstract class Event {
      * @param N Any String with additional information about the event
      */
     Event(int D, int M, int Y, String T, String N) {
-        Day = D;
-        Month = M;
-        Year = Y;
+        date = LocalDate.of(Y, M, D);
         Title = T;
         Notes = N;
+    }
+
+    /**
+     *
+     * @return The int value of the day of the month
+     */
+    public int getDay() {
+        return date.getDayOfMonth();
+    }
+
+    /**
+     *
+     * @return The int value of the month (Anything from 1 to 12 inclusive)
+     */
+    public int getMonth() {
+        return date.getMonthValue();
+    }
+
+    /**
+     *
+     * @return The int value of the year
+     */
+    public int getYear() {
+        return date.getYear();
     }
 }
