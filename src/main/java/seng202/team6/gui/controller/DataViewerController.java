@@ -233,7 +233,8 @@ public class DataViewerController implements Initializable
         fileChooser.setTitle("Import File");
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("CSV File", "*.csv"),
-                new FileChooser.ExtensionFilter("DAT File", "*.dat"));
+                new FileChooser.ExtensionFilter("DAT File", "*.dat"),
+                new FileChooser.ExtensionFilter("Text File", "*.txt"));
 
         File selectedFile = fileChooser.showOpenDialog(borderPane.getScene().getWindow());
 
@@ -254,7 +255,7 @@ public class DataViewerController implements Initializable
                 try {
                     dataHandler.InsertAirports(airports);
                 } catch (SQLException exception) {
-                    System.out.println(exception.toString());
+                    //Do nothing
                 }
             }
         }
@@ -274,7 +275,7 @@ public class DataViewerController implements Initializable
                 try {
                     dataHandler.InsertAirlines(airlines);
                 } catch (SQLException exception) {
-                    System.out.println(exception.toString());
+                    //Do nothing
                 }
             }
         }
@@ -294,7 +295,7 @@ public class DataViewerController implements Initializable
                 try {
                     dataHandler.InsertRoutes(routes);
                 } catch (SQLException exception) {
-                    System.out.println(exception.toString());
+                    //Do nothing
                 }
             }
         }
@@ -314,7 +315,7 @@ public class DataViewerController implements Initializable
 //            try {
 //                dataHandler.InsertRoutePath(routePath);
 //            } catch (SQLException exception) {
-//                System.out.println(exception.toString());
+//                //Do nothing
 //            }
 //        }
     }

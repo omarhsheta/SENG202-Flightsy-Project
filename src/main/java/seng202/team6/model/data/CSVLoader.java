@@ -143,7 +143,7 @@ public class CSVLoader {
         ArrayList<ArrayList<String>> lines = ProcessCSVFile(path);
         ArrayList<Airport> result = new ArrayList<>();
         for (ArrayList<String> line: lines) {
-            if (line.size() != 14) {
+            if (line.size() != 12) {
                 //Incorrect amount of data
                 //Does not add current Airport as it is invalid
                 continue;
