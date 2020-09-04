@@ -118,14 +118,14 @@ public class FindRoutesController implements Initializable
 
         resultsPane.getChildren().clear();
         for (Route route : routes) {
-            RouteViewButton routeButton = new RouteViewButton(route.GetSourceAirportID(), route.GetDestinationAirportID(), route);
+            RouteViewButton routeButton = new RouteViewButton(route.getSourceAirportID(), route.getDestinationAirportID(), route);
             routeButton.setPrefWidth(resultsPane.getWidth());
             routeButton.setMinHeight(50);
             //text.setText(String.format("%s --> %s", route.GetSourceAirport(), route.GetDestinationAirport()));
             routeViewButtons.add(routeButton);
             resultsPane.getChildren().add(routeButton);
 
-            query.append(String.format("'%s', '%s', ", route.GetSourceAirportID(), route.GetDestinationAirportID()));
+            query.append(String.format("'%s', '%s', ", route.getSourceAirportID(), route.getDestinationAirportID()));
         }
         if (query.length() > 2) {
             controller.ClearAll();

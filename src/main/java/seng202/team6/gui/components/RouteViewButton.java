@@ -58,7 +58,7 @@ public class RouteViewButton extends Button {
 
         distance = originAirport.GetDistance(destAirport);
 
-        this.setText(String.format("%s --> %s\nDistance: %.2f", originAirport.GetIATA(), destAirport.GetIATA(), distance));
+        this.setText(String.format("%s --> %s\nDistance: %.2f", originAirport.getIATA(), destAirport.getIATA(), distance));
         this.setOnMouseClicked(x -> onClick());
     }
 
@@ -70,9 +70,9 @@ public class RouteViewButton extends Button {
         ButtonType addToHolidayButtonType = new ButtonType("Add To Holiday");
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.getButtonTypes().setAll(addToHolidayButtonType, ButtonType.CANCEL);
-        alert.setTitle(String.format("%s to %s", originAirport.GetIATA(), destAirport.GetIATA()));
-        alert.setHeaderText(String.format("Information for flight: %s to %s", originAirport.GetIATA(), destAirport.GetIATA()));
-        alert.setContentText(String.format("%s to %s\nDistance: %.2f km\nAircraft: %s", originAirport.GetName(), destAirport.GetName(), distance, route.GetEquipment()));
+        alert.setTitle(String.format("%s to %s", originAirport.getIATA(), destAirport.getIATA()));
+        alert.setHeaderText(String.format("Information for flight: %s to %s", originAirport.getIATA(), destAirport.getIATA()));
+        alert.setContentText(String.format("%s to %s\nDistance: %.2f km\nAircraft: %s", originAirport.getName(), destAirport.getName(), distance, route.getEquipment()));
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == addToHolidayButtonType){
@@ -80,10 +80,10 @@ public class RouteViewButton extends Button {
             int day = 1;
             int month = 1;
             int year = 1;
-            String title = String.format("Flight from %s to %s", route.GetSourceAirport(), route.GetDestinationAirport());
+            String title = String.format("Flight from %s to %s", route.getSourceAirport(), route.getDestinationAirport());
             String notes = "";
-            Flight flight = new Flight(day, month, year, title, notes, originAirport.GetCity(), originAirport.GetCountry(),
-                    destAirport.GetCity(), destAirport.GetCountry(), route.GetAirline(), route.GetSourceAirport(), route.GetDestinationAirport());
+            Flight flight = new Flight(day, month, year, title, notes, originAirport.getCity(), originAirport.getCountry(),
+                    destAirport.getCity(), destAirport.getCountry(), route.getAirline(), route.getSourceAirport(), route.getDestinationAirport());
             holidayPlan.FlightAppend(flight);
         }
 

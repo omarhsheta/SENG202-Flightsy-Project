@@ -50,9 +50,9 @@ public class SQLHelper
 
         StringBuilder list = new StringBuilder();
         for (int i = 0; i < airports.size() - 1; i++) {
-            list.append(String.format("'%s', ", airports.get(i).GetIATA()));
+            list.append(String.format("'%s', ", airports.get(i).getIATA()));
         }
-        list.append(String.format("'%s'", airports.get(airports.size() - 1).GetIATA()));
+        list.append(String.format("'%s'", airports.get(airports.size() - 1).getIATA()));
 
         return list.toString();
     }
