@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import seng202.team6.gui.components.FilterTextField?>
+
+
+<BorderPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.team6.gui.controller.dataviewer.RouteTabController">
+   <left>
+      <Pane prefHeight="470.0" prefWidth="214.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label alignment="CENTER" prefHeight="25.0" prefWidth="213.0" text="Filters">
+               <styleClass>
+                  <String fx:value="text-primary" />
+                  <String fx:value="h5" />
+               </styleClass>
+            </Label>
+            <ScrollPane layoutY="27.0" prefHeight="402.0" prefWidth="214.0">
+               <content>
+                  <Pane fx:id="routeFilterPane" prefHeight="600.0" prefWidth="198.0">
+                     <children>
+                        <FilterTextField filter="AIRLINE = '%s'" layoutX="25.0" layoutY="39.0" />
+                        <Label layoutX="25.0" layoutY="14.0" prefHeight="25.0" prefWidth="148.0" text="Airline" />
+                        <FilterTextField filter="ID_AIRLINE = '%s'" layoutX="25.0" layoutY="99.0" />
+                        <Label layoutX="25.0" layoutY="74.0" prefHeight="25.0" prefWidth="148.0" text="Airline ID" />
+                        <FilterTextField filter="SOURCE_AIRPORT = '%s'" layoutX="25.0" layoutY="158.0" />
+                        <Label layoutX="25.0" layoutY="133.0" prefHeight="25.0" prefWidth="148.0" text="Source" />
+                        <FilterTextField filter="SOURCE_AIRPORT_ID = '%s'" layoutX="25.0" layoutY="218.0" />
+                        <Label layoutX="25.0" layoutY="193.0" prefHeight="25.0" prefWidth="148.0" text="Source ID" />
+                        <FilterTextField filter="DESTINATION_AIRPORT = '%s'" layoutX="25.0" layoutY="278.0" />
+                        <Label layoutX="25.0" layoutY="253.0" prefHeight="25.0" prefWidth="148.0" text="Destination" />
+                        <FilterTextField filter="DESTINATION_AIRPORT_ID = '%s'" layoutX="25.0" layoutY="338.0" />
+                        <Label layoutX="25.0" layoutY="313.0" prefHeight="25.0" prefWidth="148.0" text="Destinaton ID" />
+                        <FilterTextField filter="CODESHARE = '%s'" layoutX="25.0" layoutY="398.0" />
+                        <Label layoutX="25.0" layoutY="373.0" prefHeight="25.0" prefWidth="148.0" text="Codeshare" />
+                        <FilterTextField filter="STOPS = '%s'" layoutX="25.0" layoutY="458.0" />
+                        <Label layoutX="25.0" layoutY="433.0" prefHeight="25.0" prefWidth="148.0" text="Stops" />
+                        <FilterTextField filter="EQUIPMENT = '%s'" layoutX="25.0" layoutY="518.0" />
+                        <Label layoutX="25.0" layoutY="493.0" prefHeight="25.0" prefWidth="148.0" text="Equipment" />
+                     </children>
+                  </Pane>
+               </content>
+            </ScrollPane>
+            <Button fx:id="routeFilterButton" layoutX="53.0" layoutY="444.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="108.0" text="Apply Filters">
+               <styleClass>
+                  <String fx:value="btn" />
+                  <String fx:value="btn-sm" />
+                  <String fx:value="btn-primary" />
+               </styleClass>
+            </Button>
+         </children>
+      </Pane>
+   </left>
+   <center>
+      <TableView fx:id="routeTable" prefHeight="470.0" prefWidth="700.0" BorderPane.alignment="CENTER">
+         <columns>
+            <TableColumn fx:id="columnAirline" prefWidth="70.0" text="Airline" />
+            <TableColumn fx:id="columnID" prefWidth="70.0" text="Airline ID" />
+            <TableColumn fx:id="columnSrc" prefWidth="70.0" text="Source" />
+            <TableColumn fx:id="columnSrcID" prefWidth="70.0" text="Source ID" />
+            <TableColumn fx:id="columnDst" prefWidth="70.0" text="Dest" />
+            <TableColumn fx:id="columnDstID" prefWidth="70.0" text="Dest ID" />
+            <TableColumn fx:id="columnCodeshare" prefWidth="70.0" text="Codeshare" />
+            <TableColumn fx:id="columnStops" prefWidth="70.0" text="Stops" />
+            <TableColumn fx:id="columnEquipment" prefWidth="70.0" text="Equipment" />
+         </columns>
+      </TableView>
+   </center>
+</BorderPane>

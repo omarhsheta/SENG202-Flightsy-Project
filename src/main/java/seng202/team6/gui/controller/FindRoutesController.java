@@ -91,27 +91,11 @@ public class FindRoutesController implements Initializable
     }
 
     /**
-     * Extract filters from filter text GUI components
-     * @param filterFields List of filter GUI components
-     * @return List of filters
-     */
-    private ArrayList<Filter> ExtractFilters(ArrayList<FilterTextField> filterFields) {
-        ArrayList<Filter> filters = new ArrayList<>();
-        for (FilterTextField box : filterFields) {
-            if (!box.getText().equals("")) {
-                String filterString = String.format(box.GetFilter(), box.getText());
-                filters.add(new Filter(filterString, "AND"));
-            }
-        }
-        return filters;
-    }
-
-    /**
      * Draw airport marks based on filters
      */
     @FXML
     private void OnAirportFilterButtonClicked() {
-        ArrayList<Filter> filters = ExtractFilters(this.airportFilterTextFields);
+        ArrayList<Filter> filters = FilterTextField.ExtractFilters(this.airportFilterTextFields);
         controller.ClearAll();
         controller.DrawAirportMarks(DataHandler.GetInstance().FetchAirports(filters));
     }
@@ -121,8 +105,8 @@ public class FindRoutesController implements Initializable
      */
     @FXML
     private void OnFlightFilterButtonClicked() {
-        ArrayList<Filter> originFilters = ExtractFilters(this.flightFilterOriginTextFields);
-        ArrayList<Filter> destinationFilters = ExtractFilters(this.flightFilterDestinationTextFields);
+        ArrayList<Filter> originFilters = FilterTextField.ExtractFilters(this.flightFilterOriginTextFields);
+        ArrayList<Filter> destinationFilters = FilterTextField.ExtractFilters(this.flightFilterDestinationTextFields);
 
         ArrayList<Airport> sourceAirports = DataHandler.GetInstance().FetchAirports(originFilters);
         ArrayList<Airport> destinationAirports = DataHandler.GetInstance().FetchAirports(destinationFilters);

@@ -233,9 +233,9 @@ public class DataHandler {
         Statement stmt = this.databaseConnection.createStatement();
         for(Airline airline: airlines) {
             String sql = String.format("INSERT INTO airline (id_airline, name, alias, iata, icao, callsign, country, " +
-                    "active) VALUES (\"%d\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\");",
-                    airline.GetAirlineID(), airline.GetName(), airline.GetAlias(), airline.GetIATA(), airline.GetICAO(),
-                    airline.GetCallsign(), airline.GetCountry(), airline.GetActive()
+                    "active) VALUES (\"%d\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%c\");",
+                    airline.getAirlineID(), airline.getName(), airline.getAlias(), airline.getIATA(), airline.getICAO(),
+                    airline.getCallsign(), airline.getCountry(), airline.getActive()
             );
             stmt.executeUpdate(sql);
 
@@ -251,10 +251,10 @@ public class DataHandler {
         Statement stmt = this.databaseConnection.createStatement();
         for(Airport airport: airports) {
             String sql = String.format("INSERT INTO airport (id_airport, name, city, country, iata, icao, latitude, longitude, altitude, timezone, dst)" +
-                    "VALUES (\"%d\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%f\", \"%f\", \"%d\", \"%d\", \"%c\");",
-                    airport.GetAirportID(), airport.GetName(), airport.GetCity(), airport.GetCountry(),
-                    airport.GetIATA(), airport.GetICAO(), airport.GetLatitude(), airport.GetLongitude(), airport.GetAltitude(),
-                    airport.GetTimezone(), airport.GetDST()
+                    "VALUES (\"%d\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%f\", \"%f\", \"%d\", \"%f\", \"%c\");",
+                    airport.getAirportID(), airport.getName(), airport.getCity(), airport.getCountry(),
+                    airport.getIATA(), airport.getICAO(), airport.getLatitude(), airport.getLongitude(), airport.getAltitude(),
+                    airport.getTimezone(), airport.getDST()
             );
             stmt.executeUpdate(sql);
         }
@@ -271,9 +271,9 @@ public class DataHandler {
             String sql = String.format("INSERT INTO route (airline, id_airline, source_airport, source_airport_id, " +
                     "destination_airport, destination_airport_id, codeshare, stops, equipment)" +
                     "VALUES (\"%s\", \"%d\", \"%s\", \"%d\", \"%s\", \"%d\", \"%c\", \"%d\", \"%s\");",
-                    route.GetAirline(), route.GetAirlineID(), route.GetSourceAirport(), route.GetSourceAirportID(),
-                    route.GetDestinationAirport(), route.GetDestinationAirportID(), route.GetCodeshare(),
-                    route.GetStops(), route.GetEquipment()
+                    route.getAirline(), route.getAirlineID(), route.getSourceAirport(), route.getSourceAirportID(),
+                    route.getDestinationAirport(), route.getDestinationAirportID(), route.getCodeshare(),
+                    route.getStops(), route.getEquipment()
             );
             stmt.executeUpdate(sql);
         }
