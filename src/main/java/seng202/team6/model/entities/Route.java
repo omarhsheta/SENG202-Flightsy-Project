@@ -1,5 +1,7 @@
 package seng202.team6.model.entities;
 
+import java.util.Objects;
+
 public class Route {
 
     int AirlineID;
@@ -34,15 +36,15 @@ public class Route {
 
         Route routeObject = (Route)obj;
 
-        return this.AirlineID == routeObject.getAirlineID() &&
-                this.Airline.equals(routeObject.getAirline()) &&
-                this.SourceAirport.equals(routeObject.getSourceAirport()) &&
-                this.SourceAirportID == routeObject.getSourceAirportID() &&
-                this.DestinationAirport.equals(routeObject.getDestinationAirport()) &&
-                this.DestinationAirportID == routeObject.getDestinationAirportID() &&
-                this.Codeshare == routeObject.getCodeshare() &&
-                this.Stops == routeObject.getStops() &&
-                this.Equipment.equals(routeObject.getEquipment());
+        return this.AirlineID == routeObject.getAirlineID()
+                && Objects.equals(this.Airline, routeObject.getAirline())
+                && Objects.equals(this.SourceAirport, routeObject.getSourceAirport())
+                && this.SourceAirportID == routeObject.getSourceAirportID()
+                && Objects.equals(this.DestinationAirport, routeObject.getDestinationAirport())
+                && this.DestinationAirportID == routeObject.getDestinationAirportID()
+                && this.Codeshare == routeObject.getCodeshare()
+                && this.Stops == routeObject.getStops()
+                && Objects.equals(this.Equipment, routeObject.getEquipment());
     }
 
     public int getAirlineID() {

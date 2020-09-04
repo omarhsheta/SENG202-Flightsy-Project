@@ -1,5 +1,7 @@
 package seng202.team6.model.entities;
 
+import java.util.Objects;
+
 public class Airline {
 
     int AirlineID;
@@ -31,10 +33,11 @@ public class Airline {
 
         Airline airlineObject = (Airline)obj;
 
-        return this.AirlineID == airlineObject.getAirlineID() && this.Name.equals(airlineObject.getName())
-                            && this.Alias.equals(airlineObject.getAlias()) && this.IATA.equals(airlineObject.getIATA()) &&
-                            this.ICAO.equals(airlineObject.getICAO()) && this.Callsign.equals(airlineObject.getCallsign()) &&
-                            this.Country.equals(airlineObject.getCountry()) && this.Active == airlineObject.getActive();
+
+        return this.AirlineID == airlineObject.getAirlineID() && Objects.equals(this.Name, airlineObject.getName())
+                && Objects.equals(this.Alias, airlineObject.getAlias()) && Objects.equals(this.IATA, airlineObject.getIATA())
+                && Objects.equals(this.ICAO, airlineObject.getICAO()) && Objects.equals(this.Callsign, airlineObject.getCallsign())
+                && Objects.equals(this.Country, airlineObject.getCountry()) && this.Active == airlineObject.getActive();
     }
 
     public int getAirlineID() {

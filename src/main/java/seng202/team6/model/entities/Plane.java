@@ -1,5 +1,7 @@
 package seng202.team6.model.entities;
 
+import java.util.Objects;
+
 public class Plane {
 
     String Name;
@@ -20,7 +22,9 @@ public class Plane {
 
         Plane planeObj = (Plane)obj;
 
-        return this.Name.equals(planeObj.getName()) && this.IATA.equals(planeObj.getIATA()) && this.ICAO.equals(planeObj.getICAO());
+        return Objects.equals(this.Name, planeObj.getName())
+                && Objects.equals(this.IATA, planeObj.getIATA())
+                && Objects.equals(this.ICAO, planeObj.getICAO());
     }
 
     public String getName() {

@@ -2,6 +2,7 @@ package seng202.team6.model.entities;
 import seng202.team6.model.interfaces.IMapDrawable;
 
 import java.lang.*;
+import java.util.Objects;
 
 public class Airport implements IMapDrawable {
 
@@ -41,12 +42,12 @@ public class Airport implements IMapDrawable {
 
         Airport airportObject = (Airport)obj;
 
-        return this.AirportID == airportObject.getAirportID() && this.Name.equals(airportObject.getName()) &&
-                this.City.equals(airportObject.getCity()) && this.Country.equals(airportObject.getCountry()) &&
-                this.IATA.equals(airportObject.getIATA()) && this.ICAO.equals(airportObject.getICAO()) &&
-                this.Latitude == airportObject.getLatitude() && this.Longitude == airportObject.getLongitude() &&
-                this.Altitude == airportObject.getAltitude() && this.Timezone == airportObject.getTimezone() &&
-                this.DST == airportObject.getDST();
+        return this.AirportID == airportObject.getAirportID() && Objects.equals(this.Name, airportObject.getName())
+                && Objects.equals(this.City, airportObject.getCity()) && Objects.equals(this.Country, airportObject.getCountry())
+                && Objects.equals(this.IATA, airportObject.getIATA()) && Objects.equals(this.ICAO, airportObject.getICAO())
+                && this.Latitude == airportObject.getLatitude() && this.Longitude == airportObject.getLongitude()
+                && this.Altitude == airportObject.getAltitude() && this.Timezone == airportObject.getTimezone()
+                && this.DST == airportObject.getDST();
     }
 
     /**
