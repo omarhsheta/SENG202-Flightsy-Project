@@ -58,9 +58,16 @@ public class Airport implements IMapDrawable {
     public double GetDistance(Airport other) {
         float destLat = other.Latitude;
         float destLong = other.Longitude;
-        float x_pos = Math.abs(this.Latitude) + Math.abs(destLat);
-        float y_pos = Math.abs(this.Longitude) + Math.abs(destLong);
-        return Math.sqrt(Math.pow(x_pos, 2) + Math.pow(y_pos, 2));
+//        float x_pos = Math.abs(this.Latitude - destLat);
+//        float y_pos = Math.abs(this.Longitude - destLong);
+//        return Math.sqrt(Math.pow(x_pos, 2) + Math.pow(y_pos, 2));
+
+        double conv = Math.PI/180;
+        double dlong = Math.abs(destLong*conv - this.Longitude*conv);
+        double dlat = Math.abs(destLat*conv - this.Latitude*conv);
+
+        double a = (Math.pow(Math.sin(dlat/2), 2) + (Math.cos(this.Latitude*conv) * Math.cos(destLat*conv) * (Math.pow(Math.sin(dlong/2), 2))));
+        return 6371 * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
     }
 
     @Override

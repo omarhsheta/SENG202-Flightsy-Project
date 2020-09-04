@@ -4,11 +4,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Slider;
-import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import seng202.team6.gui.components.FilterTextField;
+import seng202.team6.gui.components.RouteViewButton;
 import seng202.team6.model.data.DataHandler;
 import seng202.team6.model.data.Filter;
 import seng202.team6.model.entities.Airport;
@@ -46,6 +46,9 @@ public class FindRoutesController implements Initializable
     private ArrayList<FilterTextField> flightFilterOriginTextFields;
     private ArrayList<FilterTextField> flightFilterDestinationTextFields;
 
+
+    ArrayList<RouteViewButton> routeViewButtons;
+
     //Route filtering
     @FXML
     private VBox routeFilterBox;
@@ -68,6 +71,8 @@ public class FindRoutesController implements Initializable
         airportFilterTextFields = GetAllNodes(airportFilterBox);
         flightFilterOriginTextFields = GetAllNodes(flightFilterOriginBox);
         flightFilterDestinationTextFields = GetAllNodes(flightFilterDestinationBox);
+
+        routeViewButtons = new ArrayList<>();
     }
 
     /**
@@ -129,11 +134,14 @@ public class FindRoutesController implements Initializable
 
         resultsPane.getChildren().clear();
         for (Route route : routes) {
-            TextArea text = new TextArea();
-            text.setText(String.format("%s --> %s", route.GetSourceAirport(), route.GetDestinationAirport()));
-            resultsPane.getChildren().add(text);
+            RouteViewButton routeButton = new RouteViewButton(route.GetSourceAirportID(), route.GetDestinationAirportID(), route);
+            routeButton.setPrefWidth(resultsPane.getWidth());
+            routeButton.setMinHeight(50);
+            //text.setText(String.format("%s --> %s", route.GetSourceAirport(), route.GetDestinationAirport()));
+            routeViewButtons.add(routeButton);
+            resultsPane.getChildren().add(routeButton);
 
-            query.append(String.format("'%s', '%s', ", route.GetSourceAirport(), route.GetDestinationAirport()));
+            query.append(String.format("'%s', '%s', ", route.GetSourceAirportID(), route.GetDestinationAirportID()));
         }
         if (query.length() > 2) {
             controller.ClearAll();

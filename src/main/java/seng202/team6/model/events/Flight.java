@@ -6,13 +6,13 @@ import javax.lang.model.util.Elements;
  * This class is for flight plans
  */
 public class Flight extends Event {
-    String Airline;
-    String OriginAirport;
-    String DestinationAirport;
     String OriginCity;
     String OriginCountry;
     String DestinationCity;
     String DestinationCountry;
+    String Airline;
+    String OriginAirport;
+    String DestinationAirport;
 
     /**
      *
@@ -29,16 +29,16 @@ public class Flight extends Event {
      * @param OAirport Origin Airport
      * @param DAirport Destination Airport
      */
-    Flight(int D, int M, int Y, String T, String N, String OCity,
-           String OCountry, String DCity, String DCountry, String newAirline, String OAirport, String DAirport) {
+    public Flight(int D, int M, int Y, String T, String N, String OCity,
+                  String OCountry, String DCity, String DCountry, String newAirline, String OAirport, String DAirport) {
         super(D, M, Y, T, N);
-        Airline = newAirline;
-        OriginAirport = OAirport;
-        DestinationAirport = DAirport;
         OriginCity = OCity;
         OriginCountry = OCountry;
         DestinationCity = DCity;
         DestinationCountry = DCountry;
+        Airline = newAirline;
+        OriginAirport = OAirport;
+        DestinationAirport = DAirport;
     }
 
     /**
