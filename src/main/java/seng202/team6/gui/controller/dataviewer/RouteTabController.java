@@ -88,7 +88,7 @@ public class RouteTabController implements Initializable
      */
     @FXML
     private void OnRouteFilterButtonClicked() {
-        ArrayList<Filter> filters =  dataHandler.GetFilters(filterRouteTextFields);
+        ArrayList<Filter> filters =  FilterTextField.ExtractFilters(filterRouteTextFields);
 
         try {
             routeTable.getItems().clear();

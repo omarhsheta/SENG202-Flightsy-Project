@@ -86,7 +86,7 @@ public class AirlineTabController implements Initializable
      */
     @FXML
     private void OnAirlineFilterButtonClicked() {
-        ArrayList<Filter> filters =  dataHandler.GetFilters(filterAirlineTextFields);
+        ArrayList<Filter> filters =  FilterTextField.ExtractFilters(filterAirlineTextFields);
 
         try {
             airlineTable.getItems().clear();

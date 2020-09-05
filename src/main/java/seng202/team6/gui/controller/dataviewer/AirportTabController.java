@@ -57,7 +57,7 @@ public class AirportTabController implements Initializable
     DataHandler dataHandler;
 
     @FXML
-    ChoiceBox sortChoiceBox;
+    ChoiceBox<String> sortChoiceBox;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -69,8 +69,6 @@ public class AirportTabController implements Initializable
                 filterAirportTextFields.add((FilterTextField) node);
             }
         }
-
-        ObservableList<TableColumn<Airport, ?>> columns = airportTable.getColumns();
 
         columnID.setCellValueFactory(new PropertyValueFactory<>("airportID"));
         columnName.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -99,9 +97,9 @@ public class AirportTabController implements Initializable
 
     @FXML
     private void OnAirportFilterButtonClicked() {
-        ArrayList<Filter> filters =  dataHandler.GetFilters(filterAirportTextFields);
+        ArrayList<Filter> filters =  FilterTextField.ExtractFilters(filterAirportTextFields);
 
-        String sortValue = (String) sortChoiceBox.getValue();
+        String sortValue = sortChoiceBox.getValue();
 
         int numRowsLeftOut = 0;
 

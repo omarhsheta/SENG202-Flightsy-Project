@@ -34,6 +34,16 @@ public class MapController
         this.mapEngine.executeScript(String.format(JSFunction, airportString));
     }
 
+    public void DrawLineBetween(ArrayList<Airport> airports) {
+        String JSFunction = "PlaceRouteLines(%s);";
+        ArrayList<Pair<Float, Float>> positions = new ArrayList<>();
+        for (Airport airport : airports) {
+            positions.add(new Pair<>(airport.getLatitude(), airport.getLongitude()));
+        }
+        String line = PositionsToArray(positions);
+        this.mapEngine.executeScript(String.format(JSFunction, line));
+    }
+
     /**
      * Draw routes on the map
      * @param route Route object to draw
@@ -52,6 +62,15 @@ public class MapController
     }
 
     /**
+     * Go to position
+     * @param lat Latitude
+     * @param lng Longitude
+     */
+    public void GoTo(double lat, double lng) {
+        this.mapEngine.executeScript(String.format("GoToPosition(%f, %f);", lat, lng));
+    }
+
+    /**
      * Turn IMapDrawable objects into javascript array
      * @param drawableList Objects which implement IMapDrawable interface
      * @return String Javascript string array representation
@@ -64,6 +83,24 @@ public class MapController
         }
         returnString.append(']');
         return returnString.toString();
+    }
+
+    public String PositionsToArray(ArrayList<Pair<Float, Float>> positions) {
+        StringBuilder string = new StringBuilder();
+        string.append('[');
+
+        string.append(String.format("{lat: %f, lng: %f}", positions.get(0).getKey(), positions.get(0).getValue()));
+
+        if (positions.size() > 1) {
+            string.append(","); //Else size > 1 then append "}," then add all the other points
+            for (int i = 1; i < positions.size() - 1; i++) {
+                string.append(String.format("{lat: %f, lng: %f},", positions.get(i).getKey(), positions.get(i).getValue()));
+            }
+
+            string.append(String.format("{lat: %f, lng: %f}", positions.get(positions.size() - 1).getKey(), positions.get(positions.size() - 1).getValue()));
+        }
+        string.append("]");
+        return string.toString();
     }
 
     /**
