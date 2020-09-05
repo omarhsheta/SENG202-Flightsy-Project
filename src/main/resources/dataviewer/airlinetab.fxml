@@ -44,7 +44,7 @@
                   <String fx:value="h5" />
                </styleClass>
             </Label>
-            <Button fx:id="airlineFilterButton" layoutX="53.0" layoutY="444.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="108.0" text="Apply Filters">
+            <Button fx:id="airlineFilterButton" layoutX="53.0" layoutY="444.0" mnemonicParsing="false" onMouseClicked="#OnAirlineFilterButtonClicked" prefHeight="25.0" prefWidth="108.0" text="Apply Filters">
                <styleClass>
                   <String fx:value="btn" />
                   <String fx:value="btn-sm" />

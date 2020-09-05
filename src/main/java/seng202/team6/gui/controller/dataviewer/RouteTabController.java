@@ -3,10 +3,12 @@ package seng202.team6.gui.controller.dataviewer;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import seng202.team6.gui.components.FilterTextField;
 import seng202.team6.model.data.DataHandler;
@@ -44,12 +46,23 @@ public class RouteTabController implements Initializable
     @FXML
     private Button routeFilterButton;
 
+    DataHandler dataHandler;
+
     @FXML
     private Pane routeFilterPane;
     private final ArrayList<FilterTextField> filterRouteTextFields = new ArrayList<>();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        dataHandler = DataHandler.GetInstance();
+
+        //Grab all airline text filter components
+        for (Node node : routeFilterPane.getChildren()) {
+            if (node != null && node.getClass() == FilterTextField.class) {
+                filterRouteTextFields.add((FilterTextField) node);
+            }
+        }
+
         ObservableList<TableColumn<Route, ?>> columns = routeTable.getColumns();
 
         columnID.setCellValueFactory(new PropertyValueFactory<>("airlineID"));
@@ -67,4 +80,25 @@ public class RouteTabController implements Initializable
         ArrayList<Route> filteredRoutes = DataHandler.GetInstance().FetchRoutes(filters);
         routeTable.getItems().addAll(filteredRoutes);
     }
+
+    /**
+     * FXML button action that takes place when the Filter button is clicked on the Routes data view.
+     * This function takes the filters from the GetFilters method and gets the filtered Route ArrayList from the DataHandler.
+     * Then it inputs the data into the data viewer table.
+     */
+    @FXML
+    private void OnRouteFilterButtonClicked() {
+        ArrayList<Filter> filters =  dataHandler.GetFilters(filterRouteTextFields);
+
+        try {
+            routeTable.getItems().clear();
+            ArrayList<Route> filteredRoutes = dataHandler.FetchRoutes(filters);
+            routeTable.getItems().addAll(filteredRoutes);
+        }
+        catch (Exception ignored) {
+        }
+
+        //Input into table here
+    }
+
 }

@@ -3,16 +3,18 @@ package seng202.team6.gui.controller.dataviewer;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.Node;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import seng202.team6.gui.components.FilterTextField;
 import seng202.team6.model.data.DataHandler;
 import seng202.team6.model.data.Filter;
+import seng202.team6.model.entities.Airline;
 import seng202.team6.model.entities.Airport;
 
+import javax.xml.crypto.Data;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -52,8 +54,22 @@ public class AirportTabController implements Initializable
     private Pane airportFilterPane;
     private final ArrayList<FilterTextField> filterAirportTextFields = new ArrayList<>();
 
+    DataHandler dataHandler;
+
+    @FXML
+    ChoiceBox sortChoiceBox;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        dataHandler = DataHandler.GetInstance();
+
+        //Grab all airport text filter components
+        for (Node node : airportFilterPane.getChildren()) {
+            if (node != null && node.getClass() == FilterTextField.class) {
+                filterAirportTextFields.add((FilterTextField) node);
+            }
+        }
+
         ObservableList<TableColumn<Airport, ?>> columns = airportTable.getColumns();
 
         columnID.setCellValueFactory(new PropertyValueFactory<>("airportID"));
@@ -72,5 +88,45 @@ public class AirportTabController implements Initializable
         filters.add(new Filter("COUNTRY = 'New Zealand'", null));
         ArrayList<Airport> filteredAirports = DataHandler.GetInstance().FetchAirports(filters);
         airportTable.getItems().addAll(filteredAirports);
+    }
+
+    /**
+     * FXML button action that takes place when the Filter button is clicked on the Airports data view.
+     * This function takes the filters from the GetFilters method and gets the filtered Airport ArrayList from the DataHandler.
+     * This function also check the sortChoiceBox for any sort preference, and applies sorting if applicable.
+     * Then it inputs the data into the data viewer table.
+     */
+
+    @FXML
+    private void OnAirportFilterButtonClicked() {
+        ArrayList<Filter> filters =  dataHandler.GetFilters(filterAirportTextFields);
+
+        String sortValue = (String) sortChoiceBox.getValue();
+
+        int numRowsLeftOut = 0;
+
+        try {
+            ArrayList<Airport> filteredAirports;
+            if (sortValue.equals("Sort by most routes")) {
+                filteredAirports = dataHandler.FetchAirports(filters, "DESC");
+                numRowsLeftOut = dataHandler.FetchAirports(filters).size() - filteredAirports.size();
+
+            } else if (sortValue.equals("Sort by least routes")) {
+                filteredAirports = dataHandler.FetchAirports(filters, "ASC");
+                numRowsLeftOut = filteredAirports.size() - dataHandler.FetchAirports(filters).size();
+            } else {
+                filteredAirports = dataHandler.FetchAirports(filters);
+            }
+
+            airportTable.getItems().clear();
+            airportTable.getItems().addAll(filteredAirports);
+        }
+        catch (Exception ignored) {
+        }
+
+        if (numRowsLeftOut > 0) {
+            Alert alert = new Alert(Alert.AlertType.WARNING, String.format("%d airports left out as they have no routes departing", numRowsLeftOut), ButtonType.OK);
+            alert.showAndWait();
+        }
     }
 }

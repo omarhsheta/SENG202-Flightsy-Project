@@ -1,6 +1,7 @@
 package seng202.team6.model.data;
 
 import javafx.util.Pair;
+import seng202.team6.gui.components.FilterTextField;
 import seng202.team6.model.entities.Airline;
 import seng202.team6.model.entities.Airport;
 import seng202.team6.model.entities.Route;
@@ -43,6 +44,27 @@ public class DataHandler {
             System.out.println(e.getMessage());
         }
     }
+
+    /**
+     * GetFilters method that takes a parameter <code>filterTextFields</code> which is an ArrayList of FilterTextField objects,
+     * and takes the filter formatting and text from the object. It then creates a Filter object from this and adds the
+     * filter to an ArrayList of Filter objects and returns the ArrayList.
+     * @param filterTextFields An ArrayList of FilterTextFields
+     * @return An ArrayList of Filter objects.
+     */
+    public ArrayList<Filter> GetFilters(ArrayList<FilterTextField> filterTextFields) {
+        ArrayList<Filter> filters = new ArrayList<>();
+
+        for (FilterTextField box : filterTextFields) {
+            if (!box.getText().equals("")) {
+                String filterString = String.format(box.GetFilter(), box.getText());
+                filters.add(new Filter(filterString, "AND"));
+            }
+        }
+        return filters;
+    }
+
+
 
     /**
      * Extract list of airlines from result set

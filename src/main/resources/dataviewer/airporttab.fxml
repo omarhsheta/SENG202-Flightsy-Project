@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TableColumn?>
@@ -50,13 +52,23 @@
                   </Pane>
                </content>
             </ScrollPane>
-            <Button fx:id="airportFilterButton" layoutX="53.0" layoutY="444.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="108.0" text="Apply Filters">
+            <Button fx:id="airportFilterButton" layoutX="119.0" layoutY="444.0" mnemonicParsing="false" onMouseClicked="#OnAirportFilterButtonClicked" prefHeight="25.0" prefWidth="95.0" text="Apply Filters">
                <styleClass>
                   <String fx:value="btn" />
                   <String fx:value="btn-sm" />
                   <String fx:value="btn-primary" />
                </styleClass>
             </Button>
+            <ChoiceBox fx:id="sortChoiceBox" layoutY="444.0" prefHeight="25.0" prefWidth="115.0" value="No sort">
+               <items>
+                  <FXCollections fx:factory="observableArrayList">
+                     <String fx:value="No sort" />
+                     <String fx:value="Sort by most routes" />
+                     <String fx:value="Sort by least routes" />
+                  </FXCollections>
+               </items>
+            </ChoiceBox>
+
          </children>
       </Pane>
    </left>
