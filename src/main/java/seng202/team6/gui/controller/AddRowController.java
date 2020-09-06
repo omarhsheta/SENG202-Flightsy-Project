@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
@@ -11,6 +12,7 @@ import seng202.team6.gui.WindowHandler;
 import seng202.team6.model.data.DataHandler;
 import seng202.team6.model.entities.Airline;
 import seng202.team6.model.entities.Airport;
+import seng202.team6.model.entities.Route;
 
 import java.io.Console;
 import java.net.URL;
@@ -22,35 +24,48 @@ import java.util.Set;
 
 public class AddRowController implements Initializable
 {
-    // Airline input fields
     @FXML
-    private TextField airIdField, airNameField, airAliasField, AirIataField, AirIcaoField, AirCallsignField,
-            AirCountryField;
+    private TextField
+            // Airline fields
+            airIdField, airNameField, airAliasField, AirIataField, AirIcaoField, AirCallsignField,
+            AirCountryField,
+            // Airport fields
+            airpId, airpName, airpCity, airpCountry, airpIata, airpIcao, airpLat, airpLon, airpAlt, airpTim,
+            airpDst,
+            // Route fields
+            rouAir, rouAirId, rouSouAir, rouSouAirId, rouDesAir, rouDesAirId, rouEqp;
 
     @FXML
-    private ComboBox AirActiveField;
+    private ComboBox AirActiveField, rouCod;
 
-    // Airport input fields
     @FXML
-    private TextField airpId, airpName, airpCity, airpCountry, airpIata, airpIcao, airpLat, airpLon, airpAlt, airpTim,
-            airpDst;
-
+    private Slider rouStp;
 
     @FXML
     private Text InfoText;
 
     private DataHandler dataHandler;
 
-    private int airlinesAdded, airportsAdded;
+    private int airlinesAdded, airportsAdded, routesAdded;
 
-
+    /**
+     * Initialise the pop up window, fetch datahandler instance and set counters.
+     * @param url Windows URL
+     * @param resourceBundle Windows resource bundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
     {
         dataHandler = DataHandler.GetInstance();
-        airlinesAdded = airportsAdded = 0;
+        airlinesAdded = airportsAdded = routesAdded = 0;
     }
 
+    /**
+     * Helper function to show/modify the existing message label.
+     * Can show red error text or green success text.
+     * @param error When set to true message appears in red fill, green when false.
+     * @param message Passed in message to display to the user.
+     */
     private void ShowMessage(boolean error, String message) {
         if (error) {
             InfoText.setFill(Paint.valueOf("Red"));
@@ -61,6 +76,22 @@ public class AddRowController implements Initializable
         InfoText.setVisible(true);
     }
 
+    /**
+     * Function to check the validity of the airport data inputted by the user.
+     * Also checks that data is suitable for inserting into the database.
+     * @param airpId Airport Id
+     * @param airpName Airport Name
+     * @param airpCity City
+     * @param airpCountry Country
+     * @param airpIata IATA
+     * @param airpIcao ICAO
+     * @param airpLat Latitude
+     * @param airpLon Longitude
+     * @param airpAlt Altitude
+     * @param airpTim Timezone
+     * @param airpDst Daylight savings
+     * @return Airport object created by valid inputs, null if an invalid input occurs.
+     */
     private Airport CheckAirport(String airpId, String airpName, String airpCity, String airpCountry, String airpIata,
                                  String airpIcao, String airpLat, String airpLon, String airpAlt, String airpTim,
                                  String airpDst) {
@@ -127,6 +158,19 @@ public class AddRowController implements Initializable
         return airport;
     }
 
+    /**
+     * Function to check the validity of the airline data inputted by the user.
+     * Also checks that data is suitable for inserting into the database.
+     * @param airlineID Airline ID
+     * @param name Airline name
+     * @param alias Alias
+     * @param iata IATA
+     * @param icao ICAO
+     * @param callsign Callsign
+     * @param country Country
+     * @param active Is the airline active
+     * @return Airline object created by valid inputs, null if an invalid input occurs.
+     */
     private Airline CheckAirline(String airlineID, String name, String alias, String iata, String icao,
                                  String callsign, String country, String active) {
         Airline airline = null;
@@ -152,18 +196,87 @@ public class AddRowController implements Initializable
         return airline;
     }
 
-    @FXML
-    public void ClearFields() {
-        airIdField.clear();
-        airNameField.clear();
-        airAliasField.clear();
-        AirIataField.clear();
-        AirIcaoField.clear();
-        AirCallsignField.clear();
-        AirCountryField.clear();
-        AirActiveField.getSelectionModel().clearSelection();
+    /**
+     * Function to check the validity of the route data inputted by the user.
+     * Also checks that data is suitable for inserting into the database.
+     * @param rouAir Airline
+     * @param rouAirId Airline ID
+     * @param rouSouAir Source airline
+     * @param rouSouAirId Source airline ID
+     * @param rouDesAir Destination airline
+     * @param rouDesAirId Destination airline ID
+     * @param rouCod Codeshare
+     * @param rouStp Amount of stops
+     * @param rouEqp Equipment
+     * @return
+     */
+    private Route CheckRoute(String rouAir, String rouAirId, String rouSouAir, String rouSouAirId, String rouDesAir,
+                             String rouDesAirId, String rouCod, int rouStp, String rouEqp) {
+        Route route = null;
+
+        int airId;
+        try {  // Check if airline id input is valid
+            airId = Integer.parseInt(rouAirId);
+        } catch (Exception e) {
+            ShowMessage(true, "Check the Airline ID field and try again");
+            return route;
+        }
+
+        int srcAirId;
+        try {  // Check if source airline id input is valid
+            srcAirId = Integer.parseInt(rouSouAirId);
+        } catch (Exception e) {
+            ShowMessage(true, "Check the Source Airline ID field and try again");
+            return route;
+        }
+
+        int desAirId;
+        try {  // Check if destination airline id input is valid
+            desAirId = Integer.parseInt(rouDesAirId);
+        } catch (Exception e) {
+            ShowMessage(true, "Check the Destination Airline ID field and try again");
+            return route;
+        }
+
+        Character codeShare = null;  // Parse combo box result
+        if (rouCod != null) {
+            if (rouCod.equals("Yes")) {
+                codeShare = 'Y';
+            } else if (rouCod.equals("No")) {
+                codeShare = 'N';
+            }
+        }
+
+        route = new Route(airId, rouAir, rouSouAir, srcAirId, rouDesAir, desAirId, codeShare, rouStp, rouEqp);
+        return route;
     }
 
+    /**
+     * Clear all fields in window and set them to their default values.
+     */
+    @FXML
+    public void ClearFields() {
+        TextField[] textFields = {
+                airIdField, airNameField, airAliasField, AirIataField, AirIcaoField, AirCallsignField, AirCountryField,
+                airpId, airpName, airpCity, airpCountry, airpIata, airpIcao, airpLat, airpLon, airpAlt, airpTim,
+                airpDst, rouAir, rouAirId, rouSouAir, rouSouAirId, rouDesAir, rouDesAirId, rouEqp
+        };
+        for (TextField textField : textFields) {
+            textField.clear();
+        }
+        ComboBox[] comboBoxes = {
+                AirActiveField, rouCod
+        };
+        for (ComboBox comboBox : comboBoxes) {
+            comboBox.getSelectionModel().clearSelection();
+        }
+
+        rouStp.setValue(rouStp.getMin());
+    }
+
+    /**
+     * Check the validity of the input and add a valid airport object to the database from the user input.
+     */
     @FXML
     public void AddAirport() {
         Airport airport = CheckAirport(airpId.getText(), airpName.getText(), airpCity.getText(), airpCountry.getText(),
@@ -187,6 +300,9 @@ public class AddRowController implements Initializable
         }
     }
 
+    /**
+     * Check the validity of the input and add a valid airline object to the database from the user input.
+     */
     @FXML
     public void AddAirline() {
         Airline airline = CheckAirline(airIdField.getText(), airNameField.getText(), airAliasField.getText(),
@@ -206,6 +322,32 @@ public class AddRowController implements Initializable
                 ShowMessage(false, message);
             } catch (SQLException e) {
                 ShowMessage(true, "There was a problem when saving the airline");
+            }
+        }
+    }
+
+    /**
+     * Check the validity of the input and add a valid route object to the database from the user input.
+     */
+    @FXML
+    public void AddRoute() {
+        Route route = CheckRoute(rouAir.getText(), rouAirId.getText(), rouSouAir.getText(), rouSouAirId.getText(),
+                rouDesAir.getText(), rouDesAirId.getText(), (String) rouCod.getValue(), (int) rouStp.getValue(),
+                rouEqp.getText());
+        if (route != null) {
+            ArrayList<Route> routeArrayList = new ArrayList<>() {{
+                add(route);
+            }};
+
+            try {
+                dataHandler.InsertRoutes(routeArrayList);
+                String message = String.format("Successfully added %d route", ++routesAdded);
+                if (routesAdded > 1) {
+                    message += "s";
+                }
+                ShowMessage(false, message);
+            } catch (SQLException e) {
+                ShowMessage(true, "There was a problem when saving the route");
             }
         }
     }
