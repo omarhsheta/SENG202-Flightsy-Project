@@ -8,12 +8,24 @@ public class Plane {
     String IATA;
     String ICAO;
 
+    /**
+     * Constructor for class Plane
+     * @param newName String value for Plane's name
+     * @param newIATA String value for Plane's International Air Transport Association (IATA) code
+     * @param newICAO String value for Plane's International Civil Aviation Organization (ICAO) code
+     */
     public Plane(String newName, String newIATA, String newICAO) {
         Name = newName;
         IATA = newIATA;
         ICAO = newICAO;
     }
 
+    /**
+     * Checks for equality between two instances of Plane
+     * @param obj the other instance of Object (will return false if it is not Plane.java.
+     *            Otherwise, it will check if all the parameters and values are identical
+     * @return returns either true or false
+     */
     @Override
     public boolean equals(Object obj) {
         if (obj == null || obj.getClass() != this.getClass()) {

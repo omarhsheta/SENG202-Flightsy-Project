@@ -34,6 +34,10 @@ public class FlightResultController extends ResultController {
         distance.setText(String.format("Distance: %.2f", GetDistance()));
     }
 
+    /**
+     * Obtains the distance between two airports
+     * @return double value of the distance between two airports
+     */
     private double GetDistance() {
         ArrayList<Airport> airports = GetAirports();
         // Only ever two airports as route only has source/destination
@@ -43,6 +47,10 @@ public class FlightResultController extends ResultController {
         return airports.get(0).GetDistance(airports.get(1));
     }
 
+    /**
+     * Obtains a filtered array of Airports
+     * @return ArrayList instance with Airport.java objects
+     */
     private ArrayList<Airport> GetAirports() {
         ArrayList<Filter> filters = new ArrayList<>();
         filters.add(new Filter(String.format("ID_AIRPORT = %d", route.getSourceAirportID()), "OR"));

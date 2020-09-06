@@ -9,7 +9,7 @@ public class General extends Event {
     String Country;
 
     /**
-     * Initializes the General Event class
+     * Constructor for the General Event class
      * @param D Any integer from 1 to 31
      * @param M Any integer from 1 to 12
      * @param Y Any integer from 2000 to 2099

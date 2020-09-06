@@ -15,7 +15,7 @@ public class Flight extends Event {
     String DestinationAirport;
 
     /**
-     *
+     * Constructor for the Flight class
      * @param D Any integer from 1 to 31
      * @param M Any integer from 1 to 12
      * @param Y Any integer from 2000 to 2099

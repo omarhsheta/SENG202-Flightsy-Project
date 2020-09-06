@@ -7,6 +7,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+import java.awt.*;
 import java.io.IOException;
 
 public class MainGUI extends Application {
@@ -62,6 +63,7 @@ public class MainGUI extends Application {
         primaryStage.setHeight(this.MIN_HEIGHT);
         primaryStage.setMinWidth(this.MIN_WIDTH);
         primaryStage.setWidth(this.MIN_WIDTH);
+        //primaryStage.setMaxHeight(1055); YET TO BE DISCUSSED DONT HATE ME SENPAI
 
         primaryStage.setScene(primaryScene);
 

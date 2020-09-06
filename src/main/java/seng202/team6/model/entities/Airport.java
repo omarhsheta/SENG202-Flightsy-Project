@@ -18,6 +18,20 @@ public class Airport implements IMapDrawable {
     float Timezone;
     char DST;
 
+    /**
+     * Constructor for Airport class
+     * @param newAirportID int value for ID of the Airport
+     * @param newName String value for Airport's name
+     * @param newCity String value for Airport's city
+     * @param newCountry String value for the Airport's country
+     * @param newIATA String value for Airport's International Air Transport Association (IATA) code
+     * @param newICAO String value for Airport's International Civil Aviation Organization (ICAO) code
+     * @param newLatitude float value for Airport's Latitude
+     * @param newLongitude float value for Airport's Longitude
+     * @param newAltitude int value for Airport's Altitude
+     * @param newTimezone float value for the Airport's Timezone
+     * @param newDST char value for the Airport's DST
+     */
     public Airport(int newAirportID, String newName, String newCity, String newCountry, String newIATA,
                    String newICAO, float newLatitude, float newLongitude, int newAltitude, float newTimezone,
                    char newDST) {
@@ -34,7 +48,12 @@ public class Airport implements IMapDrawable {
         DST = newDST;
     }
 
-
+    /**
+     * Checks for equality between two instances of Airport
+     * @param obj the other instance of Object (will return false if it is not Airport.java.
+     *            Otherwise, it will check if all the parameters and values are identical
+     * @return returns either true or false
+     */
     @Override
     public boolean equals(Object obj) {
         if (obj == null || obj.getClass() != this.getClass()) {
@@ -71,6 +90,10 @@ public class Airport implements IMapDrawable {
         return 6371 * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
     }
 
+    /**
+     * [[TO WHOEVER MADE THE METHOD PLEASE ADD USEFUL INFO HERE]]
+     * @return
+     */
     @Override
     public String ConvertToJavascriptString() {
         return String.format("lat: %f, lng: %f, " +

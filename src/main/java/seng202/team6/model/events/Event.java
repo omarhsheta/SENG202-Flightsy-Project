@@ -10,7 +10,7 @@ public abstract class Event {
     String Notes;
 
     /**
-     * Initializes the superclass Event
+     * Constructor of the abstract class Event
      * @param D Any integer from 1 to 31
      * @param M Any integer from 1 to 12
      * @param Y Any integer from 2000 to 2099

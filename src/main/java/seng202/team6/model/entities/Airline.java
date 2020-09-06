@@ -13,6 +13,17 @@ public class Airline {
     String Country;
     Character Active;
 
+    /**
+     * Constructor for the Airline class
+     * @param newAirlineID int value for ID of the airline
+     * @param newName String value for Airline's name
+     * @param newAlias String value for Airline's alias
+     * @param newIATA String value for Airline's International Air Transport Association (IATA) code
+     * @param newICAO String value for Airline's International Civil Aviation Organization (ICAO) code
+     * @param newCallsign String value for Callsign
+     * @param newCountry String value for the Airline's home Country
+     * @param newActive Character value for the Airline's active status (Either "Y" or "N")
+     */
     public Airline(int newAirlineID, String newName, String newAlias, String newIATA, String newICAO,
                    String newCallsign, String newCountry, char newActive) {
         AirlineID = newAirlineID;
@@ -25,6 +36,12 @@ public class Airline {
         Active = newActive;
     }
 
+    /**
+     * Checks for equality between two instances of Airline
+     * @param obj the other instance of Object (will return false if it is not Airline.java.
+     *            Otherwise, it will check if all the parameters and values are identical
+     * @return returns either true or false
+     */
     @Override
     public boolean equals(Object obj) {
         if (obj == null || obj.getClass() != this.getClass()) {

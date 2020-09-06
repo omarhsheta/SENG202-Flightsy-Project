@@ -34,6 +34,10 @@ public class MapController
         this.mapEngine.executeScript(String.format(JSFunction, airportString));
     }
 
+    /**
+     * [[TO WHOEVER MADE THE METHOD PLEASE ADD USEFUL INFO HERE]]
+     * @param airports
+     */
     public void DrawLineBetween(ArrayList<Airport> airports) {
         String JSFunction = "PlaceRouteLines(%s);";
         ArrayList<Pair<Float, Float>> positions = new ArrayList<>();
@@ -85,6 +89,11 @@ public class MapController
         return returnString.toString();
     }
 
+    /**
+     * [[TO WHOEVER MADE THE METHOD PLEASE ADD USEFUL INFO HERE]]
+     * @param positions
+     * @return
+     */
     public String PositionsToArray(ArrayList<Pair<Float, Float>> positions) {
         StringBuilder string = new StringBuilder();
         string.append('[');

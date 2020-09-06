@@ -10,6 +10,12 @@ public class RoutePath implements IMapDrawable {
     String destination;
     ArrayList<Pair<Double, Double>> coordinates;
 
+    /**
+     * Constructor for the class RoutePath
+     * @param newSource String value for Source
+     * @param newDestination String value for Destination
+     * @param newCoordinates An ArrayList of Pairs of Doubles that represent coordinates
+     */
     public RoutePath(String newSource, String newDestination, ArrayList<Pair<Double, Double>> newCoordinates) {
         this.source = newSource;
         this.destination = newDestination;

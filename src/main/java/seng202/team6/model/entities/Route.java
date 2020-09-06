@@ -14,6 +14,18 @@ public class Route {
     int Stops;
     String Equipment;
 
+    /**
+     * Constructor for class Route
+     * @param newAirlineID int value for ID of the Airline
+     * @param newAirline String value for the Airline's name
+     * @param newSourceAirport String value for the origin's airport's name
+     * @param newSourceAirportID int value for the ID of the origin's airport
+     * @param newDestinationAirport String value for the destination's airport's name
+     * @param newDestinationAirportID int value for the ID of the destination's airport
+     * @param newCodeshare char value for Codeshare
+     * @param newStops int value for the number of stops
+     * @param newEquipment String value for Equipment
+     */
     public Route(int newAirlineID, String newAirline, String newSourceAirport, int newSourceAirportID,
                  String newDestinationAirport, int newDestinationAirportID, char newCodeshare, int newStops,
                  String newEquipment) {
@@ -28,6 +40,12 @@ public class Route {
         Equipment = newEquipment;
     }
 
+    /**
+     * Checks for equality between two instances of Route
+     * @param obj the other instance of Object (will return false if it is not Route.java.
+     *            Otherwise, it will check if all the parameters and values are identical
+     * @return returns either true or false
+     */
     @Override
     public boolean equals(Object obj) {
         if (obj == null || obj.getClass() != this.getClass()) {
