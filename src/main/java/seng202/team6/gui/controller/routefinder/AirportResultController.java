@@ -39,8 +39,12 @@ public class AirportResultController extends ResultController {
         airportInfo.setText(String.format("IATA: %s | ICAO: %s", airportResult.getIATA(), airportResult.getICAO()));
     }
 
+    /**
+     * Called when the user wants to view the airport in question
+     * This method moves the map viewpoint to the airport in question.
+     */
     @FXML
-    private void OnButtonClicked()
+    private void OnViewButtonClicked()
     {
         if (mapController == null) {
             return;

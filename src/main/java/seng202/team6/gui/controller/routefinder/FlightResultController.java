@@ -1,14 +1,24 @@
 package seng202.team6.gui.controller.routefinder;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.Popup;
+import javafx.stage.Stage;
+import javafx.util.Pair;
+import seng202.team6.gui.controller.FindRoutesController;
 import seng202.team6.gui.controller.MapController;
 import seng202.team6.model.data.DataHandler;
 import seng202.team6.model.data.Filter;
 import seng202.team6.model.entities.Airport;
 import seng202.team6.model.entities.Route;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class FlightResultController extends ResultController {
@@ -22,7 +32,16 @@ public class FlightResultController extends ResultController {
     @FXML
     private Button showButton;
 
+    @FXML
+    private Button viewInfoButton;
+
+    @FXML
+    private Button holidayButton;
+
     private Route route;
+
+    private final String flightAddToHolidayComponent = "addflighttoholiday";
+    private final String viewFlightInfoComponent = "flightinformation";
 
     /**
      * Set flight info
@@ -58,8 +77,12 @@ public class FlightResultController extends ResultController {
         return DataHandler.GetInstance().FetchAirports(filters);
     }
 
+    /**
+     * Called when the user wants to view the route in question.
+     * The method draws a line between the source and destination airports.
+     */
     @FXML
-    private void OnButtonClicked()
+    private void OnViewButtonClicked()
     {
         if (mapController == null) {
             return;
@@ -69,5 +92,63 @@ public class FlightResultController extends ResultController {
         ArrayList<Airport> airports = GetAirports();
         mapController.DrawAirportMarks(airports);
         mapController.DrawLineBetween(airports);
+    }
+
+    /**
+     * Create new component from FXML file
+     * @param fxmlLocation Location of FXML file
+     * @return FXML Component
+     * @throws IOException IOException if file not found
+     */
+    private <T, U> Pair<T, U> LoadNode(String fxmlLocation) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        T node = loader.load(getClass().getResource("/routefinder/" + fxmlLocation + ".fxml").openStream());
+        U controller = loader.getController();
+        return new Pair<>(node, controller);
+    }
+
+    /**
+     * Called when the user wants to view information about the route in question.
+     * This method creates a new stage and shows it to the user displaying all relevant information about the route.
+     */
+    @FXML
+    private void OnViewInfoButtonClicked() {
+        try {
+            Pair<BorderPane, FlightInformationController> pair = LoadNode(viewFlightInfoComponent);
+            BorderPane infoBorderPane = pair.getKey();
+            FlightInformationController flightInfoController = pair.getValue();
+            flightInfoController.setRoute(route);
+            Scene viewFlightInfoScene = new Scene(infoBorderPane);
+            Stage newStage = new Stage();
+            newStage.setTitle(String.format("%s to %s", route.getSourceAirport(), route.getDestinationAirport()));
+            newStage.setScene(viewFlightInfoScene);
+            newStage.show();
+            flightInfoController.setStage(newStage);
+            flightInfoController.populateInfo();
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+    }
+
+    /**
+     * Called when the user wants to add the floght to their holiday
+     * This method creates a new stage and shows it to the user asking them to select a departure and arrival time for the flight.
+     */
+    @FXML
+    private void OnAddHolidayButtonClicked() {
+        try {
+            Pair<BorderPane, AddToHolidayController> pair = LoadNode(flightAddToHolidayComponent);
+            BorderPane addHolidayBorderPane = pair.getKey();
+            AddToHolidayController addToHolidayController = pair.getValue();
+            addToHolidayController.setRoute(route);
+            Scene addToHolidayScene = new Scene(addHolidayBorderPane);
+            Stage newStage = new Stage();
+            newStage.setTitle("Add to Holiday");
+            newStage.setScene(addToHolidayScene);
+            newStage.show();
+            addToHolidayController.setStage(newStage);
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
     }
 }
