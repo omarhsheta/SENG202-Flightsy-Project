@@ -1,10 +1,9 @@
 package seng202.team6.model.entities;
 
-import org.junit.Before;
 import org.junit.Test;
-import seng202.team6.model.entities.Airport;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 /**
  * Test class for Airports
@@ -22,7 +21,7 @@ public class AirportTest {
                 -35, 35,  100, 3, '3');
         double result = airport1.GetDistance(airport2);
 
-        assertEquals(98, Math.floor(result), 1e-15);
+        assertEquals(10642, Math.floor(result), 1e-15);
     }
 
     /**

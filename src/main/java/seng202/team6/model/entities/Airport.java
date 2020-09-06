@@ -2,6 +2,7 @@ package seng202.team6.model.entities;
 import seng202.team6.model.interfaces.IMapDrawable;
 
 import java.lang.*;
+import java.util.Objects;
 
 public class Airport implements IMapDrawable {
 
@@ -13,12 +14,12 @@ public class Airport implements IMapDrawable {
     String ICAO;
     float Latitude;
     float Longitude;
-    Integer Altitude;
-    Integer Timezone;
+    int Altitude;
+    float Timezone;
     char DST;
 
     public Airport(int newAirportID, String newName, String newCity, String newCountry, String newIATA,
-                   String newICAO, float newLatitude, float newLongitude, Integer newAltitude, Integer newTimezone,
+                   String newICAO, float newLatitude, float newLongitude, int newAltitude, float newTimezone,
                    char newDST) {
         AirportID = newAirportID;
         Name = newName;
@@ -42,12 +43,12 @@ public class Airport implements IMapDrawable {
 
         Airport airportObject = (Airport)obj;
 
-        return this.AirportID == airportObject.GetAirportID() && this.Name.equals(airportObject.GetName()) &&
-                this.City.equals(airportObject.GetCity()) && this.Country.equals(airportObject.GetCountry()) &&
-                this.IATA.equals(airportObject.GetIATA()) && this.ICAO.equals(airportObject.GetICAO()) &&
-                this.Latitude == airportObject.GetLatitude() && this.Longitude == airportObject.GetLongitude() &&
-                this.Altitude.equals(airportObject.GetAltitude()) && this.Timezone.equals(airportObject.GetTimezone()) &&
-                this.DST == airportObject.GetDST();
+        return this.AirportID == airportObject.getAirportID() && Objects.equals(this.Name, airportObject.getName())
+                && Objects.equals(this.City, airportObject.getCity()) && Objects.equals(this.Country, airportObject.getCountry())
+                && Objects.equals(this.IATA, airportObject.getIATA()) && Objects.equals(this.ICAO, airportObject.getICAO())
+                && this.Latitude == airportObject.getLatitude() && this.Longitude == airportObject.getLongitude()
+                && this.Altitude == airportObject.getAltitude() && this.Timezone == airportObject.getTimezone()
+                && this.DST == airportObject.getDST();
     }
 
     /**
@@ -58,23 +59,30 @@ public class Airport implements IMapDrawable {
     public double GetDistance(Airport other) {
         float destLat = other.Latitude;
         float destLong = other.Longitude;
-        float x_pos = Math.abs(this.Latitude) + Math.abs(destLat);
-        float y_pos = Math.abs(this.Longitude) + Math.abs(destLong);
-        return Math.sqrt(Math.pow(x_pos, 2) + Math.pow(y_pos, 2));
+//        float x_pos = Math.abs(this.Latitude - destLat);
+//        float y_pos = Math.abs(this.Longitude - destLong);
+//        return Math.sqrt(Math.pow(x_pos, 2) + Math.pow(y_pos, 2));
+
+        double conv = Math.PI/180;
+        double dlong = Math.abs(destLong*conv - this.Longitude*conv);
+        double dlat = Math.abs(destLat*conv - this.Latitude*conv);
+
+        double a = (Math.pow(Math.sin(dlat/2), 2) + (Math.cos(this.Latitude*conv) * Math.cos(destLat*conv) * (Math.pow(Math.sin(dlong/2), 2))));
+        return 6371 * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
     }
 
     @Override
     public String ConvertToJavascriptString() {
         return String.format("lat: %f, lng: %f, " +
                         "name: \"%s\", country: \"%s\", city: \"%s\", " +
-                        "iata: \"%s\", icao: \"%s\", alt: %d, tz: %d",
+                        "iata: \"%s\", icao: \"%s\", alt: %d, tz: %f",
 
-                this.GetLatitude(), this.GetLongitude(), this.GetName(),
-                this.GetCountry(), this.GetCity(), this.GetIATA(), this.GetICAO(),
-                this.GetAltitude(), this.GetTimezone());
+                this.getLatitude(), this.getLongitude(), this.getName(),
+                this.getCountry(), this.getCity(), this.getIATA(), this.getICAO(),
+                this.getAltitude(), this.getTimezone());
     }
 
-    public int GetAirportID() {
+    public int getAirportID() {
         return AirportID;
     }
 
@@ -82,7 +90,7 @@ public class Airport implements IMapDrawable {
         AirportID = airportID;
     }
 
-    public String GetName() {
+    public String getName() {
         return Name;
     }
 
@@ -90,7 +98,7 @@ public class Airport implements IMapDrawable {
         Name = name;
     }
 
-    public String GetCity() {
+    public String getCity() {
         return City;
     }
 
@@ -98,7 +106,7 @@ public class Airport implements IMapDrawable {
         City = city;
     }
 
-    public String GetCountry() {
+    public String getCountry() {
         return Country;
     }
 
@@ -106,7 +114,7 @@ public class Airport implements IMapDrawable {
         Country = country;
     }
 
-    public String GetIATA() {
+    public String getIATA() {
         return IATA;
     }
 
@@ -114,7 +122,7 @@ public class Airport implements IMapDrawable {
         this.IATA = IATA;
     }
 
-    public String GetICAO() {
+    public String getICAO() {
         return ICAO;
     }
 
@@ -122,39 +130,39 @@ public class Airport implements IMapDrawable {
         this.ICAO = ICAO;
     }
 
-    public Float GetLatitude() {
+    public float getLatitude() {
         return Latitude;
     }
 
-    public void SetLatitude(Float latitude) {
+    public void SetLatitude(float latitude) {
         Latitude = latitude;
     }
 
-    public Float GetLongitude() {
+    public float getLongitude() {
         return Longitude;
     }
 
-    public void SetLongitude(Float longitude) {
+    public void SetLongitude(float longitude) {
         Longitude = longitude;
     }
 
-    public Integer GetAltitude() {
+    public int getAltitude() {
         return Altitude;
     }
 
-    public void SetAltitude(Integer altitude) {
+    public void SetAltitude(int altitude) {
         Altitude = altitude;
     }
 
-    public Integer GetTimezone() {
+    public float getTimezone() {
         return Timezone;
     }
 
-    public void SetTimezone(Integer timezone) {
+    public void SetTimezone(int timezone) {
         Timezone = timezone;
     }
 
-    public char GetDST() {
+    public char getDST() {
         return DST;
     }
 

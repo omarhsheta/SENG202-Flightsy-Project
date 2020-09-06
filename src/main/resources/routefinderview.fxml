@@ -195,9 +195,9 @@
          <right>
             <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="650.0" prefWidth="211.0" BorderPane.alignment="CENTER">
                <center>
-                  <ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="402.0" prefWidth="219.0" BorderPane.alignment="CENTER">
+                  <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="402.0" prefWidth="219.0" BorderPane.alignment="CENTER">
                      <content>
-                        <VBox fx:id="resultsPane" prefHeight="200.0" prefWidth="100.0" />
+                        <VBox fx:id="resultsPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="174.0" />
                      </content>
                   </ScrollPane>
                </center>

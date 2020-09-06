@@ -21,6 +21,11 @@ function ClearMapMarkers() {
     }
 }
 
+function GoToPosition(lat, lng) {
+    const position = new google.maps.LatLng(lat, lng);
+    googleMap.panTo(position);
+}
+
 function PlaceAirportMarkers(airportList) {
     for (let i = 0; i < airportList.length; i++) {
         var mark = new google.maps.Marker( {

@@ -1,19 +1,27 @@
 package seng202.team6.gui.controller;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Slider;
-import javafx.scene.control.TextArea;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+import javafx.util.Pair;
 import seng202.team6.gui.components.FilterTextField;
+import seng202.team6.gui.components.RouteViewButton;
+import seng202.team6.gui.controller.routefinder.AirportResultController;
+import seng202.team6.gui.controller.routefinder.FlightResultController;
+import seng202.team6.gui.controller.routefinder.ResultController;
 import seng202.team6.model.data.DataHandler;
 import seng202.team6.model.data.Filter;
 import seng202.team6.model.entities.Airport;
 import seng202.team6.model.entities.Route;
 
+import javax.xml.catalog.Catalog;
+import java.io.IOException;
 import java.lang.reflect.Array;
 import java.net.URL;
 import java.util.ArrayList;
@@ -34,7 +42,7 @@ public class FindRoutesController implements Initializable
     @FXML
     private VBox airportFilterBox;
     private ArrayList<FilterTextField> airportFilterTextFields;
-
+    private final String airportResultComponent = "airportresult";
 
     //Flight filtering
     @FXML
@@ -45,6 +53,7 @@ public class FindRoutesController implements Initializable
     private Slider maxStopsSlider;
     private ArrayList<FilterTextField> flightFilterOriginTextFields;
     private ArrayList<FilterTextField> flightFilterDestinationTextFields;
+    private final String flightResultComponent = "flightresult";
 
     //Route filtering
     @FXML
@@ -63,11 +72,25 @@ public class FindRoutesController implements Initializable
         webEngine.load(getClass().getResource(mapHTML).toExternalForm());
 
         controller = new MapController(webEngine);
+        ResultController.SetMap(controller);
 
         //Grab all text filter components
         airportFilterTextFields = GetAllNodes(airportFilterBox);
         flightFilterOriginTextFields = GetAllNodes(flightFilterOriginBox);
         flightFilterDestinationTextFields = GetAllNodes(flightFilterDestinationBox);
+    }
+
+    /**
+     * Create new node from FXML file
+     * @param fxmlLocation Location of FXML file
+     * @return FXML Component
+     * @throws IOException IOException if file not found
+     */
+    private <T, U> Pair<T, U> LoadNode(String fxmlLocation) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        T node = loader.load(getClass().getResource("/routefinder/" + fxmlLocation + ".fxml").openStream());
+        U controller = loader.getController();
+        return new Pair<>(node, controller);
     }
 
     /**
@@ -86,29 +109,29 @@ public class FindRoutesController implements Initializable
     }
 
     /**
-     * Extract filters from filter text GUI components
-     * @param filterFields List of filter GUI components
-     * @return List of filters
-     */
-    private ArrayList<Filter> ExtractFilters(ArrayList<FilterTextField> filterFields) {
-        ArrayList<Filter> filters = new ArrayList<>();
-        for (FilterTextField box : filterFields) {
-            if (!box.getText().equals("")) {
-                String filterString = String.format(box.GetFilter(), box.getText());
-                filters.add(new Filter(filterString, "AND"));
-            }
-        }
-        return filters;
-    }
-
-    /**
      * Draw airport marks based on filters
      */
     @FXML
     private void OnAirportFilterButtonClicked() {
-        ArrayList<Filter> filters = ExtractFilters(this.airportFilterTextFields);
+        resultsPane.getChildren().clear();
+
+        ArrayList<Filter> filters = FilterTextField.ExtractFilters(this.airportFilterTextFields);
+        ArrayList<Airport> airports = DataHandler.GetInstance().FetchAirports(filters);
+
+        try {
+            for (Airport airport : airports) {
+                Pair<BorderPane, AirportResultController> pair = LoadNode(airportResultComponent);
+                resultsPane.getChildren().add(pair.getKey());
+
+                AirportResultController resultController = pair.getValue();
+                resultController.SetAirport(airport);
+            }
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+
         controller.ClearAll();
-        controller.DrawAirportMarks(DataHandler.GetInstance().FetchAirports(filters));
+        controller.DrawAirportMarks(airports);
     }
 
     /**
@@ -116,34 +139,25 @@ public class FindRoutesController implements Initializable
      */
     @FXML
     private void OnFlightFilterButtonClicked() {
-        ArrayList<Filter> originFilters = ExtractFilters(this.flightFilterOriginTextFields);
-        ArrayList<Filter> destinationFilters = ExtractFilters(this.flightFilterDestinationTextFields);
+        resultsPane.getChildren().clear();
+        ArrayList<Filter> originFilters = FilterTextField.ExtractFilters(this.flightFilterOriginTextFields);
+        ArrayList<Filter> destinationFilters = FilterTextField.ExtractFilters(this.flightFilterDestinationTextFields);
 
         ArrayList<Airport> sourceAirports = DataHandler.GetInstance().FetchAirports(originFilters);
         ArrayList<Airport> destinationAirports = DataHandler.GetInstance().FetchAirports(destinationFilters);
 
         ArrayList<Route> routes = DataHandler.GetInstance().FetchRoutes(sourceAirports, destinationAirports);
 
-        //VERY TEMPORARY TO TEST
-        StringBuilder query = new StringBuilder();
-
-        resultsPane.getChildren().clear();
-        for (Route route : routes) {
-            TextArea text = new TextArea();
-            text.setText(String.format("%s --> %s", route.GetSourceAirport(), route.GetDestinationAirport()));
-            resultsPane.getChildren().add(text);
-
-            query.append(String.format("'%s', '%s', ", route.GetSourceAirport(), route.GetDestinationAirport()));
+        try {
+            for (Route route : routes) {
+                Pair<BorderPane, FlightResultController> pair = LoadNode(flightResultComponent);
+                resultsPane.getChildren().add(pair.getKey());
+                FlightResultController resultController = pair.getValue();
+                resultController.SetFlight(route);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
-        if (query.length() > 2) {
-            controller.ClearAll();
-            query.delete(query.length() - 2, query.length() - 1);
-
-            ArrayList<Filter> filters = new ArrayList<>();
-            filters.add(new Filter(String.format("IATA in (%s)", query.toString()), ""));
-            controller.DrawAirportMarks(DataHandler.GetInstance().FetchAirports(filters));
-        }
-        //END TEMPORARY
     }
 
     @FXML

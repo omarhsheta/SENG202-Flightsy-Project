@@ -1,6 +1,8 @@
 package seng202.team6.model.user;
 
 import java.lang.Object;
+
+import seng202.team6.model.data.DataHandler;
 import seng202.team6.model.events.Event;
 import seng202.team6.model.events.Flight;
 import seng202.team6.model.events.General;
@@ -9,16 +11,32 @@ import java.util.ArrayList;
 
 public class HolidayPlan {
     String Name; //No more than 25 chars
-    private ArrayList<General> Itineraries;
-    private ArrayList<Flight> Flights; //Should not exceed 30
+    private ArrayList<General> Itineraries= new ArrayList<>();
+    private ArrayList<Flight> flights = new ArrayList<>(); //Should not exceed 30
+    private static HolidayPlan Instance;
+
+    /**
+     * Singleton method for the holiday
+     * @return Single HolidayPlan object
+     */
+    public static HolidayPlan GetInstance() {
+        if (Instance == null) {
+            Instance = new HolidayPlan();
+        }
+        return Instance;
+    }
 
     /**
      * This method should be called when the user is adding a new flight to their HolidayPlan.
      * It should also check if it is below 30 before appending the flight to the array, and it should
      * check that the flight that is about to be appended is not in the array.
-     * @param Flight The flight that is to be added to the array Flights
+     * @param flight The flight that is to be added to the array Flights
      */
-    public void FlightAppend(Flight Flight) {
+    public void FlightAppend(Flight flight) {
+        if (flights.size() < 30) {
+            flights.add(flight);
+            System.out.println(String.format("%s, %s to %s, %s", flight.getOAirport(), flight.getOCity(), flight.getDAirport(), flight.getDCity()));
+        }
     }
 
     /**

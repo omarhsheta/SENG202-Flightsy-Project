@@ -1,5 +1,7 @@
 package seng202.team6.model.entities;
 
+import java.util.Objects;
+
 public class Airline {
 
     int AirlineID;
@@ -12,7 +14,7 @@ public class Airline {
     Character Active;
 
     public Airline(int newAirlineID, String newName, String newAlias, String newIATA, String newICAO,
-                   String newCallsign, String newCountry, Character newActive) {
+                   String newCallsign, String newCountry, char newActive) {
         AirlineID = newAirlineID;
         Name = newName;
         Alias = newAlias;
@@ -31,13 +33,14 @@ public class Airline {
 
         Airline airlineObject = (Airline)obj;
 
-        return this.AirlineID == airlineObject.GetAirlineID() && this.Name.equals(airlineObject.GetName())
-                            && this.Alias.equals(airlineObject.GetAlias()) && this.IATA.equals(airlineObject.GetIATA()) &&
-                            this.ICAO.equals(airlineObject.GetICAO()) && this.Callsign.equals(airlineObject.GetCallsign()) &&
-                            this.Country.equals(airlineObject.GetCountry()) && this.Active == airlineObject.GetActive();
+
+        return this.AirlineID == airlineObject.getAirlineID() && Objects.equals(this.Name, airlineObject.getName())
+                && Objects.equals(this.Alias, airlineObject.getAlias()) && Objects.equals(this.IATA, airlineObject.getIATA())
+                && Objects.equals(this.ICAO, airlineObject.getICAO()) && Objects.equals(this.Callsign, airlineObject.getCallsign())
+                && Objects.equals(this.Country, airlineObject.getCountry()) && this.Active == airlineObject.getActive();
     }
 
-    public int GetAirlineID() {
+    public int getAirlineID() {
         return AirlineID;
     }
 
@@ -45,7 +48,7 @@ public class Airline {
         AirlineID = airlineID;
     }
 
-    public String GetName() {
+    public String getName() {
         return Name;
     }
 
@@ -53,7 +56,7 @@ public class Airline {
         Name = name;
     }
 
-    public String GetAlias() {
+    public String getAlias() {
         return Alias;
     }
 
@@ -61,7 +64,7 @@ public class Airline {
         Alias = alias;
     }
 
-    public String GetIATA() {
+    public String getIATA() {
         return IATA;
     }
 
@@ -69,7 +72,7 @@ public class Airline {
         this.IATA = IATA;
     }
 
-    public String GetICAO() {
+    public String getICAO() {
         return ICAO;
     }
 
@@ -77,7 +80,7 @@ public class Airline {
         this.ICAO = ICAO;
     }
 
-    public String GetCallsign() {
+    public String getCallsign() {
         return Callsign;
     }
 
@@ -85,7 +88,7 @@ public class Airline {
         Callsign = callsign;
     }
 
-    public String GetCountry() {
+    public String getCountry() {
         return Country;
     }
 
@@ -93,7 +96,7 @@ public class Airline {
         Country = country;
     }
 
-    public Character GetActive() {
+    public Character getActive() {
         return Active;
     }
 
