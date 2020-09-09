@@ -28,6 +28,15 @@
                <HBox.margin>
                   <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
                </HBox.margin></Button>
+             <Button fx:id="addRowButton" alignment="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" onAction="#OpenPopUp" text="Add Row">
+                 <styleClass>
+                     <String fx:value="btn" />
+                     <String fx:value="btn-sm" />
+                     <String fx:value="btn-primary" />
+                 </styleClass>
+                 <HBox.margin>
+                     <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
+                 </HBox.margin></Button>
                 <SplitMenuButton fx:id="importMenuButton" alignment="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Import File">
                     <items>
                         <MenuItem fx:id="airportFileMenuItem" mnemonicParsing="false" onAction="#AirportFileImport" text="Airport" />
@@ -44,15 +53,6 @@
                   <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
                </HBox.margin>
                 </SplitMenuButton>
-                 <Button fx:id="addRowButton" alignment="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" onAction="#OpenPopUp" text="Add Row">
-                 <styleClass>
-                     <String fx:value="btn" />
-                     <String fx:value="btn-sm" />
-                     <String fx:value="btn-primary" />
-                 </styleClass>
-                 <HBox.margin>
-                     <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
-                 </HBox.margin></Button>
          </children>
       </HBox>
    </bottom>
