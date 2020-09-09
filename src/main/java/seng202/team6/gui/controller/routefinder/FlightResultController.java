@@ -1,24 +1,18 @@
 package seng202.team6.gui.controller.routefinder;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
-import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.util.Pair;
-import seng202.team6.gui.controller.FindRoutesController;
-import seng202.team6.gui.controller.MapController;
+import seng202.team6.gui.helper.NodeHelper;
 import seng202.team6.model.data.DataHandler;
 import seng202.team6.model.data.Filter;
 import seng202.team6.model.entities.Airport;
 import seng202.team6.model.entities.Route;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class FlightResultController extends ResultController {
@@ -40,6 +34,7 @@ public class FlightResultController extends ResultController {
 
     private Route route;
 
+    private final String subFolder = "routefinder";
     private final String flightAddToHolidayComponent = "addflighttoholiday";
     private final String viewFlightInfoComponent = "flightinformation";
 
@@ -95,26 +90,13 @@ public class FlightResultController extends ResultController {
     }
 
     /**
-     * Create new component from FXML file
-     * @param fxmlLocation Location of FXML file
-     * @return FXML Component
-     * @throws IOException IOException if file not found
-     */
-    private <T, U> Pair<T, U> LoadNode(String fxmlLocation) throws IOException {
-        FXMLLoader loader = new FXMLLoader();
-        T node = loader.load(getClass().getResource("/routefinder/" + fxmlLocation + ".fxml").openStream());
-        U controller = loader.getController();
-        return new Pair<>(node, controller);
-    }
-
-    /**
      * Called when the user wants to view information about the route in question.
      * This method creates a new stage and shows it to the user displaying all relevant information about the route.
      */
     @FXML
     private void OnViewInfoButtonClicked() {
         try {
-            Pair<BorderPane, FlightInformationController> pair = LoadNode(viewFlightInfoComponent);
+            Pair<BorderPane, FlightInformationController> pair = NodeHelper.LoadNode(subFolder, viewFlightInfoComponent);
             BorderPane infoBorderPane = pair.getKey();
             FlightInformationController flightInfoController = pair.getValue();
             flightInfoController.setRoute(route);
@@ -137,7 +119,7 @@ public class FlightResultController extends ResultController {
     @FXML
     private void OnAddHolidayButtonClicked() {
         try {
-            Pair<BorderPane, AddToHolidayController> pair = LoadNode(flightAddToHolidayComponent);
+            Pair<BorderPane, AddToHolidayController> pair = NodeHelper.LoadNode(subFolder, flightAddToHolidayComponent);
             BorderPane addHolidayBorderPane = pair.getKey();
             AddToHolidayController addToHolidayController = pair.getValue();
             addToHolidayController.setRoute(route);

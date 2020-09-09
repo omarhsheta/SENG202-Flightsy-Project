@@ -1,10 +1,9 @@
 package seng202.team6.model.data;
 
-import javafx.util.Pair;
-import seng202.team6.gui.components.FilterTextField;
 import seng202.team6.model.entities.Airline;
 import seng202.team6.model.entities.Airport;
 import seng202.team6.model.entities.Route;
+import seng202.team6.model.entities.RoutePath;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -207,15 +206,17 @@ public class DataHandler {
      * Select and return all the Route tuples in the SQLite database.
      * @param sourceAirports Source airport list
      * @param destinationAirports Destination airport list
+     * @param maxStops Maximum stops the route has
      * @return All routes that fit the database query
      */
-    public ArrayList<Route> FetchRoutes(ArrayList<Airport> sourceAirports, ArrayList<Airport> destinationAirports) {
+    public ArrayList<Route> FetchRoutes(ArrayList<Airport> sourceAirports, ArrayList<Airport> destinationAirports, int maxStops) {
         //This is big oof query, joining two tables
         String query = String.format("SELECT * FROM route " +
                         "JOIN (SELECT airport.iata FROM airport) " +
                         "WHERE iata = route.source_airport " +
-                        "AND route.source_airport in (%s) AND route.destination_airport in (%s);",
-                SQLHelper.GetAirportIATAList(sourceAirports), SQLHelper.GetAirportIATAList(destinationAirports));
+                        "AND route.source_airport in (%s) AND route.destination_airport in (%s) " +
+                        "AND route.stops <= (%s);",
+                SQLHelper.GetAirportIATAList(sourceAirports), SQLHelper.GetAirportIATAList(destinationAirports), maxStops);
         try {
             Statement stmt = this.databaseConnection.createStatement();
             ResultSet rs = stmt.executeQuery(query);
@@ -223,6 +224,19 @@ public class DataHandler {
         } catch (Exception ignored) {
             return null;
         }
+    }
+
+    /**
+     * Select and return all the RoutePath objects in the SQLite database.
+     * @param sourceAirports Source airports list
+     * @param destinationAirports Destination airports list
+     * @return All routepaths from source to destination airports
+     * TODO: Connor make work with database
+     */
+    public ArrayList<RoutePath> FetchRoutePaths(ArrayList<Airport> sourceAirports, ArrayList<Airport> destinationAirports) {
+        //Use SQLHelper.GetAirportICAOList for ICAO's
+        //Use SQLHelper.GetAirportIATAList for IATA's
+        return null;
     }
 
     /**

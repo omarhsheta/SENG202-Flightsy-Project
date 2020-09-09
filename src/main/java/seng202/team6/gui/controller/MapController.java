@@ -35,8 +35,8 @@ public class MapController
     }
 
     /**
-     * [[TO WHOEVER MADE THE METHOD PLEASE ADD USEFUL INFO HERE]]
-     * @param airports
+     * Draw line between airports
+     * @param airports List of airport objects
      */
     public void DrawLineBetween(ArrayList<Airport> airports) {
         String JSFunction = "PlaceRouteLines(%s);";
@@ -90,9 +90,9 @@ public class MapController
     }
 
     /**
-     * [[TO WHOEVER MADE THE METHOD PLEASE ADD USEFUL INFO HERE]]
-     * @param positions
-     * @return
+     * Turn list of pairs of numbers into a javascript array
+     * @param positions List of pairs of floats
+     * @return Javascript array string format
      */
     public String PositionsToArray(ArrayList<Pair<Float, Float>> positions) {
         StringBuilder string = new StringBuilder();

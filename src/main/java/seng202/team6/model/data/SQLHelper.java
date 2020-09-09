@@ -1,6 +1,5 @@
 package seng202.team6.model.data;
 
-import seng202.team6.model.data.Filter;
 import seng202.team6.model.entities.Airport;
 
 import java.util.ArrayList;
@@ -53,6 +52,25 @@ public class SQLHelper
             list.append(String.format("'%s', ", airports.get(i).getIATA()));
         }
         list.append(String.format("'%s'", airports.get(airports.size() - 1).getIATA()));
+
+        return list.toString();
+    }
+
+    /**
+     * Extract a SQL query string list of airport ICAO
+     * @param airports Airport list
+     * @return String of ICAOs in SQL List form
+     */
+    public static String GetAirportICAOList(ArrayList<Airport> airports) {
+        if (airports.size() == 0) {
+            return "";
+        }
+
+        StringBuilder list = new StringBuilder();
+        for (int i = 0; i < airports.size() - 1; i++) {
+            list.append(String.format("'%s', ", airports.get(i).getICAO()));
+        }
+        list.append(String.format("'%s'", airports.get(airports.size() - 1).getICAO()));
 
         return list.toString();
     }
