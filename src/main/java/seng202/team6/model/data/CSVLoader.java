@@ -206,7 +206,7 @@ public class CSVLoader {
             char codeshare;
             int stops;
             try {
-                airlineID = Integer.parseInt(line.get(0));
+                airlineID = Integer.parseInt(line.get(1));
                 if (line.get(3).contains("N")) {
                     sourceID = 0;
                 } else {
@@ -230,7 +230,7 @@ public class CSVLoader {
                 continue;
             }
 
-            String name = line.get(1);
+            String name = line.get(0);
             String source = line.get(2);
             String destination = line.get(4);
 

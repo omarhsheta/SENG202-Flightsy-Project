@@ -85,7 +85,8 @@ public class DataViewerController implements Initializable
         fileChooser.setTitle("Import File");
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("CSV File", "*.csv"),
-                new FileChooser.ExtensionFilter("DAT File", "*.dat"));
+                new FileChooser.ExtensionFilter("DAT File", "*.dat"),
+                new FileChooser.ExtensionFilter("Text File", "*.txt"));
 
         return fileChooser.showOpenDialog(borderPane.getScene().getWindow());
     }
