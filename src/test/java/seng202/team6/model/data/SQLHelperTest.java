@@ -53,7 +53,7 @@ public class SQLHelperTest {
         ArrayList<Airport> airports = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
             Airport testPort = new Airport(0, null, null, null, "test",
-                    null, 0, 0, 0, 0, 'T');
+                    null, (float)0, (float)0, 0, 0, 'T');
             airports.add(testPort);
         }
 
