@@ -294,7 +294,7 @@ public class DataHandler {
      * @param Active Stating whether the airline is active
      * @throws SQLException Throws an SQLException when the update query is invalid
      */
-    public void updateAirlines(int AirlineID, String Name, String Alias, String IATA, String ICAO, String Callsign,
+    public void updateAirline(int AirlineID, String Name, String Alias, String IATA, String ICAO, String Callsign,
                                String Country, Character Active) throws SQLException {
         Statement stmt = this.databaseConnection.createStatement();
 
@@ -307,9 +307,11 @@ public class DataHandler {
         }
         if (IATA != null && !IATA.trim().isEmpty()) {
             setSQL += String.format("iata = %s,", IATA);
+            // Add error handling, only two chars allowed
         }
         if (ICAO != null && !ICAO.trim().isEmpty()) {
             setSQL += String.format("icao = %s,", ICAO);
+            // Add error handling, only three chars allowed
         }
         if (Callsign != null && !Callsign.trim().isEmpty()) {
             setSQL += String.format("callsign = %s,", Callsign);
@@ -358,9 +360,11 @@ public class DataHandler {
         }
         if (IATA != null && !IATA.trim().isEmpty()) {
             setSQL += String.format("iata = %s,", IATA);
+            // Add error handling, only three chars allowed
         }
         if (ICAO != null && !ICAO.trim().isEmpty()) {
             setSQL += String.format("icao = %s,", ICAO);
+            // Add error handling, only four chars allowed
         }
         if (Latitude != null) {
             setSQL += String.format("latitude = %f,", Latitude);
@@ -406,9 +410,11 @@ public class DataHandler {
         }
         if (SourceAirportICAO != null && !SourceAirportICAO.trim().isEmpty()) {
             setSQL += String.format("source_airport = %s,", SourceAirportICAO);
+            // Add error handling, only four chars allowed
         }
         if (DestinationAirportICAO != null && !DestinationAirportICAO.trim().isEmpty()) {
             setSQL += String.format("destination_airport = %s,", DestinationAirportICAO);
+            // Add error handling, only four chars allowed
         }
         if (Codeshare != null) {
             setSQL += String.format("codeshare = %c,", Codeshare);
