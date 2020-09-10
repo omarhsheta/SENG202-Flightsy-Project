@@ -322,7 +322,7 @@ public class DataHandler {
         }
         if (setSQL.length() > 0) { setSQL = setSQL.substring(0, setSQL.length() - 1); }
 
-        String query = String.format("UPDATE airline SET %s WHERE id_airline == %d", setSQL, AirlineID);
+        String query = String.format("UPDATE airline SET %s WHERE id_airline == %d;", setSQL, AirlineID);
         stmt.executeUpdate(query);
     }
 
@@ -376,7 +376,7 @@ public class DataHandler {
         }
         if (setSQL.length() > 0) { setSQL = setSQL.substring(0, setSQL.length() - 1); }
 
-        String query = String.format("UPDATE airline SET %s WHERE id_airport == %d", setSQL, AirportID);
+        String query = String.format("UPDATE airline SET %s WHERE id_airport == %d;", setSQL, AirportID);
         stmt.executeUpdate(query);
     }
 
@@ -395,8 +395,8 @@ public class DataHandler {
      * @param Equipment A three character code for plane types
      * @throws SQLException Throws an SQLException when the update query is invalid
      */
-    public void updateRoute(String AirlineID, String AirlineICAO, String SourceAirportICAO, Integer SourceAirportID,
-                            String DestinationAirportICAO, Integer DestinationAirportID, Character Codeshare,
+    public void updateRoute(Integer AirlineID, String AirlineICAO, String SourceAirportICAO, int SourceAirportID,
+                            String DestinationAirportICAO, int DestinationAirportID, Character Codeshare,
                             Integer Stops, String Equipment) throws SQLException {
         Statement stmt = this.databaseConnection.createStatement();
 
@@ -421,9 +421,45 @@ public class DataHandler {
         }
         if (setSQL.length() > 0) { setSQL = setSQL.substring(0, setSQL.length() - 1); }
 
-        String query = String.format("UPDATE airline SET %s WHERE id_airline == %d AND source_airport_id == %d AND destination_airport_id == %d "
-                , setSQL, AirlineID, SourceAirportID, DestinationAirportID);
+        String query = String.format("UPDATE airline SET %s WHERE id_airline == %d AND source_airport_id == %d AND destination_airport_id == %d;"
+                                     , setSQL, AirlineID, SourceAirportID, DestinationAirportID);
 
         stmt.executeUpdate(query);
+    }
+
+    /**
+     * Deletes the Airline from the Database based on the AirlineID provided
+     * @param AirlineID The unique ID associated with the airline.
+     * @throws SQLException Throws an SQLException when the delete query is invalid
+     */
+    public void deleteAirline(int AirlineID) throws SQLException {
+        Statement stmt = this.databaseConnection.createStatement();
+        String query = String.format("DELETE FROM Airline WHERE id_airline == %d;", AirlineID);
+        stmt.executeQuery(query);
+    }
+
+    /**
+     * Deletes the Airport from the Database based on the AirportID provided
+     * @param AirportID The unique ID associated with the airport.
+     * @throws SQLException Throws an SQLException when the delete query is invalid
+     */
+    public void deleteAirport(int AirportID) throws SQLException {
+        Statement stmt = this.databaseConnection.createStatement();
+        String query = String.format("DELETE FROM Airport WHERE id_airport == %d;", AirportID);
+        stmt.executeQuery(query);
+    }
+
+    /**
+     * Deletes the Route from the Database based on the AirportID, SourceAirportID and DestinationAirportID provided
+     * @param AirlineID The unique ID associated with the airline undertaking this route.
+     * @param SourceAirportID The unique ID associated with the airport the route departed from.
+     * @param DestinationAirportID The unique ID associated with the airport the route arrived at.
+     * @throws SQLException Throws an SQLException when the delete query is invalid
+     */
+    public void deleteRoute(int AirlineID, int SourceAirportID, int DestinationAirportID) throws SQLException {
+        Statement stmt = this.databaseConnection.createStatement();
+        String query = String.format("DELETE FROM Route WHERE id_airline == %d AND source_airport_id == %d AND destination_airport_id == %d;"
+                                     , AirlineID, SourceAirportID, DestinationAirportID);
+        stmt.executeQuery(query);
     }
 }
