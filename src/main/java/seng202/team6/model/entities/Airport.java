@@ -12,11 +12,11 @@ public class Airport implements IMapDrawable {
     String Country;
     String IATA;
     String ICAO;
-    float Latitude;
-    float Longitude;
-    int Altitude;
-    float Timezone;
-    char DST;
+    Float Latitude;
+    Float Longitude;
+    Integer Altitude;
+    Integer Timezone;
+    Character DST;
 
     /**
      * Constructor for Airport class
@@ -33,8 +33,8 @@ public class Airport implements IMapDrawable {
      * @param newDST char value for the Airport's DST
      */
     public Airport(int newAirportID, String newName, String newCity, String newCountry, String newIATA,
-                   String newICAO, float newLatitude, float newLongitude, int newAltitude, float newTimezone,
-                   char newDST) {
+                   String newICAO, Float newLatitude, Float newLongitude, Integer newAltitude, Integer newTimezone,
+                   Character newDST) {
         AirportID = newAirportID;
         Name = newName;
         City = newCity;
@@ -157,7 +157,7 @@ public class Airport implements IMapDrawable {
         return Latitude;
     }
 
-    public void SetLatitude(float latitude) {
+    public void SetLatitude(Float latitude) {
         Latitude = latitude;
     }
 
@@ -165,7 +165,7 @@ public class Airport implements IMapDrawable {
         return Longitude;
     }
 
-    public void SetLongitude(float longitude) {
+    public void SetLongitude(Float longitude) {
         Longitude = longitude;
     }
 
@@ -173,7 +173,7 @@ public class Airport implements IMapDrawable {
         return Altitude;
     }
 
-    public void SetAltitude(int altitude) {
+    public void SetAltitude(Integer altitude) {
         Altitude = altitude;
     }
 
@@ -181,7 +181,7 @@ public class Airport implements IMapDrawable {
         return Timezone;
     }
 
-    public void SetTimezone(int timezone) {
+    public void SetTimezone(Integer timezone) {
         Timezone = timezone;
     }
 

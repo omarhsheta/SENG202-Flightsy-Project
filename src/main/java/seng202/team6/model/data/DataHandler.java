@@ -31,7 +31,7 @@ public class DataHandler {
     /**
      * Constructor class creates the connection to the SQLite database.
      */
-    private DataHandler() {
+    public DataHandler() { //Change back to private, using public for junit testing suite
         // relative url to database
         String url = "jdbc:sqlite:src/main/database/database.sqlite";
         this.databaseConnection = null;
@@ -373,7 +373,7 @@ public class DataHandler {
             setSQL += String.format("longitude = %f,", Longitude);
         }
         if (Altitude != null) {
-            setSQL += String.format("altitude = %f,", Altitude);
+            setSQL += String.format("altitude = %d,", Altitude);
         }
         if (Timezone != null) {
             setSQL += String.format("timezone = %f,", Timezone);
@@ -389,7 +389,7 @@ public class DataHandler {
      * DestinationAirportID. Then, the fields are updated based on the provided parameters.
      * Parameters that are null will not be updated.
      * @param AirlineID The ID of the Airline undertaking the route and one of the primary keys for route
-     * @param AirlineICAO
+     * @param AirlineICAO The International Civil Aviation Organisation unique three character code of the airline the route is flying on
      * @param SourceAirportICAO The International Civil Aviation Organisation unique four character code of the airport the route will depart from
      * @param SourceAirportID The ID of the airport the route will depart from and one of the primary keys for route
      * @param DestinationAirportICAO The International Civil Aviation Organisation unique four character code of the airport the route will arrive at
