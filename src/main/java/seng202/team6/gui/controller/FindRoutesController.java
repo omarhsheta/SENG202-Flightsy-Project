@@ -2,7 +2,9 @@ package seng202.team6.gui.controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Slider;
+import javafx.geometry.Orientation;
+import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.WebEngine;
@@ -10,6 +12,7 @@ import javafx.scene.web.WebView;
 import javafx.util.Pair;
 import seng202.team6.gui.components.FilterTextField;
 import seng202.team6.gui.controller.routefinder.AirportResultController;
+import seng202.team6.gui.controller.routefinder.AnalysisDistanceController;
 import seng202.team6.gui.controller.routefinder.FlightResultController;
 import seng202.team6.gui.controller.routefinder.ResultController;
 import seng202.team6.gui.helper.NodeHelper;
@@ -19,8 +22,10 @@ import seng202.team6.model.entities.Airport;
 import seng202.team6.model.entities.Route;
 import seng202.team6.model.entities.RoutePath;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.ResourceBundle;
 
 public class FindRoutesController implements Initializable
@@ -60,6 +65,13 @@ public class FindRoutesController implements Initializable
     private VBox routeFilterDestinationBox;
     private ArrayList<FilterTextField> routeFilterOriginTextFields;
     private ArrayList<FilterTextField> routeFilterDestinationTextFields;
+
+    //Data analysis
+    @FXML
+    private FilterTextField distanceOriginAirportIATAField;
+    @FXML
+    private FilterTextField distanceDestAirportIATAField;
+    private final String analysisDistanceResultComponent = "analysisdistance";
 
     private MapController controller;
 
@@ -154,6 +166,46 @@ public class FindRoutesController implements Initializable
     }
 
     /**
+     * Display analysis information requested.
+     */
+    public void OnAnalyseButtonClicked(MouseEvent mouseEvent)
+    {
+        OnResult();
+
+        ArrayList<FilterTextField> originFilters = new ArrayList<>();
+        originFilters.add(distanceOriginAirportIATAField);
+        ArrayList<FilterTextField> destFilters = new ArrayList<>();
+        destFilters.add(distanceDestAirportIATAField);
+        Pair<ArrayList<Airport>, ArrayList<Airport>> airportsList = GetSourceAndDestinations(originFilters, destFilters);
+        try {
+            Airport sourceAirport = airportsList.getKey().get(0);
+            Airport destAirport = airportsList.getValue().get(0);
+            double distance = sourceAirport.GetDistance(destAirport);
+
+            Pair<BorderPane, AnalysisDistanceController> pair = NodeHelper.LoadNode(subFolder, analysisDistanceResultComponent);
+            resultsPane.getChildren().add(pair.getKey());
+            AnalysisDistanceController resultController = pair.getValue();
+            String title = String.format("%s to %s", sourceAirport.getIATA(), destAirport.getIATA());
+            String destText = String.format("%.2f km", distance);
+            //Display Distance
+            resultController.SetInfo(title, destText);
+
+            //Draw Airports and line between Airports
+            ArrayList<Airport> airports = new ArrayList<>(Arrays.asList(sourceAirport, destAirport));
+            controller.DrawAirportMarks(airports);
+            controller.DrawLineBetween(airports);
+
+        } catch (IndexOutOfBoundsException e) {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "No airports found with desired IATA", ButtonType.OK);
+            alert.showAndWait();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+
+
+    }
+
+    /**
      * Called when results are to be shown
      */
     private void OnResult() {
@@ -176,4 +228,6 @@ public class FindRoutesController implements Initializable
 
         return new Pair<>(sourceAirports, destinationAirports);
     }
+
+
 }
