@@ -113,6 +113,7 @@ public class DataHandlerTest {
     /**
      * Test inserting two airlines into the database
      */
+    /**
     @Test
     public void testInsertTwoAirlines() {
         ArrayList<Airline> testAirlines = new ArrayList<Airline>();
@@ -132,6 +133,7 @@ public class DataHandlerTest {
             Assert.fail(e.getMessage());
         }
     }
+    */
 
     /**
      * Test inserting five airlines into the database
@@ -183,299 +185,465 @@ public class DataHandlerTest {
     }
      */
 
+    /**
+     * Test inserting a invalid airline into the database
+     */
     @Test
     public void testInsertInvalidAirline() {
         // insert invalid airline
     }
 
+    /**
+     * Test inserting two invalid airlines and one airline into the database
+     */
     @Test
     public void testInsertTwoValidOneInvalidAirlines() {
         // insert two valid, one invalid airlines
     }
 
-
+    /**
+     * Test inserting one airport into the database
+     */
     @Test
     public void testInsertOneAirport() {
         // insert one airport
     }
 
+    /**
+     * Test inserting two airports into the database
+     */
     @Test
     public void testInsertTwoAirports() {
         // insert two airports
     }
 
+    /**
+     * Test inserting five airports in the database
+     */
     @Test
     public void testInsertFiveAirports() {
         // insert five airports
     }
 
+    /**
+     * Test inserting an empty airport (should error) in the database
+     */
     @Test
     public void testInsertEmptyAirport() {
         // insert empty airport
     }
 
+    /**
+     * Test inserting an invalid airport into the database
+     */
     @Test
     public void testInsertInvalidAirport() {
         // insert invalid airport
     }
 
+    /**
+     * Test inserting two airports and one invalid airport into the database
+     */
     @Test
     public void testInsertTwoValidOneInvalidAirports() {
         // insert two valid, one invalid airports
     }
 
-
+    /**
+     * Test inserting one route into the database
+     */
     @Test
     public void testInsertOneRoute() {
         // insert one route
     }
 
+    /**
+     * Test inserting two routes into the database
+     */
     @Test
     public void testInsertTwoRoutes() {
         // insert two routes
     }
 
+    /**
+     * Test inserting five routes into the database
+     */
     @Test
     public void testInsertFiveRoutes() {
         // insert five routes
     }
 
+    /**
+     * Test inserting an empty route (should error) into the database
+     */
     @Test
     public void testInsertEmptyRoute() {
         // insert empty route
     }
 
+    /**
+     * Test inserting an invalid route into the database
+     */
     @Test
     public void testInsertInvalidRoute() {
         // insert invalid route
     }
 
+    /**
+     * Test inserting two routes and one invalid route into the database
+     */
     @Test
     public void testInsertTwoValidOneInvalidRoutes() {
         // insert two valid, one invalid routes
     }
 
-
+    /**
+     * Test updating one airline within the database
+     */
     @Test
     public void testUpdateOneAirline() {
         // update one airline
     }
 
+    /**
+     * Test updating two airlines within the database
+     */
     @Test
     public void testUpdateTwoAirlines() {
         // update two airlines
     }
 
+    /**
+     * Test updating five airlines within the database
+     */
     @Test
     public void testUpdateFiveAirlines() {
         // update five airlines
     }
 
+    /**
+     * Test updating an airline with empty parameters (should throw exception) within the database
+     */
     @Test
     public void testUpdateAirlineEmpty() {
         // update an airline with empty parameters
-
     }
+
+    /**
+     * Test updating invalid IATA with one character within the database
+     */
     @Test
     public void testUpdateAirlineOneCharIATA() {
         // update airline with invalid IATA with one char
     }
 
+    /**
+     * Test updating invalid IATA with three characters within the database
+     */
     @Test
     public void testUpdateAirlineThreeCharIATA() {
         // update airline with invalid IATA with three chars
     }
 
+    /**
+     * Test updating invalid ICAO with two characters within the database
+     */
     @Test
     public void testUpdateAirlineTwoCharICAO() {
         // update airline with invalid ICAO with two chars
     }
 
+    /**
+     * Test updating invalid ICAO with four characters within the database
+     */
     @Test
     public void testupdateAirlineFourCharICAO() {
         // update airline with invalid ICAO with four chars
     }
 
+    /**
+     * Test updating invalid airline parameters within the database
+     */
     @Test
     public void testInvalidAirlineParams() {
         // update airline with invalid parameter data
     }
 
-
+    /**
+     * Test updating one airport within the database
+     */
     @Test
     public void testUpdateOneAirport() {
         // update one airline
     }
 
+    /**
+     * Test updating two airports within the database
+     */
     @Test
     public void testUpdateTwoAirports() {
         // update two airlines
     }
 
+    /**
+     * Test updating five airports within the database
+     */
     @Test
     public void testUpdateFiveAirports() {
         // update five airlines
     }
 
+    /**
+     * Test updating an airport with empty parameters within the database
+     */
     @Test
     public void testUpdateAirportEmpty() {
         // update an airline with empty parameters
-
     }
+
+    /**
+     * Test updating invalid IATA with two characters within the database
+     */
     @Test
     public void testUpdateAirportTwoCharIATA() {
         // update airline with invalid IATA with one char
     }
 
+    /**
+     * Test updating invalid IATA with four characters within the database
+     */
     @Test
     public void testUpdateAirportFourCharIATA() {
         // update airline with invalid IATA with three chars
     }
 
+    /**
+     * Test updating invalid ICAO with three characters within the database
+     */
     @Test
     public void testUpdateAirportThreeCharICAO() {
         // update airline with invalid ICAO with two chars
     }
 
+    /**
+     * Test updating invalid ICAO with five characters within the database
+     */
     @Test
     public void testupdateAirportFiveCharICAO() {
         // update airline with invalid ICAO with four chars
     }
 
+    /**
+     * Test updating an airport with invalid parameters within the database
+     */
     @Test
     public void testInvalidAirportParams() {
         // update airline with invalid parameter data
     }
 
-
+    /**
+     * Test updating a route within the database
+     */
     @Test
     public void testUpdateOneRoute() {
         // update one route
     }
 
+    /**
+     * Test updating two routes within the database
+     */
     @Test
     public void testUpdateTwoRoutes() {
         // update two routes
     }
 
+    /**
+     * Test updating five routes within the database
+     */
     @Test
     public void testUpdateFiveRoutes() {
         // update five routes
     }
 
+    /**
+     * Test updating a route with empty parameters (should throw exception) within the database
+     */
     @Test
     public void testUpdateRouteEmpty() {
         // update a route with empty parameters
     }
 
+    /**
+     * Test updating a route with invalid ICAO with three characters within the database
+     */
     @Test
     public void testUpdateSourceThreeCharICAO() {
         // update route with invalid source airport IATA with three chars
     }
 
+    /**
+     * Test updating a route with invalid ICAO with five characters within the database
+     */
     @Test
     public void testUpdateSourceFiveCharICAO() {
         // update route with invalid source airport IATA with five chars
     }
 
+    /**
+     * Test updating a route with invalid ICAO with three characters within the database
+     */
     @Test
     public void testUpdateDestinationThreeCharICAO() {
         // update route with invalid destination airport IATA with three chars
     }
 
+    /**
+     * Test updating a route with invalid ICAO with five characters within the database
+     */
     @Test
     public void testUpdateDestinationFiveCharICAO() {
         // update route with invalid destination airport IATA with five chars
     }
 
+    /**
+     * Test updating a route with empty parameters (should throw exception) within the database
+     */
     @Test
     public void testInvalidRouteParams() {
         // update route with invalid parameter data
     }
 
-
+    /**
+     * Test deleting an airline in the database
+     */
     @Test
     public void testDeleteOneAirline() {
         // delete one airline
     }
 
+    /**
+     * Test deleting two airlines in the database
+     */
     @Test
     public void testDeleteTwoAirlines() {
         // delete two airlines
     }
 
+    /**
+     * Test deleting five airlines in the database
+     */
     @Test
     public void testDeleteFiveAirlines() {
         // delete five airlines
     }
 
+    /**
+     * Test deleting an airline without providing an ID in the database
+     */
     @Test
     public void testDeleteAirlineEmptyID() {
         // delete airline where a null AirlineID is provided
     }
 
+    /**
+     * Test deleting an airline with an invalid ID in the database
+     */
     @Test
     public void testDeleteAirlineInvalidID() {
         // delete airline where an invalid AirlineID is provided
     }
 
-
+    /**
+     * Test deleting an airport in the database
+     */
     @Test
     public void testDeleteOneAirport() {
         // delete one airline
     }
 
+    /**
+     * Test deleting two airports in the database
+     */
     @Test
     public void testDeleteTwoAirports() {
         // delete two airlines
     }
 
+    /**
+     * Test deleting five airports in the database
+     */
     @Test
     public void testDeleteFiveAirports() {
         // delete five airlines
     }
 
+    /**
+     * Test deleting an airport without providing an ID (should thrown exception) in the database
+     */
     @Test
     public void testDeleteAirportEmptyID() {
         // delete airline where a null AirlineID is provided
     }
 
+    /**
+     * Test deleting an airport with an invalid ID in the database
+     */
     @Test
     public void testDeleteAirportInvalidID() {
         // delete airline where an invalid AirlineID is provided
     }
 
-
+    /**
+     * Test deleting one route in the database
+     */
     @Test
     public void testDeleteOneRoute() {
         // delete one route
     }
 
+    /**
+     * Test deleting two routes in the database
+     */
     @Test
     public void testDeleteTwoRoutes() {
         // delete two routes
     }
 
+    /**
+     * Test deleting five routes in the database
+     */
     @Test
     public void testDeleteFiveRoutes() {
         // delete five routes
     }
 
+    /**
+     * Test deleting a route with an empty ID (should throw exception) in the database
+     */
     @Test
     public void testDeleteRouteEmptyID() {
         // delete route where a null AirlineID is provided
     }
 
+    /**
+     * Test deleting a route with an invalid ID in the database
+     */
     @Test
     public void testDeleteRouteInvalidAirlineID() {
         // delete airline where an invalid AirlineID is provided
     }
 
+    /**
+     * Test deleting a route with an invalid source airport ID in the database
+     */
     @Test
     public void testDeleteRouteInvalidSourceID() {
         // delete airline where an invalid SourceAirportID is provided
     }
 
+    /**
+     * Test deleting a route with an invalid destination airport ID in the database
+     */
     @Test
     public void testDeleteRouteInvalidDestinationID() {
         // delete airline where an invalid DestinationAirportID is provided
