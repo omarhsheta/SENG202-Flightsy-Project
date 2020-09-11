@@ -25,7 +25,7 @@ public class Airline {
      * @param newActive Character value for the Airline's active status (Either "Y" or "N")
      */
     public Airline(int newAirlineID, String newName, String newAlias, String newIATA, String newICAO,
-                   String newCallsign, String newCountry, char newActive) {
+                   String newCallsign, String newCountry, Character newActive) {
         AirlineID = newAirlineID;
         Name = newName;
         Alias = newAlias;

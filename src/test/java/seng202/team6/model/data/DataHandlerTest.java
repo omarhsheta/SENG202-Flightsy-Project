@@ -1,13 +1,17 @@
 package seng202.team6.model.data;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
+import org.junit.Assert.*;
 import seng202.team6.model.entities.*;
+
+import java.awt.image.AreaAveragingScaleFilter;
+import java.sql.SQLException;
 import java.util.Random;
 import java.util.ArrayList;
 
+import static java.lang.String.format;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
 
 public class DataHandlerTest {
     private Random random;
@@ -19,21 +23,21 @@ public class DataHandlerTest {
     private Airline testAirline3;
     private Airline testAirline4;
     private Airline testAirline5;
-    private ArrayList<Airline> testAirlines;
+    private Airline testEmptyAirline;
 
     private Airport testAirport1;
     private Airport testAirport2;
     private Airport testAirport3;
     private Airport testAirport4;
     private Airport testAirport5;
-    private ArrayList<Airport> testAirports;
+    private Airport testEmptyAirport;
 
     private Route testRoute1;
     private Route testRoute2;
     private Route testRoute3;
     private Route testRoute4;
     private Route testRoute5;
-    private ArrayList<Route> testRoutes;
+    private Route testEmptyRoute;
 
     @Before
     public void InitializeTest() {
@@ -50,12 +54,8 @@ public class DataHandlerTest {
                 "EMI", "EMIRATES", "United Arab Emirates", 'Y');
         testAirline5 = new Airline(random.nextInt(randomBound), "Lufthansa", "Luft", "LF",
                 "LFT", "LUFTHANSA", "Germany", 'Y');
-        testAirlines = new ArrayList<Airline>();
-        testAirlines.add(testAirline1);
-        testAirlines.add(testAirline2);
-        testAirlines.add(testAirline3);
-        testAirlines.add(testAirline4);
-        testAirlines.add(testAirline5);
+        testEmptyAirline = new Airline(random.nextInt(randomBound), null, null, null, null,
+                null, null, null);
 
         testAirport1 = new Airport(random.nextInt(randomBound), "London Heathrow Airport", "London", "England",
                 "LHR", "LOND", (float)51.470020, (float)-0.454295, 25, 1, 'U');
@@ -67,12 +67,8 @@ public class DataHandlerTest {
                 "AMS", "AMSD", (float)52.3105, (float)4.7683, -3, 1, 'A');
         testAirport5 = new Airport(random.nextInt(randomBound), "Hong Kong Airport", "Hong Kong", "Hong Kong",
                 "HKG", "HGKG", (float)22.3080, (float)113.9185, 9, 8, 'A');
-        testAirports = new ArrayList<Airport>();
-        testAirports.add(testAirport1);
-        testAirports.add(testAirport2);
-        testAirports.add(testAirport3);
-        testAirports.add(testAirport4);
-        testAirports.add(testAirport5);
+        testEmptyAirport = new Airport(random.nextInt(randomBound), null, null, null, null,
+                null, null, null, null, null, null);
 
         testRoute1 = new Route(testAirline1.getAirlineID(), testAirline1.getName(), testAirport1.getName(), testAirport1.getAirportID(),
                 testAirport2.getName(), testAirport2.getAirportID(), null, 0, "CR2");
@@ -84,12 +80,8 @@ public class DataHandlerTest {
                 testAirport3.getName(), testAirport4.getAirportID(), null, 0, "AN4");
         testRoute5 = new Route(testAirline5.getAirlineID(), testAirline5.getName(), testAirport4.getName(), testAirport4.getAirportID(),
                 testAirport5.getName(), testAirport5.getAirportID(), null, 0, "142");
-        testRoutes = new ArrayList<Route>();
-        testRoutes.add(testRoute1);
-        testRoutes.add(testRoute2);
-        testRoutes.add(testRoute3);
-        testRoutes.add(testRoute4);
-        testRoutes.add(testRoute5);
+        testEmptyRoute = new Route(random.nextInt(randomBound), null, null, random.nextInt(randomBound), null,
+                random.nextInt(randomBound), null, null, null);
     }
 
     @After()
@@ -103,9 +95,19 @@ public class DataHandlerTest {
      */
     @Test
     public void testInsertOneAirline() {
-        //dataHandler.InsertAirlines(testAirlines.get(0));
-        //Check what the filters require
-        //assertEquals();
+        ArrayList<Airline> testAirlines = new ArrayList<Airline>();
+        ArrayList<Airline> actualAirlines = new ArrayList<Airline>();
+        ArrayList<Filter> filters = new ArrayList<Filter>();
+        testAirlines.add(testAirline1);
+        try {
+            dataHandler.InsertAirlines(testAirlines);
+            Filter filter = new Filter(format("id_airline = %s", testAirline1.getAirlineID()), "");
+            filters.add(filter);
+            actualAirlines = dataHandler.FetchAirlines(filters);
+            assertEquals(testAirlines, actualAirlines);
+        } catch(Exception e) {
+            Assert.fail(e.getMessage());
+        }
     }
 
     /**
@@ -113,7 +115,22 @@ public class DataHandlerTest {
      */
     @Test
     public void testInsertTwoAirlines() {
-        // insert two airline
+        ArrayList<Airline> testAirlines = new ArrayList<Airline>();
+        ArrayList<Airline> actualAirlines = new ArrayList<Airline>();
+        ArrayList<Filter> filters = new ArrayList<Filter>();
+        testAirlines.add(testAirline1);
+        testAirlines.add(testAirline2);
+        try {
+            dataHandler.InsertAirlines(testAirlines);
+            Filter filter1 = new Filter(format("id_airline = %s", testAirline1.getAirlineID()), "OR");
+            filters.add(filter1);
+            Filter filter2 = new Filter(format("id_airline = %s", testAirline2.getAirlineID()), "");
+            filters.add(filter2);
+            actualAirlines = dataHandler.FetchAirlines(filters);
+            assertEquals(testAirlines, actualAirlines);
+        } catch(Exception e) {
+            Assert.fail(e.getMessage());
+        }
     }
 
     /**
@@ -121,12 +138,44 @@ public class DataHandlerTest {
      */
     @Test
     public void testInsertFiveAirlines() {
-        // insert five airlines
+        ArrayList<Airline> testAirlines = new ArrayList<Airline>();
+        ArrayList<Airline> actualAirlines = new ArrayList<Airline>();
+        ArrayList<Filter> filters = new ArrayList<Filter>();
+        testAirlines.add(testAirline1);
+        testAirlines.add(testAirline2);
+        testAirlines.add(testAirline3);
+        testAirlines.add(testAirline4);
+        testAirlines.add(testAirline5);
+        try {
+            dataHandler.InsertAirlines(testAirlines);
+            Filter filter1 = new Filter(format("id_airline = %s", testAirline1.getAirlineID()), "OR");
+            filters.add(filter1);
+            Filter filter2 = new Filter(format("id_airline = %s", testAirline2.getAirlineID()), "OR");
+            filters.add(filter2);
+            Filter filter3 = new Filter(format("id_airline = %s", testAirline3.getAirlineID()), "OR");
+            filters.add(filter3);
+            Filter filter4 = new Filter(format("id_airline = %s", testAirline4.getAirlineID()), "OR");
+            filters.add(filter4);
+            Filter filter5 = new Filter(format("id_airline = %s", testAirline5.getAirlineID()), "");
+            filters.add(filter5);
+            actualAirlines = dataHandler.FetchAirlines(filters);
+            assertEquals(testAirlines, actualAirlines);
+        } catch(Exception e) {
+            Assert.fail(e.getMessage());
+        }
     }
 
     @Test
     public void testInsertEmptyAirline() {
-        // insert empty airline
+        ArrayList<Airline> testAirlines = new ArrayList<Airline>();
+        testAirlines.add(testEmptyAirline);
+        try {
+            dataHandler.InsertAirlines(testAirlines);
+            Assert.fail("SQLException was supposed to be thrown.");
+        } catch (Exception e) {
+            Assert.assertTrue(e instanceof SQLException);
+        }
+        // Need to add error checking so that DataHandler passes
     }
 
     @Test
