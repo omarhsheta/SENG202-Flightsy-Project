@@ -14,6 +14,8 @@
 <?import javafx.scene.web.WebView?>
 <?import seng202.team6.gui.components.FilterTextField?>
 
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
 <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="650.0" prefWidth="950.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.team6.gui.controller.FindRoutesController">
    <center>
       <WebView fx:id="webView" prefHeight="200.0" prefWidth="696.0" BorderPane.alignment="CENTER_RIGHT" />
@@ -88,6 +90,13 @@
                                        </content>
                                  </ScrollPane>
                                  <Button fx:id="airportFilterButton" alignment="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#OnAirportFilterButtonClicked" prefHeight="25.0" prefWidth="108.0" text="Apply Filters">
+                                    <graphic>
+                                       <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                          <image>
+                                             <Image url="/icons/check-4x.png" />
+                                          </image>
+                                       </ImageView>
+                                    </graphic>
                                     <styleClass>
                                        <String fx:value="btn" />
                                        <String fx:value="btn-sm" />
@@ -152,7 +161,14 @@
                                           </content>
                                       </ScrollPane>
                                       <Button fx:id="flightFilterButton" alignment="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#OnFlightFilterButtonClicked" prefHeight="25.0" prefWidth="108.0" text="Apply Filters">
-                                          <styleClass>
+                                         <graphic>
+                                            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                               <image>
+                                                  <Image url="/icons/check-4x.png" />
+                                               </image>
+                                            </ImageView>
+                                         </graphic>
+                                         <styleClass>
                                               <String fx:value="btn" />
                                               <String fx:value="btn-sm" />
                                               <String fx:value="btn-primary" />
@@ -274,6 +290,13 @@
                                           </content>
                                       </ScrollPane>
                                       <Button fx:id="routeFilterButton" alignment="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#OnRouteFilterButtonClicked" prefHeight="25.0" prefWidth="108.0" text="Apply Filters">
+                                         <graphic>
+                                            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                               <image>
+                                                  <Image url="/icons/check-4x.png" />
+                                               </image>
+                                            </ImageView>
+                                         </graphic>
                                           <styleClass>
                                               <String fx:value="btn" />
                                               <String fx:value="btn-sm" />
@@ -335,6 +358,13 @@
                                        </content>
                                     </ScrollPane>
                                     <Button fx:id="analyseButton" alignment="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#OnAnalyseButtonClicked" prefHeight="25.0" prefWidth="108.0" text="Analyse">
+                                       <graphic>
+                                          <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="/icons/terminal-4x.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
                                        <styleClass>
                                           <String fx:value="btn" />
                                           <String fx:value="btn-sm" />

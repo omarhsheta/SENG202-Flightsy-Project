@@ -12,6 +12,8 @@
 <?import javafx.scene.layout.Pane?>
 <?import seng202.team6.gui.components.FilterTextField?>
 
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
 <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="595.0" prefWidth="987.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.team6.gui.controller.dataviewer.AirportTabController">
    <left>
       <Pane prefHeight="470.0" prefWidth="214.0" BorderPane.alignment="CENTER">
@@ -53,6 +55,13 @@
                </content>
             </ScrollPane>
             <Button fx:id="airportFilterButton" layoutX="119.0" layoutY="444.0" mnemonicParsing="false" onMouseClicked="#OnAirportFilterButtonClicked" prefHeight="25.0" prefWidth="95.0" text="Apply Filters">
+               <graphic>
+                  <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="/icons/check-4x.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
                <styleClass>
                   <String fx:value="btn" />
                   <String fx:value="btn-sm" />
