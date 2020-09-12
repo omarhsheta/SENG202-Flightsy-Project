@@ -170,8 +170,6 @@ public class FindRoutesController implements Initializable
      */
     public void OnAnalyseButtonClicked(MouseEvent mouseEvent)
     {
-        OnResult();
-
         ArrayList<FilterTextField> originFilters = new ArrayList<>();
         originFilters.add(distanceOriginAirportIATAField);
         ArrayList<FilterTextField> destFilters = new ArrayList<>();
@@ -181,6 +179,8 @@ public class FindRoutesController implements Initializable
             Airport sourceAirport = airportsList.getKey().get(0);
             Airport destAirport = airportsList.getValue().get(0);
             double distance = sourceAirport.GetDistance(destAirport);
+
+            OnResult();
 
             Pair<BorderPane, AnalysisDistanceController> pair = NodeHelper.LoadNode(subFolder, analysisDistanceResultComponent);
             resultsPane.getChildren().add(pair.getKey());
