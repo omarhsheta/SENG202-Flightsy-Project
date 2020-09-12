@@ -93,7 +93,7 @@
                                     <graphic>
                                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                           <image>
-                                             <Image url="/icons/check-4x.png" />
+                                             <Image url="/icons/check-8x.png" />
                                           </image>
                                        </ImageView>
                                     </graphic>
@@ -164,7 +164,7 @@
                                          <graphic>
                                             <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                                <image>
-                                                  <Image url="/icons/check-4x.png" />
+                                                  <Image url="/icons/check-8x.png" />
                                                </image>
                                             </ImageView>
                                          </graphic>
@@ -293,7 +293,7 @@
                                          <graphic>
                                             <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                                <image>
-                                                  <Image url="/icons/check-4x.png" />
+                                                  <Image url="/icons/check-8x.png" />
                                                </image>
                                             </ImageView>
                                          </graphic>
@@ -361,7 +361,7 @@
                                        <graphic>
                                           <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
-                                                <Image url="/icons/terminal-4x.png" />
+                                                <Image url="/icons/terminal-8x.png" />
                                              </image>
                                           </ImageView>
                                        </graphic>

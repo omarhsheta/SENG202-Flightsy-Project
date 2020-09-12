@@ -25,7 +25,7 @@
                     <graphic>
                         <ImageView fitHeight="10.0" fitWidth="10.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="/icons/wrench-4x.png" />
+                                <Image url="/icons/wrench-8x.png" />
                             </image>
                         </ImageView>
                     </graphic>
@@ -41,7 +41,7 @@
                  <graphic>
                      <ImageView fitHeight="10.0" fitWidth="10.0" pickOnBounds="true" preserveRatio="true">
                          <image>
-                             <Image url="/icons/plus-4x.png" />
+                             <Image url="/icons/plus-8x.png" />
                          </image>
                      </ImageView>
                  </graphic>
@@ -57,7 +57,7 @@
                     <graphic>
                         <ImageView fitHeight="10.0" fitWidth="10.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="/icons/data-transfer-download-4x.png" />
+                                <Image url="/icons/data-transfer-download-8x.png" />
                             </image>
                         </ImageView>
                     </graphic>
