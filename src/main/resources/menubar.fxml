@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 
-<HBox prefHeight="37.0" prefWidth="750.0" style="-fx-background-color: lightgrey; -fx-background-radius: 0 0 15 15;" styleClass="btn-group-horizontal" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.team6.gui.controller.MenubarController">
+<HBox prefHeight="37.0" prefWidth="750.0" style="-fx-background-color: lightgrey;" styleClass="btn-group-horizontal" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.team6.gui.controller.MenubarController">
    <ImageView fitHeight="47.0" fitWidth="163.0" pickOnBounds="true" preserveRatio="true">
       <image>
          <Image url="@assets/logo.png" />
@@ -32,7 +32,7 @@
     <graphic>
         <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="/icons/compass-8x.png" />
+                <Image url="@icons/compass-8x.png" />
             </image>
         </ImageView>
     </graphic>
@@ -49,7 +49,7 @@
         <graphic>
             <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                 <image>
-                    <Image url="/icons/vertical-align-bottom-8x.png" />
+                    <Image url="@icons/vertical-align-bottom-8x.png" />
                 </image>
             </ImageView>
         </graphic>
