@@ -31,7 +31,9 @@ public class MapController
     public void DrawAirportMarks(ArrayList<Airport> airports) {
         String JSFunction = "PlaceAirportMarkers(%s);";
         String airportString = BuildJavascriptArrayString(airports);
-        this.mapEngine.executeScript(String.format(JSFunction, airportString));
+        if (!airportString.equals("")) {
+            this.mapEngine.executeScript(String.format(JSFunction, airportString));
+        }
     }
 
     /**
@@ -45,7 +47,9 @@ public class MapController
             positions.add(new Pair<>(airport.getLatitude(), airport.getLongitude()));
         }
         String line = PositionsToArray(positions);
-        this.mapEngine.executeScript(String.format(JSFunction, line));
+        if (!line.equals("")) {
+            this.mapEngine.executeScript(String.format(JSFunction, line));
+        }
     }
 
     /**
@@ -55,7 +59,9 @@ public class MapController
     public void DrawRoutePath(RoutePath route) {
         String JSFunction = "PlaceRouteLines(%s);";
         String routeString = BuildJavascriptArrayString(route);
-        this.mapEngine.executeScript(String.format(JSFunction, routeString));
+        if (!routeString.equals("")) {
+            this.mapEngine.executeScript(String.format(JSFunction, routeString));
+        }
     }
 
     /**
@@ -80,9 +86,16 @@ public class MapController
      * @return String Javascript string array representation
      */
     public String BuildJavascriptArrayString(ArrayList<? extends IMapDrawable> drawableList) {
+        if (drawableList == null) {
+            return "";
+        }
+
         StringBuilder returnString = new StringBuilder();
         returnString.append('[');
         for (IMapDrawable drawable : drawableList) {
+            if (drawable == null) {
+                continue;
+            }
             returnString.append(String.format("{%s},", drawable.ConvertToJavascriptString()));
         }
         returnString.append(']');
@@ -95,6 +108,9 @@ public class MapController
      * @return Javascript array string format
      */
     public String PositionsToArray(ArrayList<Pair<Float, Float>> positions) {
+        if (positions == null) {
+            return "";
+        }
         StringBuilder string = new StringBuilder();
         string.append('[');
 

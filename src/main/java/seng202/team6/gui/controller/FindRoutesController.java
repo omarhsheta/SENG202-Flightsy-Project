@@ -102,15 +102,18 @@ public class FindRoutesController implements Initializable
     @FXML
     private void OnAirportFilterButtonClicked() {
         OnResult();
-
         ArrayList<Filter> filters = FilterTextField.ExtractFilters(this.airportFilterTextFields);
         ArrayList<Airport> airports = DataHandler.GetInstance().FetchAirports(filters);
+
+        if (airports == null) {
+            return;
+        }
 
         try {
             for (Airport airport : airports) {
                 Pair<BorderPane, AirportResultController> pair = NodeHelper.LoadNode(subFolder, airportResultComponent);
-                resultsPane.getChildren().add(pair.getKey());
 
+                resultsPane.getChildren().add(pair.getKey());
                 AirportResultController resultController = pair.getValue();
                 resultController.SetAirport(airport);
             }
@@ -168,16 +171,22 @@ public class FindRoutesController implements Initializable
     /**
      * Display analysis information requested.
      */
-    public void OnAnalyseButtonClicked(MouseEvent mouseEvent)
+    public void OnAnalyseButtonClicked()
     {
         ArrayList<FilterTextField> originFilters = new ArrayList<>();
         originFilters.add(distanceOriginAirportIATAField);
         ArrayList<FilterTextField> destFilters = new ArrayList<>();
         destFilters.add(distanceDestAirportIATAField);
         Pair<ArrayList<Airport>, ArrayList<Airport>> airportsList = GetSourceAndDestinations(originFilters, destFilters);
+
         try {
+            if (airportsList.getKey() == null || airportsList.getValue() == null) {
+                return;
+            }
+
             Airport sourceAirport = airportsList.getKey().get(0);
             Airport destAirport = airportsList.getValue().get(0);
+
             double distance = sourceAirport.GetDistance(destAirport);
 
             OnResult();

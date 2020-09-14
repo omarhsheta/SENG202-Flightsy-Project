@@ -43,7 +43,7 @@ public class SQLHelper
      * @return String of IATAs in SQL List form
      */
     public static String GetAirportIATAList(ArrayList<Airport> airports) {
-        if (airports.size() == 0) {
+        if (airports == null || airports.size() == 0) {
             return "";
         }
 
