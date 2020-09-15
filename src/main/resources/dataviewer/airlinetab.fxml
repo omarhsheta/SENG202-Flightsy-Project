@@ -18,7 +18,7 @@
          <children>
             <ScrollPane layoutY="27.0" prefHeight="402.0" prefWidth="214.0">
                <content>
-                  <Pane fx:id="airlineFilterPane" prefHeight="510.0" prefWidth="198.0">
+                  <Pane fx:id="filterPane" prefHeight="510.0" prefWidth="198.0">
                      <children>
                         <FilterTextField filter="ID_AIRLINE = '%s'" layoutX="25.0" layoutY="39.0" />
                         <Label layoutX="25.0" layoutY="14.0" prefHeight="25.0" prefWidth="148.0" text="ID" />
@@ -46,7 +46,7 @@
                   <String fx:value="h5" />
                </styleClass>
             </Label>
-            <Button fx:id="airlineFilterButton" layoutX="53.0" layoutY="444.0" mnemonicParsing="false" onMouseClicked="#OnAirlineFilterButtonClicked" prefHeight="25.0" prefWidth="108.0" text="Apply Filters">
+            <Button layoutX="53.0" layoutY="444.0" mnemonicParsing="false" onMouseClicked="#OnFilterButtonClicked" prefHeight="25.0" prefWidth="108.0" text="Apply Filters">
                <graphic>
                   <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -64,7 +64,7 @@
       </Pane>
    </left>
    <center>
-      <TableView fx:id="airlineTable" prefHeight="480.0" prefWidth="590.0" BorderPane.alignment="CENTER">
+      <TableView fx:id="table" prefHeight="480.0" prefWidth="590.0" BorderPane.alignment="CENTER">
          <columns>
             <TableColumn fx:id="columnID" prefWidth="70.0" text="ID" />
             <TableColumn fx:id="columnName" prefWidth="70.0" text="Name" />

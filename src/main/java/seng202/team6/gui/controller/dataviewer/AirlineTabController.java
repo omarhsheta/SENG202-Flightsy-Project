@@ -1,17 +1,9 @@
 package seng202.team6.gui.controller.dataviewer;
 
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Pane;
 import seng202.team6.gui.components.FilterTextField;
-import seng202.team6.model.data.DataHandler;
 import seng202.team6.model.data.Filter;
 import seng202.team6.model.entities.Airline;
 
@@ -19,11 +11,11 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-public class AirlineTabController implements Initializable
+/**
+ * Controls handling the airline tab
+ */
+public class AirlineTabController extends TabController<Airline>
 {
-    @FXML
-    private TableView<Airline> airlineTable;
-
     @FXML
     private TableColumn<Airline, ?> columnID;
     @FXML
@@ -41,29 +33,24 @@ public class AirlineTabController implements Initializable
     @FXML
     private TableColumn<Airline, ?> columnActive;
 
-    @FXML
-    private Button airlineFilterButton;
-
-
-    @FXML
-    private Pane airlineFilterPane;
-    private final ArrayList<FilterTextField> filterAirlineTextFields = new ArrayList<>();
-
-    DataHandler dataHandler;
-
+    /**
+     * Initialize this tab with default data from New Zealand.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        dataHandler = DataHandler.GetInstance();
+        super.initialize(url, resourceBundle);
 
-        //Grab all airline text filter components
-        for (Node node : airlineFilterPane.getChildren()) {
-            if (node != null && node.getClass() == FilterTextField.class) {
-                filterAirlineTextFields.add((FilterTextField) node);
-            }
-        }
+        ArrayList<Filter> filters = new ArrayList<>();
+        filters.add(new Filter("COUNTRY = 'New Zealand'", null));
+        ArrayList<Airline> filteredAirlines = dataHandler.FetchAirlines(filters);
+        table.getItems().addAll(filteredAirlines);
+    }
 
-        ObservableList<TableColumn<Airline, ?>> columns = airlineTable.getColumns();
-
+    /**
+     * Set table cell value factories for the table view.
+     */
+    @Override
+    protected void SetCellFactories() {
         columnID.setCellValueFactory(new PropertyValueFactory<>("airlineID"));
         columnName.setCellValueFactory(new PropertyValueFactory<>("name"));
         columnAlias.setCellValueFactory(new PropertyValueFactory<>("alias"));
@@ -72,11 +59,6 @@ public class AirlineTabController implements Initializable
         columnCallsign.setCellValueFactory(new PropertyValueFactory<>("callsign"));
         columnCountry.setCellValueFactory(new PropertyValueFactory<>("country"));
         columnActive.setCellValueFactory(new PropertyValueFactory<>("active"));
-
-        ArrayList<Filter> filters = new ArrayList<>();
-        filters.add(new Filter("COUNTRY = 'New Zealand'", null));
-        ArrayList<Airline> filteredAirlines = dataHandler.FetchAirlines(filters);
-        airlineTable.getItems().addAll(filteredAirlines);
     }
 
     /**
@@ -84,17 +66,16 @@ public class AirlineTabController implements Initializable
      * This function takes the filters from the GetFilters method and gets the filtered Airline ArrayList from the DataHandler.
      * Then it inputs the data into the data viewer table.
      */
-    @FXML
-    private void OnAirlineFilterButtonClicked() {
-        ArrayList<Filter> filters =  FilterTextField.ExtractFilters(filterAirlineTextFields);
+    @Override
+    protected void OnFilterButtonClicked() {
+        ArrayList<Filter> filters =  FilterTextField.ExtractFilters(filterTextFields);
 
         try {
-            airlineTable.getItems().clear();
+            table.getItems().clear();
             ArrayList<Airline> filteredAirlines = dataHandler.FetchAirlines(filters);
-            airlineTable.getItems().addAll(filteredAirlines);
+            table.getItems().addAll(filteredAirlines);
         }
         catch (Exception ignored) {
         }
     }
-
 }

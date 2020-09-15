@@ -1,16 +1,10 @@
 package seng202.team6.gui.components;
 
-import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
-import javafx.scene.text.Text;
-import javafx.stage.Popup;
-import javafx.stage.Stage;
 import seng202.team6.model.data.DataHandler;
 import seng202.team6.model.data.Filter;
-import seng202.team6.model.data.SQLHelper;
 import seng202.team6.model.entities.Airport;
 import seng202.team6.model.entities.Route;
 import seng202.team6.model.events.Flight;
@@ -20,6 +14,9 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 /**
+ * Don't think this class is ever used, keeping around as some methods
+ * are useful for future development
+ 
  * Extension on JavaFX TextField to support filtering
  */
 public class RouteViewButton extends Button {
@@ -38,12 +35,6 @@ public class RouteViewButton extends Button {
      */
     public RouteViewButton(int originAirportID, int destAirportID, Route route) {
         this.route = route;
-
-        //TESTING BY OMAR
-
-
-        //TESTING BY OMAR
-
         this.prefHeight(60);
         dataHandler = DataHandler.GetInstance();
         holidayPlan = HolidayPlan.GetInstance();
@@ -80,7 +71,7 @@ public class RouteViewButton extends Button {
         alert.setContentText(String.format("%s to %s\nDistance: %.2f km\nAircraft: %s", originAirport.getName(), destAirport.getName(), distance, route.getEquipment()));
 
         Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == addToHolidayButtonType){
+        if (result.isPresent() && result.get() == addToHolidayButtonType) {
             System.out.println("Added to holiday");
             int day = 1;
             int month = 1;

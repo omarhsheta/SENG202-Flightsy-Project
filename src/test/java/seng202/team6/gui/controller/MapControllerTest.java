@@ -3,14 +3,13 @@ package seng202.team6.gui.controller;
 import javafx.util.Pair;
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.assertEquals;
-
-import seng202.team6.gui.controller.MapController;
 import seng202.team6.model.entities.Airport;
 import seng202.team6.model.entities.RoutePath;
 import seng202.team6.model.interfaces.IMapDrawable;
 
 import java.util.ArrayList;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * Test file for MapController.java
@@ -79,5 +78,46 @@ public class MapControllerTest {
         RoutePath path = new RoutePath(null, null, coords);
 
         assertEquals(expected, controller.BuildJavascriptArrayString(path));
+    }
+
+    /**
+     * Test building positions string from one
+     * set of coords
+     */
+    @Test
+    public void TestPositionsOne() {
+        String expected = "[{lat: -43.487598, lng: 172.537399}]";
+
+        ArrayList<Pair<Float, Float>> coords = new ArrayList<>();
+        coords.add(new Pair<>(-43.487600f, 172.537400f));
+
+        assertEquals(expected, controller.PositionsToArray(coords));
+    }
+
+    /**
+     * Test building positions string from multiple
+     * sets of coords
+     */
+    @Test
+    public void TestPositionsMultiple() {
+        String expected = "[{lat: -43.487598, lng: 172.537399},{lat: -43.487598, lng: 172.537399},{lat: 0.000000, lng: 0.000000}]";
+
+        ArrayList<Pair<Float, Float>> coords = new ArrayList<>();
+        coords.add(new Pair<>(-43.487600f, 172.537400f));
+        coords.add(new Pair<>(-43.487600f, 172.537400f));
+        coords.add(new Pair<>(0f, 0f));
+
+        assertEquals(expected, controller.PositionsToArray(coords));
+    }
+
+    /**
+     * Test nulls
+     */
+    @Test
+    public void TestNull() {
+        String expected = "";
+
+        assertEquals(expected, controller.BuildJavascriptArrayString((ArrayList<? extends IMapDrawable>) null));
+        assertEquals(expected, controller.PositionsToArray(null));
     }
 }
