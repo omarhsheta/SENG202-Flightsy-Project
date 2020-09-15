@@ -127,7 +127,13 @@ public class CSVLoader {
             String newICAD = line.get(4);
             String newCallsign = line.get(5);
             String newCountry = line.get(6);
+
+            if ((line.get(7) == null) || (line.get(7).length() != 1)) {
+                //Active field missing or not of char type
+                continue;
+            }
             char newActive = line.get(7).charAt(0);
+
             Airline temp = new Airline(airlineID, name, alias, newIATA, newICAD, newCallsign, newCountry, newActive);
             result.add(temp);
         }
@@ -177,7 +183,15 @@ public class CSVLoader {
                 //Does not add current Airport as it is invalid
                 continue;
             }
-            char newDST = line.get(10).charAt(0);
+
+            char newDST;
+            if ((line.get(10) == null) || (line.get(10).length() != 1)) {
+                //DST field missing or not of char type
+                newDST = 'U';
+            } else {
+                newDST = line.get(10).charAt(0);
+            }
+
             Airport temp = new Airport(airportID, name, city, country, newIATA, newICAO, newLatitude, newLongitude,
                     newAltitude, newTimezone, newDST);
             result.add(temp);
@@ -203,24 +217,18 @@ public class CSVLoader {
             int airlineID;
             int sourceID;
             int destinationID;
-            char codeshare;
             int stops;
             try {
                 airlineID = Integer.parseInt(line.get(1));
-                if (line.get(3).contains("N")) {
+                if (line.get(3) == null) {
                     sourceID = 0;
                 } else {
                     sourceID = Integer.parseInt(line.get(3));
                 }
-                if (line.get(5).contains("N")) {
+                if (line.get(5) == null) {
                     destinationID = 0;
                 } else {
                     destinationID = Integer.parseInt(line.get(5));
-                }
-                if (line.get(6).length() == 0) {
-                    codeshare = 0;
-                } else {
-                    codeshare = line.get(6).charAt(0);
                 }
                 stops = Integer.parseInt(line.get(7));
             }
@@ -228,6 +236,13 @@ public class CSVLoader {
                 //Not a number
                 //Does not add current Route as it is invalid
                 continue;
+            }
+
+            char codeshare;
+            if ((line.get(6) == null) || (line.get(6).length() != 1)){
+                codeshare = 'N';
+            } else {
+                codeshare = line.get(6).charAt(0);
             }
 
             String name = line.get(0);
