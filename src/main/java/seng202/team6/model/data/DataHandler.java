@@ -30,7 +30,7 @@ public class DataHandler {
     /**
      * Constructor class creates the connection to the SQLite database.
      */
-    private DataHandler() {
+    public DataHandler() {
         // relative url to database
         String url = "jdbc:sqlite:src/main/database/database.sqlite";
         this.databaseConnection = null;
@@ -241,56 +241,53 @@ public class DataHandler {
 
     /**
      * Insert all airlines into database
-     * @param airlines Airlines to insert
-     * @throws SQLException SQLException
+     * Catches SQLException and discards entry if invalid
+     * @param entry ArrayList of strings corresponding to each field of data to insert
      */
-    public void InsertAirlines(ArrayList<Airline> airlines) throws SQLException {
+    public void InsertAirline(ArrayList<String> entry) throws SQLException {
         Statement stmt = this.databaseConnection.createStatement();
-        for(Airline airline: airlines) {
-            String sql = String.format("INSERT INTO airline (id_airline, name, alias, iata, icao, callsign, country, " +
-                    "active) VALUES (\"%d\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%c\");",
-                    airline.getAirlineID(), airline.getName(), airline.getAlias(), airline.getIATA(), airline.getICAO(),
-                    airline.getCallsign(), airline.getCountry(), airline.getActive()
-            );
-            stmt.executeUpdate(sql);
 
-        }
+        String sql = String.format("INSERT INTO airline (id_airline, name, alias, iata, icao, callsign, country, " +
+                        "active) VALUES (\"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\");",
+                entry.get(0), entry.get(1), entry.get(2), entry.get(3), entry.get(4), entry.get(5),
+                entry.get(6), entry.get(7)
+        );
+
+        stmt.executeUpdate(sql);
     }
 
     /**
      * Insert all airports into database
-     * @param airports Airports to insert
-     * @throws SQLException SQLException
+     * Catches SQLException and discards entry if invalid
+     * @param entry ArrayList of strings corresponding to each field of data to insert
      */
-    public void InsertAirports(ArrayList<Airport> airports) throws SQLException {
+    public void InsertAirport(ArrayList<String> entry) throws SQLException {
         Statement stmt = this.databaseConnection.createStatement();
-        for(Airport airport: airports) {
-            String sql = String.format("INSERT INTO airport (id_airport, name, city, country, iata, icao, latitude, longitude, altitude, timezone, dst)" +
-                    "VALUES (\"%d\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%f\", \"%f\", \"%d\", \"%f\", \"%c\");",
-                    airport.getAirportID(), airport.getName(), airport.getCity(), airport.getCountry(),
-                    airport.getIATA(), airport.getICAO(), airport.getLatitude(), airport.getLongitude(), airport.getAltitude(),
-                    airport.getTimezone(), airport.getDST()
-            );
-            stmt.executeUpdate(sql);
-        }
+
+        String sql = String.format("INSERT INTO airport (id_airport, name, city, country, iata, icao, latitude, longitude, altitude, timezone, dst)" +
+                        "VALUES (\"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\");",
+                entry.get(0), entry.get(1), entry.get(2), entry.get(3), entry.get(4), entry.get(5),
+                entry.get(6), entry.get(7), entry.get(8), entry.get(9), entry.get(10)
+        );
+
+        stmt.executeUpdate(sql);
     }
 
     /**
-     * Insert all routes into database
-     * @param routes Routes to insert
-     * @throws SQLException SQLException
+     * Inserts a Route data entry into database
+     * Catches SQLException and discards entry if invalid
+     * @param entry ArrayList of strings corresponding to each field of data to insert
      */
-    public void InsertRoutes(ArrayList<Route> routes) throws SQLException{
+    public void InsertRoute(ArrayList<String> entry) throws SQLException{
         Statement stmt = this.databaseConnection.createStatement();
-        for(Route route: routes) {
-            String sql = String.format("INSERT INTO route (airline, id_airline, source_airport, source_airport_id, " +
-                    "destination_airport, destination_airport_id, codeshare, stops, equipment)" +
-                    "VALUES (\"%s\", \"%d\", \"%s\", \"%d\", \"%s\", \"%d\", \"%c\", \"%d\", \"%s\");",
-                    route.getAirline(), route.getAirlineID(), route.getSourceAirport(), route.getSourceAirportID(),
-                    route.getDestinationAirport(), route.getDestinationAirportID(), route.getCodeshare(),
-                    route.getStops(), route.getEquipment()
-            );
-            stmt.executeUpdate(sql);
-        }
+
+        String sql = String.format("INSERT INTO route (airline, id_airline, source_airport, source_airport_id, " +
+                        "destination_airport, destination_airport_id, codeshare, stops, equipment)" +
+                        "VALUES (\"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\");",
+                entry.get(0), entry.get(1), entry.get(2), entry.get(3), entry.get(4), entry.get(5),
+                entry.get(6), entry.get(7), entry.get(8)
+        );
+
+        stmt.executeUpdate(sql);
     }
 }

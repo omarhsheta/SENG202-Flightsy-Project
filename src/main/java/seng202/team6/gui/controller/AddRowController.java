@@ -15,6 +15,7 @@ import seng202.team6.model.entities.Route;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.ResourceBundle;
 import java.util.Set;
 
@@ -25,11 +26,11 @@ public class AddRowController implements Initializable
             // Airline fields
             airIdField, airNameField, airAliasField, AirIataField, AirIcaoField, AirCallsignField,
             AirCountryField,
-            // Airport fields
-            airpId, airpName, airpCity, airpCountry, airpIata, airpIcao, airpLat, airpLon, airpAlt, airpTim,
+    // Airport fields
+    airpId, airpName, airpCity, airpCountry, airpIata, airpIcao, airpLat, airpLon, airpAlt, airpTim,
             airpDst,
-            // Route fields
-            rouAir, rouAirId, rouSouAir, rouSouAirId, rouDesAir, rouDesAirId, rouEqp;
+    // Route fields
+    rouAir, rouAirId, rouSouAir, rouSouAirId, rouDesAir, rouDesAirId, rouEqp;
 
     @FXML
     private ComboBox AirActiveField, rouCod;
@@ -86,71 +87,65 @@ public class AddRowController implements Initializable
      * @param airpAlt Altitude
      * @param airpTim Timezone
      * @param airpDst Daylight savings
-     * @return Airport object created by valid inputs, null if an invalid input occurs.
+     * @return ArrayList of fields to be entered into database, or null if invalid input occurs
      */
-    private Airport CheckAirport(String airpId, String airpName, String airpCity, String airpCountry, String airpIata,
-                                 String airpIcao, String airpLat, String airpLon, String airpAlt, String airpTim,
-                                 String airpDst) {
-        Airport airport = null;
+    private ArrayList<String> CheckAirport(String airpId, String airpName, String airpCity, String airpCountry, String airpIata,
+                                           String airpIcao, String airpLat, String airpLon, String airpAlt, String airpTim,
+                                           String airpDst) {
 
-        int airportId;
         try {  // Check if airport id input is valid
-            airportId = Integer.parseInt(airpId);
+            Integer.parseInt(airpId);
         } catch (Exception e) {
             ShowMessage(true, "Check the Airport ID field and try again");
-            return airport;
+            return null;
         }
 
-        Float latitude = null;
         if (!airpLat.equals("")) {
             try {  // Check if latitude input is valid
-                latitude = Float.parseFloat(airpLat);
+                Float.parseFloat(airpLat);
             } catch (Exception e) {
                 ShowMessage(true, "Check the latitude field and try again");
-                return airport;
+                return null;
             }
         }
 
-        Float longitude = null;
         if (!airpLon.equals("")) {
             try {  // Check if latitude and longitude inputs are valid
-                longitude = Float.parseFloat(airpLon);
+                Float.parseFloat(airpLon);
             } catch (Exception e) {
                 ShowMessage(true, "Check the longitude field and try again");
-                return airport;
+                return null;
             }
         }
 
-        Integer altitude = null;
         if (!airpAlt.equals("")) {
             try {  // Check if altitude input is valid
-                altitude = Integer.parseInt(airpAlt);
+                Integer.parseInt(airpAlt);
             } catch (Exception e) {
                 ShowMessage(true, "Check the Altitude field and try again");
-                return airport;
+                return null;
             }
         }
 
-        Integer timeZone = null;
         if (!airpTim.equals("")) {
             try {  // Check if the time zone input is valid
-                timeZone = Integer.parseInt(airpTim);
+                Integer.parseInt(airpTim);
             } catch (Exception e) {
                 ShowMessage(true, "Check the Time Zone field and try again");
-                return airport;
+                return null;
             }
         }
 
-        char dst;
+        String dst;
         Set<String> validValues = Set.of("e", "a", "s", "o", "z", "n");
         if (validValues.contains(airpDst.toLowerCase())) {
-            dst = airpDst.toUpperCase().charAt(0);
+            dst = airpDst.toUpperCase();
         } else {
-            dst = 'U';  // Unknown Daylight savings value
+            dst = "U";  // Unknown Daylight savings value
         }
 
-        airport = new Airport(airportId, airpName, airpCity, airpCountry, airpIata, airpIcao, latitude, longitude,
-                altitude, timeZone, dst);
+        ArrayList<String> airport = new ArrayList<>(Arrays.asList(airpId, airpName, airpCity, airpCountry, airpIata, airpIcao, airpLat, airpLon,
+                airpAlt, airpTim, dst));
         return airport;
     }
 
@@ -165,30 +160,29 @@ public class AddRowController implements Initializable
      * @param callsign Callsign
      * @param country Country
      * @param active Is the airline active
-     * @return Airline object created by valid inputs, null if an invalid input occurs.
+     * @return ArrayList of fields to be entered into database, or null if invalid input occurs
      */
-    private Airline CheckAirline(String airlineID, String name, String alias, String iata, String icao,
-                                 String callsign, String country, String active) {
-        Airline airline = null;
+    private ArrayList<String> CheckAirline(String airlineID, String name, String alias, String iata, String icao,
+                                           String callsign, String country, String active) {
 
-        int airId;
         try {  // Check if airline id input is valid
-            airId = Integer.parseInt(airlineID);
+            Integer.parseInt(airlineID);
         } catch (Exception e) {
             ShowMessage(true, "Check the Airline ID field and try again");
-            return airline;
+            return null;
         }
 
-        Character airActive = null;  // Parse combo box result
+        String airActive = null;
         if (active != null) {
             if (active.equals("Yes")) {
-                airActive = 'Y';
+                airActive = "Y";
             } else if (active.equals("No")) {
-                airActive = 'N';
+                airActive = "N";
             }
         }
 
-        airline = new Airline(airId, name, alias, iata, icao, callsign, country, airActive);
+        ArrayList<String> airline = new ArrayList<>(Arrays.asList(airlineID, name, alias, iata, icao, callsign, country, airActive));
+
         return airline;
     }
 
@@ -204,46 +198,44 @@ public class AddRowController implements Initializable
      * @param rouCod Codeshare
      * @param rouStp Amount of stops
      * @param rouEqp Equipment
-     * @return
+     * @return ArrayList of fields to be entered into database, or null if invalid input occurs
      */
-    private Route CheckRoute(String rouAir, String rouAirId, String rouSouAir, String rouSouAirId, String rouDesAir,
-                             String rouDesAirId, String rouCod, int rouStp, String rouEqp) {
-        Route route = null;
+    private ArrayList<String> CheckRoute(String rouAir, String rouAirId, String rouSouAir, String rouSouAirId, String rouDesAir,
+                                         String rouDesAirId, String rouCod, double rouStp, String rouEqp) {
 
-        int airId;
         try {  // Check if airline id input is valid
-            airId = Integer.parseInt(rouAirId);
+            Integer.parseInt(rouAirId);
         } catch (Exception e) {
             ShowMessage(true, "Check the Airline ID field and try again");
-            return route;
+            return null;
         }
 
-        int srcAirId;
         try {  // Check if source airline id input is valid
-            srcAirId = Integer.parseInt(rouSouAirId);
+            Integer.parseInt(rouSouAirId);
         } catch (Exception e) {
             ShowMessage(true, "Check the Source Airline ID field and try again");
-            return route;
+            return null;
         }
 
-        int desAirId;
         try {  // Check if destination airline id input is valid
-            desAirId = Integer.parseInt(rouDesAirId);
+            Integer.parseInt(rouDesAirId);
         } catch (Exception e) {
             ShowMessage(true, "Check the Destination Airline ID field and try again");
-            return route;
+            return null;
         }
 
-        Character codeShare = null;  // Parse combo box result
+        String codeShare = null;  // Parse combo box result
         if (rouCod != null) {
             if (rouCod.equals("Yes")) {
-                codeShare = 'Y';
+                codeShare = "Y";
             } else if (rouCod.equals("No")) {
-                codeShare = 'N';
+                codeShare = "N";
             }
         }
 
-        route = new Route(airId, rouAir, rouSouAir, srcAirId, rouDesAir, desAirId, codeShare, rouStp, rouEqp);
+        String stops = String.valueOf(rouStp);
+
+        ArrayList<String> route = new ArrayList<>(Arrays.asList(rouAir, rouAirId, rouSouAir, rouSouAirId, rouDesAir, rouDesAirId, codeShare, stops, rouEqp));
         return route;
     }
 
@@ -275,22 +267,19 @@ public class AddRowController implements Initializable
      */
     @FXML
     public void AddAirport() {
-        Airport airport = CheckAirport(airpId.getText(), airpName.getText(), airpCity.getText(), airpCountry.getText(),
+        ArrayList<String> airport = CheckAirport(airpId.getText(), airpName.getText(), airpCity.getText(), airpCountry.getText(),
                 airpIata.getText(), airpIcao.getText(), airpLat.getText(), airpLon.getText(), airpAlt.getText(),
                 airpTim.getText(), airpDst.getText());
         if (airport != null) {
-            ArrayList<Airport> airportArrayList = new ArrayList<>() {{
-                add(airport);
-            }};
-
             try {
-                dataHandler.InsertAirports(airportArrayList);
+                dataHandler.InsertAirport(airport);
                 String message = String.format("Successfully added %d airline", ++airportsAdded);
                 if (airportsAdded > 1) {
                     message += "s";
                 }
                 ShowMessage(false, message);
             } catch (SQLException e) {
+                System.out.println(e.toString());
                 ShowMessage(true, "There was a problem when saving the airport");
             }
         }
@@ -301,22 +290,20 @@ public class AddRowController implements Initializable
      */
     @FXML
     public void AddAirline() {
-        Airline airline = CheckAirline(airIdField.getText(), airNameField.getText(), airAliasField.getText(),
+        ArrayList<String> airline = CheckAirline(airIdField.getText(), airNameField.getText(), airAliasField.getText(),
                 AirIataField.getText(), AirIcaoField.getText(), AirCallsignField.getText(), AirCountryField.getText(),
                 (String) AirActiveField.getValue());
         if (airline != null) {
-            ArrayList<Airline> airlineArrayList = new ArrayList<>() {{
-                add(airline);
-            }};
-
             try {
-                dataHandler.InsertAirlines(airlineArrayList);
+                dataHandler.InsertAirline(airline);
                 String message = String.format("Successfully added %d airline", ++airlinesAdded);
                 if (airlinesAdded > 1) {
                     message += "s";
                 }
                 ShowMessage(false, message);
             } catch (SQLException e) {
+                System.out.println(e.toString());
+
                 ShowMessage(true, "There was a problem when saving the airline");
             }
         }
@@ -327,22 +314,20 @@ public class AddRowController implements Initializable
      */
     @FXML
     public void AddRoute() {
-        Route route = CheckRoute(rouAir.getText(), rouAirId.getText(), rouSouAir.getText(), rouSouAirId.getText(),
+        ArrayList<String> route = CheckRoute(rouAir.getText(), rouAirId.getText(), rouSouAir.getText(), rouSouAirId.getText(),
                 rouDesAir.getText(), rouDesAirId.getText(), (String) rouCod.getValue(), (int) rouStp.getValue(),
                 rouEqp.getText());
         if (route != null) {
-            ArrayList<Route> routeArrayList = new ArrayList<>() {{
-                add(route);
-            }};
-
             try {
-                dataHandler.InsertRoutes(routeArrayList);
+                dataHandler.InsertRoute(route);
                 String message = String.format("Successfully added %d route", ++routesAdded);
                 if (routesAdded > 1) {
                     message += "s";
                 }
                 ShowMessage(false, message);
             } catch (SQLException e) {
+                System.out.println(e.toString());
+
                 ShowMessage(true, "There was a problem when saving the route");
             }
         }
