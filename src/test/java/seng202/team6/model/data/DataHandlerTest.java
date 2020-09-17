@@ -302,7 +302,19 @@ public class DataHandlerTest {
      */
     @Test
     public void testUpdateOneAirline() {
-        // update one airline
+        ArrayList<Airline> testAirlines = new ArrayList<Airline>();
+        ArrayList<Airline> actualAirlines = new ArrayList<Airline>();
+        testAirlines.add(testAirline1);
+        try {dataHandler.InsertAirlines(testAirlines);} catch (Exception e) {Assert.fail(e.getMessage());}
+        try {
+            dataHandler.updateAirline(testAirline1.getAirlineID(), "VirginBlue", null, null, null, null,
+                    null, null);
+        } catch (Exception e) {
+            Assert.fail(e.getMessage());
+        }
+        Airline updatedAirline = testAirline1;
+        updatedAirline.SetName("VirginBlue");
+        assertEquals(testAirline1, updatedAirline);
     }
 
     /**

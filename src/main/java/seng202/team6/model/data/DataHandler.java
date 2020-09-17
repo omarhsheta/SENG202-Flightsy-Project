@@ -300,27 +300,27 @@ public class DataHandler {
 
         String setSQL = "";
         if (Name != null && !Name.trim().isEmpty()) {
-            setSQL += String.format("name = %s,", Name);
+            setSQL += String.format("name = '%s',", Name);
         }
         if (Alias != null && !Alias.trim().isEmpty()) {
-            setSQL += String.format("alias = %s,", Alias);
+            setSQL += String.format("alias = '%s',", Alias);
         }
         if (IATA != null && !IATA.trim().isEmpty()) {
-            setSQL += String.format("iata = %s,", IATA);
+            setSQL += String.format("iata = '%s',", IATA);
             // Add error handling, only two chars allowed
         }
         if (ICAO != null && !ICAO.trim().isEmpty()) {
-            setSQL += String.format("icao = %s,", ICAO);
+            setSQL += String.format("icao = '%s',", ICAO);
             // Add error handling, only three chars allowed
         }
         if (Callsign != null && !Callsign.trim().isEmpty()) {
-            setSQL += String.format("callsign = %s,", Callsign);
+            setSQL += String.format("callsign = '%s',", Callsign);
         }
         if (Country != null && !Country.trim().isEmpty()) {
-            setSQL += String.format("country = %s,", Country);
+            setSQL += String.format("country = '%s',", Country);
         }
         if (Active != null) {
-            setSQL += String.format("active = %c,", Active);
+            setSQL += String.format("active = '%c',", Active);
         }
         if (setSQL.length() > 0) { setSQL = setSQL.substring(0, setSQL.length() - 1); }
 
@@ -350,20 +350,20 @@ public class DataHandler {
 
         String setSQL = "";
         if (Name != null && !Name.trim().isEmpty()) {
-            setSQL += String.format("name = %s,", Name);
+            setSQL += String.format("name = '%s',", Name);
         }
         if (City != null && !City.trim().isEmpty()) {
-            setSQL += String.format("city = %s,", City);
+            setSQL += String.format("city = '%s',", City);
         }
         if (Country != null && !Country.trim().isEmpty()) {
-            setSQL += String.format("country = %s,", Country);
+            setSQL += String.format("country = '%s',", Country);
         }
         if (IATA != null && !IATA.trim().isEmpty()) {
-            setSQL += String.format("iata = %s,", IATA);
+            setSQL += String.format("iata = '%s',", IATA);
             // Add error handling, only three chars allowed
         }
         if (ICAO != null && !ICAO.trim().isEmpty()) {
-            setSQL += String.format("icao = %s,", ICAO);
+            setSQL += String.format("icao = '%s',", ICAO);
             // Add error handling, only four chars allowed
         }
         if (Latitude != null) {
@@ -406,24 +406,24 @@ public class DataHandler {
 
         String setSQL = "";
         if (AirlineICAO != null && !AirlineICAO.trim().isEmpty()) {
-            setSQL += String.format("airline = %s,", AirlineICAO);
+            setSQL += String.format("airline = '%s',", AirlineICAO);
         }
         if (SourceAirportICAO != null && !SourceAirportICAO.trim().isEmpty()) {
-            setSQL += String.format("source_airport = %s,", SourceAirportICAO);
+            setSQL += String.format("source_airport = '%s',", SourceAirportICAO);
             // Add error handling, only four chars allowed
         }
         if (DestinationAirportICAO != null && !DestinationAirportICAO.trim().isEmpty()) {
-            setSQL += String.format("destination_airport = %s,", DestinationAirportICAO);
+            setSQL += String.format("destination_airport = '%s',", DestinationAirportICAO);
             // Add error handling, only four chars allowed
         }
         if (Codeshare != null) {
-            setSQL += String.format("codeshare = %c,", Codeshare);
+            setSQL += String.format("codeshare = '%c',", Codeshare);
         }
         if (Stops != null) {
             setSQL += String.format("stops = %d,", Stops);
         }
         if (Equipment != null && !Equipment.trim().isEmpty()) {
-            setSQL += String.format("equipment = %s,", DestinationAirportICAO);
+            setSQL += String.format("equipment = '%s',", DestinationAirportICAO);
         }
         if (setSQL.length() > 0) { setSQL = setSQL.substring(0, setSQL.length() - 1); }
 
