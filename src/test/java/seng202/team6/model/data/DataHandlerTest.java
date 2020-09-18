@@ -7,6 +7,7 @@ import seng202.team6.model.entities.*;
 
 import java.awt.image.AreaAveragingScaleFilter;
 import java.sql.SQLException;
+import java.util.Collections;
 import java.util.Random;
 import java.util.ArrayList;
 
@@ -17,6 +18,7 @@ public class DataHandlerTest {
     private Random random;
     private int randomBound = 10000000;
     private DataHandler dataHandler;
+    private ArrayList<Filter> filters;
 
     private Airline testAirline1;
     private Airline testAirline2;
@@ -46,18 +48,21 @@ public class DataHandlerTest {
     private ArrayList<Route> actualRoutes;
 
     public void fullClear() {
+        filters.clear();
         testAirlines.clear();
         actualAirlines.clear();
         testAirports.clear();
         actualAirports.clear();
         testRoutes.clear();
         actualRoutes.clear();
+
     }
 
     @Before
     public void InitializeTest() {
         random = new Random();
         dataHandler = new DataHandler();
+        filters = new ArrayList<Filter>();
 
         testAirline1 = new Airline(random.nextInt(randomBound), "Virgin Airlines", "Virgin", "VI",
                 "VIR", "VIRGIN", "Australia", 'Y');
@@ -110,7 +115,6 @@ public class DataHandlerTest {
      */
     @Test
     public void testInsertOneAirline() {
-        ArrayList<Filter> filters = new ArrayList<Filter>();
         testAirlines.add(testAirline1);
         try {
             dataHandler.InsertAirlines(testAirlines);
@@ -129,7 +133,6 @@ public class DataHandlerTest {
      */
     @Test
     public void testInsertTwoAirlines() {
-        ArrayList<Filter> filters = new ArrayList<Filter>();
         testAirlines.add(testAirline1);
         testAirlines.add(testAirline2);
         try {
@@ -142,6 +145,8 @@ public class DataHandlerTest {
         } catch(Exception e) {
             Assert.fail(e.getMessage());
         }
+        Collections.sort(testAirlines);
+        Collections.sort(actualAirlines);
         for (int i = 0; i < 2; i++) {
             Assert.assertTrue(EqualsBuilder.reflectionEquals(testAirlines.get(i), actualAirlines.get(i)));
         }
@@ -151,12 +156,8 @@ public class DataHandlerTest {
     /**
      * Test inserting five airlines into the database
      */
-    /**
     @Test
     public void testInsertFiveAirlines() {
-        ArrayList<Airline> testAirlines = new ArrayList<Airline>();
-        ArrayList<Airline> actualAirlines = new ArrayList<Airline>();
-        ArrayList<Filter> filters = new ArrayList<Filter>();
         testAirlines.add(testAirline1);
         testAirlines.add(testAirline2);
         testAirlines.add(testAirline3);
@@ -175,12 +176,16 @@ public class DataHandlerTest {
             Filter filter5 = new Filter(format("id_airline = %s", testAirline5.getAirlineID()), "");
             filters.add(filter5);
             actualAirlines = dataHandler.FetchAirlines(filters);
-            assertEquals(testAirlines, actualAirlines);
         } catch(Exception e) {
             Assert.fail(e.getMessage());
         }
+        Collections.sort(testAirlines);
+        Collections.sort(actualAirlines);
+        for (int i = 0; i < 5; i++) {
+            Assert.assertTrue(EqualsBuilder.reflectionEquals(testAirlines.get(i), actualAirlines.get(i)));
+        }
+        fullClear();
     }
-    */
 
     /**
     @Test
@@ -315,8 +320,6 @@ public class DataHandlerTest {
      */
     @Ignore @Test
     public void testUpdateOneAirline() {
-        ArrayList<Airline> testAirlines = new ArrayList<Airline>();
-        ArrayList<Airline> actualAirlines = new ArrayList<Airline>();
         testAirlines.add(testAirline1);
         try {dataHandler.InsertAirlines(testAirlines);} catch (Exception e) {Assert.fail(e.getMessage());}
         try {

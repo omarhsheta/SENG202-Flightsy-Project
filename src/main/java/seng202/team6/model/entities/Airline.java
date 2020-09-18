@@ -2,7 +2,7 @@ package seng202.team6.model.entities;
 
 import java.util.Objects;
 
-public class Airline {
+public class Airline implements Comparable<Airline> {
 
     int AirlineID;
     String Name;
@@ -119,5 +119,10 @@ public class Airline {
 
     public void SetActive(char active) {
         Active = active;
+    }
+
+    @Override
+    public int compareTo(Airline airline) {
+        return Integer.compare(AirlineID, airline.AirlineID);
     }
 }
