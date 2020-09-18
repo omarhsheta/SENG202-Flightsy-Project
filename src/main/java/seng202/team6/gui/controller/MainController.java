@@ -47,16 +47,6 @@ public class MainController implements Initializable
      * Called when WebEngine is finished loading
      */
     private void OnLoad() {
-        /* Temporary test */
-        ArrayList<Filter> filters = new ArrayList<>();
-        filters.add(new Filter("COUNTRY = 'New Zealand'", "OR"));
-        filters.add(new Filter("COUNTRY = 'Australia'", null));
-        ArrayList<Airport> airports = DataHandler.GetInstance().FetchAirports(filters);
-        controller.DrawAirportMarks(airports);
 
-        CSVLoader loader = new CSVLoader();
-        RoutePath path = loader.GetCSVRoutePath("src/test/resources/CSVLoader/NZCH-WSSS.csv");
-        controller.DrawRoutePath(path);
-        /* End temporary */
     }
 }
