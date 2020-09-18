@@ -24,6 +24,8 @@ public class DataHandlerTest {
     private Airline testAirline4;
     private Airline testAirline5;
     private Airline testEmptyAirline;
+    private ArrayList<Airline> testAirlines;
+    private ArrayList<Airline> actualAirlines;
 
     private Airport testAirport1;
     private Airport testAirport2;
@@ -31,6 +33,8 @@ public class DataHandlerTest {
     private Airport testAirport4;
     private Airport testAirport5;
     private Airport testEmptyAirport;
+    private ArrayList<Airport> testAirports;
+    private ArrayList<Airport> actualAirports;
 
     private Route testRoute1;
     private Route testRoute2;
@@ -38,6 +42,17 @@ public class DataHandlerTest {
     private Route testRoute4;
     private Route testRoute5;
     private Route testEmptyRoute;
+    private ArrayList<Route> testRoutes;
+    private ArrayList<Route> actualRoutes;
+
+    public void fullClear() {
+        testAirlines.clear();
+        actualAirlines.clear();
+        testAirports.clear();
+        actualAirports.clear();
+        testRoutes.clear();
+        actualRoutes.clear();
+    }
 
     @Before
     public void InitializeTest() {
@@ -56,6 +71,8 @@ public class DataHandlerTest {
                 "LFT", "LUFTHANSA", "Germany", 'Y');
         testEmptyAirline = new Airline(random.nextInt(randomBound), null, null, null, null,
                 null, null, null);
+        testAirlines = new ArrayList<Airline>();
+        actualAirlines = new ArrayList<Airline>();
 
         testAirport1 = new Airport(random.nextInt(randomBound), "London Heathrow Airport", "London", "England",
                 "LHR", "LOND", (float)51.470020, (float)-0.454295, 25, 1, 'U');
@@ -69,6 +86,8 @@ public class DataHandlerTest {
                 "HKG", "HGKG", (float)22.3080, (float)113.9185, 9, 8, 'A');
         testEmptyAirport = new Airport(random.nextInt(randomBound), null, null, null, null,
                 null, null, null, null, null, null);
+        testAirports = new ArrayList<Airport>();
+        actualAirports = new ArrayList<Airport>();
 
         testRoute1 = new Route(testAirline1.getAirlineID(), testAirline1.getName(), testAirport1.getName(), testAirport1.getAirportID(),
                 testAirport2.getName(), testAirport2.getAirportID(), null, 0, "CR2");
@@ -82,21 +101,15 @@ public class DataHandlerTest {
                 testAirport5.getName(), testAirport5.getAirportID(), null, 0, "142");
         testEmptyRoute = new Route(random.nextInt(randomBound), null, null, random.nextInt(randomBound), null,
                 random.nextInt(randomBound), null, null, null);
+        testRoutes = new ArrayList<Route>();
+        actualRoutes = new ArrayList<Route>();
     }
-
-    @After()
-    public void ClearDatabase() {
-        //clear test airlines,
-    }
-
 
     /**
      * Test inserting one airline into the database
      */
     @Test
     public void testInsertOneAirline() {
-        ArrayList<Airline> testAirlines = new ArrayList<Airline>();
-        ArrayList<Airline> actualAirlines = new ArrayList<Airline>();
         ArrayList<Filter> filters = new ArrayList<Filter>();
         testAirlines.add(testAirline1);
         try {
@@ -108,6 +121,7 @@ public class DataHandlerTest {
         } catch(Exception e) {
             Assert.fail(e.getMessage());
         }
+        fullClear();
     }
 
     /**
@@ -115,8 +129,6 @@ public class DataHandlerTest {
      */
     @Test
     public void testInsertTwoAirlines() {
-        ArrayList<Airline> testAirlines = new ArrayList<Airline>();
-        ArrayList<Airline> actualAirlines = new ArrayList<Airline>();
         ArrayList<Filter> filters = new ArrayList<Filter>();
         testAirlines.add(testAirline1);
         testAirlines.add(testAirline2);
@@ -133,6 +145,7 @@ public class DataHandlerTest {
         for (int i = 0; i < 2; i++) {
             Assert.assertTrue(EqualsBuilder.reflectionEquals(testAirlines.get(i), actualAirlines.get(i)));
         }
+        fullClear();
     }
 
     /**
@@ -188,15 +201,15 @@ public class DataHandlerTest {
     /**
      * Test inserting a invalid airline into the database
      */
-    @Test
+    @Ignore @Test
     public void testInsertInvalidAirline() {
-        // insert invalid airline
+
     }
 
     /**
      * Test inserting two invalid airlines and one airline into the database
      */
-    @Test
+    @Ignore @Test
     public void testInsertTwoValidOneInvalidAirlines() {
         // insert two valid, one invalid airlines
     }
@@ -204,7 +217,7 @@ public class DataHandlerTest {
     /**
      * Test inserting one airport into the database
      */
-    @Test
+    @Ignore @Test
     public void testInsertOneAirport() {
         // insert one airport
     }
@@ -212,7 +225,7 @@ public class DataHandlerTest {
     /**
      * Test inserting two airports into the database
      */
-    @Test
+    @Ignore @Test
     public void testInsertTwoAirports() {
         // insert two airports
     }
@@ -220,7 +233,7 @@ public class DataHandlerTest {
     /**
      * Test inserting five airports in the database
      */
-    @Test
+    @Ignore @Test
     public void testInsertFiveAirports() {
         // insert five airports
     }
@@ -228,7 +241,7 @@ public class DataHandlerTest {
     /**
      * Test inserting an empty airport (should error) in the database
      */
-    @Test
+    @Ignore @Test
     public void testInsertEmptyAirport() {
         // insert empty airport
     }
@@ -236,7 +249,7 @@ public class DataHandlerTest {
     /**
      * Test inserting an invalid airport into the database
      */
-    @Test
+    @Ignore @Test
     public void testInsertInvalidAirport() {
         // insert invalid airport
     }
@@ -244,7 +257,7 @@ public class DataHandlerTest {
     /**
      * Test inserting two airports and one invalid airport into the database
      */
-    @Test
+    @Ignore @Test
     public void testInsertTwoValidOneInvalidAirports() {
         // insert two valid, one invalid airports
     }
@@ -252,7 +265,7 @@ public class DataHandlerTest {
     /**
      * Test inserting one route into the database
      */
-    @Test
+    @Ignore @Test
     public void testInsertOneRoute() {
         // insert one route
     }
@@ -260,7 +273,7 @@ public class DataHandlerTest {
     /**
      * Test inserting two routes into the database
      */
-    @Test
+    @Ignore @Test
     public void testInsertTwoRoutes() {
         // insert two routes
     }
@@ -268,7 +281,7 @@ public class DataHandlerTest {
     /**
      * Test inserting five routes into the database
      */
-    @Test
+    @Ignore @Test
     public void testInsertFiveRoutes() {
         // insert five routes
     }
@@ -276,7 +289,7 @@ public class DataHandlerTest {
     /**
      * Test inserting an empty route (should error) into the database
      */
-    @Test
+    @Ignore @Test
     public void testInsertEmptyRoute() {
         // insert empty route
     }
@@ -284,7 +297,7 @@ public class DataHandlerTest {
     /**
      * Test inserting an invalid route into the database
      */
-    @Test
+    @Ignore @Test
     public void testInsertInvalidRoute() {
         // insert invalid route
     }
@@ -292,7 +305,7 @@ public class DataHandlerTest {
     /**
      * Test inserting two routes and one invalid route into the database
      */
-    @Test
+    @Ignore @Test
     public void testInsertTwoValidOneInvalidRoutes() {
         // insert two valid, one invalid routes
     }
@@ -300,7 +313,7 @@ public class DataHandlerTest {
     /**
      * Test updating one airline within the database
      */
-    @Test
+    @Ignore @Test
     public void testUpdateOneAirline() {
         ArrayList<Airline> testAirlines = new ArrayList<Airline>();
         ArrayList<Airline> actualAirlines = new ArrayList<Airline>();
@@ -320,7 +333,7 @@ public class DataHandlerTest {
     /**
      * Test updating two airlines within the database
      */
-    @Test
+    @Ignore @Test
     public void testUpdateTwoAirlines() {
         // update two airlines
     }
@@ -328,7 +341,7 @@ public class DataHandlerTest {
     /**
      * Test updating five airlines within the database
      */
-    @Test
+    @Ignore @Test
     public void testUpdateFiveAirlines() {
         // update five airlines
     }
@@ -336,7 +349,7 @@ public class DataHandlerTest {
     /**
      * Test updating an airline with empty parameters (should throw exception) within the database
      */
-    @Test
+    @Ignore @Test
     public void testUpdateAirlineEmpty() {
         // update an airline with empty parameters
     }
@@ -344,7 +357,7 @@ public class DataHandlerTest {
     /**
      * Test updating invalid IATA with one character within the database
      */
-    @Test
+    @Ignore @Test
     public void testUpdateAirlineOneCharIATA() {
         // update airline with invalid IATA with one char
     }
@@ -352,7 +365,7 @@ public class DataHandlerTest {
     /**
      * Test updating invalid IATA with three characters within the database
      */
-    @Test
+    @Ignore @Test
     public void testUpdateAirlineThreeCharIATA() {
         // update airline with invalid IATA with three chars
     }
@@ -360,7 +373,7 @@ public class DataHandlerTest {
     /**
      * Test updating invalid ICAO with two characters within the database
      */
-    @Test
+    @Ignore @Test
     public void testUpdateAirlineTwoCharICAO() {
         // update airline with invalid ICAO with two chars
     }
@@ -368,7 +381,7 @@ public class DataHandlerTest {
     /**
      * Test updating invalid ICAO with four characters within the database
      */
-    @Test
+    @Ignore @Test
     public void testupdateAirlineFourCharICAO() {
         // update airline with invalid ICAO with four chars
     }
@@ -376,7 +389,7 @@ public class DataHandlerTest {
     /**
      * Test updating invalid airline parameters within the database
      */
-    @Test
+    @Ignore @Test
     public void testInvalidAirlineParams() {
         // update airline with invalid parameter data
     }
@@ -384,7 +397,7 @@ public class DataHandlerTest {
     /**
      * Test updating one airport within the database
      */
-    @Test
+    @Ignore @Test
     public void testUpdateOneAirport() {
         // update one airline
     }
@@ -392,7 +405,7 @@ public class DataHandlerTest {
     /**
      * Test updating two airports within the database
      */
-    @Test
+    @Ignore @Test
     public void testUpdateTwoAirports() {
         // update two airlines
     }
@@ -400,7 +413,7 @@ public class DataHandlerTest {
     /**
      * Test updating five airports within the database
      */
-    @Test
+    @Ignore @Test
     public void testUpdateFiveAirports() {
         // update five airlines
     }
@@ -408,7 +421,7 @@ public class DataHandlerTest {
     /**
      * Test updating an airport with empty parameters within the database
      */
-    @Test
+    @Ignore @Test
     public void testUpdateAirportEmpty() {
         // update an airline with empty parameters
     }
@@ -416,7 +429,7 @@ public class DataHandlerTest {
     /**
      * Test updating invalid IATA with two characters within the database
      */
-    @Test
+    @Ignore @Test
     public void testUpdateAirportTwoCharIATA() {
         // update airline with invalid IATA with one char
     }
@@ -424,7 +437,7 @@ public class DataHandlerTest {
     /**
      * Test updating invalid IATA with four characters within the database
      */
-    @Test
+    @Ignore @Test
     public void testUpdateAirportFourCharIATA() {
         // update airline with invalid IATA with three chars
     }
@@ -432,7 +445,7 @@ public class DataHandlerTest {
     /**
      * Test updating invalid ICAO with three characters within the database
      */
-    @Test
+    @Ignore @Test
     public void testUpdateAirportThreeCharICAO() {
         // update airline with invalid ICAO with two chars
     }
@@ -440,7 +453,7 @@ public class DataHandlerTest {
     /**
      * Test updating invalid ICAO with five characters within the database
      */
-    @Test
+    @Ignore @Test
     public void testupdateAirportFiveCharICAO() {
         // update airline with invalid ICAO with four chars
     }
@@ -448,7 +461,7 @@ public class DataHandlerTest {
     /**
      * Test updating an airport with invalid parameters within the database
      */
-    @Test
+    @Ignore @Test
     public void testInvalidAirportParams() {
         // update airline with invalid parameter data
     }
@@ -456,7 +469,7 @@ public class DataHandlerTest {
     /**
      * Test updating a route within the database
      */
-    @Test
+    @Ignore @Test
     public void testUpdateOneRoute() {
         // update one route
     }
@@ -464,7 +477,7 @@ public class DataHandlerTest {
     /**
      * Test updating two routes within the database
      */
-    @Test
+    @Ignore @Test
     public void testUpdateTwoRoutes() {
         // update two routes
     }
@@ -472,7 +485,7 @@ public class DataHandlerTest {
     /**
      * Test updating five routes within the database
      */
-    @Test
+    @Ignore @Test
     public void testUpdateFiveRoutes() {
         // update five routes
     }
@@ -480,7 +493,7 @@ public class DataHandlerTest {
     /**
      * Test updating a route with empty parameters (should throw exception) within the database
      */
-    @Test
+    @Ignore @Test
     public void testUpdateRouteEmpty() {
         // update a route with empty parameters
     }
@@ -488,7 +501,7 @@ public class DataHandlerTest {
     /**
      * Test updating a route with invalid ICAO with three characters within the database
      */
-    @Test
+    @Ignore @Test
     public void testUpdateSourceThreeCharICAO() {
         // update route with invalid source airport IATA with three chars
     }
@@ -496,7 +509,7 @@ public class DataHandlerTest {
     /**
      * Test updating a route with invalid ICAO with five characters within the database
      */
-    @Test
+    @Ignore @Test
     public void testUpdateSourceFiveCharICAO() {
         // update route with invalid source airport IATA with five chars
     }
@@ -504,7 +517,7 @@ public class DataHandlerTest {
     /**
      * Test updating a route with invalid ICAO with three characters within the database
      */
-    @Test
+    @Ignore @Test
     public void testUpdateDestinationThreeCharICAO() {
         // update route with invalid destination airport IATA with three chars
     }
@@ -512,7 +525,7 @@ public class DataHandlerTest {
     /**
      * Test updating a route with invalid ICAO with five characters within the database
      */
-    @Test
+    @Ignore @Test
     public void testUpdateDestinationFiveCharICAO() {
         // update route with invalid destination airport IATA with five chars
     }
@@ -520,7 +533,7 @@ public class DataHandlerTest {
     /**
      * Test updating a route with empty parameters (should throw exception) within the database
      */
-    @Test
+    @Ignore @Test
     public void testInvalidRouteParams() {
         // update route with invalid parameter data
     }
@@ -528,7 +541,7 @@ public class DataHandlerTest {
     /**
      * Test deleting an airline in the database
      */
-    @Test
+    @Ignore @Test
     public void testDeleteOneAirline() {
         // delete one airline
     }
@@ -536,7 +549,7 @@ public class DataHandlerTest {
     /**
      * Test deleting two airlines in the database
      */
-    @Test
+    @Ignore @Test
     public void testDeleteTwoAirlines() {
         // delete two airlines
     }
@@ -544,7 +557,7 @@ public class DataHandlerTest {
     /**
      * Test deleting five airlines in the database
      */
-    @Test
+    @Ignore @Test
     public void testDeleteFiveAirlines() {
         // delete five airlines
     }
@@ -552,7 +565,7 @@ public class DataHandlerTest {
     /**
      * Test deleting an airline without providing an ID in the database
      */
-    @Test
+    @Ignore @Test
     public void testDeleteAirlineEmptyID() {
         // delete airline where a null AirlineID is provided
     }
@@ -560,7 +573,7 @@ public class DataHandlerTest {
     /**
      * Test deleting an airline with an invalid ID in the database
      */
-    @Test
+    @Ignore @Test
     public void testDeleteAirlineInvalidID() {
         // delete airline where an invalid AirlineID is provided
     }
@@ -568,7 +581,7 @@ public class DataHandlerTest {
     /**
      * Test deleting an airport in the database
      */
-    @Test
+    @Ignore @Test
     public void testDeleteOneAirport() {
         // delete one airline
     }
@@ -576,7 +589,7 @@ public class DataHandlerTest {
     /**
      * Test deleting two airports in the database
      */
-    @Test
+    @Ignore @Test
     public void testDeleteTwoAirports() {
         // delete two airlines
     }
@@ -584,7 +597,7 @@ public class DataHandlerTest {
     /**
      * Test deleting five airports in the database
      */
-    @Test
+    @Ignore @Test
     public void testDeleteFiveAirports() {
         // delete five airlines
     }
@@ -592,7 +605,7 @@ public class DataHandlerTest {
     /**
      * Test deleting an airport without providing an ID (should thrown exception) in the database
      */
-    @Test
+    @Ignore @Test
     public void testDeleteAirportEmptyID() {
         // delete airline where a null AirlineID is provided
     }
@@ -600,7 +613,7 @@ public class DataHandlerTest {
     /**
      * Test deleting an airport with an invalid ID in the database
      */
-    @Test
+    @Ignore @Test
     public void testDeleteAirportInvalidID() {
         // delete airline where an invalid AirlineID is provided
     }
@@ -608,7 +621,7 @@ public class DataHandlerTest {
     /**
      * Test deleting one route in the database
      */
-    @Test
+    @Ignore @Test
     public void testDeleteOneRoute() {
         // delete one route
     }
@@ -616,7 +629,7 @@ public class DataHandlerTest {
     /**
      * Test deleting two routes in the database
      */
-    @Test
+    @Ignore @Test
     public void testDeleteTwoRoutes() {
         // delete two routes
     }
@@ -624,7 +637,7 @@ public class DataHandlerTest {
     /**
      * Test deleting five routes in the database
      */
-    @Test
+    @Ignore @Test
     public void testDeleteFiveRoutes() {
         // delete five routes
     }
@@ -632,7 +645,7 @@ public class DataHandlerTest {
     /**
      * Test deleting a route with an empty ID (should throw exception) in the database
      */
-    @Test
+    @Ignore @Test
     public void testDeleteRouteEmptyID() {
         // delete route where a null AirlineID is provided
     }
@@ -640,7 +653,7 @@ public class DataHandlerTest {
     /**
      * Test deleting a route with an invalid ID in the database
      */
-    @Test
+    @Ignore @Test
     public void testDeleteRouteInvalidAirlineID() {
         // delete airline where an invalid AirlineID is provided
     }
@@ -648,7 +661,7 @@ public class DataHandlerTest {
     /**
      * Test deleting a route with an invalid source airport ID in the database
      */
-    @Test
+    @Ignore @Test
     public void testDeleteRouteInvalidSourceID() {
         // delete airline where an invalid SourceAirportID is provided
     }
@@ -656,8 +669,9 @@ public class DataHandlerTest {
     /**
      * Test deleting a route with an invalid destination airport ID in the database
      */
-    @Test
+    @Ignore @Test
     public void testDeleteRouteInvalidDestinationID() {
         // delete airline where an invalid DestinationAirportID is provided
     }
+
 }
