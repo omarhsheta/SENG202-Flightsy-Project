@@ -1,5 +1,6 @@
 package seng202.team6.model.data;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.junit.*;
 import org.junit.Assert.*;
 import seng202.team6.model.entities.*;
@@ -10,8 +11,7 @@ import java.util.Random;
 import java.util.ArrayList;
 
 import static java.lang.String.format;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
+import static org.junit.Assert.*;
 
 public class DataHandlerTest {
     private Random random;
@@ -104,7 +104,7 @@ public class DataHandlerTest {
             Filter filter = new Filter(format("id_airline = %s", testAirline1.getAirlineID()), "");
             filters.add(filter);
             actualAirlines = dataHandler.FetchAirlines(filters);
-            assertEquals(testAirlines, actualAirlines);
+            Assert.assertTrue(EqualsBuilder.reflectionEquals(testAirlines.get(0), actualAirlines.get(0)));
         } catch(Exception e) {
             Assert.fail(e.getMessage());
         }
@@ -113,7 +113,6 @@ public class DataHandlerTest {
     /**
      * Test inserting two airlines into the database
      */
-    /**
     @Test
     public void testInsertTwoAirlines() {
         ArrayList<Airline> testAirlines = new ArrayList<Airline>();
@@ -128,12 +127,13 @@ public class DataHandlerTest {
             Filter filter2 = new Filter(format("id_airline = %s", testAirline2.getAirlineID()), "");
             filters.add(filter2);
             actualAirlines = dataHandler.FetchAirlines(filters);
-            assertEquals(testAirlines, actualAirlines);
         } catch(Exception e) {
             Assert.fail(e.getMessage());
         }
+        for (int i = 0; i < 2; i++) {
+            Assert.assertTrue(EqualsBuilder.reflectionEquals(testAirlines.get(i), actualAirlines.get(i)));
+        }
     }
-    */
 
     /**
      * Test inserting five airlines into the database
