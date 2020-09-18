@@ -1,4 +1,17 @@
 # Team 6 - SENG202 - Flightsy
+
+## Table of Contents
+
+1. [Description](#description)
+2. [Prerequisites](#prerequisites)
+2. [Importing Project (using IntelliJ)](#importing-project-using-intellij)
+3. [Build Project](#build-project)
+4. [Install Application](#install-app)
+5. [Deploy Application](#deploy-app)
+6. [Run Application](#run-app)
+
+## Description
+
 Flightsy is a Holiday planner application written in Java. The applicaiton uses JavaFX for the GUI, SQLite for the dbms, JDBC for the Java/SQLite interface.
 Flightsy was designed and developed by Team 6 consisting of:
  - Callum McLouglin
@@ -7,6 +20,8 @@ Flightsy was designed and developed by Team 6 consisting of:
  - Omar Sheta
  - Rutger van Kruiningen
  - Fletcher Dick
+
+
 
 ## Prerequisites
 
@@ -20,6 +35,7 @@ Flightsy was designed and developed by Team 6 consisting of:
  3. Select a directory and click 'Clone'.
  4. Open a command line interface inside the project directory and run `mvn validate` to ensure all information needed to build has been successfully cloned from the repository.
  5. In the Maven auto pop-up click 'Install Maven Changes'.
+
 **Note:** *If you run into dependency issues when running the app or the Maven pop up doesn't appear then open the Maven sidebar and click the Refresh icon labeled 'Reimport All Maven Projects'.*
 
 ## Build Project
