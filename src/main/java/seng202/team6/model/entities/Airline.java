@@ -2,6 +2,8 @@ package seng202.team6.model.entities;
 
 import java.util.Objects;
 
+import static java.lang.String.format;
+
 public class Airline implements Comparable<Airline> {
 
     int AirlineID;
@@ -119,6 +121,11 @@ public class Airline implements Comparable<Airline> {
 
     public void SetActive(char active) {
         Active = active;
+    }
+
+    public String toString() {
+        return format("AirportID: %d\n" + "Name: %s\n" + "Alias: %s\n" + "IATA: %s\n" + "ICAO: %s\n" + "Callsign: " +
+                "%s\n" + "Country: %s\n" + "Active: %c\n", AirlineID, Alias, IATA, ICAO, Callsign, Country, Active);
     }
 
     @Override

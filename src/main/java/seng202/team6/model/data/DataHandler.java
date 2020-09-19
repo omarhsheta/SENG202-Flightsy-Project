@@ -295,7 +295,7 @@ public class DataHandler {
      * @throws SQLException Throws an SQLException when the update query is invalid
      */
     public void updateAirline(int AirlineID, String Name, String Alias, String IATA, String ICAO, String Callsign,
-                               String Country, Character Active) throws SQLException {
+                               String Country, Character Active) throws Exception {
         Statement stmt = this.databaseConnection.createStatement();
 
         String setSQL = "";
@@ -322,7 +322,11 @@ public class DataHandler {
         if (Active != null) {
             setSQL += String.format("active = '%c',", Active);
         }
-        if (setSQL.length() > 0) { setSQL = setSQL.substring(0, setSQL.length() - 1); }
+        if (setSQL.length() > 0) {
+            setSQL = setSQL.substring(0, setSQL.length() - 1);
+        } else {
+            throw new Exception("No parameters to update were provided");
+        }
 
         String query = String.format("UPDATE airline SET %s WHERE id_airline == %d;", setSQL, AirlineID);
         stmt.executeUpdate(query);

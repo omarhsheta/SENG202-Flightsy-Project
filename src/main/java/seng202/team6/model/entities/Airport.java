@@ -4,7 +4,9 @@ import seng202.team6.model.interfaces.IMapDrawable;
 import java.lang.*;
 import java.util.Objects;
 
-public class Airport implements IMapDrawable {
+import static java.lang.String.format;
+
+public class Airport implements IMapDrawable, Comparable<Airport> {
 
     int AirportID;
     String Name;
@@ -96,7 +98,7 @@ public class Airport implements IMapDrawable {
      */
     @Override
     public String ConvertToJavascriptString() {
-        return String.format("lat: %f, lng: %f, " +
+        return format("lat: %f, lng: %f, " +
                         "name: \"%s\", country: \"%s\", city: \"%s\", " +
                         "iata: \"%s\", icao: \"%s\", alt: %d, tz: %f",
 
@@ -191,5 +193,16 @@ public class Airport implements IMapDrawable {
 
     public void SetDST(char DST) {
         this.DST = DST;
+    }
+
+    public String toString() {
+        return format("AirportID: %d\n" + "Name: %s\n" + "Country: %s\n" + "IATA: %s\n" + "ICAO: %s\n" + "Latitude: " +
+                "%f\n" + "Longitude: %f\n" + "Altitude: %d\n" + "Timezone: %d\n" + "DST: %c\n", AirportID, Name, City
+                , Country, IATA, ICAO, Latitude, Longitude, Altitude, Timezone, DST);
+    }
+
+    @Override
+    public int compareTo(Airport airport) {
+        return Integer.compare(AirportID, airport.AirportID);
     }
 }
