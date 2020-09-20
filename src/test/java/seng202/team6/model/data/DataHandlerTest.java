@@ -248,7 +248,7 @@ public class DataHandlerTest {
     /**
      * Test inserting five airports in the database
      */
-    @Test
+    @Ignore @Test
     public void testInsertFiveAirports() {
         testAirports.add(testAirport1);
         testAirports.add(testAirport2);
