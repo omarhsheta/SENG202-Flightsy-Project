@@ -48,8 +48,8 @@ public class CSVLoaderTest {
     @Test
     public void TestAirportList() {
         ArrayList<Airport> testList = csvLoader.GetCSVAirportList(resourceFolder + "AirportTest.csv");
-        Airport testAirport1 = new Airport(69, "The Dystopian Airport", "Dystopia", "North Korea", "DYS", "DYNK", 42069, 42069, 9001, 3, 'Y');
-        Airport testAirport2 = new Airport(69,"The Dystopian Airport","Dystopia", "North Korea","DYS","DYNK",42069,42069,9001,3,'U');
+        Airport testAirport1 = new Airport(69, "The Dystopian Airport", "Dystopia", "North Korea", "DYS", "DYNK", (float)42069, (float)42069, 9001, 3, 'Y');
+        Airport testAirport2 = new Airport(69,"The Dystopian Airport","Dystopia", "North Korea","DYS","DYNK",(float)42069,(float)42069,9001,3,'U');
         Airport testAirport3 = new Airport(0, "0", "0", "0", "0", "0", 0, 0, 0, 0, '0');
         assertEquals(testAirport1, testList.get(0));
         assertEquals(testAirport2, testList.get(1));
