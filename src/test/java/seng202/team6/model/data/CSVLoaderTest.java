@@ -23,7 +23,7 @@ public class CSVLoaderTest {
      */
     @Test
     public void TestAirplaneList() {
-        ArrayList<Plane> testList = csvLoader.GetCSVPlanes(resourceFolder + "AirplaneTest.csv");
+        ArrayList<Plane> testList = csvLoader.ImportCSVPlanes(resourceFolder + "AirplaneTest.csv");
         Plane testPlane = new Plane("Flightsy", "CHC", "NZ");
         assertEquals(testPlane, testList.get(0));
         assertEquals(1, testList.size());// Test for invalid data
@@ -34,7 +34,7 @@ public class CSVLoaderTest {
      */
     @Test
     public void TestAirlineList() {
-        ArrayList<Airline> testList = csvLoader.GetCSVAirlineList(resourceFolder + "AirlineTest.csv");
+        ArrayList<Airline> testList = csvLoader.ImportCSVAirlines(resourceFolder + "AirlineTest.csv");
         Airline testAirline1 = new Airline(69, "Flightsy Airways", "FA", "CHC", "NZ", "KIA KAHA", "New Zealand", 'Y');
         Airline testAirline2 = new Airline(0,"0","0","0","0","0","0",'0');
         assertEquals(testAirline1, testList.get(0));
