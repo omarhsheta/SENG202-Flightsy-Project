@@ -306,12 +306,18 @@ public class DataHandler {
             setSQL += String.format("alias = '%s',", Alias);
         }
         if (IATA != null && !IATA.trim().isEmpty()) {
-            setSQL += String.format("iata = '%s',", IATA);
-            // Add error handling, only two chars allowed
+            if (IATA.length() == 2) {
+                setSQL += String.format("iata = '%s',", IATA);
+            } else {
+                throw new Exception("The provided IATA was not two characters long!");
+            }
         }
         if (ICAO != null && !ICAO.trim().isEmpty()) {
-            setSQL += String.format("icao = '%s',", ICAO);
-            // Add error handling, only three chars allowed
+            if (ICAO.length() == 3) {
+                setSQL += String.format("icao = '%s',", ICAO);
+            } else {
+                throw new Exception("The provided ICAO was not three characters long!");
+            }
         }
         if (Callsign != null && !Callsign.trim().isEmpty()) {
             setSQL += String.format("callsign = '%s',", Callsign);
@@ -325,7 +331,7 @@ public class DataHandler {
         if (setSQL.length() > 0) {
             setSQL = setSQL.substring(0, setSQL.length() - 1);
         } else {
-            throw new Exception("No parameters to update were provided");
+            throw new Exception("No parameters to update were provided!");
         }
 
         String query = String.format("UPDATE airline SET %s WHERE id_airline == %d;", setSQL, AirlineID);

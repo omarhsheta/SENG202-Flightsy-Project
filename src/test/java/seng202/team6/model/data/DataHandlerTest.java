@@ -120,10 +120,10 @@ public class DataHandlerTest {
             Filter filter = new Filter(format("id_airline = %d", testAirline1.getAirlineID()), "");
             filters.add(filter);
             actualAirlines = dataHandler.FetchAirlines(filters);
-            Assert.assertEquals(testAirlines.get(0), actualAirlines.get(0));
         } catch(Exception e) {
             Assert.fail(e.getMessage());
         }
+        Assert.assertEquals(testAirlines.get(0), actualAirlines.get(0));
         fullClear();
     }
 
@@ -188,11 +188,10 @@ public class DataHandlerTest {
 
     /**
      * Test inserting an empty airline into the database
+     * !!! Leave ignored until the database schema is updated to prevent empty parameters from being entered
      */
     @Test @Ignore
     public void testInsertEmptyAirline() {
-        ;
-        ArrayList<Airline> testAirlines = new ArrayList<Airline>();
         testAirlines.add(testEmptyAirline);
         try {
             dataHandler.InsertAirlines(testAirlines);
@@ -200,23 +199,7 @@ public class DataHandlerTest {
         } catch (Exception e) {
             Assert.assertTrue(e instanceof Exception);
         }
-        // Need to change database schema to not allow certain parameters to be empty
-    }
-
-    /**
-     * Test inserting a invalid airline into the database
-     */
-    @Ignore @Test
-    public void testInsertInvalidAirline() {
-
-    }
-
-    /**
-     * Test inserting two invalid airlines and one airline into the database
-     */
-    @Ignore @Test
-    public void testInsertTwoValidOneInvalidAirlines() {
-        // insert two valid, one invalid airlines
+        fullClear();
     }
 
     /**
@@ -300,26 +283,18 @@ public class DataHandlerTest {
 
     /**
      * Test inserting an empty airport (should error) in the database
+     * !!! Leave ignored until the database schema is updated to prevent empty parameters from being entered
      */
     @Ignore @Test
     public void testInsertEmptyAirport() {
-        // insert empty airport
-    }
-
-    /**
-     * Test inserting an invalid airport into the database
-     */
-    @Ignore @Test
-    public void testInsertInvalidAirport() {
-        // insert invalid airport
-    }
-
-    /**
-     * Test inserting two airports and one invalid airport into the database
-     */
-    @Ignore @Test
-    public void testInsertTwoValidOneInvalidAirports() {
-        // insert two valid, one invalid airports
+        testAirports.add(testEmptyAirport);
+        try {
+            dataHandler.InsertAirports(testAirports);
+            Assert.fail("SQLException was supposed to be thrown.");
+        } catch (Exception e) {
+            Assert.assertTrue(e instanceof Exception);
+        }
+        fullClear();
     }
 
     /**
@@ -381,52 +356,70 @@ public class DataHandlerTest {
 
     /**
      * Test inserting an empty route (should error) into the database
+     * !!! Leave ignored until the database schema is updated to prevent empty parameters from being entered
      */
     @Ignore @Test
     public void testInsertEmptyRoute() {
-        // insert empty route
-    }
-
-    /**
-     * Test inserting an invalid route into the database
-     */
-    @Ignore @Test
-    public void testInsertInvalidRoute() {
-        // insert invalid route
-    }
-
-    /**
-     * Test inserting two routes and one invalid route into the database
-     */
-    @Ignore @Test
-    public void testInsertTwoValidOneInvalidRoutes() {
-        // insert two valid, one invalid routes
+        testRoutes.add(testEmptyRoute);
+        try {
+            dataHandler.InsertRoutes(testRoutes);
+            Assert.fail("SQLException was supposed to be thrown.");
+        } catch (Exception e) {
+            Assert.assertTrue(e instanceof Exception);
+        }
+        fullClear();
     }
 
     /**
      * Test updating one airline within the database
      */
-    @Ignore @Test
+    @Test
     public void testUpdateOneAirline() {
         testAirlines.add(testAirline1);
         try {dataHandler.InsertAirlines(testAirlines);} catch (Exception e) {Assert.fail(e.getMessage());}
         try {
             dataHandler.updateAirline(testAirline1.getAirlineID(), "VirginBlue", null, null, null, null,
                     null, null);
+            Filter filter = new Filter(format("id_airline = %d", testAirline1.getAirlineID()), "");
+            filters.add(filter);
+            actualAirlines = dataHandler.FetchAirlines(filters);
         } catch (Exception e) {
             Assert.fail(e.getMessage());
         }
-        Airline updatedAirline = testAirline1;
-        updatedAirline.SetName("VirginBlue");
-        assertEquals(testAirline1, updatedAirline);
+        testAirlines.get(0).SetName("VirginBlue");
+        assertEquals(testAirline1, actualAirlines.get(0));
+        fullClear();
     }
 
     /**
      * Test updating two airlines within the database
      */
-    @Ignore @Test
+    @Test
     public void testUpdateTwoAirlines() {
-        // update two airlines
+        testAirlines.add(testAirline1);
+        testAirlines.add(testAirline2);
+        try {dataHandler.InsertAirlines(testAirlines);} catch (Exception e) {Assert.fail(e.getMessage());}
+        try {
+            dataHandler.updateAirline(testAirline1.getAirlineID(), "VirginGreen", null, null, null, null,
+                    null, null);
+            Filter filter1 = new Filter(format("id_airline = %d", testAirline1.getAirlineID()), "OR");
+            filters.add(filter1);
+            dataHandler.updateAirline(testAirline2.getAirlineID(), "VirginPurple", null, null, null, null,
+                    null, null);
+            Filter filter2 = new Filter(format("id_airline = %d", testAirline2.getAirlineID()), "");
+            filters.add(filter2);
+            actualAirlines = dataHandler.FetchAirlines(filters);
+        } catch (Exception e) {
+            Assert.fail(e.getMessage());
+        }
+        testAirlines.get(0).SetName("VirginGreen");
+        testAirlines.get(1).SetName("VirginPurple");
+        Collections.sort(testAirlines);
+        Collections.sort(actualAirlines);
+        for (int i = 0; i < 2; i++) {
+            assertEquals(testAirlines.get(i), actualAirlines.get(i));
+        }
+        fullClear();
     }
 
     /**
@@ -434,55 +427,138 @@ public class DataHandlerTest {
      */
     @Ignore @Test
     public void testUpdateFiveAirlines() {
-        // update five airlines
+        testAirlines.add(testAirline1);
+        testAirlines.add(testAirline2);
+        testAirlines.add(testAirline3);
+        testAirlines.add(testAirline4);
+        testAirlines.add(testAirline5);
+        try {dataHandler.InsertAirlines(testAirlines);} catch (Exception e) {Assert.fail(e.getMessage());}
+        try {
+            dataHandler.updateAirline(testAirline1.getAirlineID(), "VirginAlpha", null, null, null, null,
+                    null, null);
+            Filter filter1 = new Filter(format("id_airline = %d", testAirline1.getAirlineID()), "OR");
+            filters.add(filter1);
+            dataHandler.updateAirline(testAirline2.getAirlineID(), "VirginBeta", null, null, null, null,
+                    null, null);
+            Filter filter2 = new Filter(format("id_airline = %d", testAirline2.getAirlineID()), "");
+            filters.add(filter2);
+            dataHandler.updateAirline(testAirline3.getAirlineID(), "VirginCharlie", null, null, null, null,
+                    null, null);
+            Filter filter3 = new Filter(format("id_airline = %d", testAirline3.getAirlineID()), "");
+            filters.add(filter2);
+            dataHandler.updateAirline(testAirline4.getAirlineID(), "VirginDelta", null, null, null, null,
+                    null, null);
+            Filter filter4 = new Filter(format("id_airline = %d", testAirline4.getAirlineID()), "");
+            filters.add(filter2);
+            dataHandler.updateAirline(testAirline5.getAirlineID(), "VirginEcho", null, null, null, null,
+                    null, null);
+            Filter filter5 = new Filter(format("id_airline = %d", testAirline5.getAirlineID()), "");
+            filters.add(filter2);
+            actualAirlines = dataHandler.FetchAirlines(filters);
+        } catch (Exception e) {
+            Assert.fail(e.getMessage());
+        }
+        testAirlines.get(0).SetName("VirginAlpha");
+        testAirlines.get(1).SetName("VirginBeta");
+        testAirlines.get(2).SetName("VirginCharlie");
+        testAirlines.get(3).SetName("VirginDelta");
+        testAirlines.get(4).SetName("VirginEcho");
+        Collections.sort(testAirlines);
+        Collections.sort(actualAirlines);
+        for (int i = 0; i < 5; i++) {
+            assertEquals(testAirlines.get(i), actualAirlines.get(i));
+        }
+        fullClear();
     }
 
     /**
      * Test updating an airline with empty parameters (should throw exception) within the database
      */
-    @Ignore @Test
+    @Test
     public void testUpdateAirlineEmpty() {
-        // update an airline with empty parameters
+        testAirlines.add(testAirline1);
+        try {dataHandler.InsertAirlines(testAirlines);} catch (Exception e) {Assert.fail(e.getMessage());}
+        try {
+            dataHandler.updateAirline(testAirline1.getAirlineID(), null, null, null, null, null,
+                    null, null);
+            Assert.fail("Should have failed by now.");
+        } catch (Exception e) {
+            String message = "No parameters to update were provided!";
+            assertEquals(message, e.getMessage());
+        }
+        fullClear();
     }
 
     /**
      * Test updating invalid IATA with one character within the database
      */
-    @Ignore @Test
+    @Test
     public void testUpdateAirlineOneCharIATA() {
-        // update airline with invalid IATA with one char
+        testAirlines.add(testAirline1);
+        try {dataHandler.InsertAirlines(testAirlines);} catch (Exception e) {Assert.fail(e.getMessage());}
+        try {
+            dataHandler.updateAirline(testAirline1.getAirlineID(), null, null, "W", null, null,
+                    null, null);
+            Assert.fail("Should have failed by now.");
+        } catch (Exception e) {
+            String message = "The provided IATA was not two characters long!";
+            assertEquals(message, e.getMessage());
+        }
+        fullClear();
     }
 
     /**
      * Test updating invalid IATA with three characters within the database
      */
-    @Ignore @Test
+    @Test
     public void testUpdateAirlineThreeCharIATA() {
-        // update airline with invalid IATA with three chars
+        testAirlines.add(testAirline1);
+        try {dataHandler.InsertAirlines(testAirlines);} catch (Exception e) {Assert.fail(e.getMessage());}
+        try {
+            dataHandler.updateAirline(testAirline1.getAirlineID(), null, null, "WAP", null, null,
+                    null, null);
+            Assert.fail("Should have failed by now.");
+        } catch (Exception e) {
+            String message = "The provided IATA was not two characters long!";
+            assertEquals(message, e.getMessage());
+        }
+        fullClear();
     }
 
     /**
      * Test updating invalid ICAO with two characters within the database
      */
-    @Ignore @Test
+    @Test
     public void testUpdateAirlineTwoCharICAO() {
-        // update airline with invalid ICAO with two chars
+        testAirlines.add(testAirline1);
+        try {dataHandler.InsertAirlines(testAirlines);} catch (Exception e) {Assert.fail(e.getMessage());}
+        try {
+            dataHandler.updateAirline(testAirline1.getAirlineID(), null, null, null, "WA", null,
+                    null, null);
+            Assert.fail("Should have failed by now.");
+        } catch (Exception e) {
+            String message = "The provided ICAO was not three characters long!";
+            assertEquals(message, e.getMessage());
+        }
+        fullClear();
     }
 
     /**
      * Test updating invalid ICAO with four characters within the database
      */
-    @Ignore @Test
+    @Test
     public void testupdateAirlineFourCharICAO() {
-        // update airline with invalid ICAO with four chars
-    }
-
-    /**
-     * Test updating invalid airline parameters within the database
-     */
-    @Ignore @Test
-    public void testInvalidAirlineParams() {
-        // update airline with invalid parameter data
+        testAirlines.add(testAirline1);
+        try {dataHandler.InsertAirlines(testAirlines);} catch (Exception e) {Assert.fail(e.getMessage());}
+        try {
+            dataHandler.updateAirline(testAirline1.getAirlineID(), null, null, null, "WAPP", null,
+                    null, null);
+            Assert.fail("Should have failed by now.");
+        } catch (Exception e) {
+            String message = "The provided ICAO was not three characters long!";
+            assertEquals(message, e.getMessage());
+        }
+        fullClear();
     }
 
     /**
@@ -490,7 +566,20 @@ public class DataHandlerTest {
      */
     @Ignore @Test
     public void testUpdateOneAirport() {
-        // update one airline
+        testAirports.add(testAirport1);
+        try {dataHandler.InsertAirports(testAirports);} catch (Exception e) {Assert.fail(e.getMessage());}
+        try {
+            dataHandler.updateAirport(testAirport1.getAirportID(), "Alpha", null, null, null, null,
+                    null, null, null, null, null);
+            Filter filter = new Filter(format("id_airport = %d", testAirport1.getAirportID()), "");
+            filters.add(filter);
+            actualAirports = dataHandler.FetchAirports(filters);
+        } catch (Exception e) {
+            Assert.fail(e.getMessage());
+        }
+        testAirports.get(0).SetName("Alpha");
+        assertEquals(testAirport1, actualAirports.get(0));
+        fullClear();
     }
 
     /**

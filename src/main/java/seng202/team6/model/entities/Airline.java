@@ -125,7 +125,7 @@ public class Airline implements Comparable<Airline> {
 
     public String toString() {
         return format("AirportID: %d\n" + "Name: %s\n" + "Alias: %s\n" + "IATA: %s\n" + "ICAO: %s\n" + "Callsign: " +
-                "%s\n" + "Country: %s\n" + "Active: %c\n", AirlineID, Alias, IATA, ICAO, Callsign, Country, Active);
+                "%s\n" + "Country: %s\n" + "Active: %c\n", AirlineID, Name, Alias, IATA, ICAO, Callsign, Country, Active);
     }
 
     @Override
