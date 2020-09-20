@@ -37,7 +37,7 @@ public class DataHandler {
     /**
      * Constructor class creates the connection to the SQLite database.
      */
-    private DataHandler() {
+    public DataHandler() {
         try {
             //JDBC requires databases to be an external file
             TryCopyDatabase();
@@ -320,4 +320,204 @@ public class DataHandler {
             stmt.executeUpdate(sql);
         }
     }
+
+    /**
+     * Finds the airline in the database, based on there unique AirlineID and updates the fields based on the provided
+     * parameters. Parameters that are null will not be updated.
+     * @param AirlineID The ID of the Airline and the primary key of the airline within the database
+     * @param Name The name of the airline
+     * @param Alias The Alias of the airline
+     * @param IATA The International Air Transport Association unique two character code
+     * @param ICAO The International Civil Aviation Organisation unique three character code
+     * @param Callsign The call sign of the airline
+     * @param Country The airline's country of origin
+     * @param Active Stating whether the airline is active
+     * @throws SQLException Throws an SQLException when the update query is invalid
+     */
+    public void updateAirline(int AirlineID, String Name, String Alias, String IATA, String ICAO, String Callsign,
+                              String Country, Character Active) throws Exception {
+        Statement stmt = this.databaseConnection.createStatement();
+
+        String setSQL = "";
+        if (Name != null && !Name.trim().isEmpty()) {
+            setSQL += String.format("name = '%s',", Name);
+        }
+        if (Alias != null && !Alias.trim().isEmpty()) {
+            setSQL += String.format("alias = '%s',", Alias);
+        }
+        if (IATA != null && !IATA.trim().isEmpty()) {
+            if (IATA.length() == 2) {
+                setSQL += String.format("iata = '%s',", IATA);
+            } else {
+                throw new Exception("The provided IATA was not two characters long!");
+            }
+        }
+        if (ICAO != null && !ICAO.trim().isEmpty()) {
+            if (ICAO.length() == 3) {
+                setSQL += String.format("icao = '%s',", ICAO);
+            } else {
+                throw new Exception("The provided ICAO was not three characters long!");
+            }
+        }
+        if (Callsign != null && !Callsign.trim().isEmpty()) {
+            setSQL += String.format("callsign = '%s',", Callsign);
+        }
+        if (Country != null && !Country.trim().isEmpty()) {
+            setSQL += String.format("country = '%s',", Country);
+        }
+        if (Active != null) {
+            setSQL += String.format("active = '%c',", Active);
+        }
+        if (setSQL.length() > 0) {
+            setSQL = setSQL.substring(0, setSQL.length() - 1);
+        } else {
+            throw new Exception("No parameters to update were provided!");
+        }
+
+        String query = String.format("UPDATE airline SET %s WHERE id_airline == %d;", setSQL, AirlineID);
+        stmt.executeUpdate(query);
+    }
+
+    /**
+     * Finds the airport in the database, based on there unique AirportID and updates the fields based on the provided
+     * parameters. Parameters that are null will not be updated.
+     * @param AirportID The ID of the Airport and the primary key of the airport within the database
+     * @param Name The name of the airport
+     * @param City The name of the city the airport resides in
+     * @param Country The name of the country the airport resides in
+     * @param IATA The International Air Transport Association unique three character code
+     * @param ICAO The International Civil Aviation Organisation unique four character code
+     * @param Latitude The Latitudinal coordinate of the airport
+     * @param Longitude The Longitudinal coordinate of the airport
+     * @param Altitude The Altitude of the airport
+     * @param Timezone The timezone the airport operates on
+     * @throws SQLException Throws an SQLException when the update query is invalid
+     */
+    public void updateAirport(int AirportID, String Name, String City, String Country, String IATA, String ICAO,
+                              Float Latitude, Float Longitude, Integer Altitude, Float Timezone,
+                              Character DST) throws SQLException {
+        Statement stmt = this.databaseConnection.createStatement();
+
+        String setSQL = "";
+        if (Name != null && !Name.trim().isEmpty()) {
+            setSQL += String.format("name = '%s',", Name);
+        }
+        if (City != null && !City.trim().isEmpty()) {
+            setSQL += String.format("city = '%s',", City);
+        }
+        if (Country != null && !Country.trim().isEmpty()) {
+            setSQL += String.format("country = '%s',", Country);
+        }
+        if (IATA != null && !IATA.trim().isEmpty()) {
+            setSQL += String.format("iata = '%s',", IATA);
+            // Add error handling, only three chars allowed
+        }
+        if (ICAO != null && !ICAO.trim().isEmpty()) {
+            setSQL += String.format("icao = '%s',", ICAO);
+            // Add error handling, only four chars allowed
+        }
+        if (Latitude != null) {
+            setSQL += String.format("latitude = %f,", Latitude);
+        }
+        if (Longitude != null) {
+            setSQL += String.format("longitude = %f,", Longitude);
+        }
+        if (Altitude != null) {
+            setSQL += String.format("altitude = %d,", Altitude);
+        }
+        if (Timezone != null) {
+            setSQL += String.format("timezone = %f,", Timezone);
+        }
+        if (setSQL.length() > 0) { setSQL = setSQL.substring(0, setSQL.length() - 1); }
+
+        String query = String.format("UPDATE airline SET %s WHERE id_airport == %d;", setSQL, AirportID);
+        stmt.executeUpdate(query);
+    }
+
+    /**
+     * Finds the route in the database, based on a combination of their unique AirlineID, SourceAirportID, and
+     * DestinationAirportID. Then, the fields are updated based on the provided parameters.
+     * Parameters that are null will not be updated.
+     * @param AirlineID The ID of the Airline undertaking the route and one of the primary keys for route
+     * @param AirlineICAO The International Civil Aviation Organisation unique three character code of the airline the route is flying on
+     * @param SourceAirportICAO The International Civil Aviation Organisation unique four character code of the airport the route will depart from
+     * @param SourceAirportID The ID of the airport the route will depart from and one of the primary keys for route
+     * @param DestinationAirportICAO The International Civil Aviation Organisation unique four character code of the airport the route will arrive at
+     * @param DestinationAirportID The ID of the airport the route will arrive at and one of the primary keys for route
+     * @param Codeshare A character stating whether the route is a codeshare
+     * @param Stops The number of stops the route has
+     * @param Equipment A three character code for plane types
+     * @throws SQLException Throws an SQLException when the update query is invalid
+     */
+    public void updateRoute(Integer AirlineID, String AirlineICAO, String SourceAirportICAO, int SourceAirportID,
+                            String DestinationAirportICAO, int DestinationAirportID, Character Codeshare,
+                            Integer Stops, String Equipment) throws SQLException {
+        Statement stmt = this.databaseConnection.createStatement();
+
+        String setSQL = "";
+        if (AirlineICAO != null && !AirlineICAO.trim().isEmpty()) {
+            setSQL += String.format("airline = '%s',", AirlineICAO);
+        }
+        if (SourceAirportICAO != null && !SourceAirportICAO.trim().isEmpty()) {
+            setSQL += String.format("source_airport = '%s',", SourceAirportICAO);
+            // Add error handling, only four chars allowed
+        }
+        if (DestinationAirportICAO != null && !DestinationAirportICAO.trim().isEmpty()) {
+            setSQL += String.format("destination_airport = '%s',", DestinationAirportICAO);
+            // Add error handling, only four chars allowed
+        }
+        if (Codeshare != null) {
+            setSQL += String.format("codeshare = '%c',", Codeshare);
+        }
+        if (Stops != null) {
+            setSQL += String.format("stops = %d,", Stops);
+        }
+        if (Equipment != null && !Equipment.trim().isEmpty()) {
+            setSQL += String.format("equipment = '%s',", DestinationAirportICAO);
+        }
+        if (setSQL.length() > 0) { setSQL = setSQL.substring(0, setSQL.length() - 1); }
+
+        String query = String.format("UPDATE airline SET %s WHERE id_airline == %d AND source_airport_id == %d AND destination_airport_id == %d;"
+                , setSQL, AirlineID, SourceAirportID, DestinationAirportID);
+
+        stmt.executeUpdate(query);
+    }
+
+    /**
+     * Deletes the Airline from the Database based on the AirlineID provided
+     * @param AirlineID The unique ID associated with the airline.
+     * @throws SQLException Throws an SQLException when the delete query is invalid
+     */
+    public void deleteAirline(int AirlineID) throws SQLException {
+        Statement stmt = this.databaseConnection.createStatement();
+        String query = String.format("DELETE FROM Airline WHERE id_airline == %d;", AirlineID);
+        stmt.executeQuery(query);
+    }
+
+    /**
+     * Deletes the Airport from the Database based on the AirportID provided
+     * @param AirportID The unique ID associated with the airport.
+     * @throws SQLException Throws an SQLException when the delete query is invalid
+     */
+    public void deleteAirport(int AirportID) throws SQLException {
+        Statement stmt = this.databaseConnection.createStatement();
+        String query = String.format("DELETE FROM Airport WHERE id_airport == %d;", AirportID);
+        stmt.executeQuery(query);
+    }
+
+    /**
+     * Deletes the Route from the Database based on the AirportID, SourceAirportID and DestinationAirportID provided
+     * @param AirlineID The unique ID associated with the airline undertaking this route.
+     * @param SourceAirportID The unique ID associated with the airport the route departed from.
+     * @param DestinationAirportID The unique ID associated with the airport the route arrived at.
+     * @throws SQLException Throws an SQLException when the delete query is invalid
+     */
+    public void deleteRoute(int AirlineID, int SourceAirportID, int DestinationAirportID) throws SQLException {
+        Statement stmt = this.databaseConnection.createStatement();
+        String query = String.format("DELETE FROM Route WHERE id_airline == %d AND source_airport_id == %d AND destination_airport_id == %d;"
+                , AirlineID, SourceAirportID, DestinationAirportID);
+        stmt.executeQuery(query);
+
+    }
+
 }
