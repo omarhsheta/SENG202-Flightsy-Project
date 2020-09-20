@@ -519,5 +519,4 @@ public class DataHandler {
         stmt.executeQuery(query);
 
     }
-
 }
