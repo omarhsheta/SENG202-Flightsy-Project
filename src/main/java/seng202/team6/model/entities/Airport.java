@@ -196,7 +196,7 @@ public class Airport implements IMapDrawable, Comparable<Airport> {
     }
 
     public String toString() {
-        return format("AirportID: %d\n" + "Name: %s\n" + "Country: %s\n" + "IATA: %s\n" + "ICAO: %s\n" + "Latitude: " +
+        return format("AirportID: %d\n" + "Name: %s\n" + "City: %s\n" + "Country: %s\n" + "IATA: %s\n" + "ICAO: %s\n" + "Latitude: " +
                 "%f\n" + "Longitude: %f\n" + "Altitude: %d\n" + "Timezone: %d\n" + "DST: %c\n", AirportID, Name, City
                 , Country, IATA, ICAO, Latitude, Longitude, Altitude, Timezone, DST);
     }

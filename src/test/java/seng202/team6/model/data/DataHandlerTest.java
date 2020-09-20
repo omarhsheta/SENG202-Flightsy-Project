@@ -1,17 +1,16 @@
 package seng202.team6.model.data;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.junit.*;
 import org.junit.Assert.*;
 import seng202.team6.model.entities.*;
 
-import java.awt.image.AreaAveragingScaleFilter;
 import java.sql.SQLException;
 import java.util.Collections;
 import java.util.Random;
 import java.util.ArrayList;
 
 import static java.lang.String.format;
+import static java.lang.String.join;
 import static org.junit.Assert.*;
 
 public class DataHandlerTest {
@@ -274,17 +273,19 @@ public class DataHandlerTest {
         testAirports.add(testAirport4);
         testAirports.add(testAirport5);
         try {
+            System.out.println("What");
             dataHandler.InsertAirports(testAirports);
             Filter filter1 = new Filter(format("id_airport = %d", testAirport1.getAirportID()), "OR");
             filters.add(filter1);
             Filter filter2 = new Filter(format("id_airport = %d", testAirport2.getAirportID()), "OR");
             filters.add(filter2);
             Filter filter3 = new Filter(format("id_airport = %d", testAirport3.getAirportID()), "OR");
-            filters.add(filter2);
+            filters.add(filter3);
             Filter filter4 = new Filter(format("id_airport = %d", testAirport4.getAirportID()), "OR");
-            filters.add(filter2);
+            filters.add(filter4);
             Filter filter5 = new Filter(format("id_airport = %d", testAirport5.getAirportID()), "");
-            filters.add(filter2);
+            filters.add(filter5);
+            System.out.println("What");
             actualAirports = dataHandler.FetchAirports(filters);
         } catch(Exception e) {
             Assert.fail(e.getMessage());
