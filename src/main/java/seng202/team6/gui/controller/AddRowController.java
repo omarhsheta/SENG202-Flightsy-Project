@@ -101,7 +101,7 @@ public class AddRowController implements Initializable
             return airport;
         }
 
-        Float latitude = null;
+        Float latitude = 0f;
         if (!airpLat.equals("")) {
             try {  // Check if latitude input is valid
                 latitude = Float.parseFloat(airpLat);
@@ -111,7 +111,7 @@ public class AddRowController implements Initializable
             }
         }
 
-        Float longitude = null;
+        Float longitude = 0f;
         if (!airpLon.equals("")) {
             try {  // Check if latitude and longitude inputs are valid
                 longitude = Float.parseFloat(airpLon);
@@ -121,7 +121,7 @@ public class AddRowController implements Initializable
             }
         }
 
-        Integer altitude = null;
+        Integer altitude = 0;
         if (!airpAlt.equals("")) {
             try {  // Check if altitude input is valid
                 altitude = Integer.parseInt(airpAlt);
@@ -131,7 +131,7 @@ public class AddRowController implements Initializable
             }
         }
 
-        Integer timeZone = null;
+        Integer timeZone = 0;
         if (!airpTim.equals("")) {
             try {  // Check if the time zone input is valid
                 timeZone = Integer.parseInt(airpTim);
@@ -179,7 +179,7 @@ public class AddRowController implements Initializable
             return airline;
         }
 
-        Character airActive = null;  // Parse combo box result
+        Character airActive = ' ';  // Parse combo box result
         if (active != null) {
             if (active.equals("Yes")) {
                 airActive = 'Y';
@@ -234,7 +234,7 @@ public class AddRowController implements Initializable
             return route;
         }
 
-        Character codeShare = null;  // Parse combo box result
+        Character codeShare = ' ';  // Parse combo box result
         if (rouCod != null) {
             if (rouCod.equals("Yes")) {
                 codeShare = 'Y';
