@@ -5,6 +5,7 @@ import org.junit.Test;
 import seng202.team6.model.entities.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import static org.junit.Assert.assertEquals;
 
@@ -13,67 +14,104 @@ public class CSVLoaderTest {
     private CSVLoader csvLoader;
 
     @Before
-    public void InitializeTest()
-    {
+    public void InitializeTest() {
         csvLoader = new CSVLoader();
     }
 
+
     /**
-     * Test getting Airplanes List from CSV file
+     * Test that lines in CSV files are parsed correctly
      */
     @Test
-    public void TestAirplaneList() {
-        ArrayList<Plane> testList = csvLoader.GetCSVPlanes(resourceFolder + "AirplaneTest.csv");
-        Plane testPlane = new Plane("Flightsy", "CHC", "NZ");
-        assertEquals(testPlane, testList.get(0));
-        assertEquals(1, testList.size());// Test for invalid data
+    public void TestParseNoQuotesLine() {
+        String testString = "69,Flightsy Airways,FA,CHC,NZ,KIA KAHA,New Zealand,Y";
+        ArrayList<String> expected = new ArrayList<>(Arrays.asList("69", "Flightsy Airways", "FA", "CHC", "NZ", "KIA KAHA", "New Zealand", "Y"));
+        assertEquals(expected, csvLoader.ParseLine(testString));
     }
 
     /**
-     * Test getting Airline list from CSV file
+     * Test that quotation marks in CSV files are removed from fields and that commas in inside quotation marks are not
+     * treated as separators
      */
     @Test
-    public void TestAirlineList() {
-        ArrayList<Airline> testList = csvLoader.GetCSVAirlineList(resourceFolder + "AirlineTest.csv");
-        Airline testAirline1 = new Airline(69, "Flightsy Airways", "FA", "CHC", "NZ", "KIA KAHA", "New Zealand", 'Y');
-        Airline testAirline2 = new Airline(0,"0","0","0","0","0","0",'0');
-        assertEquals(testAirline1, testList.get(0));
-        assertEquals(testAirline2, testList.get(1));
-        assertEquals(2, testList.size());// Test for invalid data
+    public void TestParseQuotesLine() {
+        String testString = "\"69\",\"Flightsy, Airways\",\"FA\",\"CHC\",\"NZ\",\"KIA KAHA\",\"New Zealand\",\"Y\"";
+        ArrayList<String> expected = new ArrayList<>(Arrays.asList("69", "Flightsy, Airways", "FA", "CHC", "NZ", "KIA KAHA", "New Zealand", "Y"));
+        assertEquals(expected, csvLoader.ParseLine(testString));
+    }
+
+
+
+    /**
+     * Test getting Airline list from CSV file and that invalid data is discarded
+     */
+    @Test
+    public void TestAirlineEntryCheckList() {
+        ArrayList<ArrayList<String>> parsedLines = csvLoader.ProcessCSVFile(resourceFolder + "AirlineTest.csv");
+        ArrayList<ArrayList<String>> testAirlines = new ArrayList<>();
+        ArrayList<String> testAirline1 = new ArrayList<>(Arrays.asList("69", "Flightsy Airways", "FA", "CHC", "NZ", "KIA KAHA", "New Zealand", "Y"));
+        ArrayList<String> testAirline2 = new ArrayList<>(Arrays.asList("0", "0", "0", "0", "0", "0", "0", "0"));
+
+        for (int i = 0; i < parsedLines.size(); i++) {
+            ArrayList<String> entry = parsedLines.get(i);
+            if (csvLoader.AirlineEntryCheck(entry)) {
+                testAirlines.add(entry);
+            }
+        }
+        assertEquals(testAirline1, testAirlines.get(0));
+        assertEquals(testAirline2, testAirlines.get(1));
+        assertEquals(2, testAirlines.size());// Test for invalid data
     }
 
     /**
-     * Test getting Airport list from CSV file
+     * Test getting Airport list from CSV file and that invalid data is discarded
      */
     @Test
-    public void TestAirportList() {
-        ArrayList<Airport> testList = csvLoader.GetCSVAirportList(resourceFolder + "AirportTest.csv");
-        Airport testAirport1 = new Airport(69, "The Dystopian Airport", "Dystopia", "North Korea", "DYS", "DYNK", 42069, 42069, 9001, 3, 'Y');
-        Airport testAirport2 = new Airport(69,"The Dystopian Airport","Dystopia", "North Korea","DYS","DYNK",42069,42069,9001,3,'U');
-        Airport testAirport3 = new Airport(0, "0", "0", "0", "0", "0", 0, 0, 0, 0, '0');
-        assertEquals(testAirport1, testList.get(0));
-        assertEquals(testAirport2, testList.get(1));
-        assertEquals(testAirport3, testList.get(2));
-        assertEquals(3, testList.size());// Test for invalid data
+    public void TestAirportEntryCheckList() {
+        ArrayList<ArrayList<String>> parsedLines = csvLoader.ProcessCSVFile(resourceFolder + "AirportTest.csv");
+        ArrayList<ArrayList<String>> testAirports = new ArrayList<>();
+        ArrayList<String> testAirport1 = new ArrayList<>(Arrays.asList("69", "The Dystopian Airport", "Dystopia", "North Korea", "DYS", "DYNK", "42069", "42069", "9001", "3", "Y"));
+        ArrayList<String> testAirport2 = new ArrayList<>(Arrays.asList("69", "The Dystopian Airport", "Dystopia", "North Korea", "DYS", "DYNK", "42069", "42069", "9001", "3", "U"));
+        ArrayList<String> testAirport3 = new ArrayList<>(Arrays.asList("0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"));
+
+        for (int i = 0; i < parsedLines.size(); i++) {
+            ArrayList<String> entry = parsedLines.get(i);
+            if (csvLoader.AirportEntryCheck(entry)) {
+                testAirports.add(entry);
+            }
+        }
+        assertEquals(testAirport1, testAirports.get(0));
+        assertEquals(testAirport2, testAirports.get(1));
+        assertEquals(testAirport3, testAirports.get(2));
+        assertEquals(3, testAirports.size());// Test for invalid data
     }
 
+
+
+
     /**
-     * Test getting route list from CSV file
+     * Test getting route list from CSV file and that invalid data is discarded
      */
     @Test
-    public void TestRouteList() {
-        ArrayList<Route> testList = csvLoader.GetCSVRouteList(resourceFolder + "RouteTest.csv");
-        Route testRoute1 = new Route(69, "Flightsy Airways", "CHC", 420, "TLV", 666, 'N', 5, "CR2");
-        Route testRoute2 = new Route(69, "Flightsy Airways", "CHC", 420, "TLV", 666, 'Y', 5, "CR2");
-        Route testRoute3 = new Route(69, "Flightsy Airways", "CHC", 420, "TLV", 666, 'N', 5, "CR2");
-        Route testRoute4 = new Route(0,"0","0",0,"0",0,'0',0, "0");
+    public void TestRouteEntryCheckList() {
+        ArrayList<ArrayList<String>> parsedLines = csvLoader.ProcessCSVFile(resourceFolder + "RouteTest.csv");
+        ArrayList<ArrayList<String>> testRoutes = new ArrayList<>();
+        ArrayList<String> testRoute1 = new ArrayList<>(Arrays.asList("Flightsy Airways", "69", "CHC", "420", "TLV", "666", "N", "5", "CR2"));
+        ArrayList<String> testRoute2 = new ArrayList<>(Arrays.asList("Flightsy Airways", "69", "CHC", "420", "TLV", "666", "Y", "5", "CR2"));
+        ArrayList<String> testRoute3 = new ArrayList<>(Arrays.asList("Flightsy Airways", "69", "CHC", "420", "TLV", "666", "N", "5", "CR2"));
+        ArrayList<String> testRoute4 = new ArrayList<>(Arrays.asList("0", "0", "0", "0", "0", "0", "0", "0", "0"));
 
-        assertEquals(testRoute1, testList.get(0));
-        assertEquals(testRoute2, testList.get(1));
-        assertEquals(testRoute3, testList.get(2));
-        assertEquals(testRoute4, testList.get(3));
-
-        assertEquals(4, testList.size());// Test for invalid data
+        for (int i = 0; i < parsedLines.size(); i++) {
+            ArrayList<String> entry = parsedLines.get(i);
+            if (csvLoader.RouteEntryCheck(entry)) {
+                testRoutes.add(entry);
+            }
+        }
+        assertEquals(testRoute1, testRoutes.get(0));
+        assertEquals(testRoute2, testRoutes.get(1));
+        assertEquals(testRoute3, testRoutes.get(2));
+        assertEquals(testRoute4, testRoutes.get(3));
+        assertEquals(4, testRoutes.size());// Test for invalid data
     }
 
     /**
@@ -93,16 +131,7 @@ public class CSVLoaderTest {
         assertEquals(expected, lines.get(0));
     }
 
-    /**
-     * Test getting RoutePath from CSV file
-     */
-    @Test
-    public void TestRoutePath() {
-        RoutePath path = csvLoader.GetCSVRoutePath(resourceFolder + "NZCH-WSSS.csv");
-        assertEquals("NZCH", path.GetSource());
-        assertEquals("WSSS", path.GetDestination());
-        assertEquals(31, path.GetCoordinates().size());
-    }
+
 
     /**
      * Test parsing an empty CSV file

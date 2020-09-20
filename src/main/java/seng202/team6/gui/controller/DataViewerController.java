@@ -6,6 +6,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -16,6 +17,7 @@ import javafx.stage.Stage;
 import javafx.util.Pair;
 import seng202.team6.gui.components.FilterTextField;
 import seng202.team6.model.data.CSVLoader;
+
 import seng202.team6.model.data.DataHandler;
 import seng202.team6.model.data.Filter;
 import seng202.team6.model.entities.Airline;
@@ -36,16 +38,9 @@ public class DataViewerController implements Initializable
     private BorderPane borderPane;
 
     @FXML
-    private MenuItem rowImportMenuItem;
-
-    @FXML
-    private MenuItem fileImportMenuItem;
-
-    @FXML
     private TabPane tabbedPane;
 
     private CSVLoader csvLoader;
-    private DataHandler dataHandler;
 
     /**
      * Resources to load
@@ -72,7 +67,6 @@ public class DataViewerController implements Initializable
             System.out.println(e.toString());
         }
 
-        dataHandler = DataHandler.GetInstance();
         csvLoader = new CSVLoader();
     }
 
@@ -99,15 +93,9 @@ public class DataViewerController implements Initializable
     @FXML
     public void AirportFileImport() {
         File selectedFile = SelectFile();
-        if (selectedFile != null){
-            ArrayList<Airport> airports = csvLoader.GetCSVAirportList(selectedFile.getAbsolutePath());
-            if (airports.size() != 0) {
-                try {
-                    dataHandler.InsertAirports(airports);
-                } catch (SQLException exception) {
-                    System.out.println(exception.toString());
-                }
-            }
+        if (selectedFile != null) {
+            String filePath = selectedFile.getAbsolutePath();
+            csvLoader.ImportCSVAirports(filePath);
         }
     }
 
@@ -119,15 +107,10 @@ public class DataViewerController implements Initializable
     @FXML
     public void AirlineFileImport() {
         File selectedFile = SelectFile();
-        if (selectedFile != null){
-            ArrayList<Airline> airlines = csvLoader.GetCSVAirlineList(selectedFile.getAbsolutePath());
-            if (airlines.size() != 0) {
-                try {
-                    dataHandler.InsertAirlines(airlines);
-                } catch (SQLException exception) {
-                    System.out.println(exception.toString());
-                }
-            }
+        if (selectedFile != null) {
+            String filePath = selectedFile.getAbsolutePath();
+            csvLoader.ImportCSVAirlines(filePath);
+
         }
     }
 
@@ -140,35 +123,12 @@ public class DataViewerController implements Initializable
     public void RouteFileImport() {
         File selectedFile = SelectFile();
         if (selectedFile != null) {
-            ArrayList<Route> routes = csvLoader.GetCSVRouteList(selectedFile.getAbsolutePath());
-            if (routes.size() != 0) {
-                try {
-                    dataHandler.InsertRoutes(routes);
-                } catch (SQLException exception) {
-                    System.out.println(exception.toString());
-                }
-            }
+            String filePath = selectedFile.getAbsolutePath();
+            csvLoader.ImportCSVRoutes(filePath);
+
         }
     }
 
-
-    /**
-     * Gets Flight data file, passes to CSVLoader to get RoutePath object,
-     * then passes object to DataHandler to add to database
-     */
-    //TODO create method in DataHandler to add RoutePath object to database
-    @FXML
-    public void FlightFileImport() {
-//        File selectedFile = SelectFile();
-//        RoutePath routePath = csvLoader.GetCSVRoutePath(selectedFile.getAbsolutePath());
-//        if (routePath != null) {
-//            try {
-//                dataHandler.InsertRoutePath(routePath);
-//            } catch (SQLException exception) {
-//                System.out.println(exception.toString());
-//            }
-//        }
-    }
 
     /**
      * A function that creates a new stage for the user to manually add a row into the database
