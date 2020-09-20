@@ -65,7 +65,6 @@
                         <MenuItem fx:id="airportFileMenuItem" mnemonicParsing="false" onAction="#AirportFileImport" text="Airport" />
                         <MenuItem fx:id="airlineFileMenuItem" mnemonicParsing="false" onAction="#AirlineFileImport" text="Airline" />
                         <MenuItem fx:id="routeFileMenuItem" mnemonicParsing="false" onAction="#RouteFileImport" text="Route" />
-                        <MenuItem fx:id="flightFileMenuItem" mnemonicParsing="false" onAction="#FlightFileImport" text="Flight" />
                     </items>
                     <styleClass>
                         <String fx:value="split-menu-btn-sm" />
