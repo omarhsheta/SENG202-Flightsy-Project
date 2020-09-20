@@ -5,13 +5,17 @@ import seng202.team6.model.entities.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 
 public class CSVLoader {
 
+    private static DataHandler dataHandler = new DataHandler();
+
     /**
      * Processes a row from a spreadsheet file and returns it as an ArrayList of Strings
+     *
      * @param line It is a row from spreadsheet as a String
      * @return ArrayList of parameters from the spreadsheet's row
      */
@@ -20,8 +24,7 @@ public class CSVLoader {
 
         boolean isEscaped = false;
         int mark = 0;
-        for (int i = 0, n = line.length(); i < n; i++)
-        {
+        for (int i = 0, n = line.length(); i < n; i++) {
             char c = line.charAt(i);
             if (c == '"') {
                 //If char is '"' count it as 'escaped'
@@ -41,13 +44,14 @@ public class CSVLoader {
         return values;
     }
 
+
     /**
      * Parse \\N into null
+     *
      * @param str String to check if == \N
      * @return Original string or null
      */
-    private String ParseSpecialChar(String str)
-    {
+    private String ParseSpecialChar(String str) {
         if (str != null && str.equals("\\N"))
             return null;
         return str;
@@ -57,6 +61,7 @@ public class CSVLoader {
     /**
      * Processes a CSV file and runs each row through ParseLine method, then returns an ArrayList of ArrayLists
      * of Strings
+     *
      * @param path the location of the spreadsheet file
      * @return an ArrayList of ArrayLists of rows
      */
@@ -75,194 +80,170 @@ public class CSVLoader {
 
     }
 
-    /**
-     * Processes a raw data file and returns an ArrayList of object type "Plane"
-     * @param path the location of the CSV/DAT file that contains raw data about Planes
-     * @return an ArrayList of Planes
-     */
-    public ArrayList<Plane> GetCSVPlanes(String path) {
-        ArrayList<ArrayList<String>> lines = ProcessCSVFile(path);
-        ArrayList<Plane> result = new ArrayList<>();
-        for (ArrayList<String> line: lines) {
-            if (line.size() != 3) {
-                //Incorrect amount of data
-                //Does not add current Plane as it is invalid
-                continue;
-            }
-            String name = line.get(0);
-            String IATA = line.get(1);
-            String ICAO = line.get(2);
-            Plane temp = new Plane(name, IATA, ICAO);
-            result.add(temp);
-        }
-        return result;
-    }
 
     /**
-     * Processes a raw data file and returns an ArrayList of object type "Airline"
-     * @param path the location of the CSV/DAT file that contains raw data about Airlines
-     * @return an ArrayList of Airlines
+     * Checks that the fields in a row entry match the required types for Airport data
+     * @param fields ArrayList of String objects for each field of Airport data
+     * @return boolean true if the entry is valid, otherwise false indicating it can be discarded
      */
-    public ArrayList<Airline> GetCSVAirlineList(String path) {
-        ArrayList<ArrayList<String>> lines = ProcessCSVFile(path);
-        ArrayList<Airline> result = new ArrayList<>();
-        for (ArrayList<String> line: lines) {
-            if (line.size() != 8) {
-                //Incorrect amount of data
-                //Does not add current Airline as it is invalid
-                continue;
-            }
-            int airlineID;
-            try {
-                airlineID = Integer.parseInt(line.get(0));
-            }
-            catch (NumberFormatException e1) {
-                //Not a number
-                //Does not add current Airline as it is invalid
-                continue;
-            }
-            String name = line.get(1);
-            String alias = line.get(2);
-            String newIATA = line.get(3);
-            String newICAD = line.get(4);
-            String newCallsign = line.get(5);
-            String newCountry = line.get(6);
-
-            if ((line.get(7) == null) || (line.get(7).length() != 1)) {
-                //Active field missing or not of char type
-                continue;
-            }
-            char newActive = line.get(7).charAt(0);
-
-            Airline temp = new Airline(airlineID, name, alias, newIATA, newICAD, newCallsign, newCountry, newActive);
-            result.add(temp);
+    public boolean AirportEntryCheck(ArrayList<String> fields) {
+        if (fields.size() != 12) {
+            //Incorrect amount of data
+            //Does not add current Airport as it is invalid
+            return false;
         }
-        return result;
+        try {
+            Integer.parseInt(fields.get(0));
+            Float.parseFloat(fields.get(6));
+            Float.parseFloat(fields.get(7));
+            Integer.parseInt(fields.get(8));
+            Integer.parseInt(fields.get(9));
+        } catch (NumberFormatException e1) {
+            //Not a number
+            //Does not add current Airport as it is invalid
+            return false;
+        }
+
+        if ((fields.get(10) == null) || (fields.get(10).length() != 1)) {
+            //DST field missing or not of char type
+            fields.set(10, "U");
+        }
+
+        fields.remove(11);
+
+        return true;
     }
+
+
+    /**
+     * Checks that the fields in a row entry match the required types for Airline data
+     * @param fields ArrayList of String objects for each field of Airline data
+     * @return boolean true if the entry is valid, otherwise false indicating it can be discarded
+     */
+    public boolean AirlineEntryCheck(ArrayList<String> fields) {
+        if (fields.size() != 8) {
+            //Incorrect amount of data
+            //Does not add current Airline as it is invalid
+            return false;
+        }
+
+        try {
+            Integer.parseInt(fields.get(0));
+        } catch (NumberFormatException e1) {
+            //Not a number
+            //Does not add current Airline as it is invalid
+            return false;
+        }
+
+        if ((fields.get(7) == null) || (fields.get(7).length() != 1)) {
+            //Active field missing or not of char type
+            return false;
+        }
+
+        return true;
+    }
+
+
+    /**
+     * Checks that the fields in a row entry match the required types for Route data
+     * @param fields ArrayList of String objects for each field of Route data
+     * @return boolean true if the entry is valid, otherwise false indicating it can be discarded
+     */
+    public boolean RouteEntryCheck(ArrayList<String> fields) {
+        int len = fields.size();
+        if (len != 9 && len != 8) {
+            //Incorrect amount of data
+            //Does not add current Route as it is invalid
+            return false;
+        }
+
+        try {
+            Integer.parseInt(fields.get(1));
+            if (fields.get(3) == null) {
+                fields.set(3, "0");
+            } else {
+                Integer.parseInt(fields.get(3));
+            }
+            if (fields.get(5) == null) {
+                fields.set(5, "0");
+            } else {
+                Integer.parseInt(fields.get(5));
+            }
+            Integer.parseInt(fields.get(7));
+        } catch (NumberFormatException e1) {
+            //Not a number
+            //Does not add current Route as it is invalid
+            return false;
+        }
+
+        if ((fields.get(6) == null) || (fields.get(6).length() != 1)) {
+            fields.set(6, "N");
+        }
+
+        if (len == 8) {
+            fields.add("");
+        }
+
+        return true;
+    }
+
 
     /**
      * Processes a raw data file and returns an ArrayList of object type "Airport"
      * @param path the location of the CSV/DAT file that contains raw data about Airports
-     * @return an ArrayList of Airports
      */
-    public ArrayList<Airport> GetCSVAirportList(String path) {
+    public void ImportCSVAirports(String path) {
         ArrayList<ArrayList<String>> lines = ProcessCSVFile(path);
-        ArrayList<Airport> result = new ArrayList<>();
-        for (ArrayList<String> line: lines) {
-            if (line.size() != 12) {
-                //Incorrect amount of data
-                //Does not add current Airport as it is invalid
-                continue;
+        for (int i = 0; i < lines.size(); i++) {
+            ArrayList<String> entry = lines.get(i);
+            if (AirportEntryCheck(entry)) {
+                try {
+                    dataHandler.InsertAirport(entry);
+                } catch (SQLException ignored) {
+                    // Ignore duplicate entry
+                }
             }
-            int airportID;
-            try {
-                airportID = Integer.parseInt(line.get(0));
-            }
-            catch (NumberFormatException e1) {
-                //Not a number
-                //Does not add current Airport as it is invalid
-                continue;
-            }
-            String name = line.get(1);
-            String city = line.get(2);
-            String country = line.get(3);
-            String newIATA = line.get(4);
-            String newICAO = line.get(5);
-            float newLatitude;
-            float newLongitude;
-            int newAltitude;
-            int newTimezone;
-            try {
-                newLatitude = Float.parseFloat(line.get(6));
-                newLongitude = Float.parseFloat(line.get(7));
-                newAltitude = Integer.parseInt(line.get(8));
-                newTimezone = Integer.parseInt(line.get(9));
-            }
-            catch (NumberFormatException e1) {
-                //Not a number
-                //Does not add current Airport as it is invalid
-                continue;
-            }
-
-            char newDST;
-            if ((line.get(10) == null) || (line.get(10).length() != 1)) {
-                //DST field missing or not of char type
-                newDST = 'U';
-            } else {
-                newDST = line.get(10).charAt(0);
-            }
-
-            Airport temp = new Airport(airportID, name, city, country, newIATA, newICAO, newLatitude, newLongitude,
-                    newAltitude, newTimezone, newDST);
-            result.add(temp);
         }
-        return result;
     }
+
+
+    /**
+     * Processes a raw data file and returns an ArrayList of object type "Airline"
+     * @param path the location of the CSV/DAT file that contains raw data about Airlines
+     */
+    public void ImportCSVAirlines(String path) {
+        ArrayList<ArrayList<String>> lines = ProcessCSVFile(path);
+        for (int i = 0; i < lines.size(); i++) {
+            ArrayList<String> entry = lines.get(i);
+            if (AirlineEntryCheck(entry)) {
+                try {
+                    dataHandler.InsertAirline(entry);
+                } catch (SQLException ignored) {
+                    // Ignore duplicate entry
+                }
+            }
+        }
+    }
+
 
     /**
      * Processes a raw data file and returns an ArrayList of object type "Route"
      * @param path the location of the CSV/DAT file that contains raw data about Routes
-     * @return an ArrayList of Routes
      */
-    public ArrayList<Route> GetCSVRouteList(String path) {
+    public void ImportCSVRoutes(String path) {
         ArrayList<ArrayList<String>> lines = ProcessCSVFile(path);
-        ArrayList<Route> result = new ArrayList<>();
-        for (ArrayList<String> line : lines) {
-            int len = line.size();
-            if (len != 9 && len != 8) {
-                //Incorrect amount of data
-                //Does not add current Route as it is invalid
-                continue;
-            }
-            int airlineID;
-            int sourceID;
-            int destinationID;
-            int stops;
-            try {
-                airlineID = Integer.parseInt(line.get(1));
-                if (line.get(3) == null) {
-                    sourceID = 0;
-                } else {
-                    sourceID = Integer.parseInt(line.get(3));
+        for (ArrayList<String> entry : lines) {
+            if (RouteEntryCheck(entry)) {
+                try {
+                    dataHandler.InsertRoute(entry);
+                } catch (SQLException ignored) {
+                    // Ignore duplicate entry
                 }
-                if (line.get(5) == null) {
-                    destinationID = 0;
-                } else {
-                    destinationID = Integer.parseInt(line.get(5));
-                }
-                stops = Integer.parseInt(line.get(7));
-            }
-            catch (NumberFormatException e1) {
-                //Not a number
-                //Does not add current Route as it is invalid
-                continue;
-            }
 
-            char codeshare;
-            if ((line.get(6) == null) || (line.get(6).length() != 1)){
-                codeshare = 'N';
-            } else {
-                codeshare = line.get(6).charAt(0);
             }
-
-            String name = line.get(0);
-            String source = line.get(2);
-            String destination = line.get(4);
-
-            if (len != 9) {
-                Route temp = new Route(airlineID, name, source, sourceID, destination, destinationID, codeshare,
-                        stops, "");
-                result.add(temp);
-            } else {
-                String equip = line.get(8);
-                Route temp = new Route(airlineID, name, source, sourceID, destination, destinationID, codeshare,
-                        stops, equip);
-                result.add(temp);
-            }
-
         }
-        return result;
     }
+
 
     /**
      * Convert CSV file to a RoutePath object
@@ -299,4 +280,5 @@ public class CSVLoader {
         }
         return new RoutePath(source, destination, coordinates);
     }
+
 }
