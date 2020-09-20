@@ -8,7 +8,6 @@ import seng202.team6.model.entities.RoutePath;
 import java.io.File;
 import java.io.InputStream;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -58,7 +57,8 @@ public class DataHandler {
      * from embedded jar files
      */
     private void TryCopyDatabase() {
-        boolean result = new File(databaseOutputFolder).mkdir();
+        String currentDir = System.getProperty("user.dir");
+        boolean result = new File(currentDir + "/" + databaseOutputFolder).mkdir();
         File file = new File(databaseOutputFolder + "/" + databaseFile);
         if (!file.isFile()) {
             try {
