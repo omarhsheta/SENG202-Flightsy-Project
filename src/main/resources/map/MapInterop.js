@@ -6,7 +6,8 @@ let polyLines = [];
 function InitializeMap() {
     googleMap = new google.maps.Map(document.getElementById('map'), {
         center: {lat: -43.5420, lng: 172.54},
-        zoom: 6
+        zoom: 6,
+        mapId: 'c3a49356d1087bf2',
     });
     googleMap.setOptions({ minZoom: 2, maxZoom: 19, streetViewControl: false });
 }

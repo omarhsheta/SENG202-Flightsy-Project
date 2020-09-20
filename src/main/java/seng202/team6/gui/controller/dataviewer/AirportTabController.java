@@ -1,29 +1,25 @@
 package seng202.team6.gui.controller.dataviewer;
 
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Pane;
 import seng202.team6.gui.components.FilterTextField;
 import seng202.team6.model.data.DataHandler;
 import seng202.team6.model.data.Filter;
-import seng202.team6.model.entities.Airline;
 import seng202.team6.model.entities.Airport;
 
-import javax.xml.crypto.Data;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-public class AirportTabController implements Initializable
+/**
+ * Controls handling the airport tab
+ */
+public class AirportTabController extends TabController<Airport>
 {
-    @FXML
-    private TableView<Airport> airportTable;
-
     @FXML
     private TableColumn<Airport, ?> columnID;
     @FXML
@@ -48,28 +44,26 @@ public class AirportTabController implements Initializable
     private TableColumn<Airport, ?> columnDST;
 
     @FXML
-    private Button airportFilterButton;
-
-    @FXML
-    private Pane airportFilterPane;
-    private final ArrayList<FilterTextField> filterAirportTextFields = new ArrayList<>();
-
-    DataHandler dataHandler;
-
-    @FXML
     ChoiceBox<String> sortChoiceBox;
 
+    /**
+     * Initialize this tab with default data from New Zealand.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        dataHandler = DataHandler.GetInstance();
+        super.initialize(url, resourceBundle);
 
-        //Grab all airport text filter components
-        for (Node node : airportFilterPane.getChildren()) {
-            if (node != null && node.getClass() == FilterTextField.class) {
-                filterAirportTextFields.add((FilterTextField) node);
-            }
-        }
+        ArrayList<Filter> filters = new ArrayList<>();
+        filters.add(new Filter("COUNTRY = 'New Zealand'", null));
+        ArrayList<Airport> filteredAirports = DataHandler.GetInstance().FetchAirports(filters);
+        table.getItems().addAll(filteredAirports);
+    }
 
+    /**
+     * Set table cell value factories for the table view.
+     */
+    @Override
+    protected void SetCellFactories() {
         columnID.setCellValueFactory(new PropertyValueFactory<>("airportID"));
         columnName.setCellValueFactory(new PropertyValueFactory<>("name"));
         columnCity.setCellValueFactory(new PropertyValueFactory<>("city"));
@@ -81,11 +75,6 @@ public class AirportTabController implements Initializable
         columnAlt.setCellValueFactory(new PropertyValueFactory<>("altitude"));
         columnTZ.setCellValueFactory(new PropertyValueFactory<>("timezone"));
         columnDST.setCellValueFactory(new PropertyValueFactory<>("DST"));
-
-        ArrayList<Filter> filters = new ArrayList<>();
-        filters.add(new Filter("COUNTRY = 'New Zealand'", null));
-        ArrayList<Airport> filteredAirports = DataHandler.GetInstance().FetchAirports(filters);
-        airportTable.getItems().addAll(filteredAirports);
     }
 
     /**
@@ -94,10 +83,9 @@ public class AirportTabController implements Initializable
      * This function also check the sortChoiceBox for any sort preference, and applies sorting if applicable.
      * Then it inputs the data into the data viewer table.
      */
-
-    @FXML
-    private void OnAirportFilterButtonClicked() {
-        ArrayList<Filter> filters =  FilterTextField.ExtractFilters(filterAirportTextFields);
+    @Override
+    protected void OnFilterButtonClicked() {
+        ArrayList<Filter> filters =  FilterTextField.ExtractFilters(filterTextFields);
 
         String sortValue = sortChoiceBox.getValue();
 
@@ -116,10 +104,11 @@ public class AirportTabController implements Initializable
                 filteredAirports = dataHandler.FetchAirports(filters);
             }
 
-            airportTable.getItems().clear();
-            airportTable.getItems().addAll(filteredAirports);
+            table.getItems().clear();
+            table.getItems().addAll(filteredAirports);
         }
-        catch (Exception ignored) {
+        catch (Exception e) {
+            System.out.println(e.toString());
         }
 
         if (numRowsLeftOut > 0) {

@@ -2,6 +2,9 @@ package seng202.team6.gui.controller.routefinder;
 
 import seng202.team6.gui.controller.MapController;
 
+/**
+ * Base class for results
+ */
 public class ResultController {
     protected static MapController mapController;
 

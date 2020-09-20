@@ -35,10 +35,11 @@ public class CSVLoaderTest {
     @Test
     public void TestAirlineList() {
         ArrayList<Airline> testList = csvLoader.GetCSVAirlineList(resourceFolder + "AirlineTest.csv");
-        Airline testAirline = new Airline(69, "Flightsy Airways", "FA", "CHC",
-                "NZ", "KIA KAHA", "New Zealand", 'Y');
-        assertEquals(testAirline, testList.get(0));
-        assertEquals(1, testList.size());// Test for invalid data
+        Airline testAirline1 = new Airline(69, "Flightsy Airways", "FA", "CHC", "NZ", "KIA KAHA", "New Zealand", 'Y');
+        Airline testAirline2 = new Airline(0,"0","0","0","0","0","0",'0');
+        assertEquals(testAirline1, testList.get(0));
+        assertEquals(testAirline2, testList.get(1));
+        assertEquals(2, testList.size());// Test for invalid data
     }
 
     /**
@@ -47,10 +48,13 @@ public class CSVLoaderTest {
     @Test
     public void TestAirportList() {
         ArrayList<Airport> testList = csvLoader.GetCSVAirportList(resourceFolder + "AirportTest.csv");
-        Airport testAirport = new Airport(69, "The Dystopian Airport", "Dystopia", "North Korea",
-                "DYS", "DYNK", (float)42069, (float)42069, 9001, 3, 'Y');
-        assertEquals(testAirport, testList.get(0));
-        assertEquals(1, testList.size());// Test for invalid data
+        Airport testAirport1 = new Airport(69, "The Dystopian Airport", "Dystopia", "North Korea", "DYS", "DYNK", 42069, 42069, 9001, 3, 'Y');
+        Airport testAirport2 = new Airport(69,"The Dystopian Airport","Dystopia", "North Korea","DYS","DYNK",42069,42069,9001,3,'U');
+        Airport testAirport3 = new Airport(0, "0", "0", "0", "0", "0", 0, 0, 0, 0, '0');
+        assertEquals(testAirport1, testList.get(0));
+        assertEquals(testAirport2, testList.get(1));
+        assertEquals(testAirport3, testList.get(2));
+        assertEquals(3, testList.size());// Test for invalid data
     }
 
     /**
@@ -59,9 +63,17 @@ public class CSVLoaderTest {
     @Test
     public void TestRouteList() {
         ArrayList<Route> testList = csvLoader.GetCSVRouteList(resourceFolder + "RouteTest.csv");
-        Route testRoute = new Route(69, "Flightsy Airways", "CHC", 420, "TLV", 666, '\u0000', 5, "CR2");
-        assertEquals(testRoute, testList.get(0));
-        assertEquals(1, testList.size());// Test for invalid data
+        Route testRoute1 = new Route(69, "Flightsy Airways", "CHC", 420, "TLV", 666, 'N', 5, "CR2");
+        Route testRoute2 = new Route(69, "Flightsy Airways", "CHC", 420, "TLV", 666, 'Y', 5, "CR2");
+        Route testRoute3 = new Route(69, "Flightsy Airways", "CHC", 420, "TLV", 666, 'N', 5, "CR2");
+        Route testRoute4 = new Route(0,"0","0",0,"0",0,'0',0, "0");
+
+        assertEquals(testRoute1, testList.get(0));
+        assertEquals(testRoute2, testList.get(1));
+        assertEquals(testRoute3, testList.get(2));
+        assertEquals(testRoute4, testList.get(3));
+
+        assertEquals(4, testList.size());// Test for invalid data
     }
 
     /**
@@ -90,6 +102,15 @@ public class CSVLoaderTest {
         assertEquals("NZCH", path.GetSource());
         assertEquals("WSSS", path.GetDestination());
         assertEquals(31, path.GetCoordinates().size());
+    }
+
+    /**
+     * Test parsing an empty CSV file
+     */
+    @Test
+    public void TestEmptyParse() {
+        ArrayList<ArrayList<String>> testLines = csvLoader.ProcessCSVFile(resourceFolder + "EmptyTest.csv");
+        assertEquals(0, testLines.size());
     }
 
 }

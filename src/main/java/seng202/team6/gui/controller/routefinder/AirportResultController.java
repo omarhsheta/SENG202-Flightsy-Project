@@ -1,7 +1,6 @@
 package seng202.team6.gui.controller.routefinder;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import seng202.team6.model.entities.Airport;
 
@@ -21,9 +20,6 @@ public class AirportResultController extends ResultController {
 
     @FXML
     private Label airportInfo;
-
-    @FXML
-    private Button gotoButton;
 
     private Airport airport;
 

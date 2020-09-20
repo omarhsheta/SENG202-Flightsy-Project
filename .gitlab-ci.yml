@@ -9,4 +9,4 @@ generate_artifacts:
         - mvn -B clean package
     artifacts:
         paths:
-            - target/FlightAnalysis*.jar
+            - target/Flightsy*.jar

@@ -22,9 +22,6 @@ public class MainController implements Initializable
     @FXML
     private WebView webView2;
 
-    @FXML
-    private Button button;
-
     private WebEngine webEngine;
     private final String mapHTML = "/map/main.html";
     private MapController controller;
@@ -37,7 +34,6 @@ public class MainController implements Initializable
         webEngine = webView2.getEngine();
         webEngine.load(getClass().getResource(mapHTML).toExternalForm());
 
-        //Temporary test to show how to use MapController
         controller = new MapController(webEngine);
 
         webEngine.getLoadWorker().stateProperty().addListener((obs, oldState, newState) -> {
@@ -45,22 +41,12 @@ public class MainController implements Initializable
                 OnLoad();
             }
         });
-        //End temporary
     }
 
     /**
      * Called when WebEngine is finished loading
-     * TEMPORARY
      */
     private void OnLoad() {
-        ArrayList<Filter> filters = new ArrayList<>();
-        filters.add(new Filter("COUNTRY = 'New Zealand'", "OR"));
-        filters.add(new Filter("COUNTRY = 'Australia'", null));
-        ArrayList<Airport> airports = DataHandler.GetInstance().FetchAirports(filters);
-        controller.DrawAirportMarks(airports);
 
-        CSVLoader loader = new CSVLoader();
-        RoutePath path = loader.GetCSVRoutePath("src/test/resources/CSVLoader/NZCH-WSSS.csv");
-        controller.DrawRoutePath(path);
     }
 }

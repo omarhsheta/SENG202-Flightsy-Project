@@ -12,6 +12,8 @@
 <?import javafx.scene.layout.Pane?>
 <?import seng202.team6.gui.components.FilterTextField?>
 
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
 <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="595.0" prefWidth="987.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.team6.gui.controller.dataviewer.AirportTabController">
    <left>
       <Pane prefHeight="470.0" prefWidth="214.0" BorderPane.alignment="CENTER">
@@ -24,7 +26,7 @@
             </Label>
             <ScrollPane layoutY="27.0" prefHeight="402.0" prefWidth="214.0">
                <content>
-                  <Pane fx:id="airportFilterPane" prefHeight="900.0" prefWidth="198.0">
+                  <Pane fx:id="filterPane" prefHeight="900.0" prefWidth="198.0">
                      <children>
                         <FilterTextField filter="ID_AIRPORT = '%s'" layoutX="25.0" layoutY="38.0" />
                         <Label layoutX="25.0" layoutY="13.0" prefHeight="25.0" prefWidth="148.0" text="ID" />
@@ -52,7 +54,14 @@
                   </Pane>
                </content>
             </ScrollPane>
-            <Button fx:id="airportFilterButton" layoutX="119.0" layoutY="444.0" mnemonicParsing="false" onMouseClicked="#OnAirportFilterButtonClicked" prefHeight="25.0" prefWidth="95.0" text="Apply Filters">
+            <Button layoutX="119.0" layoutY="444.0" mnemonicParsing="false" onMouseClicked="#OnFilterButtonClicked" prefHeight="25.0" prefWidth="95.0" text="Apply Filters">
+               <graphic>
+                  <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="/icons/check-8x.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
                <styleClass>
                   <String fx:value="btn" />
                   <String fx:value="btn-sm" />
@@ -73,7 +82,7 @@
       </Pane>
    </left>
    <center>
-      <TableView fx:id="airportTable" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="593.0" prefWidth="771.0" BorderPane.alignment="CENTER">
+      <TableView fx:id="table" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="593.0" prefWidth="771.0" BorderPane.alignment="CENTER">
          <columns>
             <TableColumn fx:id="columnID" prefWidth="70.0" text="ID" />
             <TableColumn fx:id="columnName" prefWidth="70.0" text="Name" />

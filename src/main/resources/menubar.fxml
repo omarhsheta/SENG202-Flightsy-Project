@@ -13,9 +13,12 @@
       <image>
          <Image url="@assets/logo.png" />
       </image>
+      <HBox.margin>
+         <Insets left="15.0" />
+      </HBox.margin>
    </ImageView>
     <Pane prefWidth="122.0" visible="false" HBox.hgrow="ALWAYS" />
-    <Button fx:id="flightPlannerButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="35.0" prefWidth="135.0" text="Flight Planner" textAlignment="CENTER">
+    <Button fx:id="flightPlannerButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="35.0" prefWidth="135.0" text="Flight Planner" textAlignment="CENTER" visible="false">
     <styleClass>
        <String fx:value="btn" />
        <String fx:value="btn-primary" />
@@ -25,24 +28,38 @@
          <Insets bottom="5.0" top="5.0" />
       </HBox.margin>
     </Button>
-    <Button fx:id="tripsButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="35.0" prefWidth="135.0" text="Trips" textAlignment="CENTER">
+    <Button fx:id="tripsButton" alignment="CENTER" contentDisplay="LEFT" defaultButton="true" mnemonicParsing="false" prefHeight="35.0" prefWidth="135.0" text="Trips" textAlignment="CENTER">
+    <graphic>
+        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@icons/compass-8x.png" />
+            </image>
+        </ImageView>
+    </graphic>
     <styleClass>
        <String fx:value="btn" />
        <String fx:value="btn-primary" />
-         <String fx:value="middle" />
+         <String fx:value="first" />
     </styleClass>
       <HBox.margin>
          <Insets bottom="5.0" top="5.0" />
       </HBox.margin>
     </Button>
-    <Button fx:id="dataButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="35.0" prefWidth="135.0" text="Data" textAlignment="CENTER">
+    <Button fx:id="dataButton" alignment="CENTER" contentDisplay="LEFT" mnemonicParsing="false" prefHeight="35.0" prefWidth="135.0" text="Data" textAlignment="CENTER">
+        <graphic>
+            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                <image>
+                    <Image url="@icons/vertical-align-bottom-8x.png" />
+                </image>
+            </ImageView>
+        </graphic>
     <styleClass>
        <String fx:value="last" />
        <String fx:value="btn" />
          <String fx:value="btn-primary" />
     </styleClass>
       <HBox.margin>
-         <Insets bottom="5.0" top="5.0" />
+         <Insets bottom="5.0" right="15.0" top="5.0" />
       </HBox.margin>
     </Button>
    <padding>

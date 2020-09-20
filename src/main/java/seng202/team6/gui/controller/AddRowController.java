@@ -2,21 +2,17 @@ package seng202.team6.gui.controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
-import seng202.team6.gui.WindowHandler;
 import seng202.team6.model.data.DataHandler;
 import seng202.team6.model.entities.Airline;
 import seng202.team6.model.entities.Airport;
 import seng202.team6.model.entities.Route;
 
-import java.io.Console;
 import java.net.URL;
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -106,7 +102,7 @@ public class AddRowController implements Initializable
         }
 
         Float latitude = null;
-        if (airpLat != "") {
+        if (!airpLat.equals("")) {
             try {  // Check if latitude input is valid
                 latitude = Float.parseFloat(airpLat);
             } catch (Exception e) {
@@ -116,7 +112,7 @@ public class AddRowController implements Initializable
         }
 
         Float longitude = null;
-        if (airpLon != "") {
+        if (!airpLon.equals("")) {
             try {  // Check if latitude and longitude inputs are valid
                 longitude = Float.parseFloat(airpLon);
             } catch (Exception e) {
@@ -126,7 +122,7 @@ public class AddRowController implements Initializable
         }
 
         Integer altitude = null;
-        if (airpAlt != "") {
+        if (!airpAlt.equals("")) {
             try {  // Check if altitude input is valid
                 altitude = Integer.parseInt(airpAlt);
             } catch (Exception e) {
@@ -136,7 +132,7 @@ public class AddRowController implements Initializable
         }
 
         Integer timeZone = null;
-        if (airpTim != "") {
+        if (!airpTim.equals("")) {
             try {  // Check if the time zone input is valid
                 timeZone = Integer.parseInt(airpTim);
             } catch (Exception e) {
