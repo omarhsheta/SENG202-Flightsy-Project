@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class CSVLoader {
 
-    private static DataHandler dataHandler = new DataHandler();
+    private DataHandler dataHandler = DataHandler.GetInstance();
 
     /**
      * Processes a row from a spreadsheet file and returns it as an ArrayList of Strings
