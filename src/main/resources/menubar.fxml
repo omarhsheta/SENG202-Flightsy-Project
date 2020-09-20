@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+
+<HBox prefHeight="37.0" prefWidth="750.0" style="-fx-background-color: lightgrey;" styleClass="btn-group-horizontal" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.team6.gui.controller.MenubarController">
+   <ImageView fitHeight="47.0" fitWidth="163.0" pickOnBounds="true" preserveRatio="true">
+      <image>
+         <Image url="@assets/logo.png" />
+      </image>
+      <HBox.margin>
+         <Insets left="15.0" />
+      </HBox.margin>
+   </ImageView>
+    <Pane prefWidth="122.0" visible="false" HBox.hgrow="ALWAYS" />
+    <Button fx:id="flightPlannerButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="35.0" prefWidth="135.0" text="Flight Planner" textAlignment="CENTER" visible="false">
+    <styleClass>
+       <String fx:value="btn" />
+       <String fx:value="btn-primary" />
+         <String fx:value="first" />
+    </styleClass>
+      <HBox.margin>
+         <Insets bottom="5.0" top="5.0" />
+      </HBox.margin>
+    </Button>
+    <Button fx:id="tripsButton" alignment="CENTER" contentDisplay="LEFT" defaultButton="true" mnemonicParsing="false" prefHeight="35.0" prefWidth="135.0" text="Trips" textAlignment="CENTER">
+    <graphic>
+        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@icons/compass-8x.png" />
+            </image>
+        </ImageView>
+    </graphic>
+    <styleClass>
+       <String fx:value="btn" />
+       <String fx:value="btn-primary" />
+         <String fx:value="first" />
+    </styleClass>
+      <HBox.margin>
+         <Insets bottom="5.0" top="5.0" />
+      </HBox.margin>
+    </Button>
+    <Button fx:id="dataButton" alignment="CENTER" contentDisplay="LEFT" mnemonicParsing="false" prefHeight="35.0" prefWidth="135.0" text="Data" textAlignment="CENTER">
+        <graphic>
+            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                <image>
+                    <Image url="@icons/vertical-align-bottom-8x.png" />
+                </image>
+            </ImageView>
+        </graphic>
+    <styleClass>
+       <String fx:value="last" />
+       <String fx:value="btn" />
+         <String fx:value="btn-primary" />
+    </styleClass>
+      <HBox.margin>
+         <Insets bottom="5.0" right="15.0" top="5.0" />
+      </HBox.margin>
+    </Button>
+   <padding>
+      <Insets bottom="5.0" top="5.0" />
+   </padding>
+</HBox>

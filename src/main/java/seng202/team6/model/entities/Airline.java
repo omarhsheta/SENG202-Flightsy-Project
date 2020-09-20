@@ -1,6 +1,10 @@
 package seng202.team6.model.entities;
 
-public class Airline {
+import java.util.Objects;
+
+import static java.lang.String.format;
+
+public class Airline implements Comparable<Airline> {
 
     int AirlineID;
     String Name;
@@ -9,10 +13,21 @@ public class Airline {
     String ICAO;
     String Callsign;
     String Country;
-    char Active;
+    Character Active;
 
+    /**
+     * Constructor for the Airline class
+     * @param newAirlineID int value for ID of the airline
+     * @param newName String value for Airline's name
+     * @param newAlias String value for Airline's alias
+     * @param newIATA String value for Airline's International Air Transport Association (IATA) code
+     * @param newICAO String value for Airline's International Civil Aviation Organization (ICAO) code
+     * @param newCallsign String value for Callsign
+     * @param newCountry String value for the Airline's home Country
+     * @param newActive Character value for the Airline's active status (Either "Y" or "N")
+     */
     public Airline(int newAirlineID, String newName, String newAlias, String newIATA, String newICAO,
-                   String newCallsign, String newCountry, char newActive) {
+                   String newCallsign, String newCountry, Character newActive) {
         AirlineID = newAirlineID;
         Name = newName;
         Alias = newAlias;
@@ -23,11 +38,32 @@ public class Airline {
         Active = newActive;
     }
 
+    /**
+     * Checks for equality between two instances of Airline
+     * @param obj the other instance of Object (will return false if it is not Airline.java.
+     *            Otherwise, it will check if all the parameters and values are identical
+     * @return returns either true or false
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null || obj.getClass() != this.getClass()) {
+            return false;
+        }
+
+        Airline airlineObject = (Airline)obj;
+
+
+        return this.AirlineID == airlineObject.getAirlineID() && Objects.equals(this.Name, airlineObject.getName())
+                && Objects.equals(this.Alias, airlineObject.getAlias()) && Objects.equals(this.IATA, airlineObject.getIATA())
+                && Objects.equals(this.ICAO, airlineObject.getICAO()) && Objects.equals(this.Callsign, airlineObject.getCallsign())
+                && Objects.equals(this.Country, airlineObject.getCountry()) && this.Active == airlineObject.getActive();
+    }
+
     public int getAirlineID() {
         return AirlineID;
     }
 
-    public void setAirlineID(int airlineID) {
+    public void SetAirlineID(int airlineID) {
         AirlineID = airlineID;
     }
 
@@ -35,7 +71,7 @@ public class Airline {
         return Name;
     }
 
-    public void setName(String name) {
+    public void SetName(String name) {
         Name = name;
     }
 
@@ -43,7 +79,7 @@ public class Airline {
         return Alias;
     }
 
-    public void setAlias(String alias) {
+    public void SetAlias(String alias) {
         Alias = alias;
     }
 
@@ -51,7 +87,7 @@ public class Airline {
         return IATA;
     }
 
-    public void setIATA(String IATA) {
+    public void SetIATA(String IATA) {
         this.IATA = IATA;
     }
 
@@ -59,7 +95,7 @@ public class Airline {
         return ICAO;
     }
 
-    public void setICAO(String ICAO) {
+    public void SetICAO(String ICAO) {
         this.ICAO = ICAO;
     }
 
@@ -67,7 +103,7 @@ public class Airline {
         return Callsign;
     }
 
-    public void setCallsign(String callsign) {
+    public void SetCallsign(String callsign) {
         Callsign = callsign;
     }
 
@@ -75,15 +111,25 @@ public class Airline {
         return Country;
     }
 
-    public void setCountry(String country) {
+    public void SetCountry(String country) {
         Country = country;
     }
 
-    public char getActive() {
+    public Character getActive() {
         return Active;
     }
 
-    public void setActive(char active) {
+    public void SetActive(char active) {
         Active = active;
+    }
+
+    public String toString() {
+        return format("AirportID: %d\n" + "Name: %s\n" + "Alias: %s\n" + "IATA: %s\n" + "ICAO: %s\n" + "Callsign: " +
+                "%s\n" + "Country: %s\n" + "Active: %c\n", AirlineID, Name, Alias, IATA, ICAO, Callsign, Country, Active);
+    }
+
+    @Override
+    public int compareTo(Airline airline) {
+        return Integer.compare(AirlineID, airline.AirlineID);
     }
 }

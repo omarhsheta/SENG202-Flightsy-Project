@@ -1,6 +1,10 @@
 package seng202.team6.model.entities;
 
-public class Route {
+import java.util.Objects;
+
+import static java.lang.String.format;
+
+public class Route implements Comparable<Route> {
 
     int AirlineID;
     String Airline;
@@ -8,12 +12,24 @@ public class Route {
     int SourceAirportID;
     String DestinationAirport;
     int DestinationAirportID;
-    char Codeshare;
-    int Stops;
+    Character Codeshare;
+    Integer Stops;
     String Equipment;
 
+    /**
+     * Constructor for class Route
+     * @param newAirlineID int value for ID of the Airline
+     * @param newAirline String value for the Airline's name
+     * @param newSourceAirport String value for the origin's airport's name
+     * @param newSourceAirportID int value for the ID of the origin's airport
+     * @param newDestinationAirport String value for the destination's airport's name
+     * @param newDestinationAirportID int value for the ID of the destination's airport
+     * @param newCodeshare char value for Codeshare
+     * @param newStops int value for the number of stops
+     * @param newEquipment String value for Equipment
+     */
     public Route(int newAirlineID, String newAirline, String newSourceAirport, int newSourceAirportID,
-                 String newDestinationAirport, int newDestinationAirportID, char newCodeshare, int newStops,
+                 String newDestinationAirport, int newDestinationAirportID, Character newCodeshare, Integer newStops,
                  String newEquipment) {
         AirlineID = newAirlineID;
         Airline = newAirline;
@@ -26,11 +42,36 @@ public class Route {
         Equipment = newEquipment;
     }
 
+    /**
+     * Checks for equality between two instances of Route
+     * @param obj the other instance of Object (will return false if it is not Route.java.
+     *            Otherwise, it will check if all the parameters and values are identical
+     * @return returns either true or false
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null || obj.getClass() != this.getClass()) {
+            return false;
+        }
+
+        Route routeObject = (Route)obj;
+
+        return this.AirlineID == routeObject.getAirlineID()
+                && Objects.equals(this.Airline, routeObject.getAirline())
+                && Objects.equals(this.SourceAirport, routeObject.getSourceAirport())
+                && this.SourceAirportID == routeObject.getSourceAirportID()
+                && Objects.equals(this.DestinationAirport, routeObject.getDestinationAirport())
+                && this.DestinationAirportID == routeObject.getDestinationAirportID()
+                && this.Codeshare == routeObject.getCodeshare()
+                && this.Stops == routeObject.getStops()
+                && Objects.equals(this.Equipment, routeObject.getEquipment());
+    }
+
     public int getAirlineID() {
         return AirlineID;
     }
 
-    public void setAirlineID(int airlineID) {
+    public void SetAirlineID(int airlineID) {
         AirlineID = airlineID;
     }
 
@@ -38,7 +79,7 @@ public class Route {
         return Airline;
     }
 
-    public void setAirline(String airline) {
+    public void SetAirline(String airline) {
         Airline = airline;
     }
 
@@ -46,7 +87,7 @@ public class Route {
         return SourceAirport;
     }
 
-    public void setSourceAirport(String sourceAirport) {
+    public void SetSourceAirport(String sourceAirport) {
         SourceAirport = sourceAirport;
     }
 
@@ -54,7 +95,7 @@ public class Route {
         return SourceAirportID;
     }
 
-    public void setSourceAirportID(int sourceAirportID) {
+    public void SetSourceAirportID(int sourceAirportID) {
         SourceAirportID = sourceAirportID;
     }
 
@@ -62,7 +103,7 @@ public class Route {
         return DestinationAirport;
     }
 
-    public void setDestinationAirport(String destinationAirport) {
+    public void SetDestinationAirport(String destinationAirport) {
         DestinationAirport = destinationAirport;
     }
 
@@ -70,15 +111,15 @@ public class Route {
         return DestinationAirportID;
     }
 
-    public void setDestinationAirportID(int destinationAirportID) {
+    public void SetDestinationAirportID(int destinationAirportID) {
         DestinationAirportID = destinationAirportID;
     }
 
-    public char getCodeshare() {
+    public Character getCodeshare() {
         return Codeshare;
     }
 
-    public void setCodeshare(char codeshare) {
+    public void SetCodeshare(Character codeshare) {
         Codeshare = codeshare;
     }
 
@@ -86,7 +127,7 @@ public class Route {
         return Stops;
     }
 
-    public void setStops(int stops) {
+    public void SetStops(Integer stops) {
         Stops = stops;
     }
 
@@ -94,7 +135,19 @@ public class Route {
         return Equipment;
     }
 
-    public void setEquipment(String equipment) {
+    public void SetEquipment(String equipment) {
         Equipment = equipment;
+    }
+
+    public String toString() {
+        return format("AirlineID: %d\n" + "Airline: %s\n" + "Source Airport: %s\n" + "Source Airport ID: %d\n" +
+                "Destination Airport: %s\n" + "Destination Airport ID: %d\n" + "Codeshare: %c\n" + "Stops: %d\n" +
+                "Equipment: %s", AirlineID, Airline, SourceAirport, SourceAirportID, DestinationAirport,
+                DestinationAirportID, Codeshare, Stops, Equipment);
+    }
+
+    @Override
+    public int compareTo(Route route) {
+        return Integer.compare(AirlineID, route.AirlineID);
     }
 }
