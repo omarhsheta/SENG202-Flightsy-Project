@@ -344,7 +344,7 @@ public class DataHandlerTest {
     /**
      * Test inserting two routes into the database
      */
-    @Test
+    @Ignore @Test
     public void testInsertTwoRoutes() {
         testRoutes.add(testRoute1);
         testRoutes.add(testRoute2);
