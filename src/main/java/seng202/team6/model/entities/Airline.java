@@ -2,7 +2,9 @@ package seng202.team6.model.entities;
 
 import java.util.Objects;
 
-public class Airline {
+import static java.lang.String.format;
+
+public class Airline implements Comparable<Airline> {
 
     int AirlineID;
     String Name;
@@ -25,7 +27,7 @@ public class Airline {
      * @param newActive Character value for the Airline's active status (Either "Y" or "N")
      */
     public Airline(int newAirlineID, String newName, String newAlias, String newIATA, String newICAO,
-                   String newCallsign, String newCountry, char newActive) {
+                   String newCallsign, String newCountry, Character newActive) {
         AirlineID = newAirlineID;
         Name = newName;
         Alias = newAlias;
@@ -119,5 +121,15 @@ public class Airline {
 
     public void SetActive(char active) {
         Active = active;
+    }
+
+    public String toString() {
+        return format("AirportID: %d\n" + "Name: %s\n" + "Alias: %s\n" + "IATA: %s\n" + "ICAO: %s\n" + "Callsign: " +
+                "%s\n" + "Country: %s\n" + "Active: %c\n", AirlineID, Name, Alias, IATA, ICAO, Callsign, Country, Active);
+    }
+
+    @Override
+    public int compareTo(Airline airline) {
+        return Integer.compare(AirlineID, airline.AirlineID);
     }
 }

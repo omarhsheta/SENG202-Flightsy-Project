@@ -4,7 +4,9 @@ import seng202.team6.model.interfaces.IMapDrawable;
 import java.lang.*;
 import java.util.Objects;
 
-public class Airport implements IMapDrawable {
+import static java.lang.String.format;
+
+public class Airport implements IMapDrawable, Comparable<Airport> {
 
     int AirportID;
     String Name;
@@ -12,11 +14,11 @@ public class Airport implements IMapDrawable {
     String Country;
     String IATA;
     String ICAO;
-    float Latitude;
-    float Longitude;
-    int Altitude;
-    float Timezone;
-    char DST;
+    Float Latitude;
+    Float Longitude;
+    Integer Altitude;
+    Integer Timezone;
+    Character DST;
 
     /**
      * Constructor for Airport class
@@ -33,8 +35,8 @@ public class Airport implements IMapDrawable {
      * @param newDST char value for the Airport's DST
      */
     public Airport(int newAirportID, String newName, String newCity, String newCountry, String newIATA,
-                   String newICAO, float newLatitude, float newLongitude, int newAltitude, float newTimezone,
-                   char newDST) {
+                   String newICAO, Float newLatitude, Float newLongitude, Integer newAltitude, Integer newTimezone,
+                   Character newDST) {
         AirportID = newAirportID;
         Name = newName;
         City = newCity;
@@ -96,7 +98,7 @@ public class Airport implements IMapDrawable {
      */
     @Override
     public String ConvertToJavascriptString() {
-        return String.format("lat: %f, lng: %f, " +
+        return format("lat: %f, lng: %f, " +
                         "name: \"%s\", country: \"%s\", city: \"%s\", " +
                         "iata: \"%s\", icao: \"%s\", alt: %d, tz: %f",
 
@@ -157,7 +159,7 @@ public class Airport implements IMapDrawable {
         return Latitude;
     }
 
-    public void SetLatitude(float latitude) {
+    public void SetLatitude(Float latitude) {
         Latitude = latitude;
     }
 
@@ -165,7 +167,7 @@ public class Airport implements IMapDrawable {
         return Longitude;
     }
 
-    public void SetLongitude(float longitude) {
+    public void SetLongitude(Float longitude) {
         Longitude = longitude;
     }
 
@@ -173,7 +175,7 @@ public class Airport implements IMapDrawable {
         return Altitude;
     }
 
-    public void SetAltitude(int altitude) {
+    public void SetAltitude(Integer altitude) {
         Altitude = altitude;
     }
 
@@ -181,7 +183,7 @@ public class Airport implements IMapDrawable {
         return Timezone;
     }
 
-    public void SetTimezone(int timezone) {
+    public void SetTimezone(Integer timezone) {
         Timezone = timezone;
     }
 
@@ -191,5 +193,16 @@ public class Airport implements IMapDrawable {
 
     public void SetDST(char DST) {
         this.DST = DST;
+    }
+
+    public String toString() {
+        return format("AirportID: %d\n" + "Name: %s\n" + "City: %s\n" + "Country: %s\n" + "IATA: %s\n" + "ICAO: %s\n" + "Latitude: " +
+                "%f\n" + "Longitude: %f\n" + "Altitude: %d\n" + "Timezone: %d\n" + "DST: %c\n", AirportID, Name, City
+                , Country, IATA, ICAO, Latitude, Longitude, Altitude, Timezone, DST);
+    }
+
+    @Override
+    public int compareTo(Airport airport) {
+        return Integer.compare(AirportID, airport.AirportID);
     }
 }

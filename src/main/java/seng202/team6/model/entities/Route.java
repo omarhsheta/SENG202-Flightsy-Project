@@ -2,7 +2,9 @@ package seng202.team6.model.entities;
 
 import java.util.Objects;
 
-public class Route {
+import static java.lang.String.format;
+
+public class Route implements Comparable<Route> {
 
     int AirlineID;
     String Airline;
@@ -11,7 +13,7 @@ public class Route {
     String DestinationAirport;
     int DestinationAirportID;
     Character Codeshare;
-    int Stops;
+    Integer Stops;
     String Equipment;
 
     /**
@@ -27,7 +29,7 @@ public class Route {
      * @param newEquipment String value for Equipment
      */
     public Route(int newAirlineID, String newAirline, String newSourceAirport, int newSourceAirportID,
-                 String newDestinationAirport, int newDestinationAirportID, Character newCodeshare, int newStops,
+                 String newDestinationAirport, int newDestinationAirportID, Character newCodeshare, Integer newStops,
                  String newEquipment) {
         AirlineID = newAirlineID;
         Airline = newAirline;
@@ -125,7 +127,7 @@ public class Route {
         return Stops;
     }
 
-    public void SetStops(int stops) {
+    public void SetStops(Integer stops) {
         Stops = stops;
     }
 
@@ -135,5 +137,17 @@ public class Route {
 
     public void SetEquipment(String equipment) {
         Equipment = equipment;
+    }
+
+    public String toString() {
+        return format("AirlineID: %d\n" + "Airline: %s\n" + "Source Airport: %s\n" + "Source Airport ID: %d\n" +
+                "Destination Airport: %s\n" + "Destination Airport ID: %d\n" + "Codeshare: %c\n" + "Stops: %d\n" +
+                "Equipment: %s", AirlineID, Airline, SourceAirport, SourceAirportID, DestinationAirport,
+                DestinationAirportID, Codeshare, Stops, Equipment);
+    }
+
+    @Override
+    public int compareTo(Route route) {
+        return Integer.compare(AirlineID, route.AirlineID);
     }
 }
