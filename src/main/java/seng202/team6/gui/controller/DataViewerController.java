@@ -104,8 +104,8 @@ public class DataViewerController implements Initializable
             if (airports.size() != 0) {
                 try {
                     dataHandler.InsertAirports(airports);
-                } catch (SQLException exception) {
-                    System.out.println(exception.toString());
+                } catch (SQLException ignored) {
+                    // Failed database connection - yet to implement error message
                 }
             }
         }
@@ -124,8 +124,8 @@ public class DataViewerController implements Initializable
             if (airlines.size() != 0) {
                 try {
                     dataHandler.InsertAirlines(airlines);
-                } catch (SQLException exception) {
-                    System.out.println(exception.toString());
+                } catch (SQLException ignored) {
+                    // Failed database connection - yet to implement error message
                 }
             }
         }
@@ -144,31 +144,13 @@ public class DataViewerController implements Initializable
             if (routes.size() != 0) {
                 try {
                     dataHandler.InsertRoutes(routes);
-                } catch (SQLException exception) {
-                    System.out.println(exception.toString());
+                } catch (SQLException ignored) {
+                    // Failed database connection - yet to implement error message
                 }
             }
         }
     }
 
-
-    /**
-     * Gets Flight data file, passes to CSVLoader to get RoutePath object,
-     * then passes object to DataHandler to add to database
-     */
-    //TODO create method in DataHandler to add RoutePath object to database
-    @FXML
-    public void FlightFileImport() {
-//        File selectedFile = SelectFile();
-//        RoutePath routePath = csvLoader.GetCSVRoutePath(selectedFile.getAbsolutePath());
-//        if (routePath != null) {
-//            try {
-//                dataHandler.InsertRoutePath(routePath);
-//            } catch (SQLException exception) {
-//                System.out.println(exception.toString());
-//            }
-//        }
-    }
 
     /**
      * A function that creates a new stage for the user to manually add a row into the database

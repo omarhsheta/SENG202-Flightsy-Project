@@ -279,7 +279,12 @@ public class DataHandler {
                     airline.getAirlineID(), airline.getName(), airline.getAlias(), airline.getIATA(), airline.getICAO(),
                     airline.getCallsign(), airline.getCountry(), airline.getActive()
             );
-            stmt.executeUpdate(sql);
+
+            try {
+                stmt.executeUpdate(sql);
+            } catch (SQLException ignored) {
+                //Ignore duplicate entry
+            }
 
         }
     }
@@ -293,12 +298,17 @@ public class DataHandler {
         Statement stmt = this.databaseConnection.createStatement();
         for(Airport airport: airports) {
             String sql = String.format("INSERT INTO airport (id_airport, name, city, country, iata, icao, latitude, longitude, altitude, timezone, dst)" +
-                    "VALUES (\"%d\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%f\", \"%f\", \"%d\", \"%f\", \"%c\");",
+                            "VALUES (\"%d\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%f\", \"%f\", \"%d\", \"%f\", \"%c\");",
                     airport.getAirportID(), airport.getName(), airport.getCity(), airport.getCountry(),
                     airport.getIATA(), airport.getICAO(), airport.getLatitude(), airport.getLongitude(), airport.getAltitude(),
                     airport.getTimezone(), airport.getDST()
             );
-            stmt.executeUpdate(sql);
+
+            try {
+                stmt.executeUpdate(sql);
+            } catch (SQLException ignored) {
+                //Ignore duplicate entry
+            }
         }
     }
 
@@ -317,7 +327,11 @@ public class DataHandler {
                     route.getDestinationAirport(), route.getDestinationAirportID(), route.getCodeshare(),
                     route.getStops(), route.getEquipment()
             );
-            stmt.executeUpdate(sql);
+            try {
+                stmt.executeUpdate(sql);
+            } catch (SQLException ignored) {
+                //Ignore duplicate entry
+            }
         }
     }
 }
