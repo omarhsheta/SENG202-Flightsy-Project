@@ -5,6 +5,9 @@ import seng202.team6.model.entities.Airport;
 import seng202.team6.model.entities.Route;
 import seng202.team6.model.entities.RoutePath;
 
+import java.io.File;
+import java.io.InputStream;
+import java.nio.file.Files;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -13,6 +16,7 @@ import java.util.ArrayList;
  */
 public class DataHandler {
     private static DataHandler Instance;
+
 
     /**
      * Singleton method to ensure only one connection to the database at one time
@@ -27,20 +31,43 @@ public class DataHandler {
 
     private Connection databaseConnection;
 
+    private final String databaseSourceFolder = "database";
+    private final String databaseOutputFolder = "data";
+    private final String databaseFile = "database.sqlite";
     /**
      * Constructor class creates the connection to the SQLite database.
      */
-    public DataHandler() {
-        // relative url to database
-        String url = "jdbc:sqlite:src/main/database/database.sqlite";
-        this.databaseConnection = null;
+    private DataHandler() {
         try {
+            //JDBC requires databases to be an external file
+            TryCopyDatabase();
+            // relative url to database
+            String url = "jdbc:sqlite:" + databaseOutputFolder + "/" + databaseFile;
             // Create a connection to the database
             this.databaseConnection = DriverManager.getConnection(url);
             System.out.println("Successfully connected to SQLite.");
-
-        } catch (SQLException e) {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
+        }
+    }
+
+    /**
+     * This method copies the database into an output folder
+     * Required as JDBC loads databases from hard disk rather than
+     * from embedded jar files
+     */
+    private void TryCopyDatabase() {
+        File currentDir = new File(System.getProperty("user.dir"));
+        File newDir = new File(currentDir, databaseOutputFolder);
+        boolean ignored = newDir.mkdir();
+        File file = new File(newDir, databaseFile);
+        if (!file.isFile()) {
+            try {
+                InputStream inStream = DataHandler.class.getResourceAsStream("/" + databaseSourceFolder + "/" + databaseFile);
+                Files.copy(inStream, file.toPath());
+            } catch (Exception e) {
+                System.out.println("Failed to copy database into directory \n " + e.toString());
+            }
         }
     }
 
