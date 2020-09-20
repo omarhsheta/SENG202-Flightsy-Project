@@ -5,6 +5,7 @@ import org.junit.Test;
 import seng202.team6.model.entities.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import static org.junit.Assert.assertEquals;
 
@@ -17,6 +18,29 @@ public class CSVLoaderTest {
     {
         csvLoader = new CSVLoader();
     }
+
+
+    /**
+     * Test that lines in CSV files are parsed correctly
+     */
+    @Test
+    public void TestParseLineWithoutQuotes() {
+        String testString = "69,Flightsy Airways,FA,CHC,NZ,KIA KAHA,New Zealand,Y";
+        ArrayList<String> expected = new ArrayList<>(Arrays.asList("69", "Flightsy Airways", "FA", "CHC", "NZ", "KIA KAHA", "New Zealand", "Y"));
+        assertEquals(expected, csvLoader.ParseLine(testString));
+    }
+
+    /**
+     * Test that quotation marks in CSV files are removed from fields and that commas in inside quotation marks are not
+     * treated as separators
+     */
+    @Test
+    public void TestParseLineWithQuotes() {
+        String testString = "\"69\",\"Flightsy, Airways\",\"FA\",\"CHC\",\"NZ\",\"KIA KAHA\",\"New Zealand\",\"Y\"";
+        ArrayList<String> expected = new ArrayList<>(Arrays.asList("69", "Flightsy, Airways", "FA", "CHC", "NZ", "KIA KAHA", "New Zealand", "Y"));
+        assertEquals(expected, csvLoader.ParseLine(testString));
+    }
+
 
     /**
      * Test getting Airplanes List from CSV file

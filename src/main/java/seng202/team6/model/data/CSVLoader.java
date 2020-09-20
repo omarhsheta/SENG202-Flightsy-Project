@@ -15,7 +15,7 @@ public class CSVLoader {
      * @param line It is a row from spreadsheet as a String
      * @return ArrayList of parameters from the spreadsheet's row
      */
-    private ArrayList<String> ParseLine(String line) {
+    public ArrayList<String> ParseLine(String line) {
         ArrayList<String> values = new ArrayList<>();
 
         boolean isEscaped = false;
