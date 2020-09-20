@@ -32,6 +32,9 @@ public class RouteViewButton extends Button {
 
     /**
      * RouteViewButton component
+     * @param originAirportID Origin Airport ID
+     * @param destAirportID Destination Airport ID
+     * @param route Route object from origin to destination
      */
     public RouteViewButton(int originAirportID, int destAirportID, Route route) {
         this.route = route;

@@ -270,6 +270,7 @@ public class DataHandler {
      * Insert all airlines into database
      * Catches SQLException and discards entry if invalid
      * @param entry ArrayList of strings corresponding to each field of data to insert
+     * @throws SQLException Exception if cannot input into the database
      */
     public void InsertAirline(ArrayList<String> entry) throws SQLException {
         Statement stmt = this.databaseConnection.createStatement();
@@ -287,6 +288,7 @@ public class DataHandler {
      * Insert all airports into database
      * Catches SQLException and discards entry if invalid
      * @param entry ArrayList of strings corresponding to each field of data to insert
+     * @throws SQLException Exception if cannot input into the database
      */
     public void InsertAirport(ArrayList<String> entry) throws SQLException {
         Statement stmt = this.databaseConnection.createStatement();
@@ -304,6 +306,7 @@ public class DataHandler {
      * Inserts a Route data entry into database
      * Catches SQLException and discards entry if invalid
      * @param entry ArrayList of strings corresponding to each field of data to insert
+     * @throws SQLException Exception if cannot input into the database
      */
     public void InsertRoute(ArrayList<String> entry) throws SQLException{
         Statement stmt = this.databaseConnection.createStatement();
@@ -444,6 +447,7 @@ public class DataHandler {
      * @param Longitude The Longitudinal coordinate of the airport
      * @param Altitude The Altitude of the airport
      * @param Timezone The timezone the airport operates on
+     * @param DST DST the airport is in
      * @throws SQLException Throws an SQLException when the update query is invalid
      */
     public void updateAirport(int AirportID, String Name, String City, String Country, String IATA, String ICAO,

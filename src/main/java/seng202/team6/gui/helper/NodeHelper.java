@@ -12,7 +12,10 @@ import java.util.ArrayList;
 public class NodeHelper {
     /**
      * Create new node from FXML file
+     * @param subfolder Folder directory for FXML resource
      * @param fxmlLocation Location of FXML file
+     * @param <T> Generic node object
+     * @param <U> Generic node controller
      * @return FXML Component
      * @throws IOException IOException if file not found
      */

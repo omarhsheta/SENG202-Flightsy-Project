@@ -92,10 +92,6 @@ public class Airport implements IMapDrawable, Comparable<Airport> {
         return 6371 * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
     }
 
-    /**
-     * [[TO WHOEVER MADE THE METHOD PLEASE ADD USEFUL INFO HERE]]
-     * @return
-     */
     @Override
     public String ConvertToJavascriptString() {
         return format("lat: %f, lng: %f, " +
