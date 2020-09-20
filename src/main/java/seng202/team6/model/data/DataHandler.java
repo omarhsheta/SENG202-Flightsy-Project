@@ -57,9 +57,10 @@ public class DataHandler {
      * from embedded jar files
      */
     private void TryCopyDatabase() {
-        String currentDir = System.getProperty("user.dir");
-        boolean result = new File(currentDir + "/" + databaseOutputFolder).mkdir();
-        File file = new File(databaseOutputFolder + "/" + databaseFile);
+        File currentDir = new File(System.getProperty("user.dir"));
+        File newDir = new File(currentDir, databaseOutputFolder);
+        boolean ignored = newDir.mkdir();
+        File file = new File(newDir, databaseFile);
         if (!file.isFile()) {
             try {
                 InputStream inStream = DataHandler.class.getResourceAsStream("/" + databaseSourceFolder + "/" + databaseFile);
