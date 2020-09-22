@@ -42,10 +42,10 @@ public class AirportResultController extends ResultController {
     @FXML
     private void OnViewButtonClicked()
     {
-        if (mapController == null) {
+        if (mapHelper == null) {
             return;
         }
 
-        mapController.GoTo(airport.getLatitude(), airport.getLongitude());
+        mapHelper.GoTo(airport.getLatitude(), airport.getLongitude());
     }
 }

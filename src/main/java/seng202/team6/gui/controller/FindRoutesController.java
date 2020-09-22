@@ -2,9 +2,9 @@ package seng202.team6.gui.controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Orientation;
-import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Slider;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.WebEngine;
@@ -16,6 +16,7 @@ import seng202.team6.gui.controller.routefinder.AnalysisDistanceController;
 import seng202.team6.gui.controller.routefinder.FlightResultController;
 import seng202.team6.gui.controller.routefinder.ResultController;
 import seng202.team6.gui.helper.NodeHelper;
+import seng202.team6.model.MapHelper;
 import seng202.team6.model.data.DataHandler;
 import seng202.team6.model.data.Filter;
 import seng202.team6.model.entities.Airport;
@@ -73,7 +74,7 @@ public class FindRoutesController implements Initializable
     private FilterTextField distanceDestAirportIATAField;
     private final String analysisDistanceResultComponent = "analysisdistance";
 
-    private MapController controller;
+    private MapHelper controller;
 
     /**
      * Initialize trip window component
@@ -85,7 +86,7 @@ public class FindRoutesController implements Initializable
         webEngine = webView.getEngine();
         webEngine.load(getClass().getResource(mapHTML).toExternalForm());
 
-        controller = new MapController(webEngine);
+        controller = new MapHelper(webEngine);
         ResultController.SetMap(controller);
 
         //Grab all text filter components
@@ -131,8 +132,10 @@ public class FindRoutesController implements Initializable
     @FXML
     private void OnFlightFilterButtonClicked() {
         OnResult();
+        ArrayList<Filter> originFilters = FilterTextField.ExtractFilters(flightFilterOriginTextFields);
+        ArrayList<Filter> destinationFilters = FilterTextField.ExtractFilters(flightFilterDestinationTextFields);
 
-        Pair<ArrayList<Airport>, ArrayList<Airport>> airports = GetSourceAndDestinations(flightFilterOriginTextFields, flightFilterDestinationTextFields);
+        Pair<ArrayList<Airport>, ArrayList<Airport>> airports = Airport.GetSourceAndDestinations(originFilters, destinationFilters);
         ArrayList<Route> routes = DataHandler.GetInstance().FetchRoutes(airports.getKey(), airports.getValue(), (int)maxStopsSlider.getValue());
 
         try {
@@ -154,7 +157,10 @@ public class FindRoutesController implements Initializable
     private void OnRouteFilterButtonClicked() {
         OnResult();
 
-        Pair<ArrayList<Airport>, ArrayList<Airport>> airports = GetSourceAndDestinations(routeFilterOriginTextFields, routeFilterDestinationTextFields);
+        ArrayList<Filter> originFilters = FilterTextField.ExtractFilters(routeFilterOriginTextFields);
+        ArrayList<Filter> destinationFilters = FilterTextField.ExtractFilters(routeFilterDestinationTextFields);
+
+        Pair<ArrayList<Airport>, ArrayList<Airport>> airports = Airport.GetSourceAndDestinations(originFilters, destinationFilters);
         ArrayList<RoutePath> paths = DataHandler.GetInstance().FetchRoutePaths(airports.getKey(), airports.getValue());
 
         /* TODO
@@ -173,11 +179,10 @@ public class FindRoutesController implements Initializable
      */
     public void OnAnalyseButtonClicked()
     {
-        ArrayList<FilterTextField> originFilters = new ArrayList<>();
-        originFilters.add(distanceOriginAirportIATAField);
-        ArrayList<FilterTextField> destFilters = new ArrayList<>();
-        destFilters.add(distanceDestAirportIATAField);
-        Pair<ArrayList<Airport>, ArrayList<Airport>> airportsList = GetSourceAndDestinations(originFilters, destFilters);
+        ArrayList<Filter> originFilters =  FilterTextField.ExtractFilters(distanceOriginAirportIATAField);
+        ArrayList<Filter> destFilters = FilterTextField.ExtractFilters(distanceDestAirportIATAField);
+
+        Pair<ArrayList<Airport>, ArrayList<Airport>> airportsList = Airport.GetSourceAndDestinations(originFilters, destFilters);
 
         try {
             if (airportsList.getKey() == null || airportsList.getValue() == null) {
@@ -221,22 +226,4 @@ public class FindRoutesController implements Initializable
         resultsPane.getChildren().clear();
         controller.ClearAll();
     }
-
-    /**
-     * Extract airports from filters
-     * @param sourceFilters Source airport filters
-     * @param destinationFilters Destination airport filters
-     * @return Pair of source, destination airports
-     */
-    private Pair<ArrayList<Airport>, ArrayList<Airport>> GetSourceAndDestinations(ArrayList<FilterTextField> sourceFilters, ArrayList<FilterTextField> destinationFilters) {
-        ArrayList<Filter> origin = FilterTextField.ExtractFilters(sourceFilters);
-        ArrayList<Filter> destination = FilterTextField.ExtractFilters(destinationFilters);
-
-        ArrayList<Airport> sourceAirports = DataHandler.GetInstance().FetchAirports(origin);
-        ArrayList<Airport> destinationAirports = DataHandler.GetInstance().FetchAirports(destination);
-
-        return new Pair<>(sourceAirports, destinationAirports);
-    }
-
-
 }

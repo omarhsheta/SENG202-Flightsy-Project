@@ -46,4 +46,21 @@ public class FilterTextField extends TextField {
         }
         return filters;
     }
+
+    /**
+     * GetFilters method that takes a parameter <code>filterTextFields</code> which is a FilterTextField object,
+     * and takes the filter formatting and text from the object. It then creates a Filter object from this and adds the
+     * filter to an ArrayList of Filter objects and returns the ArrayList.
+     * @param filterTextField A FilterTextField object
+     * @return An ArrayList of Filter objects.
+     */
+    public static ArrayList<Filter> ExtractFilters(FilterTextField filterTextField) {
+        ArrayList<Filter> filters = new ArrayList<>();
+
+        if (!filterTextField.getText().equals("")) {
+            String filterString = String.format(filterTextField.GetFilter(), filterTextField.getText());
+            filters.add(new Filter(filterString, "AND"));
+        }
+        return filters;
+    }
 }

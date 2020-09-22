@@ -1,4 +1,4 @@
-package seng202.team6.gui.controller;
+package seng202.team6.model;
 
 import javafx.scene.web.WebEngine;
 import javafx.util.Pair;
@@ -12,7 +12,7 @@ import java.util.ArrayList;
 /**
  * MapController class to interop between the Google maps API and Java
  */
-public class MapController
+public class MapHelper
 {
     private WebEngine mapEngine;
 
@@ -20,7 +20,7 @@ public class MapController
      * Constructor for MapController takes in map params
      * @param engine Map engine to use
      */
-    public MapController(WebEngine engine) {
+    public MapHelper(WebEngine engine) {
         this.mapEngine = engine;
     }
 

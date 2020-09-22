@@ -1,7 +1,12 @@
 package seng202.team6.model.entities;
+import javafx.util.Pair;
+import seng202.team6.gui.components.FilterTextField;
+import seng202.team6.model.data.DataHandler;
+import seng202.team6.model.data.Filter;
 import seng202.team6.model.interfaces.IMapDrawable;
 
 import java.lang.*;
+import java.util.ArrayList;
 import java.util.Objects;
 
 import static java.lang.String.format;
@@ -80,9 +85,6 @@ public class Airport implements IMapDrawable, Comparable<Airport> {
     public double GetDistance(Airport other) {
         float destLat = other.Latitude;
         float destLong = other.Longitude;
-//        float x_pos = Math.abs(this.Latitude - destLat);
-//        float y_pos = Math.abs(this.Longitude - destLong);
-//        return Math.sqrt(Math.pow(x_pos, 2) + Math.pow(y_pos, 2));
 
         double conv = Math.PI/180;
         double dlong = Math.abs(destLong*conv - this.Longitude*conv);
@@ -101,6 +103,19 @@ public class Airport implements IMapDrawable, Comparable<Airport> {
                 this.getLatitude(), this.getLongitude(), this.getName(),
                 this.getCountry(), this.getCity(), this.getIATA(), this.getICAO(),
                 this.getAltitude(), this.getTimezone());
+    }
+
+    /**
+     * Extract airports from filters
+     * @param sourceFilters Source airport filters
+     * @param destinationFilters Destination airport filters
+     * @return Pair of source, destination airports
+     */
+    public static Pair<ArrayList<Airport>, ArrayList<Airport>> GetSourceAndDestinations(ArrayList<Filter> sourceFilters, ArrayList<Filter> destinationFilters) {
+        ArrayList<Airport> sourceAirports = DataHandler.GetInstance().FetchAirports(sourceFilters);
+        ArrayList<Airport> destinationAirports = DataHandler.GetInstance().FetchAirports(destinationFilters);
+
+        return new Pair<>(sourceAirports, destinationAirports);
     }
 
     public int getAirportID() {

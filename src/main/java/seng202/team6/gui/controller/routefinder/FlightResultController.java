@@ -79,14 +79,14 @@ public class FlightResultController extends ResultController {
     @FXML
     private void OnViewButtonClicked()
     {
-        if (mapController == null) {
+        if (mapHelper == null) {
             return;
         }
 
-        mapController.ClearAll();
+        mapHelper.ClearAll();
         ArrayList<Airport> airports = GetAirports();
-        mapController.DrawAirportMarks(airports);
-        mapController.DrawLineBetween(airports);
+        mapHelper.DrawAirportMarks(airports);
+        mapHelper.DrawLineBetween(airports);
     }
 
     /**
