@@ -1,5 +1,7 @@
 package seng202.team6.model.events;
 
+import javafx.scene.layout.Pane;
+
 /**
  * This class is for more general events
  */
@@ -18,9 +20,15 @@ public class General extends Event {
      * @param nCity The city where the general event is taking place
      * @param nCountry The country where the general event is taking place
      */
-    public General(int D, int M, int Y, String T, String N, String nCity, String nCountry) {
-        super(D, M, Y, T, N);
+    public General(int D, int M, int Y, int newHour, int newMinute, String T, String N, String nCity, String nCountry) {
+        super(D, M, Y, newHour, newMinute, T, N);
         City = nCity;
         Country = nCountry;
+    }
+
+    public Pane toPane() {
+        Pane returnPane = null;
+        //Create pane for General event
+        return returnPane;
     }
 }

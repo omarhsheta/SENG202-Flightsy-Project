@@ -1,5 +1,7 @@
 package seng202.team6.model.events;
 
+import javafx.scene.layout.Pane;
+
 /**
  * This class is for car trip plans
  */
@@ -21,9 +23,9 @@ public class CarTrip extends Event {
      * @param DCity Destination City
      * @param DCountry Destination Country
      */
-    CarTrip(int D, int M, int Y, String T, String N, String OCity,
+    CarTrip(int D, int M, int Y, int newHour, int newMinute,  String T, String N, String OCity,
             String OCountry, String DCity, String DCountry) {
-        super(D, M, Y, T, N);
+        super(D, M, Y, newHour, newMinute, T, N);
         OriginCity = OCity;
         OriginCountry = OCountry;
         DestinationCity = DCity;
@@ -44,5 +46,11 @@ public class CarTrip extends Event {
      */
     public String getDCity() {
         return DestinationCity;
+    }
+
+    public Pane toPane() {
+        Pane returnPane = null;
+        //Create pane for General event
+        return returnPane;
     }
 }

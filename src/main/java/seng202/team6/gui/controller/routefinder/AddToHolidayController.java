@@ -14,6 +14,7 @@ import seng202.team6.gui.controller.HolidayAgendaController;
 import seng202.team6.gui.controller.holidayview.HolidayFlightController;
 import seng202.team6.gui.helper.NodeHelper;
 import seng202.team6.model.entities.Route;
+import seng202.team6.model.events.Flight;
 
 import java.sql.Time;
 import java.time.LocalDate;
@@ -27,6 +28,21 @@ public class AddToHolidayController {
     DatePicker departureDatePicker;
     @FXML
     DatePicker arrivalDatePicker;
+
+    @FXML
+    TextField deptDay;
+    @FXML
+    TextField deptMonth;
+    @FXML
+    TextField deptYear;
+
+    @FXML
+    TextField arrivalDay;
+    @FXML
+    TextField arrivalMonth;
+    @FXML
+    TextField arrivalYear;
+
     @FXML
     TextField deptHour;
     @FXML
@@ -72,9 +88,17 @@ public class AddToHolidayController {
      */
     @FXML
     private void OnAddToHolidayButtonClicked() {
+        String title = String.format("%s to %s", route.getSourceAirport(), route.getDestinationAirport());
+        String notes = "";
+
+        Flight newFlight = new Flight(Integer.parseInt(deptDay.getText()), Integer.parseInt(deptMonth.getText()),
+                Integer.parseInt(deptYear.getText()), Integer.parseInt(deptHour.getText()), Integer.parseInt(deptMinute.getText()),
+                Integer.parseInt(arrivalDay.getText()), Integer.parseInt(arrivalMonth.getText()), Integer.parseInt(arrivalYear.getText()),
+                Integer.parseInt(arrivalHour.getText()), Integer.parseInt(arrivalMinute.getText()), title, notes, route);
+
         //System.out.println(String.format("Departure time %s: %s\nArrival time %s: %s", deptHour.getText(), deptMinute.getText(), arrivalHour.getText(), arrivalMinute.getText()));
 
-        Pane newFlight;
+        Pane newFlightPane;
         Time deptTime;
         //deptTime.setTime();
 
@@ -105,7 +129,7 @@ public class AddToHolidayController {
         */
         try {
             Pair<Pane, HolidayFlightController> pair = NodeHelper.LoadNode(subFolder, holidayFlightComponent);
-            newFlight = pair.getKey();
+            newFlightPane = pair.getKey();
             HolidayFlightController flightController = pair.getValue();
             flightController.setRoute(route);
             //flightController.setData();

@@ -3,6 +3,7 @@ package seng202.team6.model.user;
 import java.lang.Object;
 
 import seng202.team6.model.data.DataHandler;
+import seng202.team6.model.events.CarTrip;
 import seng202.team6.model.events.Event;
 import seng202.team6.model.events.Flight;
 import seng202.team6.model.events.General;
@@ -11,8 +12,9 @@ import java.util.ArrayList;
 
 public class HolidayPlan {
     String Name; //No more than 25 chars
-    private ArrayList<General> Itineraries= new ArrayList<>();
+    private ArrayList<General> itineraries = new ArrayList<>();
     private ArrayList<Flight> flights = new ArrayList<>(); //Should not exceed 30
+    private ArrayList<CarTrip> carTrips = new ArrayList<>();
     private static HolidayPlan Instance;
 
     /**
@@ -35,7 +37,7 @@ public class HolidayPlan {
     public void FlightAppend(Flight flight) {
         if (flights.size() < 30) {
             flights.add(flight);
-            System.out.println(String.format("%s, %s to %s, %s", flight.getOAirport(), flight.getOCity(), flight.getDAirport(), flight.getDCity()));
+            System.out.println(String.format("%s to %s", flight.getRoute().getDestinationAirport(), flight.getRoute().getSourceAirport()));
         }
     }
 
@@ -50,9 +52,20 @@ public class HolidayPlan {
      * @param nCity The city where the general event is taking place
      * @param nCountry The country where the general event is taking place
      */
-    public void ItineraryAppend(General General, int D, int M, int Y, String T, String N, String nCity, String nCountry) {
-        General = new General(D, M, Y, T, N, nCity, nCountry);
-        Itineraries.add(General);
+    public void ItineraryAppend(General General, int D, int M, int Y, int newHour, int newMinute, String T, String N, String nCity, String nCountry) {
+        General = new General(D, M, Y, newHour, newMinute, T, N, nCity, nCountry);
+        itineraries.add(General);
     }
 
+    public ArrayList<General> getItineraries() {
+        return itineraries;
+    }
+
+    public ArrayList<Flight> getFlights() {
+        return flights;
+    }
+
+    public ArrayList<CarTrip> getCarTrips() {
+        return carTrips;
+    }
 }

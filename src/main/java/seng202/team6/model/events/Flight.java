@@ -1,75 +1,69 @@
 package seng202.team6.model.events;
 
+import javafx.scene.control.Button;
+import javafx.scene.layout.Pane;
+import javafx.util.Pair;
+import seng202.team6.gui.controller.holidayview.HolidayFlightController;
+import seng202.team6.gui.helper.NodeHelper;
+import seng202.team6.model.entities.Route;
+
 import javax.lang.model.util.Elements;
+import java.time.LocalDate;
 
 /**
  * This class is for flight plans
  */
 public class Flight extends Event {
-    String OriginCity;
-    String OriginCountry;
-    String DestinationCity;
-    String DestinationCountry;
-    String Airline;
-    String OriginAirport;
-    String DestinationAirport;
+    Route route;
+    LocalDate arrivalDate;
+    int arrivalHour;
+    int arrivalMinute;
+
+    private final String subFolder = "holidayview";
+    private final String holidayFlightComponent = "holidayflight";
 
     /**
      * Constructor for the Flight class
-     * @param D Any integer from 1 to 31
-     * @param M Any integer from 1 to 12
-     * @param Y Any integer from 2000 to 2099
+     * @param deptDay Any integer from 1 to 31
+     * @param deptMonth Any integer from 1 to 12
+     * @param deptYear Any integer from 2000 to 2099
+     * @param destDay Any integer from 1 to 31
+     * @param destMonth Any integer from 1 to 12
+     * @param destYear Any integer from 2000 to 2099
      * @param T Any String with descriptive title
      * @param N Any String with additional information about the event
-     * @param OCity Origin City
-     * @param OCountry Origin Country
-     * @param DCity Destination City
-     * @param DCountry Destination Country
-     * @param newAirline Flight's airline
-     * @param OAirport Origin Airport
-     * @param DAirport Destination Airport
+     * @param route Route of the flight
      */
-    public Flight(int D, int M, int Y, String T, String N, String OCity,
-                  String OCountry, String DCity, String DCountry, String newAirline, String OAirport, String DAirport) {
-        super(D, M, Y, T, N);
-        OriginCity = OCity;
-        OriginCountry = OCountry;
-        DestinationCity = DCity;
-        DestinationCountry = DCountry;
-        Airline = newAirline;
-        OriginAirport = OAirport;
-        DestinationAirport = DAirport;
+    public Flight(int deptDay, int deptMonth, int deptYear, int deptHour, int deptMinute, int destDay, int destMonth, int destYear, int destHour, int destMinute, String T, String N, Route route) {
+        super(deptDay, deptMonth, deptYear, deptHour, deptMinute, T, N);
+        arrivalDate = LocalDate.of(destYear, destMonth, destDay);
+        arrivalHour = destHour;
+        arrivalMinute = destMinute;
+        this.route = route;
+        System.out.println(String.format("%s", super.Title));
     }
 
     /**
      *
-     * @return The origin city
+     * @return The route
      */
-    public String getOCity() {
-        return OriginCity;
+    public Route getRoute() {
+        return route;
     }
 
-    /**
-     *
-     * @return The destination city
-     */
-    public String getDCity() {
-        return DestinationCity;
-    }
-
-    /**
-     *
-     * @return The origin Airport
-     */
-    public String getOAirport() {
-        return OriginAirport;
-    }
-
-    /**
-     *
-     * @return The destination Airport
-     */
-    public String getDAirport() {
-        return DestinationAirport;
+    public Pane toPane() {
+        String deptTime = String.format("%d: %d", super.Hour, super.Minute);
+        String destTime = String.format("%d: %d", arrivalHour, arrivalMinute);
+        Pane newFlightPane = null;
+        try {
+            Pair<Pane, HolidayFlightController> pair = NodeHelper.LoadNode(subFolder, holidayFlightComponent);
+            newFlightPane = pair.getKey();
+            HolidayFlightController flightController = pair.getValue();
+            flightController.setRoute(route);
+            flightController.setData(deptTime, destTime, super.date, arrivalDate);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return newFlightPane;
     }
 }

@@ -5,6 +5,7 @@ import javafx.scene.text.Text;
 import seng202.team6.gui.controller.routefinder.ResultController;
 import seng202.team6.model.entities.Route;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -31,7 +32,7 @@ public class HolidayFlightController extends ResultController {
         this.route = route;
     }
 
-    public void setData(String sTime, String dTime, Date sDate, Date dDate) {
+    public void setData(String sTime, String dTime, LocalDate sDate, LocalDate dDate) {
         deptIATA.setText(route.getSourceAirport());
         destIATA.setText(route.getDestinationAirport());
 

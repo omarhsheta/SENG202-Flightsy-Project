@@ -10,6 +10,10 @@ import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import seng202.team6.model.MapHelper;
 import seng202.team6.model.data.DataHandler;
+import seng202.team6.model.events.CarTrip;
+import seng202.team6.model.events.Flight;
+import seng202.team6.model.events.General;
+import seng202.team6.model.user.HolidayPlan;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -17,7 +21,7 @@ import java.util.ResourceBundle;
 
 public class HolidayAgendaController implements Initializable {
 
-    private ArrayList<ArrayList<Button>> holidays;
+    private ArrayList<HolidayPlan> holidays;
 
     @FXML
     private TabPane holidaysTabPane;
@@ -73,16 +77,22 @@ public class HolidayAgendaController implements Initializable {
 
     public void addToHoliday(Button event) {
         int currHoliday = holidaysTabPane.getSelectionModel().getSelectedIndex();
-        holidays.get(currHoliday).add(event);
+        holidays.get(currHoliday);
     }
 
     private void showHoliday() {
         int currHoliday = holidaysTabPane.getSelectionModel().getSelectedIndex();
-        ArrayList<Button> events = holidays.get(currHoliday);
+        HolidayPlan holiday = holidays.get(currHoliday);
         eventsVBox.getChildren().clear();
 
-        for(Button event: events) {
-            eventsVBox.getChildren().add(event);
+        for(General itinerary: holiday.getItineraries()) {
+            eventsVBox.getChildren().add(itinerary.toPane());
+        }
+        for(Flight flight: holiday.getFlights()) {
+            eventsVBox.getChildren().add(flight.toPane());
+        }
+        for(CarTrip carTrip: holiday.getCarTrips()) {
+            eventsVBox.getChildren().add(carTrip.toPane());
         }
     }
 }

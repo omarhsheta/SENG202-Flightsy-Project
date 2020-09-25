@@ -6,6 +6,8 @@ import java.time.*;
  */
 public abstract class Event {
     LocalDate date;
+    int Hour;
+    int Minute;
     String Title;
     String Notes;
 
@@ -17,7 +19,7 @@ public abstract class Event {
      * @param T Any String with descriptive title
      * @param N Any String with additional information about the event
      */
-    Event(int D, int M, int Y, String T, String N) {
+    Event(int D, int M, int Y, int newHour, int newMinute, String T, String N) {
         date = LocalDate.of(Y, M, D);
         Title = T;
         Notes = N;

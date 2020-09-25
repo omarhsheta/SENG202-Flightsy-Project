@@ -37,7 +37,7 @@
                   <Text fx:id="deptIATA" layoutX="135.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="h3" text="IATA" textAlignment="CENTER" wrappingWidth="63.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
                   <ImageView fitHeight="30.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <image>
-                        <Image url="@../assets/plane.png" />
+                        <Image url="@/assets/plane.png" />
                      </image>
                   </ImageView>
                   <Text fx:id="destIATA" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="h3" text="IATA" textAlignment="CENTER" wrappingWidth="63.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
