@@ -256,7 +256,6 @@ public class DataHandlerTest {
         testAirports.add(testAirport4);
         testAirports.add(testAirport5);
         try {
-            System.out.println("What");
             dataHandler.InsertAirports(testAirports);
             Filter filter1 = new Filter(format("id_airport = %d", testAirport1.getAirportID()), "OR");
             filters.add(filter1);
@@ -268,7 +267,6 @@ public class DataHandlerTest {
             filters.add(filter4);
             Filter filter5 = new Filter(format("id_airport = %d", testAirport5.getAirportID()), "");
             filters.add(filter5);
-            System.out.println("What");
             actualAirports = dataHandler.FetchAirports(filters);
         } catch(Exception e) {
             Assert.fail(e.getMessage());
@@ -601,7 +599,7 @@ public class DataHandlerTest {
     /**
      * Test updating one airport within the database
      */
-    @Ignore @Test
+    @Test
     public void testUpdateOneAirport() {
         testAirports.add(testAirport1);
         try {dataHandler.InsertAirports(testAirports);} catch (Exception e) {Assert.fail(e.getMessage());}
@@ -622,66 +620,171 @@ public class DataHandlerTest {
     /**
      * Test updating two airports within the database
      */
-    @Ignore @Test
+    @Test
     public void testUpdateTwoAirports() {
-        // update two airlines
-
+        testAirports.add(testAirport1);
+        testAirports.add(testAirport2);
+        try {dataHandler.InsertAirports(testAirports);} catch (Exception e) {Assert.fail(e.getMessage());}
+        try {
+            dataHandler.updateAirport(testAirport1.getAirportID(), "Bravo", null, null, null, null,
+                    null, null, null, null, null);
+            Filter filter1 = new Filter(format("id_airport = %d", testAirport1.getAirportID()), "OR");
+            filters.add(filter1);
+            dataHandler.updateAirport(testAirport2.getAirportID(), "Charlie", null, null, null, null,
+                    null, null, null, null, null);
+            Filter filter2 = new Filter(format("id_airport = %d", testAirport2.getAirportID()), "");
+            filters.add(filter2);
+            actualAirports = dataHandler.FetchAirports(filters);
+        } catch (Exception e) {
+            Assert.fail(e.getMessage());
+        }
+        testAirports.get(0).SetName("Bravo");
+        testAirports.get(1).SetName("Charlie");
+        Collections.sort(testAirports);
+        Collections.sort(actualAirports);
+        for (int i = 0; i < 2; i++) {
+            assertEquals(testAirports.get(i), actualAirports.get(i));
+        }
+        fullClear();
     }
 
     /**
      * Test updating five airports within the database
      */
-    @Ignore @Test
+    @Test
     public void testUpdateFiveAirports() {
-        // update five airlines
+        testAirports.add(testAirport1);
+        testAirports.add(testAirport2);
+        testAirports.add(testAirport3);
+        testAirports.add(testAirport4);
+        testAirports.add(testAirport5);
+        try {dataHandler.InsertAirports(testAirports);} catch (Exception e) {Assert.fail(e.getMessage());}
+        try {
+            dataHandler.updateAirport(testAirport1.getAirportID(), "Delta", null, null, null, null,
+                    null, null, null, null, null);
+            Filter filter1 = new Filter(format("id_airport = %d", testAirport1.getAirportID()), "OR");
+            filters.add(filter1);
+            dataHandler.updateAirport(testAirport2.getAirportID(), "Echo", null, null, null, null,
+                    null, null, null, null, null);
+            Filter filter2 = new Filter(format("id_airport = %d", testAirport2.getAirportID()), "OR");
+            filters.add(filter2);
+            dataHandler.updateAirport(testAirport3.getAirportID(), "Foxtrot", null, null, null, null,
+                    null, null, null, null, null);
+            Filter filter3 = new Filter(format("id_airport = %d", testAirport3.getAirportID()), "OR");
+            filters.add(filter3);
+            dataHandler.updateAirport(testAirport4.getAirportID(), "Golf", null, null, null, null,
+                    null, null, null, null, null);
+            Filter filter4 = new Filter(format("id_airport = %d", testAirport4.getAirportID()), "OR");
+            filters.add(filter4);
+            dataHandler.updateAirport(testAirport5.getAirportID(), "Hotel", null, null, null, null,
+                    null, null, null, null, null);
+            Filter filter5 = new Filter(format("id_airport = %d", testAirport5.getAirportID()), "");
+            filters.add(filter5);
+            actualAirports = dataHandler.FetchAirports(filters);
+        } catch (Exception e) {
+            Assert.fail(e.getMessage());
+        }
+        testAirports.get(0).SetName("Delta");
+        testAirports.get(1).SetName("Echo");
+        testAirports.get(2).SetName("Foxtrot");
+        testAirports.get(3).SetName("Golf");
+        testAirports.get(4).SetName("Hotel");
+        Collections.sort(testAirports);
+        Collections.sort(actualAirports);
+        for (int i = 0; i < 5; i++) {
+            assertEquals(testAirports.get(i), actualAirports.get(i));
+        }
+        fullClear();
     }
 
     /**
      * Test updating an airport with empty parameters within the database
      */
-    @Ignore @Test
+    @Test
     public void testUpdateAirportEmpty() {
-        // update an airline with empty parameters
+        testAirports.add(testAirport1);
+        try {dataHandler.InsertAirports(testAirports);} catch (Exception e) {Assert.fail(e.getMessage());}
+        try {
+            dataHandler.updateAirport(testAirport1.getAirportID(), null, null, null, null, null,
+                    null, null, null, null, null);
+            Assert.fail("Should have failed by now.");
+        } catch (Exception e) {
+            String message = "No parameters to update were provided!";
+            assertEquals(message, e.getMessage());
+        }
+        fullClear();
     }
 
     /**
      * Test updating invalid IATA with two characters within the database
      */
-    @Ignore @Test
+    @Test
     public void testUpdateAirportTwoCharIATA() {
-        // update airline with invalid IATA with one char
+        testAirports.add(testAirport1);
+        try {dataHandler.InsertAirports(testAirports);} catch (Exception e) {Assert.fail(e.getMessage());}
+        try {
+            dataHandler.updateAirport(testAirport1.getAirportID(), null, null, null, "BO", null,
+                    null, null, null, null, null);
+            Assert.fail("Should have failed by now.");
+        } catch (Exception e) {
+            String message = "The provided IATA was not three characters long!";
+            assertEquals(message, e.getMessage());
+        }
+        fullClear();
     }
 
     /**
      * Test updating invalid IATA with four characters within the database
      */
-    @Ignore @Test
+    @Test
     public void testUpdateAirportFourCharIATA() {
-        // update airline with invalid IATA with three chars
+        testAirports.add(testAirport1);
+        try {dataHandler.InsertAirports(testAirports);} catch (Exception e) {Assert.fail(e.getMessage());}
+        try {
+            dataHandler.updateAirport(testAirport1.getAirportID(), null, null, null, "BOII", null,
+                    null, null, null, null, null);
+            Assert.fail("Should have failed by now.");
+        } catch (Exception e) {
+            String message = "The provided IATA was not three characters long!";
+            assertEquals(message, e.getMessage());
+        }
+        fullClear();
     }
 
     /**
      * Test updating invalid ICAO with three characters within the database
      */
-    @Ignore @Test
+    @Test
     public void testUpdateAirportThreeCharICAO() {
-        // update airline with invalid ICAO with two chars
+        testAirports.add(testAirport1);
+        try {dataHandler.InsertAirports(testAirports);} catch (Exception e) {Assert.fail(e.getMessage());}
+        try {
+            dataHandler.updateAirport(testAirport1.getAirportID(), null, null, null, null, "SUG",
+                    null, null, null, null, null);
+            Assert.fail("Should have failed by now.");
+        } catch (Exception e) {
+            String message = "The provided ICAO was not four characters long!";
+            assertEquals(message, e.getMessage());
+        }
+        fullClear();
     }
 
     /**
      * Test updating invalid ICAO with five characters within the database
      */
-    @Ignore @Test
+    @Test
     public void testupdateAirportFiveCharICAO() {
-        // update airline with invalid ICAO with four chars
-    }
-
-    /**
-     * Test updating an airport with invalid parameters within the database
-     */
-    @Ignore @Test
-    public void testInvalidAirportParams() {
-        // update airline with invalid parameter data
+        testAirports.add(testAirport1);
+        try {dataHandler.InsertAirports(testAirports);} catch (Exception e) {Assert.fail(e.getMessage());}
+        try {
+            dataHandler.updateAirport(testAirport1.getAirportID(), null, null, null, null, "SUGAR",
+                    null, null, null, null, null);
+            Assert.fail("Should have failed by now.");
+        } catch (Exception e) {
+            String message = "The provided ICAO was not four characters long!";
+            assertEquals(message, e.getMessage());
+        }
+        fullClear();
     }
 
     /**
@@ -689,7 +792,8 @@ public class DataHandlerTest {
      */
     @Ignore @Test
     public void testUpdateOneRoute() {
-        // update one route
+        testRoutes.add(testRoute1);
+        try {dataHandler.InsertRoutes(testRoutes);} catch (Exception e) {Assert.fail(e.getMessage());}
     }
 
     /**

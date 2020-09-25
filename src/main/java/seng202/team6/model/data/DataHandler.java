@@ -452,7 +452,7 @@ public class DataHandler {
      */
     public void updateAirport(int AirportID, String Name, String City, String Country, String IATA, String ICAO,
                               Float Latitude, Float Longitude, Integer Altitude, Float Timezone,
-                              Character DST) throws SQLException {
+                              Character DST) throws Exception {
         Statement stmt = this.databaseConnection.createStatement();
 
         String setSQL = "";
@@ -466,12 +466,18 @@ public class DataHandler {
             setSQL += String.format("country = '%s',", Country);
         }
         if (IATA != null && !IATA.trim().isEmpty()) {
-            setSQL += String.format("iata = '%s',", IATA);
-            // Add error handling, only three chars allowed
+            if (IATA.length() == 3) {
+                setSQL += String.format("iata = '%s',", IATA);
+            } else {
+                throw new Exception("The provided IATA was not three characters long!");
+            }
         }
         if (ICAO != null && !ICAO.trim().isEmpty()) {
-            setSQL += String.format("icao = '%s',", ICAO);
-            // Add error handling, only four chars allowed
+            if (ICAO.length() == 4) {
+                setSQL += String.format("icao = '%s',", ICAO);
+            } else {
+                throw new Exception("The provided ICAO was not four characters long!");
+            }
         }
         if (Latitude != null) {
             setSQL += String.format("latitude = %f,", Latitude);
@@ -485,9 +491,13 @@ public class DataHandler {
         if (Timezone != null) {
             setSQL += String.format("timezone = %f,", Timezone);
         }
-        if (setSQL.length() > 0) { setSQL = setSQL.substring(0, setSQL.length() - 1); }
+        if (setSQL.length() > 0) {
+            setSQL = setSQL.substring(0, setSQL.length() - 1);
+        } else {
+            throw new Exception("No parameters to update were provided!");
+        }
 
-        String query = String.format("UPDATE airline SET %s WHERE id_airport == %d;", setSQL, AirportID);
+        String query = String.format("UPDATE airport SET %s WHERE id_airport == %d;", setSQL, AirportID);
         stmt.executeUpdate(query);
     }
 
@@ -496,33 +506,18 @@ public class DataHandler {
      * DestinationAirportID. Then, the fields are updated based on the provided parameters.
      * Parameters that are null will not be updated.
      * @param AirlineID The ID of the Airline undertaking the route and one of the primary keys for route
-     * @param AirlineICAO The International Civil Aviation Organisation unique three character code of the airline the route is flying on
-     * @param SourceAirportICAO The International Civil Aviation Organisation unique four character code of the airport the route will depart from
      * @param SourceAirportID The ID of the airport the route will depart from and one of the primary keys for route
-     * @param DestinationAirportICAO The International Civil Aviation Organisation unique four character code of the airport the route will arrive at
      * @param DestinationAirportID The ID of the airport the route will arrive at and one of the primary keys for route
      * @param Codeshare A character stating whether the route is a codeshare
      * @param Stops The number of stops the route has
      * @param Equipment A three character code for plane types
      * @throws SQLException Throws an SQLException when the update query is invalid
      */
-    public void updateRoute(Integer AirlineID, String AirlineICAO, String SourceAirportICAO, int SourceAirportID,
-                            String DestinationAirportICAO, int DestinationAirportID, Character Codeshare,
-                            Integer Stops, String Equipment) throws SQLException {
+    public void updateRoute(Integer AirlineID, int SourceAirportID, int DestinationAirportID, Character Codeshare,
+                            Integer Stops, String Equipment) throws Exception {
         Statement stmt = this.databaseConnection.createStatement();
 
         String setSQL = "";
-        if (AirlineICAO != null && !AirlineICAO.trim().isEmpty()) {
-            setSQL += String.format("airline = '%s',", AirlineICAO);
-        }
-        if (SourceAirportICAO != null && !SourceAirportICAO.trim().isEmpty()) {
-            setSQL += String.format("source_airport = '%s',", SourceAirportICAO);
-            // Add error handling, only four chars allowed
-        }
-        if (DestinationAirportICAO != null && !DestinationAirportICAO.trim().isEmpty()) {
-            setSQL += String.format("destination_airport = '%s',", DestinationAirportICAO);
-            // Add error handling, only four chars allowed
-        }
         if (Codeshare != null) {
             setSQL += String.format("codeshare = '%c',", Codeshare);
         }
@@ -530,9 +525,13 @@ public class DataHandler {
             setSQL += String.format("stops = %d,", Stops);
         }
         if (Equipment != null && !Equipment.trim().isEmpty()) {
-            setSQL += String.format("equipment = '%s',", DestinationAirportICAO);
+            setSQL += String.format("equipment = '%s',", Equipment);
         }
-        if (setSQL.length() > 0) { setSQL = setSQL.substring(0, setSQL.length() - 1); }
+        if (setSQL.length() > 0) {
+            setSQL = setSQL.substring(0, setSQL.length() - 1);
+        } else {
+            throw new Exception("No parameters to update were provided!");
+        }
 
         String query = String.format("UPDATE airline SET %s WHERE id_airline == %d AND source_airport_id == %d AND destination_airport_id == %d;"
                 , setSQL, AirlineID, SourceAirportID, DestinationAirportID);
