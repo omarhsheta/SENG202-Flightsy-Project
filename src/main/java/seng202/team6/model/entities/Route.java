@@ -148,6 +148,17 @@ public class Route implements Comparable<Route> {
 
     @Override
     public int compareTo(Route route) {
-        return Integer.compare(AirlineID, route.AirlineID);
+        int firstCompare = Integer.compare(AirlineID, route.AirlineID);
+        if (firstCompare == 0) {
+            int secondCompare = Integer.compare(SourceAirportID, route.SourceAirportID);
+            if (secondCompare == 0) {
+                int thirdCompare = Integer.compare(DestinationAirportID, route.DestinationAirportID);
+                return thirdCompare;
+            } else {
+                return secondCompare;
+            }
+        } else {
+            return firstCompare;
+        }
     }
 }

@@ -248,7 +248,7 @@ public class DataHandlerTest {
     /**
      * Test inserting five airports in the database
      */
-    @Ignore @Test
+    @Test
     public void testInsertFiveAirports() {
         testAirports.add(testAirport1);
         testAirports.add(testAirport2);
@@ -320,7 +320,7 @@ public class DataHandlerTest {
     /**
      * Test inserting two routes into the database
      */
-    @Ignore @Test
+    @Test
     public void testInsertTwoRoutes() {
         testRoutes.add(testRoute1);
         testRoutes.add(testRoute2);
@@ -328,7 +328,7 @@ public class DataHandlerTest {
             dataHandler.InsertRoutes(testRoutes);
             Filter filter1 = new Filter(format("id_airline = %d AND source_airport_id = %d AND destination_airport_id" +
                             " = %d", testRoute1.getAirlineID(), testRoute1.getSourceAirportID(),
-                    testRoute1.getDestinationAirportID()), "");
+                    testRoute1.getDestinationAirportID()), "OR");
             filters.add(filter1);
             Filter filter2 = new Filter(format("id_airline = %d AND source_airport_id = %d AND destination_airport_id" +
                             " = %d", testRoute2.getAirlineID(), testRoute2.getSourceAirportID(),
@@ -349,9 +349,46 @@ public class DataHandlerTest {
     /**
      * Test inserting five routes into the database
      */
-    @Ignore @Test
+    @Test
     public void testInsertFiveRoutes() {
-        // insert five routes
+        testRoutes.add(testRoute1);
+        testRoutes.add(testRoute2);
+        testRoutes.add(testRoute3);
+        testRoutes.add(testRoute4);
+        testRoutes.add(testRoute5);
+        try {
+            dataHandler.InsertRoutes(testRoutes);
+            Filter filter1 = new Filter(format("id_airline = %d AND source_airport_id = %d AND destination_airport_id" +
+                            " = %d", testRoute1.getAirlineID(), testRoute1.getSourceAirportID(),
+                    testRoute1.getDestinationAirportID()), "OR");
+            filters.add(filter1);
+            Filter filter2 = new Filter(format("id_airline = %d AND source_airport_id = %d AND destination_airport_id" +
+                            " = %d", testRoute2.getAirlineID(), testRoute2.getSourceAirportID(),
+                    testRoute2.getDestinationAirportID()), "OR");
+            filters.add(filter2);
+            Filter filter3 = new Filter(format("id_airline = %d AND source_airport_id = %d AND destination_airport_id" +
+                            " = %d", testRoute3.getAirlineID(), testRoute3.getSourceAirportID(),
+                    testRoute3.getDestinationAirportID()), "OR");
+            filters.add(filter3);
+            Filter filter4 = new Filter(format("id_airline = %d AND source_airport_id = %d AND destination_airport_id" +
+                            " = %d", testRoute4.getAirlineID(), testRoute4.getSourceAirportID(),
+                    testRoute4.getDestinationAirportID()), "OR");
+            filters.add(filter4);
+            Filter filter5 = new Filter(format("id_airline = %d AND source_airport_id = %d AND destination_airport_id" +
+                            " = %d", testRoute5.getAirlineID(), testRoute5.getSourceAirportID(),
+                    testRoute5.getDestinationAirportID()), "");
+            filters.add(filter5);
+
+            actualRoutes = dataHandler.FetchRoutes(filters);
+        } catch(Exception e) {
+            Assert.fail(e.getMessage());
+        }
+        Collections.sort(testRoutes);
+        Collections.sort(actualRoutes);
+        for (int i = 0; i < 5; i++) {
+            Assert.assertEquals(testRoutes.get(i), actualRoutes.get(i));
+        }
+        fullClear();
     }
 
     /**
