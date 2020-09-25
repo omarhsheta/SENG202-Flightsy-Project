@@ -469,7 +469,7 @@ public class DataHandlerTest {
     /**
      * Test updating five airlines within the database
      */
-    @Ignore @Test
+    @Test
     public void testUpdateFiveAirlines() {
         testAirlines.add(testAirline1);
         testAirlines.add(testAirline2);
@@ -488,20 +488,20 @@ public class DataHandlerTest {
             filters.add(filter1);
             dataHandler.updateAirline(testAirline2.getAirlineID(), "VirginBeta", null, null, null, null,
                     null, null);
-            Filter filter2 = new Filter(format("id_airline = %d", testAirline2.getAirlineID()), "");
+            Filter filter2 = new Filter(format("id_airline = %d", testAirline2.getAirlineID()), "OR");
             filters.add(filter2);
             dataHandler.updateAirline(testAirline3.getAirlineID(), "VirginCharlie", null, null, null, null,
                     null, null);
-            Filter filter3 = new Filter(format("id_airline = %d", testAirline3.getAirlineID()), "");
-            filters.add(filter2);
+            Filter filter3 = new Filter(format("id_airline = %d", testAirline3.getAirlineID()), "OR");
+            filters.add(filter3);
             dataHandler.updateAirline(testAirline4.getAirlineID(), "VirginDelta", null, null, null, null,
                     null, null);
-            Filter filter4 = new Filter(format("id_airline = %d", testAirline4.getAirlineID()), "");
-            filters.add(filter2);
+            Filter filter4 = new Filter(format("id_airline = %d", testAirline4.getAirlineID()), "OR");
+            filters.add(filter4);
             dataHandler.updateAirline(testAirline5.getAirlineID(), "VirginEcho", null, null, null, null,
                     null, null);
             Filter filter5 = new Filter(format("id_airline = %d", testAirline5.getAirlineID()), "");
-            filters.add(filter2);
+            filters.add(filter5);
             actualAirlines = dataHandler.FetchAirlines(filters);
         } catch (Exception e) {
             Assert.fail(e.getMessage());
@@ -936,71 +936,169 @@ public class DataHandlerTest {
      */
     @Ignore @Test
     public void testDeleteOneAirline() {
-        // delete one airline
+        try {dataHandler.InsertAirline(testAirline1);} catch (Exception e) {Assert.fail(e.getMessage());}
+        Filter filter = new Filter(format("id_airline = %d", testAirline1.getAirlineID()), "");
+        filters.add(filter);
+        try {
+            dataHandler.deleteAirline(testAirline1.getAirlineID());
+        } catch (Exception e) {Assert.fail(e.getMessage());}
+        actualAirlines = dataHandler.FetchAirlines(filters);
+        assertTrue(actualAirlines.isEmpty());
+        fullClear();
     }
 
     /**
      * Test deleting two airlines in the database
      */
-    @Ignore @Test
+    @Test
     public void testDeleteTwoAirlines() {
-        // delete two airlines
+        testAirlines.add(testAirline1);
+        testAirlines.add(testAirline2);
+        try {
+            for (Airline airline: testAirlines) {
+                dataHandler.InsertAirline(airline);
+            }
+        } catch (Exception e) {Assert.fail(e.getMessage());}
+        Filter filter1 = new Filter(format("id_airline = %d", testAirline1.getAirlineID()), "OR");
+        filters.add(filter1);
+        Filter filter2 = new Filter(format("id_airline = %d", testAirline2.getAirlineID()), "");
+        filters.add(filter2);
+        try {
+            dataHandler.deleteAirline(testAirline1.getAirlineID());
+            dataHandler.deleteAirline(testAirline2.getAirlineID());
+        } catch (Exception e) {Assert.fail(e.getMessage());}
+        actualAirlines = dataHandler.FetchAirlines(filters);
+        assertTrue(actualAirlines.isEmpty());
+        fullClear();
     }
 
     /**
      * Test deleting five airlines in the database
      */
-    @Ignore @Test
+    @Test
     public void testDeleteFiveAirlines() {
-        // delete five airlines
-    }
-
-    /**
-     * Test deleting an airline without providing an ID in the database
-     */
-    @Ignore @Test
-    public void testDeleteAirlineEmptyID() {
-        // delete airline where a null AirlineID is provided
+        testAirlines.add(testAirline1);
+        testAirlines.add(testAirline2);
+        testAirlines.add(testAirline3);
+        testAirlines.add(testAirline4);
+        testAirlines.add(testAirline5);
+        try {
+            for (Airline airline: testAirlines) {
+                dataHandler.InsertAirline(airline);
+            }
+        } catch (Exception e) {Assert.fail(e.getMessage());}
+        Filter filter1 = new Filter(format("id_airline = %d", testAirline1.getAirlineID()), "OR");
+        filters.add(filter1);
+        Filter filter2 = new Filter(format("id_airline = %d", testAirline2.getAirlineID()), "OR");
+        filters.add(filter2);
+        Filter filter3 = new Filter(format("id_airline = %d", testAirline3.getAirlineID()), "OR");
+        filters.add(filter3);
+        Filter filter4 = new Filter(format("id_airline = %d", testAirline4.getAirlineID()), "OR");
+        filters.add(filter4);
+        Filter filter5 = new Filter(format("id_airline = %d", testAirline5.getAirlineID()), "");
+        filters.add(filter5);
+        try {
+            dataHandler.deleteAirline(testAirline1.getAirlineID());
+            dataHandler.deleteAirline(testAirline2.getAirlineID());
+            dataHandler.deleteAirline(testAirline3.getAirlineID());
+            dataHandler.deleteAirline(testAirline4.getAirlineID());
+            dataHandler.deleteAirline(testAirline5.getAirlineID());
+        } catch (Exception e) {Assert.fail(e.getMessage());}
+        actualAirlines = dataHandler.FetchAirlines(filters);
+        assertTrue(actualAirlines.isEmpty());
+        fullClear();
     }
 
     /**
      * Test deleting an airline with an invalid ID in the database
      */
-    @Ignore @Test
+    @Test
     public void testDeleteAirlineInvalidID() {
-        // delete airline where an invalid AirlineID is provided
+        try {
+            dataHandler.deleteAirline(8008);
+            Assert.fail("SQLException was supposed to be thrown.");
+        } catch (Exception e) {
+            Assert.assertTrue(e instanceof Exception);
+        }
+        fullClear();
     }
 
     /**
      * Test deleting an airport in the database
      */
-    @Ignore @Test
+    @Test
     public void testDeleteOneAirport() {
-        // delete one airline
+        try {dataHandler.InsertAirport(testAirport1);} catch (Exception e) {Assert.fail(e.getMessage());}
+        Filter filter = new Filter(format("id_airport = %d", testAirport1.getAirportID()), "");
+        filters.add(filter);
+        try {
+            dataHandler.deleteAirport(testAirport1.getAirportID());
+        } catch (Exception e) {Assert.fail(e.getMessage());}
+        actualAirports = dataHandler.FetchAirports(filters);
+        assertTrue(actualAirports.isEmpty());
+        fullClear();
     }
 
     /**
      * Test deleting two airports in the database
      */
-    @Ignore @Test
+    @Test
     public void testDeleteTwoAirports() {
-        // delete two airlines
+        testAirports.add(testAirport1);
+        testAirports.add(testAirport2);
+        try {
+            for (Airport airport: testAirports) {
+                dataHandler.InsertAirport(airport);
+            }
+        } catch (Exception e) {Assert.fail(e.getMessage());}
+        Filter filter1 = new Filter(format("id_airport = %d", testAirport1.getAirportID()), "OR");
+        filters.add(filter1);
+        Filter filter2 = new Filter(format("id_airport = %d", testAirport2.getAirportID()), "");
+        filters.add(filter2);
+        try {
+            dataHandler.deleteAirport(testAirport1.getAirportID());
+            dataHandler.deleteAirport(testAirport2.getAirportID());
+        } catch (Exception e) {Assert.fail(e.getMessage());}
+        actualAirports = dataHandler.FetchAirports(filters);
+        assertTrue(actualAirports.isEmpty());
+        fullClear();
     }
 
     /**
      * Test deleting five airports in the database
      */
-    @Ignore @Test
+    @Test
     public void testDeleteFiveAirports() {
-        // delete five airlines
-    }
-
-    /**
-     * Test deleting an airport without providing an ID (should thrown exception) in the database
-     */
-    @Ignore @Test
-    public void testDeleteAirportEmptyID() {
-        // delete airline where a null AirlineID is provided
+        testAirports.add(testAirport1);
+        testAirports.add(testAirport2);
+        testAirports.add(testAirport3);
+        testAirports.add(testAirport4);
+        testAirports.add(testAirport5);
+        try {
+            for (Airport airport: testAirports) {
+                dataHandler.InsertAirport(airport);
+            }
+        } catch (Exception e) {Assert.fail(e.getMessage());}
+        Filter filter1 = new Filter(format("id_airport = %d", testAirport1.getAirportID()), "OR");
+        filters.add(filter1);
+        Filter filter2 = new Filter(format("id_airport = %d", testAirport2.getAirportID()), "OR");
+        filters.add(filter2);
+        Filter filter3 = new Filter(format("id_airport = %d", testAirport3.getAirportID()), "OR");
+        filters.add(filter3);
+        Filter filter4 = new Filter(format("id_airport = %d", testAirport4.getAirportID()), "OR");
+        filters.add(filter4);
+        Filter filter5 = new Filter(format("id_airport = %d", testAirport5.getAirportID()), "");
+        filters.add(filter5);
+        try {
+            dataHandler.deleteAirport(testAirport1.getAirportID());
+            dataHandler.deleteAirport(testAirport2.getAirportID());
+            dataHandler.deleteAirport(testAirport3.getAirportID());
+            dataHandler.deleteAirport(testAirport4.getAirportID());
+            dataHandler.deleteAirport(testAirport5.getAirportID());
+        } catch (Exception e) {Assert.fail(e.getMessage());}
+        actualAirports = dataHandler.FetchAirports(filters);
+        assertTrue(actualAirports.isEmpty());
+        fullClear();
     }
 
     /**
@@ -1008,63 +1106,153 @@ public class DataHandlerTest {
      */
     @Ignore @Test
     public void testDeleteAirportInvalidID() {
-        // delete airline where an invalid AirlineID is provided
+        try {
+            dataHandler.deleteAirport(8008);
+            Assert.fail("SQLException was supposed to be thrown.");
+        } catch (Exception e) {
+            Assert.assertTrue(e instanceof Exception);
+        }
+        fullClear();
     }
 
     /**
      * Test deleting one route in the database
      */
-    @Ignore @Test
+    @Test
     public void testDeleteOneRoute() {
-        // delete one route
+        try {dataHandler.InsertRoute(testRoute1);} catch (Exception e) {Assert.fail(e.getMessage());}
+        Filter filter = new Filter(format("id_airline = %d AND source_airport_id = %d AND destination_airport_id = %d",
+                testRoute1.getAirlineID(), testRoute1.getSourceAirportID(), testRoute1.getDestinationAirportID()), "");
+        filters.add(filter);
+        try {
+            dataHandler.deleteRoute(testRoute1.getAirlineID(), testRoute1.getSourceAirportID(), testRoute1.getDestinationAirportID());
+        } catch (Exception e) {Assert.fail(e.getMessage());}
+        actualRoutes = dataHandler.FetchRoutes(filters);
+        assertTrue(actualRoutes.isEmpty());
+        fullClear();
     }
 
     /**
      * Test deleting two routes in the database
      */
-    @Ignore @Test
+    @Test
     public void testDeleteTwoRoutes() {
-        // delete two routes
+        testRoutes.add(testRoute1);
+        testRoutes.add(testRoute2);
+        try {
+            for (Route route: testRoutes) {
+                dataHandler.InsertRoute(route);
+            }
+        } catch (Exception e) {Assert.fail(e.getMessage());}
+        Filter filter1 = new Filter(format("id_airline = %d AND source_airport_id = %d AND destination_airport_id = %d",
+                testRoute1.getAirlineID(), testRoute1.getSourceAirportID(), testRoute1.getDestinationAirportID()), "OR");
+        filters.add(filter1);
+        Filter filter2 = new Filter(format("id_airline = %d AND source_airport_id = %d AND destination_airport_id = %d",
+                testRoute2.getAirlineID(), testRoute2.getSourceAirportID(), testRoute2.getDestinationAirportID()), "OR");
+        filters.add(filter2);
+        try {
+            dataHandler.deleteRoute(testRoute1.getAirlineID(), testRoute1.getSourceAirportID(), testRoute1.getDestinationAirportID());
+            dataHandler.deleteRoute(testRoute2.getAirlineID(), testRoute2.getSourceAirportID(), testRoute2.getDestinationAirportID());
+        } catch (Exception e) {Assert.fail(e.getMessage());}
+        actualRoutes = dataHandler.FetchRoutes(filters);
+        assertTrue(actualRoutes.isEmpty());
+        fullClear();
     }
 
     /**
      * Test deleting five routes in the database
      */
-    @Ignore @Test
+    @Test
     public void testDeleteFiveRoutes() {
-        // delete five routes
-    }
-
-    /**
-     * Test deleting a route with an empty ID (should throw exception) in the database
-     */
-    @Ignore @Test
-    public void testDeleteRouteEmptyID() {
-        // delete route where a null AirlineID is provided
+        testRoutes.add(testRoute1);
+        testRoutes.add(testRoute2);
+        testRoutes.add(testRoute3);
+        testRoutes.add(testRoute4);
+        testRoutes.add(testRoute5);
+        try {
+            for (Route route: testRoutes) {
+                dataHandler.InsertRoute(route);
+            }
+        } catch (Exception e) {Assert.fail(e.getMessage());}
+        Filter filter1 = new Filter(format("id_airline = %d AND source_airport_id = %d AND destination_airport_id = %d",
+                testRoute1.getAirlineID(), testRoute1.getSourceAirportID(), testRoute1.getDestinationAirportID()), "OR");
+        filters.add(filter1);
+        Filter filter2 = new Filter(format("id_airline = %d AND source_airport_id = %d AND destination_airport_id = %d",
+                testRoute2.getAirlineID(), testRoute2.getSourceAirportID(), testRoute2.getDestinationAirportID()), "OR");
+        filters.add(filter2);
+        Filter filter3 = new Filter(format("id_airline = %d AND source_airport_id = %d AND destination_airport_id = %d",
+                testRoute3.getAirlineID(), testRoute3.getSourceAirportID(), testRoute3.getDestinationAirportID()), "OR");
+        filters.add(filter3);
+        Filter filter4 = new Filter(format("id_airline = %d AND source_airport_id = %d AND destination_airport_id = %d",
+                testRoute4.getAirlineID(), testRoute4.getSourceAirportID(), testRoute4.getDestinationAirportID()), "OR");
+        filters.add(filter4);
+        Filter filter5 = new Filter(format("id_airline = %d AND source_airport_id = %d AND destination_airport_id = %d",
+                testRoute5.getAirlineID(), testRoute5.getSourceAirportID(), testRoute5.getDestinationAirportID()), "");
+        filters.add(filter5);
+        try {
+            dataHandler.deleteRoute(testRoute1.getAirlineID(), testRoute1.getSourceAirportID(), testRoute1.getDestinationAirportID());
+            dataHandler.deleteRoute(testRoute2.getAirlineID(), testRoute2.getSourceAirportID(), testRoute2.getDestinationAirportID());
+            dataHandler.deleteRoute(testRoute3.getAirlineID(), testRoute3.getSourceAirportID(), testRoute3.getDestinationAirportID());
+            dataHandler.deleteRoute(testRoute4.getAirlineID(), testRoute4.getSourceAirportID(), testRoute4.getDestinationAirportID());
+            dataHandler.deleteRoute(testRoute5.getAirlineID(), testRoute5.getSourceAirportID(), testRoute5.getDestinationAirportID());
+        } catch (Exception e) {Assert.fail(e.getMessage());}
+        actualRoutes = dataHandler.FetchRoutes(filters);
+        assertTrue(actualRoutes.isEmpty());
+        fullClear();
     }
 
     /**
      * Test deleting a route with an invalid ID in the database
      */
-    @Ignore @Test
+    @Test
     public void testDeleteRouteInvalidAirlineID() {
-        // delete airline where an invalid AirlineID is provided
+        try {dataHandler.InsertRoute(testRoute1);} catch (Exception e) {Assert.fail(e.getMessage());}
+        Filter filter = new Filter(format("id_airline = %d AND source_airport_id = %d AND destination_airport_id = %d",
+                testRoute1.getAirlineID(), testRoute1.getSourceAirportID(), testRoute1.getDestinationAirportID()), "");
+        filters.add(filter);
+        try {
+            dataHandler.deleteRoute(8008, testRoute1.getSourceAirportID(), testRoute1.getDestinationAirportID());
+            Assert.fail("SQLException was supposed to be thrown.");
+        } catch (Exception e) {
+            Assert.assertTrue(e instanceof Exception);
+        }
+        fullClear();
     }
 
     /**
      * Test deleting a route with an invalid source airport ID in the database
      */
-    @Ignore @Test
+    @Test
     public void testDeleteRouteInvalidSourceID() {
-        // delete airline where an invalid SourceAirportID is provided
+        try {dataHandler.InsertRoute(testRoute1);} catch (Exception e) {Assert.fail(e.getMessage());}
+        Filter filter = new Filter(format("id_airline = %d AND source_airport_id = %d AND destination_airport_id = %d",
+                testRoute1.getAirlineID(), testRoute1.getSourceAirportID(), testRoute1.getDestinationAirportID()), "");
+        filters.add(filter);
+        try {
+            dataHandler.deleteRoute(testRoute1.getAirlineID(), 8008, testRoute1.getDestinationAirportID());
+            Assert.fail("SQLException was supposed to be thrown.");
+        } catch (Exception e) {
+            Assert.assertTrue(e instanceof Exception);
+        }
+        fullClear();
     }
 
     /**
      * Test deleting a route with an invalid destination airport ID in the database
      */
-    @Ignore @Test
+    @Test
     public void testDeleteRouteInvalidDestinationID() {
-        // delete airline where an invalid DestinationAirportID is provided
+        try {dataHandler.InsertRoute(testRoute1);} catch (Exception e) {Assert.fail(e.getMessage());}
+        Filter filter = new Filter(format("id_airline = %d AND source_airport_id = %d AND destination_airport_id = %d",
+                testRoute1.getAirlineID(), testRoute1.getSourceAirportID(), testRoute1.getDestinationAirportID()), "");
+        filters.add(filter);
+        try {
+            dataHandler.deleteRoute(testRoute1.getAirlineID(), testRoute1.getSourceAirportID(), 8008);
+            Assert.fail("SQLException was supposed to be thrown.");
+        } catch (Exception e) {
+            Assert.assertTrue(e instanceof Exception);
+        }
+        fullClear();
     }
 
 }
