@@ -22,7 +22,7 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.web.WebView?>
 
-<BorderPane prefHeight="613.0" prefWidth="950.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.team6.gui.controller.MainController">
+<BorderPane prefHeight="613.0" prefWidth="950.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.team6.gui.controller.HolidayAgendaController">
    <left>
       <VBox prefHeight="0.0" BorderPane.alignment="CENTER">
          <children>
@@ -40,7 +40,7 @@
             </Pane>
             <ScrollPane hbarPolicy="NEVER" prefWidth="231.0" vbarPolicy="ALWAYS">
                <content>
-                  <VBox alignment="TOP_CENTER" prefHeight="455.0" prefWidth="213.0">
+                  <VBox fx:id="eventsVBox" alignment="TOP_CENTER" prefHeight="455.0" prefWidth="213.0">
                      <children>
                         <Button minHeight="-Infinity" mnemonicParsing="false" prefWidth="203.0">
                            <graphic>
