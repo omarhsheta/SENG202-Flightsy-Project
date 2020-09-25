@@ -267,57 +267,50 @@ public class DataHandler {
     }
 
     /**
-     * Insert all airlines into database
-     * Catches SQLException and discards entry if invalid
-     * @param entry ArrayList of strings corresponding to each field of data to insert
-     * @throws SQLException Exception if cannot input into the database
+     * Insert an airline into the database
+     * @param airline Airlines to insert
+     * @throws SQLException SQLException
      */
-    public void InsertAirline(ArrayList<String> entry) throws SQLException {
+    public void InsertAirline(Airline airline) throws SQLException {
         Statement stmt = this.databaseConnection.createStatement();
-
         String sql = String.format("INSERT INTO airline (id_airline, name, alias, iata, icao, callsign, country, " +
-                        "active) VALUES (\"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\");",
-                entry.get(0), entry.get(1), entry.get(2), entry.get(3), entry.get(4), entry.get(5),
-                entry.get(6), entry.get(7)
+                            "active) VALUES (\"%d\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%c\");",
+                    airline.getAirlineID(), airline.getName(), airline.getAlias(), airline.getIATA(), airline.getICAO(),
+                    airline.getCallsign(), airline.getCountry(), airline.getActive()
         );
-
         stmt.executeUpdate(sql);
     }
 
     /**
      * Insert all airports into database
-     * Catches SQLException and discards entry if invalid
-     * @param entry ArrayList of strings corresponding to each field of data to insert
-     * @throws SQLException Exception if cannot input into the database
+     * @param airport Airport to insert
+     * @throws SQLException SQLException
      */
-    public void InsertAirport(ArrayList<String> entry) throws SQLException {
+    public void InsertAirport(Airport airport) throws SQLException {
         Statement stmt = this.databaseConnection.createStatement();
-
         String sql = String.format("INSERT INTO airport (id_airport, name, city, country, iata, icao, latitude, longitude, altitude, timezone, dst)" +
-                        "VALUES (\"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\");",
-                entry.get(0), entry.get(1), entry.get(2), entry.get(3), entry.get(4), entry.get(5),
-                entry.get(6), entry.get(7), entry.get(8), entry.get(9), entry.get(10)
+                            "VALUES (\"%d\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%f\", \"%f\", \"%d\", \"%f\", \"%c\");",
+                    airport.getAirportID(), airport.getName(), airport.getCity(), airport.getCountry(),
+                    airport.getIATA(), airport.getICAO(), airport.getLatitude(), airport.getLongitude(), airport.getAltitude(),
+                    airport.getTimezone(), airport.getDST()
         );
-
         stmt.executeUpdate(sql);
     }
 
     /**
-     * Inserts a Route data entry into database
-     * Catches SQLException and discards entry if invalid
-     * @param entry ArrayList of strings corresponding to each field of data to insert
-     * @throws SQLException Exception if cannot input into the database
+     * Insert all routes into database
+     * @param route Route to insert
+     * @throws SQLException SQLException
      */
-    public void InsertRoute(ArrayList<String> entry) throws SQLException{
+    public void InsertRoute(Route route) throws SQLException{
         Statement stmt = this.databaseConnection.createStatement();
-
         String sql = String.format("INSERT INTO route (airline, id_airline, source_airport, source_airport_id, " +
-                        "destination_airport, destination_airport_id, codeshare, stops, equipment)" +
-                        "VALUES (\"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\");",
-                entry.get(0), entry.get(1), entry.get(2), entry.get(3), entry.get(4), entry.get(5),
-                entry.get(6), entry.get(7), entry.get(8)
+                            "destination_airport, destination_airport_id, codeshare, stops, equipment)" +
+                            "VALUES (\"%s\", \"%d\", \"%s\", \"%d\", \"%s\", \"%d\", \"%c\", \"%d\", \"%s\");",
+                    route.getAirline(), route.getAirlineID(), route.getSourceAirport(), route.getSourceAirportID(),
+                    route.getDestinationAirport(), route.getDestinationAirportID(), route.getCodeshare(),
+                    route.getStops(), route.getEquipment()
         );
-
         stmt.executeUpdate(sql);
     }
 
@@ -508,16 +501,25 @@ public class DataHandler {
      * @param AirlineID The ID of the Airline undertaking the route and one of the primary keys for route
      * @param SourceAirportID The ID of the airport the route will depart from and one of the primary keys for route
      * @param DestinationAirportID The ID of the airport the route will arrive at and one of the primary keys for route
+     * @param newAirlineID The new ID of the airline undertaking the route
+     * @param newSourceAirportID The new ID of the airport the route will depart from
+     * @param newDestinationAirportID The new ID of the airport the route will arrive at
      * @param Codeshare A character stating whether the route is a codeshare
      * @param Stops The number of stops the route has
      * @param Equipment A three character code for plane types
      * @throws SQLException Throws an SQLException when the update query is invalid
      */
-    public void updateRoute(Integer AirlineID, int SourceAirportID, int DestinationAirportID, Character Codeshare,
+    public void updateRoute(Integer AirlineID, int SourceAirportID, int DestinationAirportID, Integer newAirlineID,
+                            Integer newSourceAirportID, Integer newDestinationAirportID, Character Codeshare,
                             Integer Stops, String Equipment) throws Exception {
         Statement stmt = this.databaseConnection.createStatement();
 
         String setSQL = "";
+
+        if (AirlineID != null) {
+            //TODO
+        }
+
         if (Codeshare != null) {
             setSQL += String.format("codeshare = '%c',", Codeshare);
         }
