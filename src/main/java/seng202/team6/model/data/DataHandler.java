@@ -505,7 +505,7 @@ public class DataHandler {
             throw new Exception("No parameters to update were provided!");
         }
 
-        String query = format("UPDATE airline SET %s WHERE id_airline == %d AND source_airport_id == %d AND destination_airport_id == %d;"
+        String query = format("UPDATE route SET %s WHERE id_airline == %d AND source_airport_id == %d AND destination_airport_id == %d;"
                 , setSQL, AirlineID, SourceAirportID, DestinationAirportID);
 
         stmt.executeUpdate(query);

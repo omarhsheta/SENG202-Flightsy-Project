@@ -800,14 +800,12 @@ public class DataHandlerTest {
     /**
      * Test updating a route within the database
      */
-    @Ignore @Test
+    @Test
     public void testUpdateOneRoute() {
         try {dataHandler.InsertRoute(testRoute1);} catch (Exception e) {Assert.fail(e.getMessage());}
         try {
-            System.out.println("Hmm");
             dataHandler.updateRoute(testRoute1.getAirlineID(), testRoute1.getSourceAirportID(), testRoute1.getDestinationAirportID(),
                     null, null, null, null, 5, null);
-            System.out.println("Help");
             Filter filter = new Filter(format("id_airline = %d AND source_airport_id = %d AND destination_airport_id = %d",
                     testRoute1.getAirlineID(), testRoute1.getSourceAirportID(), testRoute1.getDestinationAirportID()), "");
             filters.add(filter);
@@ -823,66 +821,115 @@ public class DataHandlerTest {
     /**
      * Test updating two routes within the database
      */
-    @Ignore @Test
+    @Test
     public void testUpdateTwoRoutes() {
-        // update two routes
+        testRoutes.add(testRoute1);
+        testRoutes.add(testRoute2);
+        try {
+            for (Route route: testRoutes) {
+                dataHandler.InsertRoute(route);
+            }
+        } catch (Exception e) {Assert.fail(e.getMessage());}
+        try {
+            dataHandler.updateRoute(testRoute1.getAirlineID(), testRoute1.getSourceAirportID(), testRoute1.getDestinationAirportID(),
+                    null, null, null, null, 6, null);
+            Filter filter1 = new Filter(format("id_airline = %d AND source_airport_id = %d AND destination_airport_id = %d",
+                    testRoute1.getAirlineID(), testRoute1.getSourceAirportID(), testRoute1.getDestinationAirportID()), "OR");
+            filters.add(filter1);
+            dataHandler.updateRoute(testRoute2.getAirlineID(), testRoute2.getSourceAirportID(), testRoute2.getDestinationAirportID(),
+                    null, null, null, null, 7, null);
+            Filter filter2 = new Filter(format("id_airline = %d AND source_airport_id = %d AND destination_airport_id = %d",
+                    testRoute2.getAirlineID(), testRoute2.getSourceAirportID(), testRoute2.getDestinationAirportID()), "");
+            filters.add(filter2);
+            actualRoutes = dataHandler.FetchRoutes(filters);
+        } catch (Exception e) {
+            Assert.fail(e.getMessage());
+        }
+        testRoute1.SetStops(6);
+        testRoute2.SetStops(7);
+        Collections.sort(testRoutes);
+        Collections.sort(actualRoutes);
+        for (int i = 0; i < 2; i++) {
+            assertEquals(testRoutes.get(i), actualRoutes.get(i));
+        }
+        fullClear();
     }
 
     /**
      * Test updating five routes within the database
      */
-    @Ignore @Test
+    @Test
     public void testUpdateFiveRoutes() {
-        // update five routes
+        testRoutes.add(testRoute1);
+        testRoutes.add(testRoute2);
+        testRoutes.add(testRoute3);
+        testRoutes.add(testRoute4);
+        testRoutes.add(testRoute5);
+        try {
+            for (Route route: testRoutes) {
+                dataHandler.InsertRoute(route);
+            }
+        } catch (Exception e) {Assert.fail(e.getMessage());}
+        try {
+            dataHandler.updateRoute(testRoute1.getAirlineID(), testRoute1.getSourceAirportID(), testRoute1.getDestinationAirportID(),
+                    null, null, null, null, 8, null);
+            Filter filter1 = new Filter(format("id_airline = %d AND source_airport_id = %d AND destination_airport_id = %d",
+                    testRoute1.getAirlineID(), testRoute1.getSourceAirportID(), testRoute1.getDestinationAirportID()), "OR");
+            filters.add(filter1);
+            dataHandler.updateRoute(testRoute2.getAirlineID(), testRoute2.getSourceAirportID(), testRoute2.getDestinationAirportID(),
+                    null, null, null, null, 9, null);
+            Filter filter2 = new Filter(format("id_airline = %d AND source_airport_id = %d AND destination_airport_id = %d",
+                    testRoute2.getAirlineID(), testRoute2.getSourceAirportID(), testRoute2.getDestinationAirportID()), "OR");
+            filters.add(filter2);
+            dataHandler.updateRoute(testRoute3.getAirlineID(), testRoute3.getSourceAirportID(), testRoute3.getDestinationAirportID(),
+                    null, null, null, null, 10, null);
+            Filter filter3 = new Filter(format("id_airline = %d AND source_airport_id = %d AND destination_airport_id = %d",
+                    testRoute3.getAirlineID(), testRoute3.getSourceAirportID(), testRoute3.getDestinationAirportID()), "OR");
+            filters.add(filter3);
+            dataHandler.updateRoute(testRoute4.getAirlineID(), testRoute4.getSourceAirportID(), testRoute4.getDestinationAirportID(),
+                    null, null, null, null, 11, null);
+            Filter filter4 = new Filter(format("id_airline = %d AND source_airport_id = %d AND destination_airport_id = %d",
+                    testRoute4.getAirlineID(), testRoute4.getSourceAirportID(), testRoute4.getDestinationAirportID()), "OR");
+            filters.add(filter4);
+            dataHandler.updateRoute(testRoute5.getAirlineID(), testRoute5.getSourceAirportID(), testRoute5.getDestinationAirportID(),
+                    null, null, null, null, 12, null);
+            Filter filter5 = new Filter(format("id_airline = %d AND source_airport_id = %d AND destination_airport_id = %d",
+                    testRoute5.getAirlineID(), testRoute5.getSourceAirportID(), testRoute5.getDestinationAirportID()), "");
+            filters.add(filter5);
+            actualRoutes = dataHandler.FetchRoutes(filters);
+        } catch (Exception e) {
+            Assert.fail(e.getMessage());
+        }
+        testRoute1.SetStops(8);
+        testRoute2.SetStops(9);
+        testRoute3.SetStops(10);
+        testRoute4.SetStops(11);
+        testRoute5.SetStops(12);
+        Collections.sort(testRoutes);
+        Collections.sort(actualRoutes);
+        for (int i = 0; i < 2; i++) {
+            assertEquals(testRoutes.get(i), actualRoutes.get(i));
+        }
+        fullClear();
     }
 
     /**
      * Test updating a route with empty parameters (should throw exception) within the database
      */
-    @Ignore @Test
+    @Test
     public void testUpdateRouteEmpty() {
-        // update a route with empty parameters
+        try {dataHandler.InsertRoute(testRoute1);} catch (Exception e) {Assert.fail(e.getMessage());}
+        try {
+            dataHandler.updateRoute(testRoute1.getAirlineID(), testRoute1.getSourceAirportID(), testRoute1.getDestinationAirportID(),
+                    null, null, null, null, null, null);
+            Assert.fail("Should have failed by now.");
+        } catch (Exception e) {
+            String message = "No parameters to update were provided!";
+            assertEquals(message, e.getMessage());
+        }
+        fullClear();
     }
-
-    /**
-     * Test updating a route with invalid ICAO with three characters within the database
-     */
-    @Ignore @Test
-    public void testUpdateSourceThreeCharICAO() {
-        // update route with invalid source airport IATA with three chars
-    }
-
-    /**
-     * Test updating a route with invalid ICAO with five characters within the database
-     */
-    @Ignore @Test
-    public void testUpdateSourceFiveCharICAO() {
-        // update route with invalid source airport IATA with five chars
-    }
-
-    /**
-     * Test updating a route with invalid ICAO with three characters within the database
-     */
-    @Ignore @Test
-    public void testUpdateDestinationThreeCharICAO() {
-        // update route with invalid destination airport IATA with three chars
-    }
-
-    /**
-     * Test updating a route with invalid ICAO with five characters within the database
-     */
-    @Ignore @Test
-    public void testUpdateDestinationFiveCharICAO() {
-        // update route with invalid destination airport IATA with five chars
-    }
-
-    /**
-     * Test updating a route with empty parameters (should throw exception) within the database
-     */
-    @Ignore @Test
-    public void testInvalidRouteParams() {
-        // update route with invalid parameter data
-    }
+    //TODO Should add more tests for UpdateRoute, as newAirline and NewAirports are not tested
 
     /**
      * Test deleting an airline in the database
