@@ -263,36 +263,13 @@ public class AddRowController implements Initializable
     }
 
     /**
-     * Check the validity of the input and add a valid airport object to the database from the user input.
-     */
-    @FXML
-    public void AddAirport() {
-        ArrayList<String> airport = CheckAirport(airpId.getText(), airpName.getText(), airpCity.getText(), airpCountry.getText(),
-                airpIata.getText(), airpIcao.getText(), airpLat.getText(), airpLon.getText(), airpAlt.getText(),
-                airpTim.getText(), airpDst.getText());
-        if (airport != null) {
-            try {
-                dataHandler.InsertAirport(airport);
-                String message = String.format("Successfully added %d airline", ++airportsAdded);
-                if (airportsAdded > 1) {
-                    message += "s";
-                }
-                ShowMessage(false, message);
-            } catch (SQLException e) {
-                System.out.println(e.toString());
-                ShowMessage(true, "There was a problem when saving the airport");
-            }
-        }
-    }
-
-    /**
      * Check the validity of the input and add a valid airline object to the database from the user input.
      */
     @FXML
     public void AddAirline() {
-        ArrayList<String> airline = CheckAirline(airIdField.getText(), airNameField.getText(), airAliasField.getText(),
+        Airline airline = new Airline(Integer.parseInt(airIdField.getText()), airNameField.getText(), airAliasField.getText(),
                 AirIataField.getText(), AirIcaoField.getText(), AirCallsignField.getText(), AirCountryField.getText(),
-                (String) AirActiveField.getValue());
+                (char) AirActiveField.getValue());
         if (airline != null) {
             try {
                 dataHandler.InsertAirline(airline);
@@ -310,13 +287,37 @@ public class AddRowController implements Initializable
     }
 
     /**
+     * Check the validity of the input and add a valid airport object to the database from the user input.
+     */
+    @FXML
+    public void AddAirport() {
+        Airport airport = new Airport(Integer.parseInt(airpId.getText()), airpName.getText(), airpCity.getText(),
+                airpCountry.getText(), airpIata.getText(), airpIcao.getText(), Float.parseFloat(airpLat.getText()),
+                Float.parseFloat(airpLon.getText()), Integer.parseInt(airpAlt.getText()), Integer.parseInt(airpTim.getText()),
+                airpDst.getText().charAt(0));
+        if (airport != null) {
+            try {
+                dataHandler.InsertAirport(airport);
+                String message = String.format("Successfully added %d airline", ++airportsAdded);
+                if (airportsAdded > 1) {
+                    message += "s";
+                }
+                ShowMessage(false, message);
+            } catch (SQLException e) {
+                System.out.println(e.toString());
+                ShowMessage(true, "There was a problem when saving the airport");
+            }
+        }
+    }
+
+    /**
      * Check the validity of the input and add a valid route object to the database from the user input.
      */
     @FXML
     public void AddRoute() {
-        ArrayList<String> route = CheckRoute(rouAir.getText(), rouAirId.getText(), rouSouAir.getText(), rouSouAirId.getText(),
-                rouDesAir.getText(), rouDesAirId.getText(), (String) rouCod.getValue(), (int) rouStp.getValue(),
-                rouEqp.getText());
+        Route route = new Route(Integer.parseInt(rouAir.getText()), rouAirId.getText(), rouSouAir.getText(),
+                Integer.parseInt(rouSouAirId.getText()), rouDesAir.getText(), Integer.parseInt(rouDesAirId.getText()),
+                (char) rouCod.getValue(), (int) rouStp.getValue(), rouEqp.getText());
         if (route != null) {
             try {
                 dataHandler.InsertRoute(route);
