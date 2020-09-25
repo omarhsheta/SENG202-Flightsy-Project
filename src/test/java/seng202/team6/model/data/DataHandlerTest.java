@@ -784,7 +784,7 @@ public class DataHandlerTest {
      * Test updating invalid ICAO with five characters within the database
      */
     @Test
-    public void testupdateAirportFiveCharICAO() {
+    public void testUpdateAirportFiveCharICAO() {
         try {dataHandler.InsertAirport(testAirport1);} catch (Exception e) {Assert.fail(e.getMessage());}
         try {
             dataHandler.updateAirport(testAirport1.getAirportID(), null, null, null, null, "SUGAR",
@@ -803,6 +803,21 @@ public class DataHandlerTest {
     @Ignore @Test
     public void testUpdateOneRoute() {
         try {dataHandler.InsertRoute(testRoute1);} catch (Exception e) {Assert.fail(e.getMessage());}
+        try {
+            System.out.println("Hmm");
+            dataHandler.updateRoute(testRoute1.getAirlineID(), testRoute1.getSourceAirportID(), testRoute1.getDestinationAirportID(),
+                    null, null, null, null, 5, null);
+            System.out.println("Help");
+            Filter filter = new Filter(format("id_airline = %d AND source_airport_id = %d AND destination_airport_id = %d",
+                    testRoute1.getAirlineID(), testRoute1.getSourceAirportID(), testRoute1.getDestinationAirportID()), "");
+            filters.add(filter);
+            actualRoutes = dataHandler.FetchRoutes(filters);
+        } catch (Exception e) {
+            Assert.fail(e.getMessage());
+        }
+        testRoute1.SetStops(5);
+        assertEquals(testRoute1, actualRoutes.get(0));
+        fullClear();
     }
 
     /**
