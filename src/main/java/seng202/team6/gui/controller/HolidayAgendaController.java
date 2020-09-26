@@ -9,7 +9,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import seng202.team6.model.MapHelper;
-import seng202.team6.model.data.DataHandler;
 import seng202.team6.model.events.CarTrip;
 import seng202.team6.model.events.Flight;
 import seng202.team6.model.events.General;
@@ -71,7 +70,7 @@ public class HolidayAgendaController implements Initializable {
      * Called when WebEngine is finished loading
      */
     private void OnLoad() {
-        ; // to get index of tab selected
+        // to get index of tab selected
     }
 
 

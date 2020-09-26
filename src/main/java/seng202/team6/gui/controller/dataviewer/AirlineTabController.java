@@ -42,7 +42,7 @@ public class AirlineTabController extends TabController<Airline>
 
         ArrayList<Filter> filters = new ArrayList<>();
         filters.add(new Filter("COUNTRY = 'New Zealand'", null));
-        ArrayList<Airline> filteredAirlines = dataHandler.FetchAirlines(filters);
+        ArrayList<Airline> filteredAirlines = dataExport.FetchAirlines(filters);
         table.getItems().addAll(filteredAirlines);
     }
 
@@ -72,7 +72,7 @@ public class AirlineTabController extends TabController<Airline>
 
         try {
             table.getItems().clear();
-            ArrayList<Airline> filteredAirlines = dataHandler.FetchAirlines(filters);
+            ArrayList<Airline> filteredAirlines = dataExport.FetchAirlines(filters);
             table.getItems().addAll(filteredAirlines);
         }
         catch (Exception ignored) {

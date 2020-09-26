@@ -7,7 +7,6 @@ import javafx.scene.control.Button;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Pair;
-import seng202.team6.model.data.DataHandler;
 import seng202.team6.model.data.Filter;
 import seng202.team6.model.entities.Airport;
 import seng202.team6.model.entities.Route;
@@ -37,8 +36,6 @@ public class FlightInformationController {
 
     private Stage stage;
 
-    DataHandler dataHandler;
-
     Airport originAirport;
     Airport destAirport;
     double distance;
@@ -47,7 +44,7 @@ public class FlightInformationController {
      * Called when this FXML page is loaded
      */
     public void initialize() {
-        dataHandler = DataHandler.GetInstance();
+
     }
 
     /**

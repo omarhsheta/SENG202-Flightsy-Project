@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class CSVLoader {
 
-    private DataHandler dataHandler = DataHandler.GetInstance();
+    private DataImportHandler dataImport = DataImportHandler.GetInstance();
 
     /**
      * Processes a row from a spreadsheet file and returns it as an ArrayList of Strings
@@ -135,12 +135,8 @@ public class CSVLoader {
             return false;
         }
 
-        if ((fields.get(7) == null) || (fields.get(7).length() != 1)) {
-            //Active field missing or not of char type
-            return false;
-        }
-
-        return true;
+        //Active field missing or not of char type
+        return (fields.get(7) != null) && (fields.get(7).length() == 1);
     }
 
 
@@ -194,13 +190,12 @@ public class CSVLoader {
      */
     public void ImportCSVAirlines(String path) {
         ArrayList<ArrayList<String>> lines = ProcessCSVFile(path);
-        for (int i = 0; i < lines.size(); i++) {
-            ArrayList<String> entry = lines.get(i);
+        for (ArrayList<String> entry : lines) {
             if (AirlineEntryCheck(entry)) {
                 try {
                     Airline airline = new Airline(Integer.parseInt(entry.get(0)), entry.get(1), entry.get(2), entry.get(3),
                             entry.get(4), entry.get(5), entry.get(6), entry.get(7).charAt(0));
-                    dataHandler.InsertAirline(airline);
+                    dataImport.InsertAirline(airline);
                 } catch (SQLException ignored) {
                     // Ignore duplicate entry
                 }
@@ -215,14 +210,13 @@ public class CSVLoader {
      */
     public void ImportCSVAirports(String path) {
         ArrayList<ArrayList<String>> lines = ProcessCSVFile(path);
-        for (int i = 0; i < lines.size(); i++) {
-            ArrayList<String> entry = lines.get(i);
+        for (ArrayList<String> entry : lines) {
             if (AirportEntryCheck(entry)) {
                 try {
                     Airport airport = new Airport(Integer.parseInt(entry.get(0)), entry.get(1), entry.get(2), entry.get(3),
                             entry.get(4), entry.get(5), Float.parseFloat(entry.get(6)), Float.parseFloat(entry.get(7)),
                             Integer.parseInt(entry.get(8)), Integer.parseInt(entry.get(9)), entry.get(10).charAt(0));
-                    dataHandler.InsertAirport(airport);
+                    dataImport.InsertAirport(airport);
                 } catch (SQLException ignored) {
                     // Ignore duplicate entry
                 }
@@ -243,7 +237,7 @@ public class CSVLoader {
                     Route route = new Route(Integer.parseInt(entry.get(0)), entry.get(1), entry.get(2),
                             Integer.parseInt(entry.get(3)), entry.get(4), Integer.parseInt(entry.get(5)),
                             entry.get(6).charAt(0), Integer.parseInt(entry.get(7)), entry.get(8));
-                    dataHandler.InsertRoute(route);
+                    dataImport.InsertRoute(route);
                 } catch (SQLException ignored) {
                     // Ignore duplicate entry
                 }

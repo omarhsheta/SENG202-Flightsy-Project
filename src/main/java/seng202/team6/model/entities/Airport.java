@@ -1,7 +1,6 @@
 package seng202.team6.model.entities;
 import javafx.util.Pair;
-import seng202.team6.gui.components.FilterTextField;
-import seng202.team6.model.data.DataHandler;
+import seng202.team6.model.data.DataExportHandler;
 import seng202.team6.model.data.Filter;
 import seng202.team6.model.interfaces.IMapDrawable;
 
@@ -112,8 +111,8 @@ public class Airport implements IMapDrawable, Comparable<Airport> {
      * @return Pair of source, destination airports
      */
     public static Pair<ArrayList<Airport>, ArrayList<Airport>> GetSourceAndDestinations(ArrayList<Filter> sourceFilters, ArrayList<Filter> destinationFilters) {
-        ArrayList<Airport> sourceAirports = DataHandler.GetInstance().FetchAirports(sourceFilters);
-        ArrayList<Airport> destinationAirports = DataHandler.GetInstance().FetchAirports(destinationFilters);
+        ArrayList<Airport> sourceAirports = DataExportHandler.GetInstance().FetchAirports(sourceFilters);
+        ArrayList<Airport> destinationAirports = DataExportHandler.GetInstance().FetchAirports(destinationFilters);
 
         return new Pair<>(sourceAirports, destinationAirports);
     }

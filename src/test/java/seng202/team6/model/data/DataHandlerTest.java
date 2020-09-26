@@ -1,10 +1,8 @@
 package seng202.team6.model.data;
 
 import org.junit.*;
-import org.junit.Assert.*;
 import seng202.team6.model.entities.*;
 
-import java.sql.SQLException;
 import java.util.Collections;
 import java.util.Random;
 import java.util.ArrayList;
@@ -16,7 +14,10 @@ import static org.junit.Assert.*;
 public class DataHandlerTest {
     private Random random;
     private int randomBound = 10000000;
-    private DataHandler dataHandler;
+
+    private DataImportHandler dataImport;
+    private DataExportHandler dataExport;
+
     private ArrayList<Filter> filters;
 
     private Airline testAirline1;
@@ -54,13 +55,13 @@ public class DataHandlerTest {
         actualAirports.clear();
         testRoutes.clear();
         actualRoutes.clear();
-
     }
 
     @Before
     public void InitializeTest() {
         random = new Random();
-        dataHandler = new DataHandler();
+        dataImport = DataImportHandler.GetInstance();
+        dataExport = DataExportHandler.GetInstance();
         filters = new ArrayList<Filter>();
 
         testAirline1 = new Airline(random.nextInt(randomBound), "Virgin Airlines", "Virgin", "VI",
@@ -115,10 +116,10 @@ public class DataHandlerTest {
     @Test
     public void testInsertOneAirline() {
         try {
-            dataHandler.InsertAirline(testAirline1);
+            dataImport.InsertAirline(testAirline1);
             Filter filter = new Filter(format("id_airline = %d", testAirline1.getAirlineID()), "");
             filters.add(filter);
-            actualAirlines = dataHandler.FetchAirlines(filters);
+            actualAirlines = dataExport.FetchAirlines(filters);
         } catch(Exception e) {
             Assert.fail(e.getMessage());
         }
@@ -135,13 +136,13 @@ public class DataHandlerTest {
         testAirlines.add(testAirline2);
         try {
             for (Airline airline: testAirlines) {
-                dataHandler.InsertAirline(airline);
+                dataImport.InsertAirline(airline);
             }
             Filter filter1 = new Filter(format("id_airline = %d", testAirline1.getAirlineID()), "OR");
             filters.add(filter1);
             Filter filter2 = new Filter(format("id_airline = %d", testAirline2.getAirlineID()), "");
             filters.add(filter2);
-            actualAirlines = dataHandler.FetchAirlines(filters);
+            actualAirlines = dataExport.FetchAirlines(filters);
         } catch(Exception e) {
             Assert.fail(e.getMessage());
         }
@@ -165,7 +166,7 @@ public class DataHandlerTest {
         testAirlines.add(testAirline5);
         try {
             for (Airline airline: testAirlines) {
-                dataHandler.InsertAirline(airline);
+                dataImport.InsertAirline(airline);
             }
             Filter filter1 = new Filter(format("id_airline = %d", testAirline1.getAirlineID()), "OR");
             filters.add(filter1);
@@ -177,7 +178,7 @@ public class DataHandlerTest {
             filters.add(filter4);
             Filter filter5 = new Filter(format("id_airline = %d", testAirline5.getAirlineID()), "");
             filters.add(filter5);
-            actualAirlines = dataHandler.FetchAirlines(filters);
+            actualAirlines = dataExport.FetchAirlines(filters);
         } catch(Exception e) {
             Assert.fail(e.getMessage());
         }
@@ -196,7 +197,7 @@ public class DataHandlerTest {
     @Test @Ignore
     public void testInsertEmptyAirline() {
         try {
-            dataHandler.InsertAirline(testEmptyAirline);
+            dataImport.InsertAirline(testEmptyAirline);
             Assert.fail("SQLException was supposed to be thrown.");
         } catch (Exception e) {
             Assert.assertTrue(e instanceof Exception);
@@ -210,10 +211,10 @@ public class DataHandlerTest {
     @Test
     public void testInsertOneAirport() {
         try {
-            dataHandler.InsertAirport(testAirport1);
+            dataImport.InsertAirport(testAirport1);
             Filter filter = new Filter(format("id_airport = %d", testAirport1.getAirportID()), "");
             filters.add(filter);
-            actualAirports = dataHandler.FetchAirports(filters);
+            actualAirports = dataExport.FetchAirports(filters);
             Assert.assertEquals(testAirport1, actualAirports.get(0));
         } catch(Exception e) {
             Assert.fail(e.getMessage());
@@ -230,13 +231,13 @@ public class DataHandlerTest {
         testAirports.add(testAirport2);
         try {
             for (Airport airport: testAirports) {
-                dataHandler.InsertAirport(airport);
+                dataImport.InsertAirport(airport);
             }
             Filter filter1 = new Filter(format("id_airport = %d", testAirport1.getAirportID()), "OR");
             filters.add(filter1);
             Filter filter2 = new Filter(format("id_airport = %d", testAirport2.getAirportID()), "");
             filters.add(filter2);
-            actualAirports = dataHandler.FetchAirports(filters);
+            actualAirports = dataExport.FetchAirports(filters);
         } catch(Exception e) {
             Assert.fail(e.getMessage());
         }
@@ -260,7 +261,7 @@ public class DataHandlerTest {
         testAirports.add(testAirport5);
         try {
             for (Airport airport: testAirports) {
-                dataHandler.InsertAirport(airport);
+                dataImport.InsertAirport(airport);
             }
             Filter filter1 = new Filter(format("id_airport = %d", testAirport1.getAirportID()), "OR");
             filters.add(filter1);
@@ -272,7 +273,7 @@ public class DataHandlerTest {
             filters.add(filter4);
             Filter filter5 = new Filter(format("id_airport = %d", testAirport5.getAirportID()), "");
             filters.add(filter5);
-            actualAirports = dataHandler.FetchAirports(filters);
+            actualAirports = dataExport.FetchAirports(filters);
         } catch(Exception e) {
             Assert.fail(e.getMessage());
         }
@@ -291,7 +292,7 @@ public class DataHandlerTest {
     @Ignore @Test
     public void testInsertEmptyAirport() {
         try {
-            dataHandler.InsertAirport(testEmptyAirport);
+            dataImport.InsertAirport(testEmptyAirport);
             Assert.fail("SQLException was supposed to be thrown.");
         } catch (Exception e) {
             Assert.assertTrue(e instanceof Exception);
@@ -305,12 +306,12 @@ public class DataHandlerTest {
     @Test
     public void testInsertOneRoute() {
         try {
-            dataHandler.InsertRoute(testRoute1);
+            dataImport.InsertRoute(testRoute1);
             Filter filter = new Filter(format("id_airline = %d AND source_airport_id = %d AND destination_airport_id " +
                             " = %d", testRoute1.getAirlineID(), testRoute1.getSourceAirportID(),
                     testRoute1.getDestinationAirportID()), "");
             filters.add(filter);
-            actualRoutes = dataHandler.FetchRoutes(filters);
+            actualRoutes = dataExport.FetchRoutes(filters);
         } catch(Exception e) {
             Assert.fail(e.getMessage());
         }
@@ -327,7 +328,7 @@ public class DataHandlerTest {
         testRoutes.add(testRoute2);
         try {
             for (Route route: testRoutes) {
-                dataHandler.InsertRoute(route);
+                dataImport.InsertRoute(route);
             }
             Filter filter1 = new Filter(format("id_airline = %d AND source_airport_id = %d AND destination_airport_id" +
                             " = %d", testRoute1.getAirlineID(), testRoute1.getSourceAirportID(),
@@ -337,7 +338,7 @@ public class DataHandlerTest {
                             " = %d", testRoute2.getAirlineID(), testRoute2.getSourceAirportID(),
                     testRoute2.getDestinationAirportID()), "");
             filters.add(filter2);
-            actualRoutes = dataHandler.FetchRoutes(filters);
+            actualRoutes = dataExport.FetchRoutes(filters);
         } catch(Exception e) {
             Assert.fail(e.getMessage());
         }
@@ -361,7 +362,7 @@ public class DataHandlerTest {
         testRoutes.add(testRoute5);
         try {
             for (Route route: testRoutes) {
-                dataHandler.InsertRoute(route);
+                dataImport.InsertRoute(route);
             }
             Filter filter1 = new Filter(format("id_airline = %d AND source_airport_id = %d AND destination_airport_id" +
                             " = %d", testRoute1.getAirlineID(), testRoute1.getSourceAirportID(),
@@ -384,7 +385,7 @@ public class DataHandlerTest {
                     testRoute5.getDestinationAirportID()), "");
             filters.add(filter5);
 
-            actualRoutes = dataHandler.FetchRoutes(filters);
+            actualRoutes = dataExport.FetchRoutes(filters);
         } catch(Exception e) {
             Assert.fail(e.getMessage());
         }
@@ -403,7 +404,7 @@ public class DataHandlerTest {
     @Ignore @Test
     public void testInsertEmptyRoute() {
         try {
-            dataHandler.InsertRoute(testEmptyRoute);
+            dataImport.InsertRoute(testEmptyRoute);
             Assert.fail("SQLException was supposed to be thrown.");
         } catch (Exception e) {
             Assert.assertTrue(e instanceof Exception);
@@ -416,13 +417,14 @@ public class DataHandlerTest {
      */
     @Test
     public void testUpdateOneAirline() {
-        try {dataHandler.InsertAirline(testAirline1);} catch (Exception e) {Assert.fail(e.getMessage());}
         try {
-            dataHandler.updateAirline(testAirline1.getAirlineID(), "VirginBlue", null, null, null, null,
+            dataImport.InsertAirline(testAirline1);} catch (Exception e) {Assert.fail(e.getMessage());}
+        try {
+            dataImport.updateAirline(testAirline1.getAirlineID(), "VirginBlue", null, null, null, null,
                     null, null);
             Filter filter = new Filter(format("id_airline = %d", testAirline1.getAirlineID()), "");
             filters.add(filter);
-            actualAirlines = dataHandler.FetchAirlines(filters);
+            actualAirlines = dataExport.FetchAirlines(filters);
         } catch (Exception e) {
             Assert.fail(e.getMessage());
         }
@@ -440,19 +442,19 @@ public class DataHandlerTest {
         testAirlines.add(testAirline2);
         try {
             for (Airline airline: testAirlines) {
-                dataHandler.InsertAirline(airline);
+                dataImport.InsertAirline(airline);
             }
         } catch (Exception e) {Assert.fail(e.getMessage());}
         try {
-            dataHandler.updateAirline(testAirline1.getAirlineID(), "VirginGreen", null, null, null, null,
+            dataImport.updateAirline(testAirline1.getAirlineID(), "VirginGreen", null, null, null, null,
                     null, null);
             Filter filter1 = new Filter(format("id_airline = %d", testAirline1.getAirlineID()), "OR");
             filters.add(filter1);
-            dataHandler.updateAirline(testAirline2.getAirlineID(), "VirginPurple", null, null, null, null,
+            dataImport.updateAirline(testAirline2.getAirlineID(), "VirginPurple", null, null, null, null,
                     null, null);
             Filter filter2 = new Filter(format("id_airline = %d", testAirline2.getAirlineID()), "");
             filters.add(filter2);
-            actualAirlines = dataHandler.FetchAirlines(filters);
+            actualAirlines = dataExport.FetchAirlines(filters);
         } catch (Exception e) {
             Assert.fail(e.getMessage());
         }
@@ -478,31 +480,31 @@ public class DataHandlerTest {
         testAirlines.add(testAirline5);
         try {
             for (Airline airline: testAirlines) {
-                dataHandler.InsertAirline(airline);
+                dataImport.InsertAirline(airline);
             }
         } catch (Exception e) {Assert.fail(e.getMessage());}
         try {
-            dataHandler.updateAirline(testAirline1.getAirlineID(), "VirginAlpha", null, null, null, null,
+            dataImport.updateAirline(testAirline1.getAirlineID(), "VirginAlpha", null, null, null, null,
                     null, null);
             Filter filter1 = new Filter(format("id_airline = %d", testAirline1.getAirlineID()), "OR");
             filters.add(filter1);
-            dataHandler.updateAirline(testAirline2.getAirlineID(), "VirginBeta", null, null, null, null,
+            dataImport.updateAirline(testAirline2.getAirlineID(), "VirginBeta", null, null, null, null,
                     null, null);
             Filter filter2 = new Filter(format("id_airline = %d", testAirline2.getAirlineID()), "OR");
             filters.add(filter2);
-            dataHandler.updateAirline(testAirline3.getAirlineID(), "VirginCharlie", null, null, null, null,
+            dataImport.updateAirline(testAirline3.getAirlineID(), "VirginCharlie", null, null, null, null,
                     null, null);
             Filter filter3 = new Filter(format("id_airline = %d", testAirline3.getAirlineID()), "OR");
             filters.add(filter3);
-            dataHandler.updateAirline(testAirline4.getAirlineID(), "VirginDelta", null, null, null, null,
+            dataImport.updateAirline(testAirline4.getAirlineID(), "VirginDelta", null, null, null, null,
                     null, null);
             Filter filter4 = new Filter(format("id_airline = %d", testAirline4.getAirlineID()), "OR");
             filters.add(filter4);
-            dataHandler.updateAirline(testAirline5.getAirlineID(), "VirginEcho", null, null, null, null,
+            dataImport.updateAirline(testAirline5.getAirlineID(), "VirginEcho", null, null, null, null,
                     null, null);
             Filter filter5 = new Filter(format("id_airline = %d", testAirline5.getAirlineID()), "");
             filters.add(filter5);
-            actualAirlines = dataHandler.FetchAirlines(filters);
+            actualAirlines = dataExport.FetchAirlines(filters);
         } catch (Exception e) {
             Assert.fail(e.getMessage());
         }
@@ -524,9 +526,10 @@ public class DataHandlerTest {
      */
     @Test
     public void testUpdateAirlineEmpty() {
-        try {dataHandler.InsertAirline(testAirline1);} catch (Exception e) {Assert.fail(e.getMessage());}
         try {
-            dataHandler.updateAirline(testAirline1.getAirlineID(), null, null, null, null, null,
+            dataImport.InsertAirline(testAirline1);} catch (Exception e) {Assert.fail(e.getMessage());}
+        try {
+            dataImport.updateAirline(testAirline1.getAirlineID(), null, null, null, null, null,
                     null, null);
             Assert.fail("Should have failed by now.");
         } catch (Exception e) {
@@ -541,9 +544,10 @@ public class DataHandlerTest {
      */
     @Test
     public void testUpdateAirlineOneCharIATA() {
-        try {dataHandler.InsertAirline(testAirline1);} catch (Exception e) {Assert.fail(e.getMessage());}
         try {
-            dataHandler.updateAirline(testAirline1.getAirlineID(), null, null, "W", null, null,
+            dataImport.InsertAirline(testAirline1);} catch (Exception e) {Assert.fail(e.getMessage());}
+        try {
+            dataImport.updateAirline(testAirline1.getAirlineID(), null, null, "W", null, null,
                     null, null);
             Assert.fail("Should have failed by now.");
         } catch (Exception e) {
@@ -558,9 +562,10 @@ public class DataHandlerTest {
      */
     @Test
     public void testUpdateAirlineThreeCharIATA() {
-        try {dataHandler.InsertAirline(testAirline1);} catch (Exception e) {Assert.fail(e.getMessage());}
         try {
-            dataHandler.updateAirline(testAirline1.getAirlineID(), null, null, "WAP", null, null,
+            dataImport.InsertAirline(testAirline1);} catch (Exception e) {Assert.fail(e.getMessage());}
+        try {
+            dataImport.updateAirline(testAirline1.getAirlineID(), null, null, "WAP", null, null,
                     null, null);
             Assert.fail("Should have failed by now.");
         } catch (Exception e) {
@@ -575,9 +580,10 @@ public class DataHandlerTest {
      */
     @Test
     public void testUpdateAirlineTwoCharICAO() {
-        try {dataHandler.InsertAirline(testAirline1);} catch (Exception e) {Assert.fail(e.getMessage());}
         try {
-            dataHandler.updateAirline(testAirline1.getAirlineID(), null, null, null, "WA", null,
+            dataImport.InsertAirline(testAirline1);} catch (Exception e) {Assert.fail(e.getMessage());}
+        try {
+            dataImport.updateAirline(testAirline1.getAirlineID(), null, null, null, "WA", null,
                     null, null);
             Assert.fail("Should have failed by now.");
         } catch (Exception e) {
@@ -592,9 +598,10 @@ public class DataHandlerTest {
      */
     @Test
     public void testUpdateAirlineFourCharICAO() {
-        try {dataHandler.InsertAirline(testAirline1);} catch (Exception e) {Assert.fail(e.getMessage());}
         try {
-            dataHandler.updateAirline(testAirline1.getAirlineID(), null, null, null, "WAPP", null,
+            dataImport.InsertAirline(testAirline1);} catch (Exception e) {Assert.fail(e.getMessage());}
+        try {
+            dataImport.updateAirline(testAirline1.getAirlineID(), null, null, null, "WAPP", null,
                     null, null);
             Assert.fail("Should have failed by now.");
         } catch (Exception e) {
@@ -609,13 +616,14 @@ public class DataHandlerTest {
      */
     @Test
     public void testUpdateOneAirport() {
-        try {dataHandler.InsertAirport(testAirport1);} catch (Exception e) {Assert.fail(e.getMessage());}
         try {
-            dataHandler.updateAirport(testAirport1.getAirportID(), "Alpha", null, null, null, null,
+            dataImport.InsertAirport(testAirport1);} catch (Exception e) {Assert.fail(e.getMessage());}
+        try {
+            dataImport.updateAirport(testAirport1.getAirportID(), "Alpha", null, null, null, null,
                     null, null, null, null, null);
             Filter filter = new Filter(format("id_airport = %d", testAirport1.getAirportID()), "");
             filters.add(filter);
-            actualAirports = dataHandler.FetchAirports(filters);
+            actualAirports = dataExport.FetchAirports(filters);
         } catch (Exception e) {
             Assert.fail(e.getMessage());
         }
@@ -633,19 +641,19 @@ public class DataHandlerTest {
         testAirports.add(testAirport2);
         try {
             for (Airport airport: testAirports) {
-                dataHandler.InsertAirport(airport);
+                dataImport.InsertAirport(airport);
             }
         } catch (Exception e) {Assert.fail(e.getMessage());}
         try {
-            dataHandler.updateAirport(testAirport1.getAirportID(), "Bravo", null, null, null, null,
+            dataImport.updateAirport(testAirport1.getAirportID(), "Bravo", null, null, null, null,
                     null, null, null, null, null);
             Filter filter1 = new Filter(format("id_airport = %d", testAirport1.getAirportID()), "OR");
             filters.add(filter1);
-            dataHandler.updateAirport(testAirport2.getAirportID(), "Charlie", null, null, null, null,
+            dataImport.updateAirport(testAirport2.getAirportID(), "Charlie", null, null, null, null,
                     null, null, null, null, null);
             Filter filter2 = new Filter(format("id_airport = %d", testAirport2.getAirportID()), "");
             filters.add(filter2);
-            actualAirports = dataHandler.FetchAirports(filters);
+            actualAirports = dataExport.FetchAirports(filters);
         } catch (Exception e) {
             Assert.fail(e.getMessage());
         }
@@ -671,31 +679,31 @@ public class DataHandlerTest {
         testAirports.add(testAirport5);
         try {
             for (Airport airport: testAirports) {
-                dataHandler.InsertAirport(airport);
+                dataImport.InsertAirport(airport);
             }
         } catch (Exception e) {Assert.fail(e.getMessage());}
         try {
-            dataHandler.updateAirport(testAirport1.getAirportID(), "Delta", null, null, null, null,
+            dataImport.updateAirport(testAirport1.getAirportID(), "Delta", null, null, null, null,
                     null, null, null, null, null);
             Filter filter1 = new Filter(format("id_airport = %d", testAirport1.getAirportID()), "OR");
             filters.add(filter1);
-            dataHandler.updateAirport(testAirport2.getAirportID(), "Echo", null, null, null, null,
+            dataImport.updateAirport(testAirport2.getAirportID(), "Echo", null, null, null, null,
                     null, null, null, null, null);
             Filter filter2 = new Filter(format("id_airport = %d", testAirport2.getAirportID()), "OR");
             filters.add(filter2);
-            dataHandler.updateAirport(testAirport3.getAirportID(), "Foxtrot", null, null, null, null,
+            dataImport.updateAirport(testAirport3.getAirportID(), "Foxtrot", null, null, null, null,
                     null, null, null, null, null);
             Filter filter3 = new Filter(format("id_airport = %d", testAirport3.getAirportID()), "OR");
             filters.add(filter3);
-            dataHandler.updateAirport(testAirport4.getAirportID(), "Golf", null, null, null, null,
+            dataImport.updateAirport(testAirport4.getAirportID(), "Golf", null, null, null, null,
                     null, null, null, null, null);
             Filter filter4 = new Filter(format("id_airport = %d", testAirport4.getAirportID()), "OR");
             filters.add(filter4);
-            dataHandler.updateAirport(testAirport5.getAirportID(), "Hotel", null, null, null, null,
+            dataImport.updateAirport(testAirport5.getAirportID(), "Hotel", null, null, null, null,
                     null, null, null, null, null);
             Filter filter5 = new Filter(format("id_airport = %d", testAirport5.getAirportID()), "");
             filters.add(filter5);
-            actualAirports = dataHandler.FetchAirports(filters);
+            actualAirports = dataExport.FetchAirports(filters);
         } catch (Exception e) {
             Assert.fail(e.getMessage());
         }
@@ -717,9 +725,10 @@ public class DataHandlerTest {
      */
     @Test
     public void testUpdateAirportEmpty() {
-        try {dataHandler.InsertAirport(testAirport1);} catch (Exception e) {Assert.fail(e.getMessage());}
         try {
-            dataHandler.updateAirport(testAirport1.getAirportID(), null, null, null, null, null,
+            dataImport.InsertAirport(testAirport1);} catch (Exception e) {Assert.fail(e.getMessage());}
+        try {
+            dataImport.updateAirport(testAirport1.getAirportID(), null, null, null, null, null,
                     null, null, null, null, null);
             Assert.fail("Should have failed by now.");
         } catch (Exception e) {
@@ -734,9 +743,10 @@ public class DataHandlerTest {
      */
     @Test
     public void testUpdateAirportTwoCharIATA() {
-        try {dataHandler.InsertAirport(testAirport1);} catch (Exception e) {Assert.fail(e.getMessage());}
         try {
-            dataHandler.updateAirport(testAirport1.getAirportID(), null, null, null, "BO", null,
+            dataImport.InsertAirport(testAirport1);} catch (Exception e) {Assert.fail(e.getMessage());}
+        try {
+            dataImport.updateAirport(testAirport1.getAirportID(), null, null, null, "BO", null,
                     null, null, null, null, null);
             Assert.fail("Should have failed by now.");
         } catch (Exception e) {
@@ -751,9 +761,10 @@ public class DataHandlerTest {
      */
     @Test
     public void testUpdateAirportFourCharIATA() {
-        try {dataHandler.InsertAirport(testAirport1);} catch (Exception e) {Assert.fail(e.getMessage());}
         try {
-            dataHandler.updateAirport(testAirport1.getAirportID(), null, null, null, "BOII", null,
+            dataImport.InsertAirport(testAirport1);} catch (Exception e) {Assert.fail(e.getMessage());}
+        try {
+            dataImport.updateAirport(testAirport1.getAirportID(), null, null, null, "BOII", null,
                     null, null, null, null, null);
             Assert.fail("Should have failed by now.");
         } catch (Exception e) {
@@ -768,9 +779,10 @@ public class DataHandlerTest {
      */
     @Test
     public void testUpdateAirportThreeCharICAO() {
-        try {dataHandler.InsertAirport(testAirport1);} catch (Exception e) {Assert.fail(e.getMessage());}
         try {
-            dataHandler.updateAirport(testAirport1.getAirportID(), null, null, null, null, "SUG",
+            dataImport.InsertAirport(testAirport1);} catch (Exception e) {Assert.fail(e.getMessage());}
+        try {
+            dataImport.updateAirport(testAirport1.getAirportID(), null, null, null, null, "SUG",
                     null, null, null, null, null);
             Assert.fail("Should have failed by now.");
         } catch (Exception e) {
@@ -785,9 +797,10 @@ public class DataHandlerTest {
      */
     @Test
     public void testUpdateAirportFiveCharICAO() {
-        try {dataHandler.InsertAirport(testAirport1);} catch (Exception e) {Assert.fail(e.getMessage());}
         try {
-            dataHandler.updateAirport(testAirport1.getAirportID(), null, null, null, null, "SUGAR",
+            dataImport.InsertAirport(testAirport1);} catch (Exception e) {Assert.fail(e.getMessage());}
+        try {
+            dataImport.updateAirport(testAirport1.getAirportID(), null, null, null, null, "SUGAR",
                     null, null, null, null, null);
             Assert.fail("Should have failed by now.");
         } catch (Exception e) {
@@ -802,14 +815,15 @@ public class DataHandlerTest {
      */
     @Test
     public void testUpdateOneRoute() {
-        try {dataHandler.InsertRoute(testRoute1);} catch (Exception e) {Assert.fail(e.getMessage());}
         try {
-            dataHandler.updateRoute(testRoute1.getAirlineID(), testRoute1.getSourceAirportID(), testRoute1.getDestinationAirportID(),
+            dataImport.InsertRoute(testRoute1);} catch (Exception e) {Assert.fail(e.getMessage());}
+        try {
+            dataImport.updateRoute(testRoute1.getAirlineID(), testRoute1.getSourceAirportID(), testRoute1.getDestinationAirportID(),
                     null, null, null, null, 5, null);
             Filter filter = new Filter(format("id_airline = %d AND source_airport_id = %d AND destination_airport_id = %d",
                     testRoute1.getAirlineID(), testRoute1.getSourceAirportID(), testRoute1.getDestinationAirportID()), "");
             filters.add(filter);
-            actualRoutes = dataHandler.FetchRoutes(filters);
+            actualRoutes = dataExport.FetchRoutes(filters);
         } catch (Exception e) {
             Assert.fail(e.getMessage());
         }
@@ -827,21 +841,21 @@ public class DataHandlerTest {
         testRoutes.add(testRoute2);
         try {
             for (Route route: testRoutes) {
-                dataHandler.InsertRoute(route);
+                dataImport.InsertRoute(route);
             }
         } catch (Exception e) {Assert.fail(e.getMessage());}
         try {
-            dataHandler.updateRoute(testRoute1.getAirlineID(), testRoute1.getSourceAirportID(), testRoute1.getDestinationAirportID(),
+            dataImport.updateRoute(testRoute1.getAirlineID(), testRoute1.getSourceAirportID(), testRoute1.getDestinationAirportID(),
                     null, null, null, null, 6, null);
             Filter filter1 = new Filter(format("id_airline = %d AND source_airport_id = %d AND destination_airport_id = %d",
                     testRoute1.getAirlineID(), testRoute1.getSourceAirportID(), testRoute1.getDestinationAirportID()), "OR");
             filters.add(filter1);
-            dataHandler.updateRoute(testRoute2.getAirlineID(), testRoute2.getSourceAirportID(), testRoute2.getDestinationAirportID(),
+            dataImport.updateRoute(testRoute2.getAirlineID(), testRoute2.getSourceAirportID(), testRoute2.getDestinationAirportID(),
                     null, null, null, null, 7, null);
             Filter filter2 = new Filter(format("id_airline = %d AND source_airport_id = %d AND destination_airport_id = %d",
                     testRoute2.getAirlineID(), testRoute2.getSourceAirportID(), testRoute2.getDestinationAirportID()), "");
             filters.add(filter2);
-            actualRoutes = dataHandler.FetchRoutes(filters);
+            actualRoutes = dataExport.FetchRoutes(filters);
         } catch (Exception e) {
             Assert.fail(e.getMessage());
         }
@@ -867,36 +881,36 @@ public class DataHandlerTest {
         testRoutes.add(testRoute5);
         try {
             for (Route route: testRoutes) {
-                dataHandler.InsertRoute(route);
+                dataImport.InsertRoute(route);
             }
         } catch (Exception e) {Assert.fail(e.getMessage());}
         try {
-            dataHandler.updateRoute(testRoute1.getAirlineID(), testRoute1.getSourceAirportID(), testRoute1.getDestinationAirportID(),
+            dataImport.updateRoute(testRoute1.getAirlineID(), testRoute1.getSourceAirportID(), testRoute1.getDestinationAirportID(),
                     null, null, null, null, 8, null);
             Filter filter1 = new Filter(format("id_airline = %d AND source_airport_id = %d AND destination_airport_id = %d",
                     testRoute1.getAirlineID(), testRoute1.getSourceAirportID(), testRoute1.getDestinationAirportID()), "OR");
             filters.add(filter1);
-            dataHandler.updateRoute(testRoute2.getAirlineID(), testRoute2.getSourceAirportID(), testRoute2.getDestinationAirportID(),
+            dataImport.updateRoute(testRoute2.getAirlineID(), testRoute2.getSourceAirportID(), testRoute2.getDestinationAirportID(),
                     null, null, null, null, 9, null);
             Filter filter2 = new Filter(format("id_airline = %d AND source_airport_id = %d AND destination_airport_id = %d",
                     testRoute2.getAirlineID(), testRoute2.getSourceAirportID(), testRoute2.getDestinationAirportID()), "OR");
             filters.add(filter2);
-            dataHandler.updateRoute(testRoute3.getAirlineID(), testRoute3.getSourceAirportID(), testRoute3.getDestinationAirportID(),
+            dataImport.updateRoute(testRoute3.getAirlineID(), testRoute3.getSourceAirportID(), testRoute3.getDestinationAirportID(),
                     null, null, null, null, 10, null);
             Filter filter3 = new Filter(format("id_airline = %d AND source_airport_id = %d AND destination_airport_id = %d",
                     testRoute3.getAirlineID(), testRoute3.getSourceAirportID(), testRoute3.getDestinationAirportID()), "OR");
             filters.add(filter3);
-            dataHandler.updateRoute(testRoute4.getAirlineID(), testRoute4.getSourceAirportID(), testRoute4.getDestinationAirportID(),
+            dataImport.updateRoute(testRoute4.getAirlineID(), testRoute4.getSourceAirportID(), testRoute4.getDestinationAirportID(),
                     null, null, null, null, 11, null);
             Filter filter4 = new Filter(format("id_airline = %d AND source_airport_id = %d AND destination_airport_id = %d",
                     testRoute4.getAirlineID(), testRoute4.getSourceAirportID(), testRoute4.getDestinationAirportID()), "OR");
             filters.add(filter4);
-            dataHandler.updateRoute(testRoute5.getAirlineID(), testRoute5.getSourceAirportID(), testRoute5.getDestinationAirportID(),
+            dataImport.updateRoute(testRoute5.getAirlineID(), testRoute5.getSourceAirportID(), testRoute5.getDestinationAirportID(),
                     null, null, null, null, 12, null);
             Filter filter5 = new Filter(format("id_airline = %d AND source_airport_id = %d AND destination_airport_id = %d",
                     testRoute5.getAirlineID(), testRoute5.getSourceAirportID(), testRoute5.getDestinationAirportID()), "");
             filters.add(filter5);
-            actualRoutes = dataHandler.FetchRoutes(filters);
+            actualRoutes = dataExport.FetchRoutes(filters);
         } catch (Exception e) {
             Assert.fail(e.getMessage());
         }
@@ -918,9 +932,10 @@ public class DataHandlerTest {
      */
     @Test
     public void testUpdateRouteEmpty() {
-        try {dataHandler.InsertRoute(testRoute1);} catch (Exception e) {Assert.fail(e.getMessage());}
         try {
-            dataHandler.updateRoute(testRoute1.getAirlineID(), testRoute1.getSourceAirportID(), testRoute1.getDestinationAirportID(),
+            dataImport.InsertRoute(testRoute1);} catch (Exception e) {Assert.fail(e.getMessage());}
+        try {
+            dataImport.updateRoute(testRoute1.getAirlineID(), testRoute1.getSourceAirportID(), testRoute1.getDestinationAirportID(),
                     null, null, null, null, null, null);
             Assert.fail("Should have failed by now.");
         } catch (Exception e) {
@@ -936,13 +951,14 @@ public class DataHandlerTest {
      */
     @Ignore @Test
     public void testDeleteOneAirline() {
-        try {dataHandler.InsertAirline(testAirline1);} catch (Exception e) {Assert.fail(e.getMessage());}
+        try {
+            dataImport.InsertAirline(testAirline1);} catch (Exception e) {Assert.fail(e.getMessage());}
         Filter filter = new Filter(format("id_airline = %d", testAirline1.getAirlineID()), "");
         filters.add(filter);
         try {
-            dataHandler.deleteAirline(testAirline1.getAirlineID());
+            dataImport.deleteAirline(testAirline1.getAirlineID());
         } catch (Exception e) {Assert.fail(e.getMessage());}
-        actualAirlines = dataHandler.FetchAirlines(filters);
+        actualAirlines = dataExport.FetchAirlines(filters);
         assertTrue(actualAirlines.isEmpty());
         fullClear();
     }
@@ -956,7 +972,7 @@ public class DataHandlerTest {
         testAirlines.add(testAirline2);
         try {
             for (Airline airline: testAirlines) {
-                dataHandler.InsertAirline(airline);
+                dataImport.InsertAirline(airline);
             }
         } catch (Exception e) {Assert.fail(e.getMessage());}
         Filter filter1 = new Filter(format("id_airline = %d", testAirline1.getAirlineID()), "OR");
@@ -964,10 +980,10 @@ public class DataHandlerTest {
         Filter filter2 = new Filter(format("id_airline = %d", testAirline2.getAirlineID()), "");
         filters.add(filter2);
         try {
-            dataHandler.deleteAirline(testAirline1.getAirlineID());
-            dataHandler.deleteAirline(testAirline2.getAirlineID());
+            dataImport.deleteAirline(testAirline1.getAirlineID());
+            dataImport.deleteAirline(testAirline2.getAirlineID());
         } catch (Exception e) {Assert.fail(e.getMessage());}
-        actualAirlines = dataHandler.FetchAirlines(filters);
+        actualAirlines = dataExport.FetchAirlines(filters);
         assertTrue(actualAirlines.isEmpty());
         fullClear();
     }
@@ -984,7 +1000,7 @@ public class DataHandlerTest {
         testAirlines.add(testAirline5);
         try {
             for (Airline airline: testAirlines) {
-                dataHandler.InsertAirline(airline);
+                dataImport.InsertAirline(airline);
             }
         } catch (Exception e) {Assert.fail(e.getMessage());}
         Filter filter1 = new Filter(format("id_airline = %d", testAirline1.getAirlineID()), "OR");
@@ -998,13 +1014,13 @@ public class DataHandlerTest {
         Filter filter5 = new Filter(format("id_airline = %d", testAirline5.getAirlineID()), "");
         filters.add(filter5);
         try {
-            dataHandler.deleteAirline(testAirline1.getAirlineID());
-            dataHandler.deleteAirline(testAirline2.getAirlineID());
-            dataHandler.deleteAirline(testAirline3.getAirlineID());
-            dataHandler.deleteAirline(testAirline4.getAirlineID());
-            dataHandler.deleteAirline(testAirline5.getAirlineID());
+            dataImport.deleteAirline(testAirline1.getAirlineID());
+            dataImport.deleteAirline(testAirline2.getAirlineID());
+            dataImport.deleteAirline(testAirline3.getAirlineID());
+            dataImport.deleteAirline(testAirline4.getAirlineID());
+            dataImport.deleteAirline(testAirline5.getAirlineID());
         } catch (Exception e) {Assert.fail(e.getMessage());}
-        actualAirlines = dataHandler.FetchAirlines(filters);
+        actualAirlines = dataExport.FetchAirlines(filters);
         assertTrue(actualAirlines.isEmpty());
         fullClear();
     }
@@ -1015,7 +1031,7 @@ public class DataHandlerTest {
     @Test
     public void testDeleteAirlineInvalidID() {
         try {
-            dataHandler.deleteAirline(8008);
+            dataImport.deleteAirline(8008);
             Assert.fail("SQLException was supposed to be thrown.");
         } catch (Exception e) {
             Assert.assertTrue(e instanceof Exception);
@@ -1028,13 +1044,14 @@ public class DataHandlerTest {
      */
     @Test
     public void testDeleteOneAirport() {
-        try {dataHandler.InsertAirport(testAirport1);} catch (Exception e) {Assert.fail(e.getMessage());}
+        try {
+            dataImport.InsertAirport(testAirport1);} catch (Exception e) {Assert.fail(e.getMessage());}
         Filter filter = new Filter(format("id_airport = %d", testAirport1.getAirportID()), "");
         filters.add(filter);
         try {
-            dataHandler.deleteAirport(testAirport1.getAirportID());
+            dataImport.deleteAirport(testAirport1.getAirportID());
         } catch (Exception e) {Assert.fail(e.getMessage());}
-        actualAirports = dataHandler.FetchAirports(filters);
+        actualAirports = dataExport.FetchAirports(filters);
         assertTrue(actualAirports.isEmpty());
         fullClear();
     }
@@ -1048,7 +1065,7 @@ public class DataHandlerTest {
         testAirports.add(testAirport2);
         try {
             for (Airport airport: testAirports) {
-                dataHandler.InsertAirport(airport);
+                dataImport.InsertAirport(airport);
             }
         } catch (Exception e) {Assert.fail(e.getMessage());}
         Filter filter1 = new Filter(format("id_airport = %d", testAirport1.getAirportID()), "OR");
@@ -1056,10 +1073,10 @@ public class DataHandlerTest {
         Filter filter2 = new Filter(format("id_airport = %d", testAirport2.getAirportID()), "");
         filters.add(filter2);
         try {
-            dataHandler.deleteAirport(testAirport1.getAirportID());
-            dataHandler.deleteAirport(testAirport2.getAirportID());
+            dataImport.deleteAirport(testAirport1.getAirportID());
+            dataImport.deleteAirport(testAirport2.getAirportID());
         } catch (Exception e) {Assert.fail(e.getMessage());}
-        actualAirports = dataHandler.FetchAirports(filters);
+        actualAirports = dataExport.FetchAirports(filters);
         assertTrue(actualAirports.isEmpty());
         fullClear();
     }
@@ -1076,7 +1093,7 @@ public class DataHandlerTest {
         testAirports.add(testAirport5);
         try {
             for (Airport airport: testAirports) {
-                dataHandler.InsertAirport(airport);
+                dataImport.InsertAirport(airport);
             }
         } catch (Exception e) {Assert.fail(e.getMessage());}
         Filter filter1 = new Filter(format("id_airport = %d", testAirport1.getAirportID()), "OR");
@@ -1090,13 +1107,13 @@ public class DataHandlerTest {
         Filter filter5 = new Filter(format("id_airport = %d", testAirport5.getAirportID()), "");
         filters.add(filter5);
         try {
-            dataHandler.deleteAirport(testAirport1.getAirportID());
-            dataHandler.deleteAirport(testAirport2.getAirportID());
-            dataHandler.deleteAirport(testAirport3.getAirportID());
-            dataHandler.deleteAirport(testAirport4.getAirportID());
-            dataHandler.deleteAirport(testAirport5.getAirportID());
+            dataImport.deleteAirport(testAirport1.getAirportID());
+            dataImport.deleteAirport(testAirport2.getAirportID());
+            dataImport.deleteAirport(testAirport3.getAirportID());
+            dataImport.deleteAirport(testAirport4.getAirportID());
+            dataImport.deleteAirport(testAirport5.getAirportID());
         } catch (Exception e) {Assert.fail(e.getMessage());}
-        actualAirports = dataHandler.FetchAirports(filters);
+        actualAirports = dataExport.FetchAirports(filters);
         assertTrue(actualAirports.isEmpty());
         fullClear();
     }
@@ -1107,7 +1124,7 @@ public class DataHandlerTest {
     @Ignore @Test
     public void testDeleteAirportInvalidID() {
         try {
-            dataHandler.deleteAirport(8008);
+            dataImport.deleteAirport(8008);
             Assert.fail("SQLException was supposed to be thrown.");
         } catch (Exception e) {
             Assert.assertTrue(e instanceof Exception);
@@ -1120,14 +1137,15 @@ public class DataHandlerTest {
      */
     @Test
     public void testDeleteOneRoute() {
-        try {dataHandler.InsertRoute(testRoute1);} catch (Exception e) {Assert.fail(e.getMessage());}
+        try {
+            dataImport.InsertRoute(testRoute1);} catch (Exception e) {Assert.fail(e.getMessage());}
         Filter filter = new Filter(format("id_airline = %d AND source_airport_id = %d AND destination_airport_id = %d",
                 testRoute1.getAirlineID(), testRoute1.getSourceAirportID(), testRoute1.getDestinationAirportID()), "");
         filters.add(filter);
         try {
-            dataHandler.deleteRoute(testRoute1.getAirlineID(), testRoute1.getSourceAirportID(), testRoute1.getDestinationAirportID());
+            dataImport.deleteRoute(testRoute1.getAirlineID(), testRoute1.getSourceAirportID(), testRoute1.getDestinationAirportID());
         } catch (Exception e) {Assert.fail(e.getMessage());}
-        actualRoutes = dataHandler.FetchRoutes(filters);
+        actualRoutes = dataExport.FetchRoutes(filters);
         assertTrue(actualRoutes.isEmpty());
         fullClear();
     }
@@ -1141,7 +1159,7 @@ public class DataHandlerTest {
         testRoutes.add(testRoute2);
         try {
             for (Route route: testRoutes) {
-                dataHandler.InsertRoute(route);
+                dataImport.InsertRoute(route);
             }
         } catch (Exception e) {Assert.fail(e.getMessage());}
         Filter filter1 = new Filter(format("id_airline = %d AND source_airport_id = %d AND destination_airport_id = %d",
@@ -1151,10 +1169,10 @@ public class DataHandlerTest {
                 testRoute2.getAirlineID(), testRoute2.getSourceAirportID(), testRoute2.getDestinationAirportID()), "OR");
         filters.add(filter2);
         try {
-            dataHandler.deleteRoute(testRoute1.getAirlineID(), testRoute1.getSourceAirportID(), testRoute1.getDestinationAirportID());
-            dataHandler.deleteRoute(testRoute2.getAirlineID(), testRoute2.getSourceAirportID(), testRoute2.getDestinationAirportID());
+            dataImport.deleteRoute(testRoute1.getAirlineID(), testRoute1.getSourceAirportID(), testRoute1.getDestinationAirportID());
+            dataImport.deleteRoute(testRoute2.getAirlineID(), testRoute2.getSourceAirportID(), testRoute2.getDestinationAirportID());
         } catch (Exception e) {Assert.fail(e.getMessage());}
-        actualRoutes = dataHandler.FetchRoutes(filters);
+        actualRoutes = dataExport.FetchRoutes(filters);
         assertTrue(actualRoutes.isEmpty());
         fullClear();
     }
@@ -1171,7 +1189,7 @@ public class DataHandlerTest {
         testRoutes.add(testRoute5);
         try {
             for (Route route: testRoutes) {
-                dataHandler.InsertRoute(route);
+                dataImport.InsertRoute(route);
             }
         } catch (Exception e) {Assert.fail(e.getMessage());}
         Filter filter1 = new Filter(format("id_airline = %d AND source_airport_id = %d AND destination_airport_id = %d",
@@ -1190,13 +1208,13 @@ public class DataHandlerTest {
                 testRoute5.getAirlineID(), testRoute5.getSourceAirportID(), testRoute5.getDestinationAirportID()), "");
         filters.add(filter5);
         try {
-            dataHandler.deleteRoute(testRoute1.getAirlineID(), testRoute1.getSourceAirportID(), testRoute1.getDestinationAirportID());
-            dataHandler.deleteRoute(testRoute2.getAirlineID(), testRoute2.getSourceAirportID(), testRoute2.getDestinationAirportID());
-            dataHandler.deleteRoute(testRoute3.getAirlineID(), testRoute3.getSourceAirportID(), testRoute3.getDestinationAirportID());
-            dataHandler.deleteRoute(testRoute4.getAirlineID(), testRoute4.getSourceAirportID(), testRoute4.getDestinationAirportID());
-            dataHandler.deleteRoute(testRoute5.getAirlineID(), testRoute5.getSourceAirportID(), testRoute5.getDestinationAirportID());
+            dataImport.deleteRoute(testRoute1.getAirlineID(), testRoute1.getSourceAirportID(), testRoute1.getDestinationAirportID());
+            dataImport.deleteRoute(testRoute2.getAirlineID(), testRoute2.getSourceAirportID(), testRoute2.getDestinationAirportID());
+            dataImport.deleteRoute(testRoute3.getAirlineID(), testRoute3.getSourceAirportID(), testRoute3.getDestinationAirportID());
+            dataImport.deleteRoute(testRoute4.getAirlineID(), testRoute4.getSourceAirportID(), testRoute4.getDestinationAirportID());
+            dataImport.deleteRoute(testRoute5.getAirlineID(), testRoute5.getSourceAirportID(), testRoute5.getDestinationAirportID());
         } catch (Exception e) {Assert.fail(e.getMessage());}
-        actualRoutes = dataHandler.FetchRoutes(filters);
+        actualRoutes = dataExport.FetchRoutes(filters);
         assertTrue(actualRoutes.isEmpty());
         fullClear();
     }
@@ -1206,12 +1224,13 @@ public class DataHandlerTest {
      */
     @Test
     public void testDeleteRouteInvalidAirlineID() {
-        try {dataHandler.InsertRoute(testRoute1);} catch (Exception e) {Assert.fail(e.getMessage());}
+        try {
+            dataImport.InsertRoute(testRoute1);} catch (Exception e) {Assert.fail(e.getMessage());}
         Filter filter = new Filter(format("id_airline = %d AND source_airport_id = %d AND destination_airport_id = %d",
                 testRoute1.getAirlineID(), testRoute1.getSourceAirportID(), testRoute1.getDestinationAirportID()), "");
         filters.add(filter);
         try {
-            dataHandler.deleteRoute(8008, testRoute1.getSourceAirportID(), testRoute1.getDestinationAirportID());
+            dataImport.deleteRoute(8008, testRoute1.getSourceAirportID(), testRoute1.getDestinationAirportID());
             Assert.fail("SQLException was supposed to be thrown.");
         } catch (Exception e) {
             Assert.assertTrue(e instanceof Exception);
@@ -1224,12 +1243,13 @@ public class DataHandlerTest {
      */
     @Test
     public void testDeleteRouteInvalidSourceID() {
-        try {dataHandler.InsertRoute(testRoute1);} catch (Exception e) {Assert.fail(e.getMessage());}
+        try {
+            dataImport.InsertRoute(testRoute1);} catch (Exception e) {Assert.fail(e.getMessage());}
         Filter filter = new Filter(format("id_airline = %d AND source_airport_id = %d AND destination_airport_id = %d",
                 testRoute1.getAirlineID(), testRoute1.getSourceAirportID(), testRoute1.getDestinationAirportID()), "");
         filters.add(filter);
         try {
-            dataHandler.deleteRoute(testRoute1.getAirlineID(), 8008, testRoute1.getDestinationAirportID());
+            dataImport.deleteRoute(testRoute1.getAirlineID(), 8008, testRoute1.getDestinationAirportID());
             Assert.fail("SQLException was supposed to be thrown.");
         } catch (Exception e) {
             Assert.assertTrue(e instanceof Exception);
@@ -1242,12 +1262,13 @@ public class DataHandlerTest {
      */
     @Test
     public void testDeleteRouteInvalidDestinationID() {
-        try {dataHandler.InsertRoute(testRoute1);} catch (Exception e) {Assert.fail(e.getMessage());}
+        try {
+            dataImport.InsertRoute(testRoute1);} catch (Exception e) {Assert.fail(e.getMessage());}
         Filter filter = new Filter(format("id_airline = %d AND source_airport_id = %d AND destination_airport_id = %d",
                 testRoute1.getAirlineID(), testRoute1.getSourceAirportID(), testRoute1.getDestinationAirportID()), "");
         filters.add(filter);
         try {
-            dataHandler.deleteRoute(testRoute1.getAirlineID(), testRoute1.getSourceAirportID(), 8008);
+            dataImport.deleteRoute(testRoute1.getAirlineID(), testRoute1.getSourceAirportID(), 8008);
             Assert.fail("SQLException was supposed to be thrown.");
         } catch (Exception e) {
             Assert.assertTrue(e instanceof Exception);

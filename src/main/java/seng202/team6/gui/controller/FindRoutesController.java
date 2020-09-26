@@ -17,7 +17,7 @@ import seng202.team6.gui.controller.routefinder.FlightResultController;
 import seng202.team6.gui.controller.routefinder.ResultController;
 import seng202.team6.gui.helper.NodeHelper;
 import seng202.team6.model.MapHelper;
-import seng202.team6.model.data.DataHandler;
+import seng202.team6.model.data.DataExportHandler;
 import seng202.team6.model.data.Filter;
 import seng202.team6.model.entities.Airport;
 import seng202.team6.model.entities.Route;
@@ -104,7 +104,7 @@ public class FindRoutesController implements Initializable
     private void OnAirportFilterButtonClicked() {
         OnResult();
         ArrayList<Filter> filters = FilterTextField.ExtractFilters(this.airportFilterTextFields);
-        ArrayList<Airport> airports = DataHandler.GetInstance().FetchAirports(filters);
+        ArrayList<Airport> airports = DataExportHandler.GetInstance().FetchAirports(filters);
 
         if (airports == null) {
             return;
@@ -136,7 +136,7 @@ public class FindRoutesController implements Initializable
         ArrayList<Filter> destinationFilters = FilterTextField.ExtractFilters(flightFilterDestinationTextFields);
 
         Pair<ArrayList<Airport>, ArrayList<Airport>> airports = Airport.GetSourceAndDestinations(originFilters, destinationFilters);
-        ArrayList<Route> routes = DataHandler.GetInstance().FetchRoutes(airports.getKey(), airports.getValue(), (int)maxStopsSlider.getValue());
+        ArrayList<Route> routes = DataExportHandler.GetInstance().FetchRoutes(airports.getKey(), airports.getValue(), (int)maxStopsSlider.getValue());
 
         try {
             for (Route route : routes) {
@@ -161,7 +161,7 @@ public class FindRoutesController implements Initializable
         ArrayList<Filter> destinationFilters = FilterTextField.ExtractFilters(routeFilterDestinationTextFields);
 
         Pair<ArrayList<Airport>, ArrayList<Airport>> airports = Airport.GetSourceAndDestinations(originFilters, destinationFilters);
-        ArrayList<RoutePath> paths = DataHandler.GetInstance().FetchRoutePaths(airports.getKey(), airports.getValue());
+        ArrayList<RoutePath> paths = DataExportHandler.GetInstance().FetchRoutePaths(airports.getKey(), airports.getValue());
 
         /* TODO
         try {

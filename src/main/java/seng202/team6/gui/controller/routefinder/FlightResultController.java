@@ -8,7 +8,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 import seng202.team6.gui.helper.NodeHelper;
-import seng202.team6.model.data.DataHandler;
+import seng202.team6.model.data.DataExportHandler;
 import seng202.team6.model.data.Filter;
 import seng202.team6.model.entities.Airport;
 import seng202.team6.model.entities.Route;
@@ -69,7 +69,7 @@ public class FlightResultController extends ResultController {
         ArrayList<Filter> filters = new ArrayList<>();
         filters.add(new Filter(String.format("ID_AIRPORT = %d", route.getSourceAirportID()), "OR"));
         filters.add(new Filter(String.format("ID_AIRPORT = %d", route.getDestinationAirportID()), null));
-        return DataHandler.GetInstance().FetchAirports(filters);
+        return DataExportHandler.GetInstance().FetchAirports(filters);
     }
 
     /**

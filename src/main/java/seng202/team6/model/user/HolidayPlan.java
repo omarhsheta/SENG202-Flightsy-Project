@@ -1,10 +1,6 @@
 package seng202.team6.model.user;
 
-import java.lang.Object;
-
-import seng202.team6.model.data.DataHandler;
 import seng202.team6.model.events.CarTrip;
-import seng202.team6.model.events.Event;
 import seng202.team6.model.events.Flight;
 import seng202.team6.model.events.General;
 

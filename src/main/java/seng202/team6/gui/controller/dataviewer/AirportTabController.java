@@ -7,7 +7,6 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 import seng202.team6.gui.components.FilterTextField;
-import seng202.team6.model.data.DataHandler;
 import seng202.team6.model.data.Filter;
 import seng202.team6.model.entities.Airport;
 
@@ -55,7 +54,7 @@ public class AirportTabController extends TabController<Airport>
 
         ArrayList<Filter> filters = new ArrayList<>();
         filters.add(new Filter("COUNTRY = 'New Zealand'", null));
-        ArrayList<Airport> filteredAirports = DataHandler.GetInstance().FetchAirports(filters);
+        ArrayList<Airport> filteredAirports = dataExport.FetchAirports(filters);
         table.getItems().addAll(filteredAirports);
     }
 
@@ -94,14 +93,14 @@ public class AirportTabController extends TabController<Airport>
         try {
             ArrayList<Airport> filteredAirports;
             if (sortValue.equals("Sort by most routes")) {
-                filteredAirports = dataHandler.FetchAirports(filters, "DESC");
-                numRowsLeftOut = dataHandler.FetchAirports(filters).size() - filteredAirports.size();
+                filteredAirports = dataExport.FetchAirports(filters, "DESC");
+                numRowsLeftOut = dataExport.FetchAirports(filters).size() - filteredAirports.size();
 
             } else if (sortValue.equals("Sort by least routes")) {
-                filteredAirports = dataHandler.FetchAirports(filters, "ASC");
-                numRowsLeftOut = filteredAirports.size() - dataHandler.FetchAirports(filters).size();
+                filteredAirports = dataExport.FetchAirports(filters, "ASC");
+                numRowsLeftOut = filteredAirports.size() - dataExport.FetchAirports(filters).size();
             } else {
-                filteredAirports = dataHandler.FetchAirports(filters);
+                filteredAirports = dataExport.FetchAirports(filters);
             }
 
             table.getItems().clear();

@@ -7,7 +7,7 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
-import seng202.team6.model.data.DataHandler;
+import seng202.team6.model.data.DataImportHandler;
 import seng202.team6.model.entities.Airline;
 import seng202.team6.model.entities.Airport;
 import seng202.team6.model.entities.Route;
@@ -41,7 +41,7 @@ public class AddRowController implements Initializable
     @FXML
     private Text InfoText;
 
-    private DataHandler dataHandler;
+    private DataImportHandler dataImport;
 
     private int airlinesAdded, airportsAdded, routesAdded;
 
@@ -53,7 +53,7 @@ public class AddRowController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
     {
-        dataHandler = DataHandler.GetInstance();
+        dataImport = DataImportHandler.GetInstance();
         airlinesAdded = airportsAdded = routesAdded = 0;
     }
 
@@ -144,9 +144,8 @@ public class AddRowController implements Initializable
             dst = "U";  // Unknown Daylight savings value
         }
 
-        ArrayList<String> airport = new ArrayList<>(Arrays.asList(airpId, airpName, airpCity, airpCountry, airpIata, airpIcao, airpLat, airpLon,
+        return new ArrayList<>(Arrays.asList(airpId, airpName, airpCity, airpCountry, airpIata, airpIcao, airpLat, airpLon,
                 airpAlt, airpTim, dst));
-        return airport;
     }
 
     /**
@@ -181,9 +180,7 @@ public class AddRowController implements Initializable
             }
         }
 
-        ArrayList<String> airline = new ArrayList<>(Arrays.asList(airlineID, name, alias, iata, icao, callsign, country, airActive));
-
-        return airline;
+        return new ArrayList<>(Arrays.asList(airlineID, name, alias, iata, icao, callsign, country, airActive));
     }
 
     /**
@@ -235,8 +232,7 @@ public class AddRowController implements Initializable
 
         String stops = String.valueOf(rouStp);
 
-        ArrayList<String> route = new ArrayList<>(Arrays.asList(rouAir, rouAirId, rouSouAir, rouSouAirId, rouDesAir, rouDesAirId, codeShare, stops, rouEqp));
-        return route;
+        return new ArrayList<>(Arrays.asList(rouAir, rouAirId, rouSouAir, rouSouAirId, rouDesAir, rouDesAirId, codeShare, stops, rouEqp));
     }
 
     /**
@@ -270,19 +266,17 @@ public class AddRowController implements Initializable
         Airline airline = new Airline(Integer.parseInt(airIdField.getText()), airNameField.getText(), airAliasField.getText(),
                 AirIataField.getText(), AirIcaoField.getText(), AirCallsignField.getText(), AirCountryField.getText(),
                 (char) AirActiveField.getValue());
-        if (airline != null) {
-            try {
-                dataHandler.InsertAirline(airline);
-                String message = String.format("Successfully added %d airline", ++airlinesAdded);
-                if (airlinesAdded > 1) {
-                    message += "s";
-                }
-                ShowMessage(false, message);
-            } catch (SQLException e) {
-                System.out.println(e.toString());
-
-                ShowMessage(true, "There was a problem when saving the airline");
+        try {
+            dataImport.InsertAirline(airline);
+            String message = String.format("Successfully added %d airline", ++airlinesAdded);
+            if (airlinesAdded > 1) {
+                message += "s";
             }
+            ShowMessage(false, message);
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+
+            ShowMessage(true, "There was a problem when saving the airline");
         }
     }
 
@@ -295,18 +289,16 @@ public class AddRowController implements Initializable
                 airpCountry.getText(), airpIata.getText(), airpIcao.getText(), Float.parseFloat(airpLat.getText()),
                 Float.parseFloat(airpLon.getText()), Integer.parseInt(airpAlt.getText()), Integer.parseInt(airpTim.getText()),
                 airpDst.getText().charAt(0));
-        if (airport != null) {
-            try {
-                dataHandler.InsertAirport(airport);
-                String message = String.format("Successfully added %d airline", ++airportsAdded);
-                if (airportsAdded > 1) {
-                    message += "s";
-                }
-                ShowMessage(false, message);
-            } catch (SQLException e) {
-                System.out.println(e.toString());
-                ShowMessage(true, "There was a problem when saving the airport");
+        try {
+            dataImport.InsertAirport(airport);
+            String message = String.format("Successfully added %d airline", ++airportsAdded);
+            if (airportsAdded > 1) {
+                message += "s";
             }
+            ShowMessage(false, message);
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+            ShowMessage(true, "There was a problem when saving the airport");
         }
     }
 
@@ -318,19 +310,17 @@ public class AddRowController implements Initializable
         Route route = new Route(Integer.parseInt(rouAir.getText()), rouAirId.getText(), rouSouAir.getText(),
                 Integer.parseInt(rouSouAirId.getText()), rouDesAir.getText(), Integer.parseInt(rouDesAirId.getText()),
                 (char) rouCod.getValue(), (int) rouStp.getValue(), rouEqp.getText());
-        if (route != null) {
-            try {
-                dataHandler.InsertRoute(route);
-                String message = String.format("Successfully added %d route", ++routesAdded);
-                if (routesAdded > 1) {
-                    message += "s";
-                }
-                ShowMessage(false, message);
-            } catch (SQLException e) {
-                System.out.println(e.toString());
-
-                ShowMessage(true, "There was a problem when saving the route");
+        try {
+            dataImport.InsertRoute(route);
+            String message = String.format("Successfully added %d route", ++routesAdded);
+            if (routesAdded > 1) {
+                message += "s";
             }
+            ShowMessage(false, message);
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+
+            ShowMessage(true, "There was a problem when saving the route");
         }
     }
 }
