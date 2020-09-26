@@ -2,6 +2,8 @@ package seng202.team6.model.events;
 
 import org.junit.Test;
 
+import java.time.LocalDateTime;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
@@ -11,14 +13,8 @@ public class CarTripTest {
         CarTrip test = new CarTrip(25, 1, 2020, 11, 24, "Testing Trip",
                 "Nothing like testing a class :)", "Christchurch", "Mew Zealand",
                 "Dunedin", "New Zealand");
-        int expectedDay = 25;
-        int expectedMonth = 1;
-        int expectedYear = 2020;
-        int expectedHour = 11;
-        int expectedMinute = 24;
-        assertEquals(25, test.getDay());
-        assertEquals(1, test.getMonth());
-        assertEquals(2020, test.getYear());
+        LocalDateTime expectedDateTime = LocalDateTime.of(2020, 1, 25, 11, 24);
+        assertEquals(expectedDateTime, test.getDateTime());
     }
 
     @Test

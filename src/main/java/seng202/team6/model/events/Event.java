@@ -1,13 +1,13 @@
 package seng202.team6.model.events;
+import javafx.scene.layout.Pane;
+
 import java.time.*;
 
 /**
  * The Abstract class event has three subclasses; General, Flight, and CarTrip
  */
 public abstract class Event {
-    LocalDate date;
-    int Hour;
-    int Minute;
+    LocalDateTime dateTime;
     String Title;
     String Notes;
 
@@ -20,32 +20,27 @@ public abstract class Event {
      * @param N Any String with additional information about the event
      */
     Event(int D, int M, int Y, int newHour, int newMinute, String T, String N) {
-        date = LocalDate.of(Y, M, D);
+        dateTime = LocalDateTime.of(Y, M, D, newHour, newMinute);
         Title = T;
         Notes = N;
     }
 
     /**
      *
-     * @return The int value of the day of the month
+     * @return The DateTime of the event
      */
-    public int getDay() {
-        return date.getDayOfMonth();
+    public LocalDateTime getDateTime() {
+        return dateTime;
     }
 
     /**
-     *
-     * @return The int value of the month (Anything from 1 to 12 inclusive)
+     * A method that makes a Pane for the event
+     * This method is only a filler as the children classes should all have @Override'ed this method
+     * @return Pane object to be added to the holiday GUI
      */
-    public int getMonth() {
-        return date.getMonthValue();
-    }
-
-    /**
-     *
-     * @return The int value of the year
-     */
-    public int getYear() {
-        return date.getYear();
+    public Pane toPane() {
+        //Implimented in children classes
+        Pane newPane = null;
+        return newPane;
     }
 }

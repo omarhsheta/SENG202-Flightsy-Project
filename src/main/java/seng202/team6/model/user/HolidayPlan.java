@@ -53,15 +53,51 @@ public class HolidayPlan {
         itineraries.add(General);
     }
 
+    /**
+     *
+     * @return the itineraries for the holiday
+     */
     public ArrayList<General> getItineraries() {
         return itineraries;
     }
 
+    /**
+     *
+     * @return the flights for the holiday
+     */
     public ArrayList<Flight> getFlights() {
         return flights;
     }
 
+    /**
+     *
+     * @return the car trips for the holiday
+     */
     public ArrayList<CarTrip> getCarTrips() {
         return carTrips;
+    }
+
+    /**
+     * Adds a General event to the itineraries ArrayList
+     * @param generalEvent general Event to add to the itinerary
+     */
+    public void addItinerary(General generalEvent) {
+        itineraries.add(generalEvent);
+    }
+
+    /**
+     * Adds a Flight to the flights ArrayList
+     * @param flight Flight to add to the flights
+     */
+    public void addFlight(Flight flight) {
+        flights.add(flight);
+    }
+
+    /**
+     * Adds a CarTrip to the carTrips ArrayList
+     * @param carTrip CarTrip to add to the carTrips
+     */
+    public void addCarTrip(CarTrip carTrip) {
+        carTrips.add(carTrip);
     }
 }

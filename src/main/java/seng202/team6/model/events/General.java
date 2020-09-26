@@ -26,9 +26,15 @@ public class General extends Event {
         Country = nCountry;
     }
 
+    /**
+     * A method that makes a Pane for the General event
+     * @return Pane object to be added to the holiday GUI
+     */
+    @Override
     public Pane toPane() {
         Pane returnPane = null;
         //Create pane for General event
+        //Look at the Flight.java toPane() method for details on how to do this
         return returnPane;
     }
 }

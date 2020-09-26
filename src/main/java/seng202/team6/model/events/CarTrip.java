@@ -48,9 +48,15 @@ public class CarTrip extends Event {
         return DestinationCity;
     }
 
+    /**
+     * A method that makes a Pane for the car trip event
+     * @return Pane object to be added to the holiday GUI
+     */
+    @Override
     public Pane toPane() {
         Pane returnPane = null;
         //Create pane for General event
+        //Look at the Flight.java toPane() method for details on how to do this
         return returnPane;
     }
 }
