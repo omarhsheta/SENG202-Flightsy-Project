@@ -42,7 +42,7 @@
                         <TextField fx:id="deptYear" prefHeight="25.0" prefWidth="57.0" promptText="Year" />
                      </children>
                   </HBox>
-                  <Label text="arrival Date" />
+                  <Label text="Arrival Date" />
                   <HBox layoutX="10.0" layoutY="27.0" prefHeight="17.0" prefWidth="309.0" spacing="5.0">
                      <children>
                         <TextField fx:id="arrivalDay" prefHeight="25.0" prefWidth="48.0" promptText="Day" />
@@ -63,7 +63,7 @@
                         <TextField fx:id="deptMinute" prefHeight="25.0" prefWidth="57.0" promptText="Minute" />
                      </children>
                   </HBox>
-                  <Label text="arrival Time" />
+                  <Label text="Arrival Time" />
                   <HBox prefHeight="17.0" prefWidth="309.0" spacing="5.0">
                      <children>
                         <TextField fx:id="arrivalHour" prefHeight="25.0" prefWidth="48.0" promptText="Hour" />
@@ -76,6 +76,9 @@
          <BorderPane.margin>
             <Insets left="20.0" right="20.0" />
          </BorderPane.margin>
+         <bottom>
+            <Text fx:id="infoText" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="294.13671875" BorderPane.alignment="CENTER" />
+         </bottom>
       </BorderPane>
    </center>
 </BorderPane>

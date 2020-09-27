@@ -68,7 +68,7 @@ public class MainGUI extends Application {
         primaryStage.setScene(primaryScene);
 
         //Set active window
-        WindowHandler.GetInstance().SetActiveWindow("routefinderview");
+        WindowHandler.GetInstance().SetActiveWindow("holidayview");
         primaryStage.show();
     }
 }

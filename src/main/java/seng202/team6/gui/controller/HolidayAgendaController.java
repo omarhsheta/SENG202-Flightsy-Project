@@ -27,7 +27,7 @@ import java.util.ResourceBundle;
 
 public class HolidayAgendaController implements Initializable {
 
-    private ArrayList<HolidayPlan> holidays = new ArrayList<>();
+    ArrayList<HolidayPlan> holidays = new ArrayList<>();
     private String selectedHoliday;
 
     @FXML
@@ -95,16 +95,28 @@ public class HolidayAgendaController implements Initializable {
         // to get index of tab selected
     }
 
+    public ArrayList<HolidayPlan> getHolidays() {
+        return holidays;
+    }
+
     /**
      * A method that is called every time the choicebox value changes. This method changes the holiday visible to the recently selected holiday
      */
     private void changeHoliday() {
+        selectedHoliday = holidaySelectChoiceBox.getValue();
         int currHolidayIndex = getSelectedHolidayIndex();
         if (currHolidayIndex == holidays.size()) { // New Holiday was selected
             createNewHoliday();
         }
         selectedHoliday = holidaySelectChoiceBox.getValue();
-        System.out.println(String.format("%s, index %d", selectedHoliday, currHolidayIndex));
+
+        int i = 0;
+        for(HolidayPlan holiday: holidays) {
+            System.out.println(String.format("%s, index: %d", holiday.getName(), i++));
+        }
+        System.out.println("\n");
+
+        System.out.println(String.format("Current index: %d", currHolidayIndex));
         showHoliday(holidays.get(currHolidayIndex));
     }
 
@@ -112,11 +124,7 @@ public class HolidayAgendaController implements Initializable {
      *
      * @return selected holiday index from the holidaySelectChoiceBox
      */
-    private int getSelectedHolidayIndex() {
-        if (selectedHoliday == null) {
-            selectedHoliday = holidaySelectChoiceBox.getValue();
-        }
-
+    public int getSelectedHolidayIndex() {
         int count = 0;
         if (selectedHoliday == "New Holiday") {
             return holidays.size();// Index of new holiday
