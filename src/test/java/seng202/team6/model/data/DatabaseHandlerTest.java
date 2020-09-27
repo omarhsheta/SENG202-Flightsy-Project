@@ -25,7 +25,6 @@ public class DatabaseHandlerTest {
     private Airline testAirline3;
     private Airline testAirline4;
     private Airline testAirline5;
-    private Airline testEmptyAirline;
     private ArrayList<Airline> testAirlines;
     private ArrayList<Airline> actualAirlines;
 
@@ -34,7 +33,6 @@ public class DatabaseHandlerTest {
     private Airport testAirport3;
     private Airport testAirport4;
     private Airport testAirport5;
-    private Airport testEmptyAirport;
     private ArrayList<Airport> testAirports;
     private ArrayList<Airport> actualAirports;
 
@@ -43,7 +41,6 @@ public class DatabaseHandlerTest {
     private Route testRoute3;
     private Route testRoute4;
     private Route testRoute5;
-    private Route testEmptyRoute;
     private ArrayList<Route> testRoutes;
     private ArrayList<Route> actualRoutes;
 
@@ -74,8 +71,6 @@ public class DatabaseHandlerTest {
                 "EMI", "EMIRATES", "United Arab Emirates", 'Y');
         testAirline5 = new Airline(random.nextInt(randomBound), "Lufthansa", "Luft", "LF",
                 "LFT", "LUFTHANSA", "Germany", 'Y');
-        testEmptyAirline = new Airline(random.nextInt(randomBound), null, null, null, null,
-                null, null, null);
         testAirlines = new ArrayList<Airline>();
         actualAirlines = new ArrayList<Airline>();
 
@@ -89,8 +84,6 @@ public class DatabaseHandlerTest {
                 "AMS", "AMSD", (float)52.3105, (float)4.7683, -3, 1, 'A');
         testAirport5 = new Airport(random.nextInt(randomBound), "Hong Kong Airport", "Hong Kong", "Hong Kong",
                 "HKG", "HGKG", (float)22.3080, (float)113.9185, 9, 8, 'A');
-        testEmptyAirport = new Airport(random.nextInt(randomBound), null, null, null, null,
-                null, null, null, null, null, null);
         testAirports = new ArrayList<Airport>();
         actualAirports = new ArrayList<Airport>();
 
@@ -104,8 +97,6 @@ public class DatabaseHandlerTest {
                 testAirport3.getName(), testAirport4.getAirportID(), ' ', 0, "AN4");
         testRoute5 = new Route(testAirline5.getAirlineID(), testAirline5.getName(), testAirport4.getName(), testAirport4.getAirportID(),
                 testAirport5.getName(), testAirport5.getAirportID(), ' ', 0, "142");
-        testEmptyRoute = new Route(random.nextInt(randomBound), null, null, random.nextInt(randomBound), null,
-                random.nextInt(randomBound), null, null, null);
         testRoutes = new ArrayList<Route>();
         actualRoutes = new ArrayList<Route>();
     }
@@ -191,13 +182,13 @@ public class DatabaseHandlerTest {
     }
 
     /**
-     * Test inserting an empty airline into the database
-     * !!! Leave ignored until the database schema is updated to prevent empty parameters from being entered
+     * Test inserting an two of the same airlines into the database
      */
-    @Test @Ignore
-    public void testInsertEmptyAirline() {
+    @Test
+    public void testInsertTwoSameAirlines() {
         try {
-            dataImport.InsertAirline(testEmptyAirline);
+            dataImport.InsertAirline(testAirline1);
+            dataImport.InsertAirline(testAirline1);
             Assert.fail("SQLException was supposed to be thrown.");
         } catch (Exception e) {
             Assert.assertTrue(e instanceof Exception);
@@ -286,13 +277,13 @@ public class DatabaseHandlerTest {
     }
 
     /**
-     * Test inserting an empty airport (should error) in the database
-     * !!! Leave ignored until the database schema is updated to prevent empty parameters from being entered
+     * Test inserting an two of the same airports into the database
      */
-    @Ignore @Test
-    public void testInsertEmptyAirport() {
+    @Test
+    public void testInsertTwoSameAirports() {
         try {
-            dataImport.InsertAirport(testEmptyAirport);
+            dataImport.InsertAirport(testAirport1);
+            dataImport.InsertAirport(testAirport1);
             Assert.fail("SQLException was supposed to be thrown.");
         } catch (Exception e) {
             Assert.assertTrue(e instanceof Exception);
@@ -393,21 +384,6 @@ public class DatabaseHandlerTest {
         Collections.sort(actualRoutes);
         for (int i = 0; i < 5; i++) {
             Assert.assertEquals(testRoutes.get(i), actualRoutes.get(i));
-        }
-        fullClear();
-    }
-
-    /**
-     * Test inserting an empty route (should error) into the database
-     * !!! Leave ignored until the database schema is updated to prevent empty parameters from being entered
-     */
-    @Ignore @Test
-    public void testInsertEmptyRoute() {
-        try {
-            dataImport.InsertRoute(testEmptyRoute);
-            Assert.fail("SQLException was supposed to be thrown.");
-        } catch (Exception e) {
-            Assert.assertTrue(e instanceof Exception);
         }
         fullClear();
     }
@@ -949,7 +925,7 @@ public class DatabaseHandlerTest {
     /**
      * Test deleting an airline in the database
      */
-    @Ignore @Test
+    @Test
     public void testDeleteOneAirline() {
         try {
             dataImport.InsertAirline(testAirline1);} catch (Exception e) {Assert.fail(e.getMessage());}
@@ -1121,10 +1097,10 @@ public class DatabaseHandlerTest {
     /**
      * Test deleting an airport with an invalid ID in the database
      */
-    @Ignore @Test
+    @Test
     public void testDeleteAirportInvalidID() {
         try {
-            dataImport.deleteAirport(8008);
+            dataImport.deleteAirport(9009);
             Assert.fail("SQLException was supposed to be thrown.");
         } catch (Exception e) {
             Assert.assertTrue(e instanceof Exception);

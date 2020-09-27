@@ -284,7 +284,7 @@ public class DataImportHandler {
     public void deleteAirline(int AirlineID) throws SQLException {
         Statement stmt = this.databaseConnection.createStatement();
         String query = format("DELETE FROM Airline WHERE id_airline == %d;", AirlineID);
-        if (stmt.executeUpdate(query) == 0) {
+        if (stmt.executeUpdate(query) <= 0) {
             throw new SQLException("Nothing was deleted");
         }
     }
@@ -297,7 +297,7 @@ public class DataImportHandler {
     public void deleteAirport(int AirportID) throws SQLException {
         Statement stmt = this.databaseConnection.createStatement();
         String query = format("DELETE FROM Airport WHERE id_airport == %d;", AirportID);
-        if (stmt.executeUpdate(query) == 0) {
+        if (stmt.executeUpdate(query) <= 0) {
             throw new SQLException("Nothing was deleted");
         }
     }
@@ -313,7 +313,7 @@ public class DataImportHandler {
         Statement stmt = this.databaseConnection.createStatement();
         String query = format("DELETE FROM Route WHERE id_airline == %d AND source_airport_id == %d AND destination_airport_id == %d;",
                 AirlineID, SourceAirportID, DestinationAirportID);
-        if (stmt.executeUpdate(query) == 0) {
+        if (stmt.executeUpdate(query) <= 0) {
             throw new SQLException("Nothing was deleted");
         }
     }
