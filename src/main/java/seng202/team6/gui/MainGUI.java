@@ -1,4 +1,5 @@
 package seng202.team6.gui;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -7,7 +8,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-import java.awt.*;
 import java.io.IOException;
 
 public class MainGUI extends Application {
@@ -15,8 +15,8 @@ public class MainGUI extends Application {
      * Name of the GUI
      */
     private final String GUI_TITLE = "Flightsy - Travel Planner";
-    private final int MIN_WIDTH = 950;
-    private final int MIN_HEIGHT = 650;
+    private final int MIN_WIDTH = 1200;
+    private final int MIN_HEIGHT = 700;
 
     private final String menubarFXML = "menubar";
 

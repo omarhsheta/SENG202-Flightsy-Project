@@ -21,22 +21,6 @@
       <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="50.0" prefWidth="900.0" BorderPane.alignment="CENTER">
          <children>
             <Pane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
-                <Button fx:id="editButton" alignment="CENTER" contentDisplay="LEFT" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Edit Row">
-                    <graphic>
-                        <ImageView fitHeight="10.0" fitWidth="10.0" pickOnBounds="true" preserveRatio="true">
-                            <image>
-                                <Image url="/icons/wrench-8x.png" />
-                            </image>
-                        </ImageView>
-                    </graphic>
-                    <styleClass>
-                        <String fx:value="btn" />
-                        <String fx:value="btn-sm" />
-                        <String fx:value="btn-primary" />
-                    </styleClass>
-               <HBox.margin>
-                  <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
-               </HBox.margin></Button>
              <Button fx:id="addRowButton" alignment="CENTER" contentDisplay="LEFT" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" onAction="#OpenPopUp" text="Add Row">
                  <graphic>
                      <ImageView fitHeight="10.0" fitWidth="10.0" pickOnBounds="true" preserveRatio="true">

@@ -4,6 +4,11 @@ import java.util.Objects;
 
 import static java.lang.String.format;
 
+/**
+ * Airline class
+ * Do not change the getters from being lowercase i.e 'getName()' as
+ * this is required for the table view.
+ */
 public class Airline implements Comparable<Airline> {
 
     int AirlineID;
