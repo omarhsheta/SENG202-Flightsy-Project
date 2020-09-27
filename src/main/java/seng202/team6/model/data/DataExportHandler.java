@@ -32,7 +32,7 @@ public class DataExportHandler {
      * Private constructor for class, grabs database connection
      */
     private DataExportHandler() {
-        databaseConnection = DatabaseHandler.GetInstance().GetConnection();
+        databaseConnection = DataHandler.GetInstance().GetConnection();
     }
 
     /**

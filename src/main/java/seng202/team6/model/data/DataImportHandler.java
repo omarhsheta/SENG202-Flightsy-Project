@@ -30,7 +30,7 @@ public class DataImportHandler {
      * Private constructor for class, grabs database connection
      */
     private DataImportHandler() {
-        databaseConnection = DatabaseHandler.GetInstance().GetConnection();
+        databaseConnection = DataHandler.GetInstance().GetConnection();
     }
 
     /**
