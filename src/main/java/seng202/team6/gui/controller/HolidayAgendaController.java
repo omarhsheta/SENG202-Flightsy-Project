@@ -28,9 +28,10 @@ import java.util.ResourceBundle;
 public class HolidayAgendaController implements Initializable {
 
     private ArrayList<HolidayPlan> holidays = new ArrayList<>();
+    private String selectedHoliday;
 
     @FXML
-    private ChoiceBox<String> holidaySelectChoiceBox;
+    private ChoiceBox<String> holidaySelectChoiceBox = new ChoiceBox<>();
     private String currSelectedHoliday;
     @FXML
     private VBox eventsVBox;
@@ -63,6 +64,7 @@ public class HolidayAgendaController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        Instance = this;
         holidaySelectChoiceBox.getSelectionModel().selectedItemProperty().addListener(
                 (ObservableValue<? extends String> observable, String oldValue, String newValue) -> changeHoliday());
         holidaySelectChoiceBox.getItems().add("New Holiday");
@@ -101,7 +103,8 @@ public class HolidayAgendaController implements Initializable {
         if (currHolidayIndex == holidays.size()) { // New Holiday was selected
             createNewHoliday();
         }
-        System.out.println(String.format("%s, index %d", holidaySelectChoiceBox.getValue(), currHolidayIndex));
+        selectedHoliday = holidaySelectChoiceBox.getValue();
+        System.out.println(String.format("%s, index %d", selectedHoliday, currHolidayIndex));
         showHoliday(holidays.get(currHolidayIndex));
     }
 
@@ -110,13 +113,16 @@ public class HolidayAgendaController implements Initializable {
      * @return selected holiday index from the holidaySelectChoiceBox
      */
     private int getSelectedHolidayIndex() {
-        String holidayTitle = holidaySelectChoiceBox.getValue();
+        if (selectedHoliday == null) {
+            selectedHoliday = holidaySelectChoiceBox.getValue();
+        }
+
         int count = 0;
-        if (holidayTitle == "New Holiday") {
+        if (selectedHoliday == "New Holiday") {
             return holidays.size();// Index of new holiday
         } else {
             for (HolidayPlan holiday : holidays) {
-                if (holidayTitle == holiday.getName()) {
+                if (selectedHoliday == holiday.getName()) {
                     return count;
                 }
                 count++;
@@ -140,6 +146,7 @@ public class HolidayAgendaController implements Initializable {
         int currHolidayIndex = getSelectedHolidayIndex();
         //int currHolidayIndex = holidaysTabPane.getSelectionModel().getSelectedIndex();
         holidays.get(currHolidayIndex).addItinerary(generalEvent);
+        showHoliday(holidays.get(currHolidayIndex));
     }
 
     /**
@@ -149,6 +156,7 @@ public class HolidayAgendaController implements Initializable {
     public void addFlightToHoliday(Flight flight) {
         int currHolidayIndex = getSelectedHolidayIndex();
         holidays.get(currHolidayIndex).addFlight(flight);
+        showHoliday(holidays.get(currHolidayIndex));
     }
 
     /**
@@ -158,6 +166,7 @@ public class HolidayAgendaController implements Initializable {
     public void addCarTripToHoliday(CarTrip carTrip) {
         int currHolidayIndex = getSelectedHolidayIndex();
         holidays.get(currHolidayIndex).addCarTrip(carTrip);
+        showHoliday(holidays.get(currHolidayIndex));
     }
 
     /**
@@ -173,14 +182,15 @@ public class HolidayAgendaController implements Initializable {
         allEvents.addAll(holiday.getCarTrips());
 
         Event earliestEvent = null;
+        int numEvents = allEvents.size();
         //Sorting the events for displaying
-        for(Event event: allEvents) {
-
-            if (earliestEvent == null || event.getDateTime().isBefore(earliestEvent.getDateTime())) {
-                earliestEvent = event;
+        for(int i = 0; i < numEvents;i++) {
+            for(Event event: allEvents) {
+                if (earliestEvent == null || event.getDateTime().isBefore(earliestEvent.getDateTime())) {
+                    earliestEvent = event;
+                }
             }
-
-            eventsVBox.getChildren().add(event.toPane());
+            eventsVBox.getChildren().add(earliestEvent.toPane());
             allEvents.remove(earliestEvent);
             earliestEvent = null;
         }

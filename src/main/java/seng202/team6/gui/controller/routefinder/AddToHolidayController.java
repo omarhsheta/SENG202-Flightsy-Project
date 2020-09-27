@@ -61,8 +61,6 @@ public class AddToHolidayController {
 
     private Stage stage;
 
-    private HolidayAgendaController holidayController = HolidayAgendaController.GetInstance();
-
     private final String subFolder = "holidayview";
     private final String holidayFlightComponent = "holidayflight";
 
@@ -96,49 +94,8 @@ public class AddToHolidayController {
                 Integer.parseInt(arrivalDay.getText()), Integer.parseInt(arrivalMonth.getText()), Integer.parseInt(arrivalYear.getText()),
                 Integer.parseInt(arrivalHour.getText()), Integer.parseInt(arrivalMinute.getText()), title, notes, route);
 
-        //System.out.println(String.format("Departure time %s: %s\nArrival time %s: %s", deptHour.getText(), deptMinute.getText(), arrivalHour.getText(), arrivalMinute.getText()));
 
-        Pane newFlightPane;
-        Time deptTime;
-        //deptTime.setTime();
-
-        //NOT WORKING YET
-        /*
-        LocalDate deptDate = departureDatePicker.getValue();
-
-
-
-        Calendar deptCalendar = Calendar.getInstance();
-        deptCalendar.set(Calendar.YEAR, deptDate.getYear());
-        deptCalendar.set(Calendar.MONTH, deptDate.getMonthValue());
-        deptCalendar.set(Calendar.DATE, deptDate.getDayOfMonth());
-        deptCalendar.set(Calendar.HOUR, Integer.parseInt(deptHour.getText()));
-        deptCalendar.set(Calendar.MINUTE, Integer.parseInt(deptMinute.getText()));
-        deptCalendar.set(Calendar.SECOND, 0);
-        deptCalendar.set(Calendar.MILLISECOND, 0);
-
-        Date currTimezoneDeptDate = Date.from(deptDate.atTime(Integer.parseInt(deptHour.getText()), Integer.parseInt(deptMinute.getText())).toInstant());
-
-        //deptDate = deptCalendar.getTime();
-
-
-        LocalDate arrivalDate = arrivalDatePicker.getValue();
-
-        Calendar c1 = Calendar.getInstance();
-        c1.set(Calendar.HOUR, 22);
-        */
-        try {
-            Pair<Pane, HolidayFlightController> pair = NodeHelper.LoadNode(subFolder, holidayFlightComponent);
-            newFlightPane = pair.getKey();
-            HolidayFlightController flightController = pair.getValue();
-            flightController.setRoute(route);
-            //flightController.setData();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-
-        // Add to holiday here
-        //holidayController.addToHoliday();
+        HolidayAgendaController.GetInstance().addFlightToHoliday(newFlight);
 
 
         stage.close();
