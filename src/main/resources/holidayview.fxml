@@ -328,7 +328,7 @@
                         <String fx:value="btn-primary" />
                      </styleClass>
                   </Button>
-                  <Button mnemonicParsing="false" text="Import Holiday">
+                  <Button fx:id="newHolidayButton" mnemonicParsing="false" text="New Holiday" onMouseClicked="#OnNewHolidayButtonClicked">
                      <VBox.margin>
                         <Insets top="3.0" />
                      </VBox.margin>

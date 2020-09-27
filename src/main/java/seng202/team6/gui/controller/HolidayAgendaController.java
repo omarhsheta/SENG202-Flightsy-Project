@@ -8,6 +8,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.MenuItem;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
@@ -39,6 +40,9 @@ public class HolidayAgendaController implements Initializable {
     @FXML
     private WebView webView2;
 
+    @FXML
+    private Button newHolidayButton;
+
     private WebEngine webEngine;
     private final String mapHTML = "/map/main.html";
     private MapHelper controller;
@@ -67,7 +71,6 @@ public class HolidayAgendaController implements Initializable {
         Instance = this;
         holidaySelectChoiceBox.getSelectionModel().selectedItemProperty().addListener(
                 (ObservableValue<? extends String> observable, String oldValue, String newValue) -> changeHoliday());
-        holidaySelectChoiceBox.getItems().add("New Holiday");
         holidays.add(new HolidayPlan("Holiday 1"));
         holidays.add(new HolidayPlan("Holiday 2"));
         holidays.add(new HolidayPlan("Holiday 3"));
@@ -105,18 +108,7 @@ public class HolidayAgendaController implements Initializable {
     private void changeHoliday() {
         selectedHoliday = holidaySelectChoiceBox.getValue();
         int currHolidayIndex = getSelectedHolidayIndex();
-        if (currHolidayIndex == holidays.size()) { // New Holiday was selected
-            createNewHoliday();
-        }
-        selectedHoliday = holidaySelectChoiceBox.getValue();
-
         int i = 0;
-        for(HolidayPlan holiday: holidays) {
-            System.out.println(String.format("%s, index: %d", holiday.getName(), i++));
-        }
-        System.out.println("\n");
-
-        System.out.println(String.format("Current index: %d", currHolidayIndex));
         showHoliday(holidays.get(currHolidayIndex));
     }
 
@@ -126,24 +118,13 @@ public class HolidayAgendaController implements Initializable {
      */
     public int getSelectedHolidayIndex() {
         int count = 0;
-        if (selectedHoliday == "New Holiday") {
-            return holidays.size();// Index of new holiday
-        } else {
-            for (HolidayPlan holiday : holidays) {
-                if (selectedHoliday == holiday.getName()) {
-                    return count;
-                }
-                count++;
+        for (HolidayPlan holiday : holidays) {
+            if (selectedHoliday == holiday.getName()) {
+                return count;
             }
+            count++;
         }
         return -1;// Shouldn't get to this point
-    }
-
-    /**
-     * A method to create a new holiday
-     */
-    private void createNewHoliday() {
-        //Create new holiday here
     }
 
     /**
@@ -202,5 +183,12 @@ public class HolidayAgendaController implements Initializable {
             allEvents.remove(earliestEvent);
             earliestEvent = null;
         }
+    }
+
+    /**
+     * A method to create a new holiday
+     */
+    public void OnNewHolidayButtonClicked() {
+        System.out.println("Not implemented yet");
     }
 }
