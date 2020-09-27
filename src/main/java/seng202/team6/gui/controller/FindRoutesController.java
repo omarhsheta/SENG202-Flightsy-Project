@@ -127,7 +127,7 @@ public class FindRoutesController implements Initializable
     }
 
     /**
-     * Get all routes between source and destination airports
+     * Get all flights between source and destination airports
      */
     @FXML
     private void OnFlightFilterButtonClicked() {

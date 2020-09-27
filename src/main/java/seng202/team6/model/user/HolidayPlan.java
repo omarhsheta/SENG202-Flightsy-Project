@@ -7,22 +7,20 @@ import seng202.team6.model.events.General;
 import java.util.ArrayList;
 
 public class HolidayPlan {
-    String Name; //No more than 25 chars
+    String name; //No more than 25 chars
     private ArrayList<General> itineraries = new ArrayList<>();
     private ArrayList<Flight> flights = new ArrayList<>(); //Should not exceed 30
     private ArrayList<CarTrip> carTrips = new ArrayList<>();
-    private static HolidayPlan Instance;
 
     /**
-     * Singleton method for the holiday
-     * @return Single HolidayPlan object
+     * Constructor for the holiday plan
+     * @param newName the name of the new HolidayPlan
      */
-    public static HolidayPlan GetInstance() {
-        if (Instance == null) {
-            Instance = new HolidayPlan();
-        }
-        return Instance;
+    public HolidayPlan(String newName) {
+        name = newName;
     }
+
+
 
     /**
      * This method should be called when the user is adding a new flight to their HolidayPlan.
@@ -51,6 +49,14 @@ public class HolidayPlan {
     public void ItineraryAppend(General General, int D, int M, int Y, int newHour, int newMinute, String T, String N, String nCity, String nCountry) {
         General = new General(D, M, Y, newHour, newMinute, T, N, nCity, nCountry);
         itineraries.add(General);
+    }
+
+    /**
+     *
+     * @return the holiday name
+     */
+    public String getName() {
+        return name;
     }
 
     /**
