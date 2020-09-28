@@ -104,6 +104,20 @@ public class DataExportHandler {
         return routes;
     }
 
+    private ArrayList<RoutePath> ExtractRoutePaths(ResultSet resultSet) throws SQLException {
+        ArrayList<RoutePath> paths = new ArrayList<>();
+        // Loop through the result set and create Airport objects from data
+        while (resultSet.next()) {
+            String directory = resultSet.getString("directory");
+            String json = DataHandler.GetInstance().ReadDataFile(directory);
+            System.out.println(directory);
+            System.out.println(json);
+            RoutePath path = RoutePath.FromJSON(json);
+            paths.add(path);
+        }
+        return paths;
+    }
+
     /**
      * Select and return all the Airline tuples in the SQLite database.
      * @param filters List of filters to apply to search query
@@ -217,6 +231,20 @@ public class DataExportHandler {
         }
     }
 
+    public ArrayList<RoutePath> FetchRoutePaths(ArrayList<Airport> sourceAirports, ArrayList<Airport> destinationAirports) {
+        String query = String.format("SELECT directory FROM flight_path " +
+                                     "WHERE source_airport_id IN (%s) AND destination_airport_id IN (%s);",
+                SQLHelper.GetAirportIDList(sourceAirports), SQLHelper.GetAirportIDList(destinationAirports));
+        try {
+            Statement stmt = this.databaseConnection.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            return ExtractRoutePaths(rs);
+
+        } catch (Exception ignored) {
+            return null;
+        }
+    }
+
 
     /**
      * Finds the source and destination airport IDs based off the respective airport's ICAOs
@@ -255,6 +283,20 @@ public class DataExportHandler {
         }
         return directory;
     }
+
+
+    public String FetchFlightPaths(Airport sourceAirport, Airport destinationAirport) throws SQLException {
+        String query = format("SELECT directory FROM flight_path WHERE AirportSourceID = %d AND DestinationSourceID = %d",
+                sourceAirport.getAirportID(), destinationAirport.getAirportID());
+        Statement stmt = this.databaseConnection.createStatement();
+        String directory = stmt.executeQuery(query).getString("directory");
+        if (directory == null) {
+            throw new SQLException("No flight path directory was found");
+        }
+        return directory;
+    }
+
+
 
     /**
      * Finds the flight path row in the database and returns its directory

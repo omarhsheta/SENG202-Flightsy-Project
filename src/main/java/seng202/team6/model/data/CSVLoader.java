@@ -252,7 +252,7 @@ public class CSVLoader {
      * @param path File path to CSV file
      * @return RoutePath object with coordinate data from file
      */
-    public RoutePath ImportCSVRoutePath(String path) {
+    public void ImportCSVRoutePath(String path) {
         ArrayList<ArrayList<String>> lines = ProcessCSVFile(path);
         ArrayList<Pair<Double, Double>> coordinates = new ArrayList<>();
         int lastInd = lines.size() - 1;
@@ -280,7 +280,9 @@ public class CSVLoader {
             }
             coordinates.add(point);
         }
-        return new RoutePath(source, destination, coordinates);
+        RoutePath route = new RoutePath(source, destination, coordinates);
+        String filename = String.format("%sto%s.json", source, destination);
+        DataHandler.GetInstance().WriteDataFile(filename, route.ToJson());
     }
 
 }

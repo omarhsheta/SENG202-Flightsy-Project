@@ -74,4 +74,24 @@ public class SQLHelper
 
         return list.toString();
     }
+
+    /**
+     *
+     * @param airports
+     * @return
+     */
+    public static String GetAirportIDList(ArrayList<Airport> airports) {
+        if (airports.size() == 0) {
+            return "";
+        }
+
+        StringBuilder list = new StringBuilder();
+        for (int i = 0; i < airports.size() - 1; i++) {
+            list.append(String.format("'%s', ", airports.get(i).getAirportID()));
+        }
+        list.append(String.format("'%s'", airports.get(airports.size() - 1).getAirportID()));
+
+        return list.toString();
+    }
+
 }

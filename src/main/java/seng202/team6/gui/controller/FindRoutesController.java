@@ -161,18 +161,16 @@ public class FindRoutesController implements Initializable
         ArrayList<Filter> destinationFilters = FilterTextField.ExtractFilters(routeFilterDestinationTextFields);
 
         Pair<ArrayList<Airport>, ArrayList<Airport>> airports = Airport.GetSourceAndDestinations(originFilters, destinationFilters);
-        //ArrayList<RoutePath> paths = DataExportHandler.GetInstance().FetchRoutePaths(airports.getKey(), airports.getValue());
-        //TODO Whoever did this needs to fix it ^
+        ArrayList<RoutePath> paths = DataExportHandler.GetInstance().FetchRoutePaths(airports.getKey(), airports.getValue());
 
-        /* TODO
+
         try {
             for (RoutePath path : paths) {
-
+                System.out.println(path.GetDestination());
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        */
     }
 
     /**
