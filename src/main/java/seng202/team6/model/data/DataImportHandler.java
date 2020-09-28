@@ -320,7 +320,6 @@ public class DataImportHandler {
         }
     }
 
-
     /**
      * Finds the source and destination airport IDs based off the respective airport's ICAOs
      * @param routePath the route path object
@@ -344,37 +343,7 @@ public class DataImportHandler {
         return airportIDsPair;
     }
 
-    /**
-     * Finds the flight path row in the database and returns its directory
-     * @param sourceAirportID The source airport ID of the airport the flight path departs from
-     * @param destinationAirportID the destination airport ID of the airport the flight path arrives at
-     * @return The directory associated with the route path object
-     */
-    //TODO Move to DataExportHandler
-    public String fetchFlightPaths(int sourceAirportID, int destinationAirportID) throws SQLException {
-        String query = format("SELECT directory FROM flight_path WHERE AirportSourceID = %d AND DestinationSourceID = %d",
-                sourceAirportID, destinationAirportID);
-        Statement stmt = this.databaseConnection.createStatement();
-        String directory = stmt.executeQuery(query).getString("directory");
-        if (directory == null) {
-            throw new SQLException("No flight path directory was found");
-        }
-        return directory;
-    }
 
-    /**
-     * Finds the flight path row in the database and returns its directory
-     * @param routePath the route path object
-     * @return The directory associated with the route path object
-     */
-    //TODO Move to DataExportHandler
-    public String fetchFlightPaths(RoutePath routePath) throws SQLException{
-        ArrayList<Integer> airportIDsPair = new ArrayList<Integer>(2);
-        airportIDsPair = getAirportIDsFromRoutePath(routePath);
-        int sourceAirportID = airportIDsPair.get(0);
-        int destinationAirportID = airportIDsPair.get(1);
-        return fetchFlightPaths(sourceAirportID, destinationAirportID);
-    }
 
     /**
      * Inserts a flight path into the database

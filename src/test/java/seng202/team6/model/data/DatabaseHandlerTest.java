@@ -1252,4 +1252,276 @@ public class DatabaseHandlerTest {
         fullClear();
     }
 
+
+    /**
+     * Test inserting a flight path into the database
+     */
+    @Test @Ignore
+    public void testInsertOneFlightPath() {
+
+    }
+
+    /**
+     * Test inserting a two flight paths into the database
+     */
+    @Test @Ignore
+    public void testInsertTwoFlightPaths() {
+
+    }
+
+    /**
+     * Test inserting a five flight paths into the database
+     */
+    @Test @Ignore
+    public void testInsertFiveFlightPaths() {
+
+    }
+
+    /**
+     * Test inserting two of the same flights, should error
+     */
+    @Test @Ignore
+    public void testInsertTwoSameFlightPaths() {
+
+    }
+
+    /**
+     * Test inserting a flight with no directory, should error
+     */
+    @Test @Ignore
+    public void testInsertFlightPathWithNoDirectory() {
+
+    }
+
+    /**
+     * Test updating one flight path
+     */
+    @Test @Ignore
+    public void testUpdateOneFlightPath() {
+
+    }
+
+    /**
+     * Test updating two flight paths
+     */
+    @Test @Ignore
+    public void testUpdateTwoFlightPaths() {
+
+    }
+
+    /**
+     * Test updating five flight paths
+     */
+    @Test @Ignore
+    public void testUpdateFiveFlightPaths() {
+
+    }
+
+    /**
+     * Test updating a flight path without a directory, should error
+     */
+    @Test @Ignore
+    public void testUpdateFlightPathWithNoDirectory() {
+
+    }
+
+    /**
+     * Test updating a flight with an invalid source airport ID, should error
+     */
+    @Test @Ignore
+    public void testUpdateFlightPathWithInvalidSourceAirportID() {
+
+    }
+
+    /**
+     * Test updating a flight with an invalid destination airport ID, should error
+     */
+    @Test @Ignore
+    public void testUpdateFlightPathWithInvalidDestinationAirportID() {
+
+    }
+
+    /**
+     * Test deleting one flight path
+     */
+    @Test @Ignore
+    public void testDeleteOneFlightPath() {
+
+    }
+
+    /**
+     * Test deleting two flight paths
+     */
+    @Test @Ignore
+    public void testDeleteTwoFlightPaths() {
+
+    }
+
+    /**
+     * Test deleting five flight paths
+     */
+    @Test @Ignore
+    public void testDeleteFiveFlightPaths() {
+
+    }
+
+    /**
+     * Test deleting a non-existant flight path, should error
+     */
+    @Test @Ignore
+    public void testDeleteNonExistantFlightPath() {
+
+    }
+
+    /**
+     * Test deleting a flight path with an invalid source airport ID, should error
+     */
+    @Test @Ignore
+    public void testDeleteFlightPathWithInvalidSourceAirportID() {
+
+    }
+
+    /**
+     * Test deleting a flight path with an invalid destination airport ID, should error
+     */
+    @Test @Ignore
+    public void testDeleteFlightPathWithInvalidDestinationAirportID() {
+
+    }
+
+    /**
+     * Test inserting one holiday plan
+     */
+    @Test @Ignore
+    public void testInsertOneHolidayPlan() {
+
+    }
+
+    /**
+     * Test inserting two holiday plans
+     */
+    @Test @Ignore
+    public void testInsertTwoHolidayPlans() {
+
+    }
+
+    /**
+     * Test inserting five holiday plans
+     */
+    @Test @Ignore
+    public void testInsertFiveHolidayPlans() {
+
+    }
+
+    /**
+     * Test inserting two of the same holiday plans, should error
+     */
+    @Test @Ignore
+    public void testInsertTwoSameHolidayPlans() {
+
+    }
+
+    /**
+     * Testing inserting a holiday plan with not parameters provided, should error
+     */
+    @Test @Ignore
+    public void testInsertHolidayPlanWithNoParameters() {
+
+    }
+
+    /**
+     * Test inserting a holiday plan without providing a dictionary, should error
+     */
+    @Test @Ignore
+    public void testInsertHolidayPlanWithoutDirectory() {
+
+    }
+
+    /**
+     * Test inserting a holiday plan without providing a name, should error
+     */
+    @Test @Ignore
+    public void testInsertHolidayPlanWithoutName() {
+
+    }
+
+    /**
+     * Test updating one holiday plan
+     */
+    @Test @Ignore
+    public void testUpdateOneHolidayPlan() {
+
+    }
+
+    /**
+     * Test updating two holiday plans
+     */
+    @Test @Ignore
+    public void testUpdateTwoHolidayPlans() {
+
+    }
+
+    /**
+     * Test updating five holiday plans
+     */
+    @Test @Ignore
+    public void testUpdateFiveHolidayPlans() {
+
+    }
+
+    /**
+     * Test updating a holiday plan without providing a new directory
+     */
+    @Test @Ignore
+    public void testUpdateHolidayPlanWithoutNewDirectory() {
+
+    }
+
+    /**
+     * Test updating a holiday plan without providing a new name
+     */
+    @Test @Ignore
+    public void testUpdateHolidayPlanWithoutNewName() {
+
+    }
+
+    /**
+     * Test updating a holiday plan with an invalid index, should error
+     */
+    @Test @Ignore
+    public void testUpdateHolidayPlanWithInvalidIndex() {
+
+    }
+
+    /**
+     * Test deleting one holiday plan
+     */
+    @Test @Ignore
+    public void testDeleteOneHolidayPlan() {
+
+    }
+
+    /**
+     * Test deleting two holiday plans
+     */
+    @Test @Ignore
+    public void testDeleteTwoHolidayPlans() {
+
+    }
+
+    /**
+     * Test deleting five holiday plans
+     */
+    @Test @Ignore
+    public void testDeleteFiveHolidayPlans() {
+
+    }
+
+    /**
+     * Test deleting a non-existant holiday plan, should error
+     */
+    @Test @Ignore
+    public void testDeleteNonExistantHolidayPlan() {
+
+    }
 }
