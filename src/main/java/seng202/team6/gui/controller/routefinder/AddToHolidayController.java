@@ -149,11 +149,11 @@ public class AddToHolidayController {
         /* Departure Time */
         try {
             hour = Integer.parseInt(deptHour.getText());
-            if (hour > 24 || hour < 1) {
+            if (hour > 24 || hour < 0) {
                 throw new Exception();
             }
             minute = Integer.parseInt(deptMinute.getText());
-            if (minute > 60 || minute < 1) {
+            if (minute > 60 || minute < 0) {
                 throw new Exception();
             }
         } catch (Exception e) {
@@ -182,11 +182,11 @@ public class AddToHolidayController {
         /* Arrival Time */
         try {
             hour = Integer.parseInt(arrivalHour.getText());
-            if (hour > 24 || hour < 1) {
+            if (hour > 24 || hour < 0) {
                 throw new Exception();
             }
             minute = Integer.parseInt(arrivalMinute.getText());
-            if (minute > 60 || minute < 1) {
+            if (minute > 60 || minute < 0) {
                 throw new Exception();
             }
         } catch (Exception e) {

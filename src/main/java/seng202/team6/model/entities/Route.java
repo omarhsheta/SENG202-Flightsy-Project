@@ -1,7 +1,10 @@
 package seng202.team6.model.entities;
 
 import com.google.gson.Gson;
+import seng202.team6.model.data.DataExportHandler;
+import seng202.team6.model.data.Filter;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 import static java.lang.String.format;
@@ -162,5 +165,16 @@ public class Route implements Comparable<Route> {
         } else {
             return firstCompare;
         }
+    }
+
+    /**
+     * Obtains a filtered array of Airports
+     * @return ArrayList instance with Airport.java objects
+     */
+    public ArrayList<Airport> GetAirports() {
+        ArrayList<Filter> filters = new ArrayList<>();
+        filters.add(new Filter(String.format("ID_AIRPORT = %d", SourceAirportID), "OR"));
+        filters.add(new Filter(String.format("ID_AIRPORT = %d", DestinationAirportID), null));
+        return DataExportHandler.GetInstance().FetchAirports(filters);
     }
 }

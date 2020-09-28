@@ -11,10 +11,7 @@ import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.util.Pair;
 import seng202.team6.gui.components.FilterTextField;
-import seng202.team6.gui.controller.routefinder.AirportResultController;
-import seng202.team6.gui.controller.routefinder.AnalysisDistanceController;
-import seng202.team6.gui.controller.routefinder.FlightResultController;
-import seng202.team6.gui.controller.routefinder.ResultController;
+import seng202.team6.gui.controller.routefinder.*;
 import seng202.team6.gui.helper.NodeHelper;
 import seng202.team6.model.MapHelper;
 import seng202.team6.model.data.DataExportHandler;
@@ -66,6 +63,7 @@ public class FindRoutesController implements Initializable
     private VBox routeFilterDestinationBox;
     private ArrayList<FilterTextField> routeFilterOriginTextFields;
     private ArrayList<FilterTextField> routeFilterDestinationTextFields;
+    private final String routeResultComponent = "flightpathresult";
 
     //Data analysis
     @FXML
@@ -136,18 +134,15 @@ public class FindRoutesController implements Initializable
         ArrayList<Filter> destinationFilters = FilterTextField.ExtractFilters(flightFilterDestinationTextFields);
 
         Pair<ArrayList<Airport>, ArrayList<Airport>> airports = Airport.GetSourceAndDestinations(originFilters, destinationFilters);
-        //ArrayList<Route> routes = DataExportHandler.GetInstance().FetchRoutes(airports.getKey(), airports.getValue(), (int)maxStopsSlider.getValue());
-        //TODO Whoever did this needs to fix it ^
+        ArrayList<Route> routes = DataExportHandler.GetInstance().FetchRoutes(airports.getKey(), airports.getValue(), (int)maxStopsSlider.getValue());
 
         try {
-            /*
             for (Route route : routes) {
                 Pair<BorderPane, FlightResultController> pair = NodeHelper.LoadNode(subFolder, flightResultComponent);
                 resultsPane.getChildren().add(pair.getKey());
                 FlightResultController resultController = pair.getValue();
                 resultController.SetFlight(route);
             }
-            */
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -164,18 +159,19 @@ public class FindRoutesController implements Initializable
         ArrayList<Filter> destinationFilters = FilterTextField.ExtractFilters(routeFilterDestinationTextFields);
 
         Pair<ArrayList<Airport>, ArrayList<Airport>> airports = Airport.GetSourceAndDestinations(originFilters, destinationFilters);
-        //ArrayList<RoutePath> paths = DataExportHandler.GetInstance().FetchRoutePaths(airports.getKey(), airports.getValue());
-        //TODO Whoever did this needs to fix it ^
+        ArrayList<RoutePath> paths = DataExportHandler.GetInstance().FetchRoutePaths(airports.getKey(), airports.getValue());
 
-        /* TODO
+
         try {
             for (RoutePath path : paths) {
-
+                Pair<BorderPane, FlightPathResultController> pair = NodeHelper.LoadNode(subFolder, routeResultComponent);
+                resultsPane.getChildren().add(pair.getKey());
+                FlightPathResultController resultController = pair.getValue();
+                resultController.SetRoutePath(path);
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        */
     }
 
     /**
