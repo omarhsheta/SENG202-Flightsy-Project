@@ -252,7 +252,7 @@ public class CSVLoader {
      * @param path File path to CSV file
      * @return RoutePath object with coordinate data from file
      */
-    public RoutePath GetCSVRoutePath(String path) {
+    public RoutePath ImportCSVRoutePath(String path) {
         ArrayList<ArrayList<String>> lines = ProcessCSVFile(path);
         ArrayList<Pair<Double, Double>> coordinates = new ArrayList<>();
         int lastInd = lines.size() - 1;

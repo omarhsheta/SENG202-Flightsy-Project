@@ -119,6 +119,19 @@ public class DataViewerController implements Initializable
         }
     }
 
+    /**
+     * Gets Flight path data file, passes to CSVLoader to get Flight path object,
+     * then passes objects to DataHandler to add to database
+     */
+    @FXML
+    public void FlightPathFileImport() {
+        File selectedFile = SelectFile();
+        if (selectedFile != null) {
+            String filePath = selectedFile.getAbsolutePath();
+            csvLoader.ImportCSVRoutePath(filePath);
+        }
+    }
+
 
     /**
      * A function that creates a new stage for the user to manually add a row into the database
