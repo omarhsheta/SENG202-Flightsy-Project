@@ -104,14 +104,18 @@ public class DataExportHandler {
         return routes;
     }
 
+    /**
+     * Extract list of paths from result set
+     * @param resultSet Results from query
+     * @return List of route paths
+     * @throws SQLException SQLException
+     */
     private ArrayList<RoutePath> ExtractRoutePaths(ResultSet resultSet) throws SQLException {
         ArrayList<RoutePath> paths = new ArrayList<>();
         // Loop through the result set and create Airport objects from data
         while (resultSet.next()) {
             String directory = resultSet.getString("directory");
             String json = DataHandler.GetInstance().ReadDataFile(directory);
-            System.out.println(directory);
-            System.out.println(json);
             RoutePath path = RoutePath.FromJSON(json);
             paths.add(path);
         }
@@ -231,6 +235,12 @@ public class DataExportHandler {
         }
     }
 
+    /**
+     * Select and return all the Route Paths in the SQLite database.
+     * @param sourceAirports Source airport list
+     * @param destinationAirports Destination airport list
+     * @return All Route paths that fit the database query
+     */
     public ArrayList<RoutePath> FetchRoutePaths(ArrayList<Airport> sourceAirports, ArrayList<Airport> destinationAirports) {
         String query = String.format("SELECT directory FROM flight_path " +
                                      "WHERE source_airport_id IN (%s) AND destination_airport_id IN (%s);",
@@ -285,6 +295,13 @@ public class DataExportHandler {
     }
 
 
+    /**
+     * NOT OMAR'S, PLS FIX @WHOEVER DID IT I DONT WAND DADDY MATTY TO SEE IT :(
+     * @param sourceAirport
+     * @param destinationAirport
+     * @return
+     * @throws SQLException
+     */
     public String FetchFlightPaths(Airport sourceAirport, Airport destinationAirport) throws SQLException {
         String query = format("SELECT directory FROM flight_path WHERE AirportSourceID = %d AND DestinationSourceID = %d",
                 sourceAirport.getAirportID(), destinationAirport.getAirportID());

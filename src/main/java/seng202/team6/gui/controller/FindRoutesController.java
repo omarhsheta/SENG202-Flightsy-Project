@@ -11,10 +11,7 @@ import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.util.Pair;
 import seng202.team6.gui.components.FilterTextField;
-import seng202.team6.gui.controller.routefinder.AirportResultController;
-import seng202.team6.gui.controller.routefinder.AnalysisDistanceController;
-import seng202.team6.gui.controller.routefinder.FlightResultController;
-import seng202.team6.gui.controller.routefinder.ResultController;
+import seng202.team6.gui.controller.routefinder.*;
 import seng202.team6.gui.helper.NodeHelper;
 import seng202.team6.model.MapHelper;
 import seng202.team6.model.data.DataExportHandler;
@@ -66,6 +63,7 @@ public class FindRoutesController implements Initializable
     private VBox routeFilterDestinationBox;
     private ArrayList<FilterTextField> routeFilterOriginTextFields;
     private ArrayList<FilterTextField> routeFilterDestinationTextFields;
+    private final String routeResultComponent = "flightpathresult";
 
     //Data analysis
     @FXML
@@ -166,7 +164,10 @@ public class FindRoutesController implements Initializable
 
         try {
             for (RoutePath path : paths) {
-                System.out.println(path.GetDestination());
+                Pair<BorderPane, FlightPathResultController> pair = NodeHelper.LoadNode(subFolder, routeResultComponent);
+                resultsPane.getChildren().add(pair.getKey());
+                FlightPathResultController resultController = pair.getValue();
+                resultController.SetRoutePath(path);
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
