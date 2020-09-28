@@ -1,10 +1,10 @@
 package seng202.team6.model.entities;
+
 import javafx.util.Pair;
 import seng202.team6.model.data.DataExportHandler;
 import seng202.team6.model.data.Filter;
 import seng202.team6.model.interfaces.IMapDrawable;
 
-import java.lang.*;
 import java.util.ArrayList;
 import java.util.Objects;
 

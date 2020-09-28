@@ -23,7 +23,7 @@ public class CarTrip extends Event {
      * @param DCity Destination City
      * @param DCountry Destination Country
      */
-    CarTrip(int D, int M, int Y, int newHour, int newMinute,  String T, String N, String OCity,
+    public CarTrip(int D, int M, int Y, int newHour, int newMinute,  String T, String N, String OCity,
             String OCountry, String DCity, String DCountry) {
         super(D, M, Y, newHour, newMinute, T, N);
         OriginCity = OCity;

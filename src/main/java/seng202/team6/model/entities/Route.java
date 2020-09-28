@@ -1,5 +1,7 @@
 package seng202.team6.model.entities;
 
+import com.google.gson.Gson;
+
 import java.util.Objects;
 
 import static java.lang.String.format;

@@ -1,12 +1,14 @@
 package seng202.team6.model.user;
 
+import com.google.gson.Gson;
 import seng202.team6.model.events.CarTrip;
 import seng202.team6.model.events.Flight;
 import seng202.team6.model.events.General;
+import seng202.team6.model.interfaces.JSONSerializable;
 
 import java.util.ArrayList;
 
-public class HolidayPlan {
+public class HolidayPlan implements JSONSerializable {
     String name; //No more than 25 chars
     private ArrayList<General> itineraries = new ArrayList<>();
     private ArrayList<Flight> flights = new ArrayList<>(); //Should not exceed 30
@@ -20,6 +22,24 @@ public class HolidayPlan {
         name = newName;
     }
 
+    /**
+     * Constructor for turning object from JSON
+     * @param json JSON String
+     */
+    public static HolidayPlan FromJSON(String json) {
+        Gson gson = new Gson();
+        return gson.fromJson(json, HolidayPlan.class);
+    }
+
+    /**
+     * Turn object into JSON Representation
+     * @return String JSON String
+     */
+    @Override
+    public String ToJson() {
+        Gson gson = new Gson();
+        return gson.toJson(this);
+    }
 
 
     /**

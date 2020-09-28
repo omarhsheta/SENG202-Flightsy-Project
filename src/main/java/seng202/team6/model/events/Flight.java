@@ -38,7 +38,6 @@ public class Flight extends Event {
         super(deptDay, deptMonth, deptYear, deptHour, deptMinute, T, N);
         arrivalDateTime = LocalDateTime.of(destYear, destMonth, destDay, destHour, destMinute);
         this.route = route;
-        System.out.println(String.format("%s", super.Title));
     }
 
     /**

@@ -1,11 +1,13 @@
 package seng202.team6.model.entities;
 
+import com.google.gson.Gson;
 import javafx.util.Pair;
 import seng202.team6.model.interfaces.IMapDrawable;
+import seng202.team6.model.interfaces.JSONSerializable;
 
 import java.util.ArrayList;
 
-public class RoutePath implements IMapDrawable {
+public class RoutePath implements IMapDrawable, JSONSerializable {
     String source;
     String destination;
     ArrayList<Pair<Double, Double>> coordinates;
@@ -20,6 +22,25 @@ public class RoutePath implements IMapDrawable {
         this.source = newSource;
         this.destination = newDestination;
         this.coordinates = newCoordinates;
+    }
+
+    /**
+     * Constructor for turning object from JSON
+     * @param json JSON String
+     */
+    public static RoutePath FromJSON(String json) {
+        Gson gson = new Gson();
+        return gson.fromJson(json, RoutePath.class);
+    }
+
+    /**
+     * Turn object into JSON Representation
+     * @return String JSON String
+     */
+    @Override
+    public String ToJson() {
+        Gson gson = new Gson();
+        return gson.toJson(this);
     }
 
     public String GetSource() {
