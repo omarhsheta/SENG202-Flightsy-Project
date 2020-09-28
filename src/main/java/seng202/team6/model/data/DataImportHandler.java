@@ -6,6 +6,7 @@ import seng202.team6.model.entities.Route;
 import seng202.team6.model.entities.RoutePath;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -326,8 +327,39 @@ public class DataImportHandler {
      * @return an array list of size two where the first element is the source airport ID and the second element is the
      * destination airport ID
      */
-    public ArrayList<Integer> getAirportIDsFromRoutePath(RoutePath routePath) {
-        return null;
+    public ArrayList<Integer> getAirportIDsFromRoutePath(RoutePath routePath) throws SQLException{
+        String sourceAirportICAO = routePath.GetSource();
+        String destinationAirportICAO = routePath.GetDestination();
+        Statement stmt = this.databaseConnection.createStatement();
+        String sourceQuery = format("SELECT id_airport FROM airport WHERE icao = '%s'", sourceAirportICAO);
+        String destinationQuery = format("SELECT id_airport FROM airport WHERE icao = '%s'", destinationAirportICAO);
+        Integer sourceAirportID = stmt.executeQuery(sourceQuery).getInt("id_airport");
+        Integer destinationAirportID = stmt.executeQuery(destinationQuery).getInt("id_airport");
+        if (sourceAirportID == null || destinationAirportID == null) {
+            throw new SQLException("An airport id did not match with its ICAO");
+        }
+        ArrayList<Integer> airportIDsPair = new ArrayList<>(2);
+        airportIDsPair.add(sourceAirportID);
+        airportIDsPair.add(destinationAirportID);
+        return airportIDsPair;
+    }
+
+    /**
+     * Finds the flight path row in the database and returns its directory
+     * @param sourceAirportID The source airport ID of the airport the flight path departs from
+     * @param destinationAirportID the destination airport ID of the airport the flight path arrives at
+     * @return The directory associated with the route path object
+     */
+    //TODO Move to DataExportHandler
+    public String fetchFlightPaths(int sourceAirportID, int destinationAirportID) throws SQLException {
+        String query = format("SELECT directory FROM flight_path WHERE AirportSourceID = %d AND DestinationSourceID = %d",
+                sourceAirportID, destinationAirportID);
+        Statement stmt = this.databaseConnection.createStatement();
+        String directory = stmt.executeQuery(query).getString("directory");
+        if (directory == null) {
+            throw new SQLException("No flight path directory was found");
+        }
+        return directory;
     }
 
     /**
@@ -335,18 +367,13 @@ public class DataImportHandler {
      * @param routePath the route path object
      * @return The directory associated with the route path object
      */
-    public String fetchFlightPaths(RoutePath routePath) {
-        return null;
-    }
-
-    /**
-     * Finds the flight path row in the database and returns its directory
-     * @param AirportSourceId The source airport ID of the airport the flight path departs from
-     * @param AirportDestinationID the destination airport ID of the airport the flight path arrives at
-     * @return The directory associated with the route path object
-     */
-    public String fetchFlightPaths(int AirportSourceId, int AirportDestinationID) {
-        return null;
+    //TODO Move to DataExportHandler
+    public String fetchFlightPaths(RoutePath routePath) throws SQLException{
+        ArrayList<Integer> airportIDsPair = new ArrayList<Integer>(2);
+        airportIDsPair = getAirportIDsFromRoutePath(routePath);
+        int sourceAirportID = airportIDsPair.get(0);
+        int destinationAirportID = airportIDsPair.get(1);
+        return fetchFlightPaths(sourceAirportID, destinationAirportID);
     }
 
     /**
@@ -355,17 +382,35 @@ public class DataImportHandler {
      * @param directory The local directory the flight path object is stored at
      */
     public void insertFlightPath(RoutePath routePath, String directory) throws SQLException {
-
+        ArrayList<Integer> airportIDsPair = new ArrayList<Integer>(2);
+        airportIDsPair = getAirportIDsFromRoutePath(routePath);
+        int sourceAirportID = airportIDsPair.get(0);
+        int destinationAirportID = airportIDsPair.get(1);
+        String sql = format("INSERT INTO flight_path (source_airport_id, destination_airport_id, directory)" +
+                "VALUES (%d, %d, '%s')", sourceAirportID, destinationAirportID, directory);
+        Statement stmt = this.databaseConnection.createStatement();
+        if (stmt.executeUpdate(sql) <= 0) {
+            throw new SQLException("The flight path was not inserted into the database");
+        }
     }
 
     /**
      * Updates the directory of the flight path in the database
-     * @param AirportSourceId The source airport ID of the airport the flight path departs from
-     * @param AirportDestinationID the destination airport ID of the airport the flight path arrives at
+     * @param sourceAirportID The source airport ID of the airport the flight path departs from
+     * @param destinationAirportID the destination airport ID of the airport the flight path arrives at
      * @param newDirectory The new directory the RoutePath object will be stored
      */
-    public void updateFlightPath(int AirportSourceId, int AirportDestinationID, String newDirectory) {
-
+    public void updateFlightPath(int sourceAirportID, int destinationAirportID, String newDirectory) throws SQLException,
+            Exception {
+        if (newDirectory == null || newDirectory.isEmpty()) {
+            throw new Exception("No directory was provided");
+        }
+        String sql = format("UPDATE flight_path SET directory = %s WHERE source_airport_id = %d AND destination_airport_id = %d",
+                newDirectory, sourceAirportID, destinationAirportID);
+        Statement stmt = this.databaseConnection.createStatement();
+        if (stmt.executeUpdate(sql) <= 0) {
+            throw new SQLException("The flight path in the database was not updated");
+        }
     }
 
     /**
@@ -373,25 +418,42 @@ public class DataImportHandler {
      * @param routePath the route path object
      * @param newDirectory The new directory the RoutePath object will be stored
      */
-    public void updateFlightPath(RoutePath routePath, String newDirectory) {
-
+    public void updateFlightPath(RoutePath routePath, String newDirectory) throws SQLException, Exception {
+        ArrayList<Integer> airportIDsPair = new ArrayList<Integer>(2);
+        try {
+            airportIDsPair = getAirportIDsFromRoutePath(routePath);
+        } catch (Exception e) { throw e; }
+        int sourceAirportID = airportIDsPair.get(0);
+        int destinationAirportID = airportIDsPair.get(1);
+        updateFlightPath(sourceAirportID, destinationAirportID, newDirectory);
     }
 
     /**
      * Deletes the flight path in the database
-     * @param AirportSourceID The source airport ID of the airport the flight path departs from
-     * @param AirportDestinationID the destination airport ID of the airport the flight path arrives at
+     * @param sourceAirportID The source airport ID of the airport the flight path departs from
+     * @param destinationAirportID the destination airport ID of the airport the flight path arrives at
      */
-    public void deleteFlightPath(int AirportSourceID, int AirportDestinationID) {
-
+    public void deleteFlightPath(int sourceAirportID, int destinationAirportID) throws SQLException {
+        Statement stmt = this.databaseConnection.createStatement();
+        String sql = format("DELETE FROM flight_path WHERE sourceAirportID = %d AND destinationAirportID = %d",
+                sourceAirportID, destinationAirportID);
+        if (stmt.executeUpdate(sql) <= 0) {
+            throw new SQLException("The flight path was not deleted from then database");
+        }
     }
 
     /**
      * Deletes the flight path in the database
      * @param routePath routePath the route path object
      */
-    public void deleteFlightPath(RoutePath routePath) {
-
+    public void deleteFlightPath(RoutePath routePath) throws SQLException {
+        ArrayList<Integer> airportIDsPair = new ArrayList<Integer>(2);
+        try {
+            airportIDsPair = getAirportIDsFromRoutePath(routePath);
+        } catch (Exception e) { throw e; }
+        int sourceAirportID = airportIDsPair.get(0);
+        int destinationAirportID = airportIDsPair.get(1);
+        deleteFlightPath(sourceAirportID, destinationAirportID);
     }
 
 
@@ -399,36 +461,69 @@ public class DataImportHandler {
 
     /**
      * Retrieves the directory of the holiday plan object from the database
-     * @param holidayPlanID the id of the holiday plan object
+     * @param holidayPlanIndex the index of the holiday plan object in the array of holiday plans
      * @return the directory of the holiday plan object
      */
-    public String fetchHolidayPlan(int holidayPlanID) {
-        return null;
+    //TODO Move to DataExportHandler
+    public String fetchHolidayPlan(int holidayPlanIndex) throws SQLException{
+        String query = format("SELECT directory FROM holiday_plan WHERE index_holiday_plan = %s", holidayPlanIndex);
+        Statement stmt = this.databaseConnection.createStatement();
+        String directory = stmt.executeQuery(query).getString("directory");
+        if (directory == null) {
+            throw new SQLException("No flight path directory was found");
+        }
+        return directory;
     }
 
     /**
      * Inserts the holiday plan object's directory location into the database
-     * @param holidayPlanID the id of the holiday plan object
+     * @param holidayPlanIndex the index of the holiday plan object in the array of holiday plans
      * @param directory the directory in which the holiday plan object resides
      */
-    public void insertHolidayPlan(int holidayPlanID, String directory) {
-
+    public void insertHolidayPlan(int holidayPlanIndex, String name, String directory) throws SQLException {
+        String sql = format("INSERT INTO holiday_plan (index_holiday_plan, name, directory), VALUES (%d, %s, %s)",
+                holidayPlanIndex, name, directory);
+        Statement stmt = this.databaseConnection.createStatement();
+        if (stmt.executeUpdate(sql) <= 0) {
+            throw new SQLException("The holiday plan was not inserted into the database");
+        }
     }
 
     /**
      * Updates the holiday plan in the database with a new location for the object
-     * @param holidayPlanID the id of the holiday plan object
+     * @param holidayPlanIndex the index of the holiday plan object in the array of holiday plans
      * @param newDirectory the new directory in which the holiday plan object will reside
      */
-    public void updateHolidayPlan(int holidayPlanID, String newDirectory) {
+    public void updateHolidayPlan(int holidayPlanIndex, String newName, String newDirectory) throws SQLException, Exception{
+        String setSQL = "";
+        if (newDirectory == null || newDirectory.isEmpty()) {
+            setSQL += format("directory = %s, ", newDirectory);
+        }
+        if (newName != null && !newName.isEmpty()) {
+            setSQL += format("name = %s, ", newName);
+        }
+        if (setSQL.length() > 0) {
+            setSQL = setSQL.substring(0, setSQL.length() - 1);
+        } else {
+            throw new Exception("No parameters to update were provided!");
+        }
 
+        String sql = format("UPDATE holiday_path SET %s WHERE index_holiday_plan = %d", setSQL, holidayPlanIndex);
+        Statement stmt = this.databaseConnection.createStatement();
+        if (stmt.executeUpdate(sql) <= 0) {
+            throw new SQLException("The holiday plan in the database was not updated");
+        }
     }
 
     /**
      * Deletes the holiday plan entry from the database
-     * @param holidayPlanID the id of the holiday plan object
+     * @param holidayPlanIndex the index of the holiday plan object in the array of holiday plans
      */
-    public void deleteHolidayPlan(int holidayPlanID) {
-
+    public void deleteHolidayPlan(int holidayPlanIndex) throws SQLException{
+        String sql = format("DELETE FROM holiday_plan WHERE index_holiday = %d", holidayPlanIndex);
+        Statement stmt = this.databaseConnection.createStatement();
+        if (stmt.executeUpdate(sql) <= 0) {
+            throw new SQLException("Nothing was deleted");
+        }
     }
 }
