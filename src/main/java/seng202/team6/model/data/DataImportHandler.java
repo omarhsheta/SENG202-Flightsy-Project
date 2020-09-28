@@ -3,6 +3,7 @@ package seng202.team6.model.data;
 import seng202.team6.model.entities.Airline;
 import seng202.team6.model.entities.Airport;
 import seng202.team6.model.entities.Route;
+import seng202.team6.model.entities.RoutePath;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -316,5 +317,118 @@ public class DataImportHandler {
         if (stmt.executeUpdate(query) <= 0) {
             throw new SQLException("Nothing was deleted");
         }
+    }
+
+
+    /**
+     * Finds the source and destination airport IDs based off the respective airport's ICAOs
+     * @param routePath the route path object
+     * @return an array list of size two where the first element is the source airport ID and the second element is the
+     * destination airport ID
+     */
+    public ArrayList<Integer> getAirportIDsFromRoutePath(RoutePath routePath) {
+        return null;
+    }
+
+    /**
+     * Finds the flight path row in the database and returns its directory
+     * @param routePath the route path object
+     * @return The directory associated with the route path object
+     */
+    public String fetchFlightPaths(RoutePath routePath) {
+        return null;
+    }
+
+    /**
+     * Finds the flight path row in the database and returns its directory
+     * @param AirportSourceId The source airport ID of the airport the flight path departs from
+     * @param AirportDestinationID the destination airport ID of the airport the flight path arrives at
+     * @return The directory associated with the route path object
+     */
+    public String fetchFlightPaths(int AirportSourceId, int AirportDestinationID) {
+        return null;
+    }
+
+    /**
+     * Inserts a flight path into the database
+     * @param routePath the route path object, also known as the flight path
+     * @param directory The local directory the flight path object is stored at
+     */
+    public void insertFlightPath(RoutePath routePath, String directory) throws SQLException {
+
+    }
+
+    /**
+     * Updates the directory of the flight path in the database
+     * @param AirportSourceId The source airport ID of the airport the flight path departs from
+     * @param AirportDestinationID the destination airport ID of the airport the flight path arrives at
+     * @param newDirectory The new directory the RoutePath object will be stored
+     */
+    public void updateFlightPath(int AirportSourceId, int AirportDestinationID, String newDirectory) {
+
+    }
+
+    /**
+     * Updates the directory of the flight path in the database
+     * @param routePath the route path object
+     * @param newDirectory The new directory the RoutePath object will be stored
+     */
+    public void updateFlightPath(RoutePath routePath, String newDirectory) {
+
+    }
+
+    /**
+     * Deletes the flight path in the database
+     * @param AirportSourceID The source airport ID of the airport the flight path departs from
+     * @param AirportDestinationID the destination airport ID of the airport the flight path arrives at
+     */
+    public void deleteFlightPath(int AirportSourceID, int AirportDestinationID) {
+
+    }
+
+    /**
+     * Deletes the flight path in the database
+     * @param routePath routePath the route path object
+     */
+    public void deleteFlightPath(RoutePath routePath) {
+
+    }
+
+
+
+
+    /**
+     * Retrieves the directory of the holiday plan object from the database
+     * @param holidayPlanID the id of the holiday plan object
+     * @return the directory of the holiday plan object
+     */
+    public String fetchHolidayPlan(int holidayPlanID) {
+        return null;
+    }
+
+    /**
+     * Inserts the holiday plan object's directory location into the database
+     * @param holidayPlanID the id of the holiday plan object
+     * @param directory the directory in which the holiday plan object resides
+     */
+    public void insertHolidayPlan(int holidayPlanID, String directory) {
+
+    }
+
+    /**
+     * Updates the holiday plan in the database with a new location for the object
+     * @param holidayPlanID the id of the holiday plan object
+     * @param newDirectory the new directory in which the holiday plan object will reside
+     */
+    public void updateHolidayPlan(int holidayPlanID, String newDirectory) {
+
+    }
+
+    /**
+     * Deletes the holiday plan entry from the database
+     * @param holidayPlanID the id of the holiday plan object
+     */
+    public void deleteHolidayPlan(int holidayPlanID) {
+
     }
 }
