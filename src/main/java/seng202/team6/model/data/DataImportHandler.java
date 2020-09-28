@@ -352,11 +352,10 @@ public class DataImportHandler {
      */
     //TODO Move to DataExportHandler
     public String fetchFlightPaths(int sourceAirportID, int destinationAirportID) throws SQLException {
-        String query = format("SELECT directory FROM airport WHERE AirportSourceID = %d AND DestinationSourceID = %d",
+        String query = format("SELECT directory FROM flight_path WHERE AirportSourceID = %d AND DestinationSourceID = %d",
                 sourceAirportID, destinationAirportID);
         Statement stmt = this.databaseConnection.createStatement();
-        String directory;
-        directory = stmt.executeQuery(query).getString("directory");
+        String directory = stmt.executeQuery(query).getString("directory");
         if (directory == null) {
             throw new SQLException("No flight path directory was found");
         }
@@ -387,11 +386,10 @@ public class DataImportHandler {
         airportIDsPair = getAirportIDsFromRoutePath(routePath);
         int sourceAirportID = airportIDsPair.get(0);
         int destinationAirportID = airportIDsPair.get(1);
-        String sql = format("INSERT INTO flight_paths (source_airport_id, destination_airport_id, directory)" +
+        String sql = format("INSERT INTO flight_path (source_airport_id, destination_airport_id, directory)" +
                 "VALUES (%d, %d, '%s')", sourceAirportID, destinationAirportID, directory);
         Statement stmt = this.databaseConnection.createStatement();
-        int results = stmt.executeUpdate(sql);
-        if (results <= 0) {
+        if (stmt.executeUpdate(sql) <= 0) {
             throw new SQLException("The flight path was not inserted into the database");
         }
     }
@@ -407,11 +405,10 @@ public class DataImportHandler {
         if (newDirectory == null || newDirectory.isEmpty()) {
             throw new Exception("No directory was provided");
         }
-        String sql = format("UPDATE flight_paths SET directory = %s WHERE source_airport_id = %d AND destination_airport_id = %d",
+        String sql = format("UPDATE flight_path SET directory = %s WHERE source_airport_id = %d AND destination_airport_id = %d",
                 newDirectory, sourceAirportID, destinationAirportID);
         Statement stmt = this.databaseConnection.createStatement();
-        int results = stmt.executeUpdate(sql);
-        if (results <= 0) {
+        if (stmt.executeUpdate(sql) <= 0) {
             throw new SQLException("The flight path in the database was not updated");
         }
     }
@@ -438,10 +435,9 @@ public class DataImportHandler {
      */
     public void deleteFlightPath(int sourceAirportID, int destinationAirportID) throws SQLException {
         Statement stmt = this.databaseConnection.createStatement();
-        String sql = format("DELETE FROM flight_paths WHERE sourceAirportID = %d AND destinationAirportID = %d",
+        String sql = format("DELETE FROM flight_path WHERE sourceAirportID = %d AND destinationAirportID = %d",
                 sourceAirportID, destinationAirportID);
-        int results = stmt.executeUpdate(sql);
-        if (results <= 0) {
+        if (stmt.executeUpdate(sql) <= 0) {
             throw new SQLException("The flight path was not deleted from then database");
         }
     }
@@ -469,8 +465,14 @@ public class DataImportHandler {
      * @return the directory of the holiday plan object
      */
     //TODO Move to DataExportHandler
-    public String fetchHolidayPlan(int holidayPlanIndex) {
-        return null;
+    public String fetchHolidayPlan(int holidayPlanIndex) throws SQLException{
+        String query = format("SELECT directory FROM holiday_plan WHERE index_holiday_plan = %s", holidayPlanIndex);
+        Statement stmt = this.databaseConnection.createStatement();
+        String directory = stmt.executeQuery(query).getString("directory");
+        if (directory == null) {
+            throw new SQLException("No flight path directory was found");
+        }
+        return directory;
     }
 
     /**
@@ -478,8 +480,13 @@ public class DataImportHandler {
      * @param holidayPlanIndex the index of the holiday plan object in the array of holiday plans
      * @param directory the directory in which the holiday plan object resides
      */
-    public void insertHolidayPlan(int holidayPlanIndex, String directory) {
-
+    public void insertHolidayPlan(int holidayPlanIndex, String name, String directory) throws SQLException {
+        String sql = format("INSERT INTO holiday_plan (index_holiday_plan, name, directory), VALUES (%d, %s, %s)",
+                holidayPlanIndex, name, directory);
+        Statement stmt = this.databaseConnection.createStatement();
+        if (stmt.executeUpdate(sql) <= 0) {
+            throw new SQLException("The holiday plan was not inserted into the database");
+        }
     }
 
     /**
@@ -487,15 +494,36 @@ public class DataImportHandler {
      * @param holidayPlanIndex the index of the holiday plan object in the array of holiday plans
      * @param newDirectory the new directory in which the holiday plan object will reside
      */
-    public void updateHolidayPlan(int holidayPlanIndex, String newDirectory) {
+    public void updateHolidayPlan(int holidayPlanIndex, String newName, String newDirectory) throws SQLException, Exception{
+        String setSQL = "";
+        if (newDirectory == null || newDirectory.isEmpty()) {
+            setSQL += format("directory = %s, ", newDirectory);
+        }
+        if (newName != null && !newName.isEmpty()) {
+            setSQL += format("name = %s, ", newName);
+        }
+        if (setSQL.length() > 0) {
+            setSQL = setSQL.substring(0, setSQL.length() - 1);
+        } else {
+            throw new Exception("No parameters to update were provided!");
+        }
 
+        String sql = format("UPDATE holiday_path SET %s WHERE index_holiday_plan = %d", setSQL, holidayPlanIndex);
+        Statement stmt = this.databaseConnection.createStatement();
+        if (stmt.executeUpdate(sql) <= 0) {
+            throw new SQLException("The holiday plan in the database was not updated");
+        }
     }
 
     /**
      * Deletes the holiday plan entry from the database
      * @param holidayPlanIndex the index of the holiday plan object in the array of holiday plans
      */
-    public void deleteHolidayPlan(int holidayPlanIndex) {
-
+    public void deleteHolidayPlan(int holidayPlanIndex) throws SQLException{
+        String sql = format("DELETE FROM holiday_plan WHERE index_holiday = %d", holidayPlanIndex);
+        Statement stmt = this.databaseConnection.createStatement();
+        if (stmt.executeUpdate(sql) <= 0) {
+            throw new SQLException("Nothing was deleted");
+        }
     }
 }
