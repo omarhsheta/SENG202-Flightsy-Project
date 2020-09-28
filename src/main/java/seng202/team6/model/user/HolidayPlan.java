@@ -11,8 +11,10 @@ import java.util.Random;
 import java.util.ArrayList;
 
 public class HolidayPlan implements JSONSerializable {
+    /*
     Random random;
     int holidayPlanID;
+    */
     String name; //No more than 25 chars
     private ArrayList<General> itineraries = new ArrayList<>();
     private ArrayList<Flight> flights = new ArrayList<>(); //Should not exceed 30
@@ -23,7 +25,9 @@ public class HolidayPlan implements JSONSerializable {
      * @param newName the name of the new HolidayPlan
      */
     public HolidayPlan(String newName) {
+        /*
         holidayPlanID = createHolidayPlanID();
+         */
         name = newName;
     }
 
@@ -49,11 +53,13 @@ public class HolidayPlan implements JSONSerializable {
     /**
      * Creates a random Holiday Plan ID
      */
+    /*
     public int createHolidayPlanID() {
         int randomBound = 10000000;
         new Random();
         return random.nextInt(randomBound);
     }
+     */
 
     /**
      * This method should be called when the user is adding a new flight to their HolidayPlan.
