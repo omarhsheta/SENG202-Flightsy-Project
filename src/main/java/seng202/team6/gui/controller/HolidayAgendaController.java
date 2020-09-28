@@ -1,29 +1,24 @@
 package seng202.team6.gui.controller;
 
 import javafx.beans.value.ObservableValue;
-import javafx.collections.ObservableList;
 import javafx.concurrent.Worker;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.MenuItem;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import seng202.team6.model.MapHelper;
+import seng202.team6.model.entities.Airport;
 import seng202.team6.model.events.CarTrip;
 import seng202.team6.model.events.Event;
 import seng202.team6.model.events.Flight;
 import seng202.team6.model.events.General;
 import seng202.team6.model.user.HolidayPlan;
 
-import javax.swing.event.ChangeListener;
 import java.net.URL;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.ResourceBundle;
 
 public class HolidayAgendaController implements Initializable {
@@ -45,10 +40,9 @@ public class HolidayAgendaController implements Initializable {
 
     private WebEngine webEngine;
     private final String mapHTML = "/map/main.html";
-    private MapHelper controller;
+    private MapHelper mapHelper;
 
     private static HolidayAgendaController Instance;
-
 
 
 
@@ -82,7 +76,7 @@ public class HolidayAgendaController implements Initializable {
         webEngine = webView2.getEngine();
         webEngine.load(getClass().getResource(mapHTML).toExternalForm());
 
-        controller = new MapHelper(webEngine);
+        mapHelper = new MapHelper(webEngine);
 
         webEngine.getLoadWorker().stateProperty().addListener((obs, oldState, newState) -> {
             if (newState == Worker.State.SUCCEEDED) {
@@ -119,7 +113,7 @@ public class HolidayAgendaController implements Initializable {
     public int getSelectedHolidayIndex() {
         int count = 0;
         for (HolidayPlan holiday : holidays) {
-            if (selectedHoliday == holiday.getName()) {
+            if (selectedHoliday.equals(holiday.getName())) {
                 return count;
             }
             count++;
@@ -163,6 +157,7 @@ public class HolidayAgendaController implements Initializable {
      * sorted order by date and time.
      */
     private void showHoliday(HolidayPlan holiday) {
+        mapHelper.ClearAll();
         eventsVBox.getChildren().clear();
 
         ArrayList<Event> allEvents = new ArrayList<>();
@@ -183,7 +178,16 @@ public class HolidayAgendaController implements Initializable {
             allEvents.remove(earliestEvent);
             earliestEvent = null;
         }
+
+        /* Show flights on map */
+        for (Flight flight: holiday.getFlights()) {
+            ArrayList<Airport> airports = flight.getRoute().GetAirports();
+            mapHelper.DrawAirportMarks(airports);
+            mapHelper.DrawLineBetween(airports);
+        }
     }
+
+
 
     /**
      * A method to create a new holiday

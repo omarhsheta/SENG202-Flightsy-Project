@@ -11,6 +11,7 @@ import javax.lang.model.util.Elements;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * This class is for flight plans
@@ -49,20 +50,46 @@ public class Flight extends Event {
     }
 
     /**
+     *
+     * @return the arrival LocalDateTime
+     */
+    public LocalDateTime getArrivalDateTime() {
+        return arrivalDateTime;
+    }
+
+    /**
      * A method that makes a Pane for the flight event
      * @return Pane object to be added to the holiday GUI
      */
     @Override
     public Pane toPane() {
-        String deptTime = String.format("%d: %d", super.getDateTime().getHour(), super.getDateTime().getMinute());
-        String destTime = String.format("%d: %d", arrivalDateTime.getHour(), arrivalDateTime.getMinute());
+        //String deptTime = String.format("%d: %d", super.getDateTime().getHour(), super.getDateTime().getMinute());
+        //String destTime = String.format("%d: %d", arrivalDateTime.getHour(), arrivalDateTime.getMinute());
+
+
+//        String deptDayOfWeek = super.getDateTime().getDayOfWeek().toString();
+//        deptDayOfWeek = deptDayOfWeek.substring(0, 1) + deptDayOfWeek.substring(1).toLowerCase();
+//        String deptMonth = super.getDateTime().getMonth().toString();
+//        deptMonth = deptMonth.substring(0, 1) + deptMonth.substring(1).toLowerCase();
+//        String deptDate = String.format("%s %d %s, %d", deptDayOfWeek, super.getDateTime().getDayOfMonth(), deptMonth, super.getDateTime().getYear());
+        String deptTime = super.getDateTime().format(DateTimeFormatter.ofPattern("HH:mm"));
+        String deptDate = super.getDateTime().format(DateTimeFormatter.ofPattern("dd-MM-yyy"));
+
+//        String destDayOfWeek = arrivalDateTime.getDayOfWeek().toString();
+//        destDayOfWeek = destDayOfWeek.substring(0, 1) + destDayOfWeek.substring(1).toLowerCase();
+//        String destMonth = arrivalDateTime.getMonth().toString();
+//        destMonth = destMonth.substring(0, 1) + destMonth.substring(1).toLowerCase();
+//        String destDate = String.format("%s %d %s, %d", destDayOfWeek, arrivalDateTime.getDayOfMonth(), destMonth, arrivalDateTime.getYear());
+        String destTime = arrivalDateTime.format(DateTimeFormatter.ofPattern("HH:mm"));
+        String destDate = arrivalDateTime.format(DateTimeFormatter.ofPattern("dd-MM-yyy"));
+
+
         Pane newFlightPane = null;
         try {
             Pair<Pane, HolidayFlightController> pair = NodeHelper.LoadNode(subFolder, holidayFlightComponent);
             newFlightPane = pair.getKey();
             HolidayFlightController flightController = pair.getValue();
-            flightController.setRoute(route);
-            flightController.setData(deptTime, destTime, super.getDateTime(), arrivalDateTime);
+            flightController.setData(deptTime, destTime, deptDate, destDate, this, route);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
