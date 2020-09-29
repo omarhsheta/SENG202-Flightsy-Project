@@ -32,6 +32,7 @@ public class FlightPathResultController extends ResultController {
         if (mapHelper == null) {
             return;
         }
+        mapHelper.ClearAll();
         mapHelper.DrawRoutePath(path);
     }
 }
