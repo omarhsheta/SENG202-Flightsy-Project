@@ -22,9 +22,9 @@ public class AddRowController implements Initializable
 {
     @FXML
     private TextField
-            // Airline fields
-            airIdField, airNameField, airAliasField, AirIataField, AirIcaoField, AirCallsignField,
-            AirCountryField,
+    // Airline fields
+    airIdField, airNameField, airAliasField, AirIataField, AirIcaoField, AirCallsignField,
+    AirCountryField,
     // Airport fields
     airpId, airpName, airpCity, airpCountry, airpIata, airpIcao, airpLat, airpLon, airpAlt, airpTim,
             airpDst,

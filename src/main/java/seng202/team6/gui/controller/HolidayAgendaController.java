@@ -3,12 +3,17 @@ package seng202.team6.gui.controller;
 import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Worker;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import seng202.team6.model.MapHelper;
 import seng202.team6.model.entities.Airport;
 import seng202.team6.model.events.CarTrip;
@@ -17,8 +22,12 @@ import seng202.team6.model.events.Flight;
 import seng202.team6.model.events.General;
 import seng202.team6.model.user.HolidayPlan;
 
+import javax.swing.event.ChangeListener;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class HolidayAgendaController implements Initializable {
@@ -194,5 +203,26 @@ public class HolidayAgendaController implements Initializable {
      */
     public void OnNewHolidayButtonClicked() {
         System.out.println("Not implemented yet");
+    }
+
+    /**
+     * A function that creates a new stage for the user to manually add an event to holiday
+     * @throws IOException Exception
+     */
+    @FXML
+    public void OnNewEventButtonClicked() throws IOException {
+        final Stage popUp = new Stage();
+        popUp.initModality(Modality.APPLICATION_MODAL);
+        Parent root = FXMLLoader.load(
+                Objects.requireNonNull(
+                        getClass().getClassLoader().getResource("addevent.fxml")
+                )
+        );
+        Scene popUpScene = new Scene(root);
+        //Set variables
+        popUp.setTitle("Add Event");
+        popUpScene.getStylesheets().add("org/kordamp/bootstrapfx/bootstrapfx.css");
+        popUp.setScene(popUpScene);
+        popUp.show();
     }
 }
