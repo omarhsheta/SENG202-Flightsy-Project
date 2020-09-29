@@ -16,6 +16,7 @@ import seng202.team6.model.entities.Route;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.ResourceBundle;
 
 public class AddRowController implements Initializable
@@ -104,11 +105,19 @@ public class AddRowController implements Initializable
      */
     @FXML
     public void AddAirline() {
-        ArrayList<String> fields = addRowHandler.CheckAirline(this, airIdField.getText(),
-                airNameField.getText(), airAliasField.getText(), AirIataField.getText(), AirIcaoField.getText(),
-                AirCallsignField.getText(), AirCountryField.getText(), (String) AirActiveField.getValue());
+//        ArrayList<String> fields = addRowHandler.CheckAirline(this, airIdField.getText(),
+//                airNameField.getText(), airAliasField.getText(), AirIataField.getText(), AirIcaoField.getText(),
+//                AirCallsignField.getText(), AirCountryField.getText(), (String) AirActiveField.getValue());
 
-        if (fields != null) {
+        ArrayList<String> fields = new ArrayList<>(Arrays.asList(airIdField.getText(), airNameField.getText(),
+                airAliasField.getText(), AirIataField.getText(), AirIcaoField.getText(), AirCallsignField.getText(),
+                AirCountryField.getText(), (String) AirActiveField.getValue()));
+
+        String errorMessage = addRowHandler.CheckAirline(fields);
+
+        if (errorMessage != null) {
+            ShowMessage(true, errorMessage);
+        } else {
             Airline airline = addRowHandler.CreateAirline(fields);
             try {
                 dataImport.InsertAirline(airline);
@@ -130,11 +139,15 @@ public class AddRowController implements Initializable
      */
     @FXML
     public void AddAirport() {
-        ArrayList<String> fields = addRowHandler.CheckAirport(this, airpId.getText(), airpName.getText(),
+        ArrayList<String> fields = new ArrayList<>(Arrays.asList(airpId.getText(), airpName.getText(),
                 airpCity.getText(), airpCountry.getText(), airpIata.getText(), airpIcao.getText(), airpLat.getText(),
-                airpLon.getText(), airpAlt.getText(), airpTim.getText(), airpDst.getText());
 
-        if (fields != null) {
+                airpLon.getText(), airpAlt.getText(), airpTim.getText(), airpDst.getText()));
+        String errorMessage = addRowHandler.CheckAirport(fields);
+
+        if (errorMessage != null) {
+            ShowMessage(true, errorMessage);
+        } else {
             Airport airport = addRowHandler.CreateAirport(fields);
             try {
                 dataImport.InsertAirport(airport);
@@ -155,10 +168,19 @@ public class AddRowController implements Initializable
      */
     @FXML
     public void AddRoute() {
-        ArrayList<String> fields = addRowHandler.CheckRoute(this, rouAir.getText(), rouAirId.getText(),
+//        ArrayList<String> fields = addRowHandler.CheckRoute(this, rouAir.getText(), rouAirId.getText(),
+//                rouSouAir.getText(), rouSouAirId.getText(), rouDesAir.getText(), rouDesAirId.getText(),
+//                (String) rouCod.getValue(), (int) rouStp.getValue(), rouEqp.getText());
+
+        ArrayList<String> fields = new ArrayList<>(Arrays.asList(rouAir.getText(), rouAirId.getText(),
                 rouSouAir.getText(), rouSouAirId.getText(), rouDesAir.getText(), rouDesAirId.getText(),
-                (String) rouCod.getValue(), (int) rouStp.getValue(), rouEqp.getText());
-        if (fields != null) {
+                (String) rouCod.getValue(), String.valueOf((int)(rouStp.getValue())), rouEqp.getText()));
+
+        String errorMessage = addRowHandler.CheckRoute(fields);
+
+        if (errorMessage != null) {
+            ShowMessage(true, errorMessage);
+        } else {
             Route route = addRowHandler.CreateRoute(fields);
             try {
                 dataImport.InsertRoute(route);

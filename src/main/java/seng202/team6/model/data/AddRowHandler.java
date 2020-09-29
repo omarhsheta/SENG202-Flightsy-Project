@@ -5,6 +5,7 @@ import seng202.team6.model.entities.Airline;
 import seng202.team6.model.entities.Airport;
 import seng202.team6.model.entities.Route;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Set;
@@ -14,154 +15,111 @@ public class AddRowHandler {
     /**
      * Function to check the validity of the airport data inputted by the user.
      * Also checks that data is suitable for inserting into the database.
-     * @param airpId Airport Id
-     * @param airpName Airport Name
-     * @param airpCity City
-     * @param airpCountry Country
-     * @param airpIata IATA
-     * @param airpIcao ICAO
-     * @param airpLat Latitude
-     * @param airpLon Longitude
-     * @param airpAlt Altitude
-     * @param airpTim Timezone
-     * @param airpDst Daylight savings
-     * @return ArrayList of fields to be entered into database, or null if invalid input occurs
+     * @param fields ArrayList of fields input by user in Add Row popup
+     * @return String either error message if a field is invalid or null if all fields are valid.
      */
-    public ArrayList<String> CheckAirport(AddRowController addRowController, String airpId, String airpName, String airpCity, String airpCountry, String airpIata,
-                                          String airpIcao, String airpLat, String airpLon, String airpAlt, String airpTim,
-                                          String airpDst) {
+    public String CheckAirport(ArrayList<String> fields) {
 
         try {  // Check if airport id input is valid
-            Integer.parseInt(airpId);
+            Integer.parseInt(fields.get(0));
         } catch (Exception e) {
-            addRowController.ShowMessage(true, "Check the Airport ID field and try again");
-            return null;
+            return "Check the Airport ID field and try again";
         }
 
         try {  // Check if latitude input is valid
-            Float.parseFloat(airpLat);
+            Float.parseFloat(fields.get(6));
         } catch (Exception e) {
-            addRowController.ShowMessage(true, "Check the latitude field and try again");
-            return null;
+            return "Check the latitude field and try again";
         }
 
         try {  // Check if latitude and longitude inputs are valid
-            Float.parseFloat(airpLon);
+            Float.parseFloat(fields.get(7));
         } catch (Exception e) {
-            addRowController.ShowMessage(true, "Check the longitude field and try again");
-            return null;
+            return "Check the longitude field and try again";
         }
 
         try {  // Check if altitude input is valid
-            Integer.parseInt(airpAlt);
+            Integer.parseInt(fields.get(8));
         } catch (Exception e) {
-            addRowController.ShowMessage(true, "Check the Altitude field and try again");
-            return null;
+            return "Check the Altitude field and try again";
         }
 
         try {  // Check if the time zone input is valid
-            Integer.parseInt(airpTim);
+            Integer.parseInt(fields.get(9));
         } catch (Exception e) {
-            addRowController.ShowMessage(true, "Check the Time Zone field and try again");
-            return null;
+            return "Check the Time Zone field and try again";
         }
 
-        String dst;
+
         Set<String> validValues = Set.of("e", "a", "s", "o", "z", "n");
-        if (validValues.contains(airpDst.toLowerCase())) {
-            dst = airpDst.toUpperCase();
+        if (validValues.contains(fields.get(10).toLowerCase())) {
+            fields.set(10, fields.get(10).toUpperCase());
         } else {
-            dst = "U";  // Unknown Daylight savings value
+            fields.set(10, "U");  // Unknown Daylight savings value
         }
 
-        return new ArrayList<>(Arrays.asList(airpId, airpName, airpCity, airpCountry, airpIata, airpIcao, airpLat, airpLon,
-                airpAlt, airpTim, dst));
+        return null;
     }
 
 
     /**
      * Function to check the validity of the airline data inputted by the user.
      * Also checks that data is suitable for inserting into the database.
-     * @param airlineID Airline ID
-     * @param name Airline name
-     * @param alias Alias
-     * @param iata IATA
-     * @param icao ICAO
-     * @param callsign Callsign
-     * @param country Country
-     * @param active Is the airline active
-     * @return ArrayList of fields to be entered into database, or null if invalid input occurs
+     * @param fields ArrayList of fields input by user in Add Row popup
+     * @return String either error message if a field is invalid or null if all fields are valid.
      */
-    public ArrayList<String> CheckAirline(AddRowController addRowController, String airlineID, String name, String alias, String iata, String icao,
-                                           String callsign, String country, String active) {
+    public String CheckAirline(ArrayList<String> fields) {
 
         try {  // Check if airline id input is valid
-            Integer.parseInt(airlineID);
+            Integer.parseInt(fields.get(0));
         } catch (Exception e) {
-            addRowController.ShowMessage(true, "Check the Airline ID field and try again");
-            return null;
+            return "Check the Airline ID field and try again";
         }
 
-        String airActive;
-        if ((active == null) || (active.equals("No"))) {
-            airActive = "N";
+        if ((fields.get(7) == null) || (fields.get(7).equals("No"))) {
+            fields.set(7, "N");
         } else {
-            airActive = "Y";
+            fields.set(7, "Y");
         }
 
-
-        return new ArrayList<>(Arrays.asList(airlineID, name, alias, iata, icao, callsign, country, airActive));
+        return null;
     }
 
 
     /**
      * Function to check the validity of the route data inputted by the user.
      * Also checks that data is suitable for inserting into the database.
-     * @param rouAir Airline
-     * @param rouAirId Airline ID
-     * @param rouSouAir Source airline
-     * @param rouSouAirId Source airline ID
-     * @param rouDesAir Destination airline
-     * @param rouDesAirId Destination airline ID
-     * @param rouCod Codeshare
-     * @param rouStp Amount of stops
-     * @param rouEqp Equipment
-     * @return ArrayList of fields to be entered into database, or null if invalid input occurs
+     * @param fields ArrayList of fields input by user in Add Row popup
+     * @return String either error message if a field is invalid or null if all fields are valid.
      */
-    public ArrayList<String> CheckRoute(AddRowController addRowController, String rouAir, String rouAirId, String rouSouAir, String rouSouAirId, String rouDesAir,
-                                         String rouDesAirId, String rouCod, double rouStp, String rouEqp) {
+    public String CheckRoute(ArrayList<String> fields) {
 
         try {  // Check if airline id input is valid
-            Integer.parseInt(rouAirId);
+            Integer.parseInt(fields.get(1));
         } catch (Exception e) {
-            addRowController.ShowMessage(true, "Check the Airline ID field and try again");
-            return null;
+            return "Check the Airline ID field and try again";
         }
 
         try {  // Check if source airline id input is valid
-            Integer.parseInt(rouSouAirId);
+            Integer.parseInt(fields.get(3));
         } catch (Exception e) {
-            addRowController.ShowMessage(true, "Check the Source Airline ID field and try again");
-            return null;
+            return "Check the Source Airline ID field and try again";
         }
 
         try {  // Check if destination airline id input is valid
-            Integer.parseInt(rouDesAirId);
+            Integer.parseInt(fields.get(5));
         } catch (Exception e) {
-            addRowController.ShowMessage(true, "Check the Destination Airline ID field and try again");
-            return null;
+            return "Check the Destination Airline ID field and try again";
         }
 
         String codeShare;  // Parse combo box result
-        if ((rouCod == null) || (rouCod.equals("No"))) {
-            codeShare = "N";
+        if ((fields.get(6) == null) || (fields.get(6).equals("No"))) {
+            fields.set(6, "N");
         } else {
-            codeShare = "Y";
+            fields.set(6, "Y");
         }
 
-        String stops = String.valueOf((int) rouStp);
-
-        return new ArrayList<>(Arrays.asList(rouAir, rouAirId, rouSouAir, rouSouAirId, rouDesAir, rouDesAirId, codeShare, stops, rouEqp));
+        return null;
     }
 
 
