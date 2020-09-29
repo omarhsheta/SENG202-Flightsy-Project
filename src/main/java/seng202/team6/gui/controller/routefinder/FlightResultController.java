@@ -10,10 +10,12 @@ import javafx.util.Pair;
 import seng202.team6.gui.helper.NodeHelper;
 import seng202.team6.model.data.DataExportHandler;
 import seng202.team6.model.data.Filter;
+import seng202.team6.model.entities.Airline;
 import seng202.team6.model.entities.Airport;
 import seng202.team6.model.entities.Route;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class FlightResultController extends ResultController {
 
@@ -22,6 +24,9 @@ public class FlightResultController extends ResultController {
 
     @FXML
     private Label distance;
+
+    @FXML
+    private Label airline;
 
     @FXML
     private Button showButton;
@@ -46,6 +51,21 @@ public class FlightResultController extends ResultController {
         this.route = resultRoute;
         flight.setText(String.format("%s to %s", resultRoute.getSourceAirport(), resultRoute.getDestinationAirport()));
         distance.setText(String.format("Distance: %.2f", GetDistance()));
+        airline.setText(GetAirlineName());
+    }
+
+    private String GetAirlineName() {
+        ArrayList<Filter> filters = new ArrayList<>();
+        filters.add(new Filter(String.format("ID_AIRLINE = %s", route.getAirlineID()), null));
+        String airlineName;
+        try {
+            Airline routeAirline = DataExportHandler.GetInstance().FetchAirlines(filters).get(0);
+            airlineName = routeAirline.getName();
+        } catch (Exception e) {
+            airlineName = null;
+        }
+
+        return airlineName;
     }
 
     /**

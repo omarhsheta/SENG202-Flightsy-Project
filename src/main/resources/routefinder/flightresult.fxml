@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="152.0" prefWidth="210.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.team6.gui.controller.routefinder.FlightResultController">
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="210.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.team6.gui.controller.routefinder.FlightResultController">
    <top>
       <Label fx:id="flight" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="250.0" text="Flight" textAlignment="CENTER" BorderPane.alignment="CENTER">
          <styleClass>
@@ -23,6 +23,15 @@
       <VBox prefHeight="200.0" prefWidth="260.0" BorderPane.alignment="CENTER">
          <children>
             <Separator prefWidth="200.0" />
+            <Label fx:id="airline" alignment="CENTER" prefHeight="25.0" prefWidth="250.0" text="Airline">
+               <styleClass>
+                  <String fx:value="h5" />
+                  <String fx:value="text-info" />
+               </styleClass>
+               <padding>
+                  <Insets bottom="2.0" />
+               </padding>
+            </Label>
             <Label fx:id="distance" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="250.0" text="Distance" textAlignment="CENTER">
                <styleClass>
                   <String fx:value="h5" />
