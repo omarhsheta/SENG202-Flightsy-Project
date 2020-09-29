@@ -76,15 +76,15 @@ public class DatabaseHandlerTest {
         testAirlines = new ArrayList<Airline>();
         actualAirlines = new ArrayList<Airline>();
 
-        testAirport1 = new Airport(random.nextInt(randomBound), "London Heathrow Airport", "London", "England",
+        testAirport1 = new Airport(1, "London Heathrow Airport", "London", "England",
                 "LHR", "LOND", (float)51.470020, (float)-0.454295, 25, 1, 'U');
-        testAirport2 = new Airport(random.nextInt(randomBound), "Los Angeles Airport", "Los Angeles", "United States of America",
+        testAirport2 = new Airport(2, "Los Angeles Airport", "Los Angeles", "United States of America",
                 "LAX", "LOSX", (float)33.94279, (float)-118.410042, 38, -7, 'U');
-        testAirport3 = new Airport(random.nextInt(randomBound), "Tokyo Haneda Airport", "Tokyo", "Japan",
+        testAirport3 = new Airport(3, "Tokyo Haneda Airport", "Tokyo", "Japan",
                 "HND", "HNDA", (float)35.5494, (float)139.7798, 11, 9, 'A');
-        testAirport4 = new Airport(random.nextInt(randomBound), "Amsterdam Airport Schipol", "Amsterdam", "Netherlands",
+        testAirport4 = new Airport(4, "Amsterdam Airport Schipol", "Amsterdam", "Netherlands",
                 "AMS", "AMSD", (float)52.3105, (float)4.7683, -3, 1, 'A');
-        testAirport5 = new Airport(random.nextInt(randomBound), "Hong Kong Airport", "Hong Kong", "Hong Kong",
+        testAirport5 = new Airport(5, "Hong Kong Airport", "Hong Kong", "Hong Kong",
                 "HKG", "HGKG", (float)22.3080, (float)113.9185, 9, 8, 'A');
         testAirports = new ArrayList<Airport>();
         actualAirports = new ArrayList<Airport>();
@@ -246,13 +246,15 @@ public class DatabaseHandlerTest {
     /**
      * Test inserting one airport into the database
      */
-    @Test @Ignore
+    @Test
     public void TestInsertOneAirport() {
         try {
             dataImport.InsertAirport(testAirport1);
-            Filter filter = new Filter(format("id_airport = %d", testAirport1.getAirportID()), "");
+            Filter filter = new Filter(format("icao = '%s'", testAirport1.getICAO()), "");
             filters.add(filter);
             actualAirports = dataExport.FetchAirports(filters);
+            testAirport1.SetAirportID(actualAirports.get(0).getAirportID());
+            System.out.println(actualAirports);
             Assert.assertEquals(testAirport1, actualAirports.get(0));
         } catch(Exception e) {
             Assert.fail(e.getMessage());
@@ -326,7 +328,7 @@ public class DatabaseHandlerTest {
     /**
      * Test inserting an two of the same airports into the database
      */
-    @Test
+    @Test @Ignore
     public void TestInsertTwoSameAirports() {
         try {
             dataImport.InsertAirport(testAirport1);

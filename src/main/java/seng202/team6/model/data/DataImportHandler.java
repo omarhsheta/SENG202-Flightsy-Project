@@ -47,7 +47,9 @@ public class DataImportHandler {
                 airline.getAirlineID(), airline.getName(), airline.getAlias(), airline.getIATA(), airline.getICAO(),
                 airline.getCallsign(), airline.getCountry(), airline.getActive()
         );
-        stmt.executeUpdate(sql);
+        if (stmt.executeUpdate(sql) <= 0) {
+            throw new SQLException("The airline was not inserted into the database");
+        }
     }
 
     /**
@@ -57,13 +59,16 @@ public class DataImportHandler {
      */
     public void InsertAirport(Airport airport) throws SQLException {
         Statement stmt = this.databaseConnection.createStatement();
-        String sql = format("INSERT INTO airport (id_airport, name, city, country, iata, icao, latitude, longitude, altitude, timezone, dst)" +
-                        "VALUES (\"%d\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%f\", \"%f\", \"%d\", \"%f\", \"%c\");",
-                airport.getAirportID(), airport.getName(), airport.getCity(), airport.getCountry(),
+        String sql = format("INSERT INTO airport (name, city, country, iata, icao, latitude, longitude, altitude, timezone, dst)" +
+                        "VALUES (\"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%f\", \"%f\", \"%d\", \"%f\", \"%c\");",
+                airport.getName(), airport.getCity(), airport.getCountry(),
                 airport.getIATA(), airport.getICAO(), airport.getLatitude(), airport.getLongitude(), airport.getAltitude(),
                 airport.getTimezone(), airport.getDST()
         );
-        stmt.executeUpdate(sql);
+        int pass = stmt.executeUpdate(sql);
+        if (pass <= 0) {
+            throw new SQLException("The airport was not inserted into the database");
+        }
     }
 
     /**
@@ -80,7 +85,9 @@ public class DataImportHandler {
                 route.getDestinationAirport(), route.getDestinationAirportID(), route.getCodeshare(),
                 route.getStops(), route.getEquipment()
         );
-        stmt.executeUpdate(sql);
+        if (stmt.executeUpdate(sql) <= 0) {
+            throw new SQLException("The route was not inserted into the database");
+        }
     }
 
     /**
