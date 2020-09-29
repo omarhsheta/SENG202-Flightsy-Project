@@ -18,8 +18,9 @@ public class SQLHelper
      * @return SQL String query.
      */
     public static String ExtractQuery(String tableName, ArrayList<Filter> filters) {
+        int limitVal = 500;
         if (filters == null || filters.size() == 0) {
-            return String.format("SELECT * FROM %s;", tableName);
+            return String.format("SELECT * FROM %s LIMIT %d;", tableName, limitVal);
         }
 
         StringBuilder builder = new StringBuilder();
@@ -32,7 +33,7 @@ public class SQLHelper
             builder.append(" ");
         }
         builder.append(filters.get(filters.size() - 1).GetFilter());
-        builder.append(';');
+        builder.append(String.format(" LIMIT %d;", limitVal));
 
         return builder.toString();
     }
