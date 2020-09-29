@@ -136,7 +136,13 @@ public class CSVLoader {
         }
 
         //Active field missing or not of char type
-        return (fields.get(7) != null) && (fields.get(7).length() == 1);
+        if (fields.get(7) == null) {
+            fields.set(7, "N");
+        } else if (fields.get(7).length() != 1) {
+            return false;
+        }
+
+        return true;
     }
 
 
@@ -172,8 +178,12 @@ public class CSVLoader {
             return false;
         }
 
-        if ((fields.get(6) == null) || (fields.get(6).length() != 1)) {
+        if ((fields.get(6) == null) || (fields.get(6).equals(""))) {
+            //Missing field
             fields.set(6, "N");
+        } else if (fields.get(6).length() != 1) {
+            //Not a char
+            return false;
         }
 
         if (len == 8) {
@@ -234,7 +244,7 @@ public class CSVLoader {
         for (ArrayList<String> entry : lines) {
             if (RouteEntryCheck(entry)) {
                 try {
-                    Route route = new Route(Integer.parseInt(entry.get(0)), entry.get(1), entry.get(2),
+                    Route route = new Route(Integer.parseInt(entry.get(1)), entry.get(0), entry.get(2),
                             Integer.parseInt(entry.get(3)), entry.get(4), Integer.parseInt(entry.get(5)),
                             entry.get(6).charAt(0), Integer.parseInt(entry.get(7)), entry.get(8));
                     dataImport.InsertRoute(route);

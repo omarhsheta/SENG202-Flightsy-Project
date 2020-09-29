@@ -98,8 +98,7 @@ public class CSVLoaderTest {
         ArrayList<ArrayList<String>> testRoutes = new ArrayList<>();
         ArrayList<String> testRoute1 = new ArrayList<>(Arrays.asList("Flightsy Airways", "69", "CHC", "420", "TLV", "666", "N", "5", "CR2"));
         ArrayList<String> testRoute2 = new ArrayList<>(Arrays.asList("Flightsy Airways", "69", "CHC", "420", "TLV", "666", "Y", "5", "CR2"));
-        ArrayList<String> testRoute3 = new ArrayList<>(Arrays.asList("Flightsy Airways", "69", "CHC", "420", "TLV", "666", "N", "5", "CR2"));
-        ArrayList<String> testRoute4 = new ArrayList<>(Arrays.asList("0", "0", "0", "0", "0", "0", "0", "0", "0"));
+        ArrayList<String> testRoute3 = new ArrayList<>(Arrays.asList("0", "0", "0", "0", "0", "0", "0", "0", "0"));
 
         for (int i = 0; i < parsedLines.size(); i++) {
             ArrayList<String> entry = parsedLines.get(i);
@@ -110,8 +109,7 @@ public class CSVLoaderTest {
         assertEquals(testRoute1, testRoutes.get(0));
         assertEquals(testRoute2, testRoutes.get(1));
         assertEquals(testRoute3, testRoutes.get(2));
-        assertEquals(testRoute4, testRoutes.get(3));
-        assertEquals(4, testRoutes.size());// Test for invalid data
+        assertEquals(3, testRoutes.size());// Test for invalid data
     }
 
     /**
