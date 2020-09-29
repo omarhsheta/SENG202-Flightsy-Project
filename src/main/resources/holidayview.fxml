@@ -319,7 +319,7 @@
             </ScrollPane>
             <VBox alignment="CENTER" minHeight="-Infinity" prefHeight="79.0" prefWidth="231.0">
                <children>
-                  <Button mnemonicParsing="false" text="Add event">
+                  <Button mnemonicParsing="false" onAction="#OnNewEventButtonClicked" text="Add event">
                      <VBox.margin>
                         <Insets bottom="3.0" top="2.0" />
                      </VBox.margin>
