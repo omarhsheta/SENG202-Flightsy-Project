@@ -44,43 +44,43 @@
                                           <VBox fx:id="airportFilterBox" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="196.0">
                                              <children>
                                              <Label alignment="CENTER" prefHeight="25.0" prefWidth="200.0" text="Airport ID" />
-                                             <FilterTextField filter="ID_AIRPORT = '%s'" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="25.0">
+                                             <FilterTextField filter="ID_AIRPORT LIKE '%%%s%%'" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="25.0">
                                                    <VBox.margin>
                                                       <Insets left="10.0" right="10.0" />
                                                    </VBox.margin>
                                                 </FilterTextField>
                                              <Label alignment="CENTER" prefHeight="25.0" prefWidth="200.0" text="Airport Name" />
-                                             <FilterTextField filter="NAME = '%s'" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="25.0">
+                                             <FilterTextField filter="NAME LIKE '%%%s%%'" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="25.0">
                                                    <VBox.margin>
                                                       <Insets left="10.0" right="10.0" />
                                                    </VBox.margin>
                                                 </FilterTextField>
                                              <Label alignment="CENTER" prefHeight="19.0" prefWidth="200.0" text="City" />
-                                             <FilterTextField filter="CITY = '%s'" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="25.0">
+                                             <FilterTextField filter="CITY LIKE '%%%s%%'" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="25.0">
                                                    <VBox.margin>
                                                       <Insets left="10.0" right="10.0" />
                                                    </VBox.margin>
                                                 </FilterTextField>
                                              <Label alignment="CENTER" prefHeight="25.0" prefWidth="200.0" text="Country" />
-                                             <FilterTextField filter="COUNTRY = '%s'" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="25.0">
+                                             <FilterTextField filter="COUNTRY LIKE '%%%s%%'" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="25.0">
                                                    <VBox.margin>
                                                       <Insets left="10.0" right="10.0" />
                                                    </VBox.margin>
                                                 </FilterTextField>
                                              <Label alignment="CENTER" prefHeight="25.0" prefWidth="200.0" text="IATA" />
-                                             <FilterTextField filter="IATA = '%s'" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="25.0">
+                                             <FilterTextField filter="IATA LIKE '%%%s%%'" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="25.0">
                                                    <VBox.margin>
                                                       <Insets left="10.0" right="10.0" />
                                                    </VBox.margin>
                                                 </FilterTextField>
                                              <Label alignment="CENTER" prefHeight="25.0" prefWidth="200.0" text="ICAO" />
-                                             <FilterTextField filter="ICAO = '%s'" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="25.0">
+                                             <FilterTextField filter="ICAO LIKE '%%%s%%'" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="25.0">
                                                    <VBox.margin>
                                                       <Insets left="10.0" right="10.0" />
                                                    </VBox.margin>
                                                 </FilterTextField>
                                                 <Label alignment="CENTER" prefHeight="25.0" prefWidth="200.0" text="Timezone" />
-                                                <FilterTextField filter="TIMEZONE = %s" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="25.0">
+                                                <FilterTextField filter="TIMEZONE LIKE '%%%s%%'" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="25.0">
                                                    <VBox.margin>
                                                       <Insets left="10.0" right="10.0" />
                                                    </VBox.margin>
@@ -120,11 +120,11 @@
                                                       <Label alignment="CENTER" prefHeight="25.0" prefWidth="200.0" text="Origin Airport ID" />
                                                       <FilterTextField filter="id_airport = %s" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="25.0" />
                                                             <Label alignment="CENTER" prefHeight="25.0" prefWidth="200.0" text="Origin Airport Name" />
-                                                            <FilterTextField filter="NAME = '%s'" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="25.0" />
+                                                            <FilterTextField filter="NAME LIKE '%%%s%%'" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="25.0" />
                                                       <Label alignment="CENTER" prefHeight="25.0" prefWidth="200.0" text="Origin City" />
-                                                      <FilterTextField filter="CITY = '%s'" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="25.0" />
+                                                      <FilterTextField filter="CITY LIKE '%%%s%%'" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="25.0" />
                                                       <Label alignment="CENTER" prefHeight="25.0" prefWidth="200.0" text="Origin Country" />
-                                                      <FilterTextField filter="COUNTRY = '%s'" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="25.0" />
+                                                      <FilterTextField filter="COUNTRY LIKE '%%%s%%'" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="25.0" />
                                                    </children>
                                                    <VBox.margin>
                                                       <Insets left="10.0" right="10.0" />
@@ -140,11 +140,11 @@
                                                       <Label alignment="CENTER" prefHeight="25.0" prefWidth="200.0" text="Destination Airport ID" />
                                                       <FilterTextField filter="id_airport = %s" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="25.0" />
                                                       <Label alignment="CENTER" prefHeight="25.0" prefWidth="200.0" text="Destination Airport Name" />
-                                                      <FilterTextField filter="NAME = '%s'" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="25.0" />
+                                                      <FilterTextField filter="NAME LIKE '%%%s%%'" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="25.0" />
                                                       <Label alignment="CENTER" prefHeight="25.0" prefWidth="200.0" text="Destination City" />
-                                                      <FilterTextField filter="CITY = '%s'" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="25.0" />
+                                                      <FilterTextField filter="CITY LIKE '%%%s%%'" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="25.0" />
                                                       <Label alignment="CENTER" prefHeight="25.0" prefWidth="200.0" text="Destination Country" />
-                                                      <FilterTextField filter="COUNTRY = '%s'" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="25.0" />
+                                                      <FilterTextField filter="COUNTRY LIKE '%%%s%%'" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="25.0" />
                                                    </children>
                                                    <VBox.margin>
                                                       <Insets left="10.0" right="10.0" />
@@ -203,7 +203,7 @@
                                                             <Insets />
                                                          </VBox.margin>
                                                       </Label>
-                                                      <FilterTextField filter="NAME = '%s'" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="200.0">
+                                                      <FilterTextField filter="NAME LIKE '%%%s%%'" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="200.0">
                                                          <VBox.margin>
                                                             <Insets />
                                                          </VBox.margin>
@@ -213,7 +213,7 @@
                                                             <Insets />
                                                          </VBox.margin>
                                                       </Label>
-                                                      <FilterTextField filter="CITY = '%s'" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="200.0">
+                                                      <FilterTextField filter="CITY LIKE '%%%s%%'" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="200.0">
                                                          <VBox.margin>
                                                             <Insets />
                                                          </VBox.margin>
@@ -223,7 +223,7 @@
                                                             <Insets />
                                                          </VBox.margin>
                                                       </Label>
-                                                      <FilterTextField filter="COUNTRY = '%s'" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="200.0">
+                                                      <FilterTextField filter="COUNTRY LIKE '%%%s%%'" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="200.0">
                                                          <VBox.margin>
                                                             <Insets />
                                                          </VBox.margin>
@@ -255,7 +255,7 @@
                                                             <Insets />
                                                          </VBox.margin>
                                                       </Label>
-                                                      <FilterTextField filter="NAME = '%s'" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="200.0">
+                                                      <FilterTextField filter="NAME LIKE '%%%s%%'" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="200.0">
                                                          <VBox.margin>
                                                             <Insets />
                                                          </VBox.margin>
@@ -265,7 +265,7 @@
                                                             <Insets />
                                                          </VBox.margin>
                                                       </Label>
-                                                      <FilterTextField filter="CITY = '%s'" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="200.0">
+                                                      <FilterTextField filter="CITY LIKE '%%%s%%'" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="200.0">
                                                          <VBox.margin>
                                                             <Insets />
                                                          </VBox.margin>
@@ -275,7 +275,7 @@
                                                             <Insets />
                                                          </VBox.margin>
                                                       </Label>
-                                                      <FilterTextField filter="COUNTRY = '%s'" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="200.0">
+                                                      <FilterTextField filter="COUNTRY LIKE '%%%s%%'" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="200.0">
                                                          <VBox.margin>
                                                             <Insets />
                                                          </VBox.margin>
@@ -323,7 +323,7 @@
                                                             <Insets />
                                                          </VBox.margin>
                                                       </Label>
-                                                      <FilterTextField fx:id="distanceOriginAirportIATAField" filter="IATA = '%s'" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="200.0">
+                                                      <FilterTextField fx:id="distanceOriginAirportIATAField" filter="IATA LIKE '%%%s%%'" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="200.0">
                                                          <VBox.margin>
                                                             <Insets />
                                                          </VBox.margin>
@@ -333,7 +333,7 @@
                                                             <Insets />
                                                          </VBox.margin>
                                                       </Label>
-                                                      <FilterTextField fx:id="distanceDestAirportIATAField" filter="IATA = '%s'" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="200.0">
+                                                      <FilterTextField fx:id="distanceDestAirportIATAField" filter="IATA LIKE '%%%s%%'" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="200.0">
                                                          <VBox.margin>
                                                             <Insets />
                                                          </VBox.margin>
