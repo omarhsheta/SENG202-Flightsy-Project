@@ -283,7 +283,7 @@ public class CSVLoader {
         String filename = String.format("%sto%s.json", source, destination);
         DataHandler.GetInstance().WriteDataFile(filename, route.ToJson());
         try {
-            dataImport.insertFlightPath(route, filename);
+            dataImport.InsertFlightPath(route, filename);
         } catch (SQLException e) {
             System.out.println(e.toString());
         }
