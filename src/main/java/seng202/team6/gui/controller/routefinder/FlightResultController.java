@@ -2,7 +2,6 @@ package seng202.team6.gui.controller.routefinder;
 
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -10,6 +9,7 @@ import javafx.util.Pair;
 import seng202.team6.gui.helper.NodeHelper;
 import seng202.team6.model.data.DataExportHandler;
 import seng202.team6.model.data.Filter;
+import seng202.team6.model.entities.Airline;
 import seng202.team6.model.entities.Airport;
 import seng202.team6.model.entities.Route;
 
@@ -24,13 +24,7 @@ public class FlightResultController extends ResultController {
     private Label distance;
 
     @FXML
-    private Button showButton;
-
-    @FXML
-    private Button viewInfoButton;
-
-    @FXML
-    private Button holidayButton;
+    private Label airline;
 
     private Route route;
 
@@ -46,6 +40,21 @@ public class FlightResultController extends ResultController {
         this.route = resultRoute;
         flight.setText(String.format("%s to %s", resultRoute.getSourceAirport(), resultRoute.getDestinationAirport()));
         distance.setText(String.format("Distance: %.2f", GetDistance()));
+        airline.setText(GetAirlineName());
+    }
+
+    private String GetAirlineName() {
+        ArrayList<Filter> filters = new ArrayList<>();
+        filters.add(new Filter(String.format("ID_AIRLINE = %s", route.getAirlineID()), null));
+        String airlineName;
+        try {
+            Airline routeAirline = DataExportHandler.GetInstance().FetchAirlines(filters).get(0);
+            airlineName = routeAirline.getName();
+        } catch (Exception e) {
+            airlineName = null;
+        }
+
+        return airlineName;
     }
 
     /**
