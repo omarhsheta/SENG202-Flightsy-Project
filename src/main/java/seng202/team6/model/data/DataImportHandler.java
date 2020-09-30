@@ -6,7 +6,6 @@ import seng202.team6.model.entities.Route;
 import seng202.team6.model.entities.RoutePath;
 
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;

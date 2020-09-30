@@ -7,7 +7,6 @@ import seng202.team6.model.user.HolidayPlan;
 
 import java.sql.Connection;
 import java.sql.Statement;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Random;
 import java.util.ArrayList;
@@ -49,6 +48,11 @@ public class DatabaseHandlerTest {
     private ArrayList<Route> testRoutes;
     private ArrayList<Route> actualRoutes;
 
+    private Connection databaseConnection;
+    private int databaseRowsAirline;
+    private int databaseRowsAirport;
+    private int databaseRowsRoute;
+
     public void fullClear() {
         filters.clear();
         testAirlines.clear();
@@ -78,7 +82,6 @@ public class DatabaseHandlerTest {
         }
     }
     public void cleanUpListApt(ArrayList<Airport> objects) {
-        System.out.println(objects.size());
         for (int i = 0; i < objects.size(); i++) {
             cleanUp(objects.get(i));
         }
@@ -89,79 +92,80 @@ public class DatabaseHandlerTest {
         }
     }
 
+    private boolean setup = false;
     @Before
     public void InitialiseTest() {
-        random = new Random();
-        dataImport = DataImportHandler.GetInstance();
-        dataExport = DataExportHandler.GetInstance();
-        filters = new ArrayList<Filter>();
+        if (!setup) {
+            setup = true;
+            random = new Random();
+            dataImport = DataImportHandler.GetInstance();
+            dataExport = DataExportHandler.GetInstance();
+            filters = new ArrayList<Filter>();
 
-        testAirline1 = new Airline(random.nextInt(randomBound), "Virgin Airlines", "Virgin", "VI",
-                "VIR", "VIRGIN", "Australia", 'Y');
-        testAirline2 = new Airline(random.nextInt(randomBound), "Singapore Airlines", "Singapore", "SN",
-                "SNG", "SINGAPORE", "Signapore", 'Y');
-        testAirline3 = new Airline(random.nextInt(randomBound), "Qatar Airways", "Qatar", "QA",
-                "QAT", "QATAR", "Qatar", 'Y');
-        testAirline4 = new Airline(random.nextInt(randomBound), "Emirates", "Emirates", "EM",
-                "EMI", "EMIRATES", "United Arab Emirates", 'Y');
-        testAirline5 = new Airline(random.nextInt(randomBound), "Lufthansa", "Luft", "LF",
-                "LFT", "LUFTHANSA", "Germany", 'Y');
-        testAirlines = new ArrayList<Airline>();
-        actualAirlines = new ArrayList<Airline>();
+            try {
+                databaseConnection = DataHandler.GetInstance().GetConnection();
+                Statement stmt = this.databaseConnection.createStatement();
+                databaseRowsAirline = stmt.executeQuery("SELECT COUNT(*) FROM airline").getInt(1);
+                databaseRowsAirport = stmt.executeQuery("SELECT COUNT(*) FROM airport").getInt(1);
+                databaseRowsRoute = stmt.executeQuery("SELECT COUNT(*) FROM route").getInt(1);
+            } catch (Exception e) { System.out.println(e.getMessage()); }
 
-        testAirport1 = new Airport(1, "London Heathrow Airport", "London", "England",
-                "LHR", "LOND", (float)51.470020, (float)-0.454295, 25, 1, 'U');
-        testAirport2 = new Airport(2, "Los Angeles Airport", "Los Angeles", "United States of America",
-                "LAX", "LOSX", (float)33.94279, (float)-118.410042, 38, -7, 'U');
-        testAirport3 = new Airport(3, "Tokyo Haneda Airport", "Tokyo", "Japan",
-                "HND", "HNDA", (float)35.5494, (float)139.7798, 11, 9, 'A');
-        testAirport4 = new Airport(4, "Amsterdam Airport Schipol", "Amsterdam", "Netherlands",
-                "AMS", "AMSD", (float)52.3105, (float)4.7683, -3, 1, 'A');
-        testAirport5 = new Airport(5, "Hong Kong Airport", "Hong Kong", "Hong Kong",
-                "HKG", "HGKG", (float)22.3080, (float)113.9185, 9, 8, 'A');
-        testAirports = new ArrayList<Airport>();
-        actualAirports = new ArrayList<Airport>();
+            testAirline1 = new Airline(random.nextInt(randomBound), "Virgin Airlines", "Virgin", "VI",
+                    "VIR", "VIRGIN", "Australia", 'Y');
+            testAirline2 = new Airline(random.nextInt(randomBound), "Singapore Airlines", "Singapore", "SN",
+                    "SNG", "SINGAPORE", "Signapore", 'Y');
+            testAirline3 = new Airline(random.nextInt(randomBound), "Qatar Airways", "Qatar", "QA",
+                    "QAT", "QATAR", "Qatar", 'Y');
+            testAirline4 = new Airline(random.nextInt(randomBound), "Emirates", "Emirates", "EM",
+                    "EMI", "EMIRATES", "United Arab Emirates", 'Y');
+            testAirline5 = new Airline(random.nextInt(randomBound), "Lufthansa", "Luft", "LF",
+                    "LFT", "LUFTHANSA", "Germany", 'Y');
+            testAirlines = new ArrayList<Airline>();
+            actualAirlines = new ArrayList<Airline>();
 
-        testRoute1 = new Route(testAirline1.getAirlineID(), testAirline1.getName(), testAirport1.getName(), testAirport1.getAirportID(),
-                testAirport2.getName(), testAirport2.getAirportID(), ' ', 0, "CR2");
-        testRoute2 = new Route(testAirline2.getAirlineID(), testAirline2.getName(), testAirport3.getName(), testAirport3.getAirportID(),
-                testAirport4.getName(), testAirport4.getAirportID(), ' ', 0, "CR2");
-        testRoute3 = new Route(testAirline3.getAirlineID(), testAirline3.getName(), testAirport5.getName(), testAirport5.getAirportID(),
-                testAirport1.getName(), testAirport1.getAirportID(), ' ', 0, "A81");
-        testRoute4 = new Route(testAirline4.getAirlineID(), testAirline4.getName(), testAirport2.getName(), testAirport2.getAirportID(),
-                testAirport3.getName(), testAirport4.getAirportID(), ' ', 0, "AN4");
-        testRoute5 = new Route(testAirline5.getAirlineID(), testAirline5.getName(), testAirport4.getName(), testAirport4.getAirportID(),
-                testAirport5.getName(), testAirport5.getAirportID(), ' ', 0, "142");
-        testRoutes = new ArrayList<Route>();
-        actualRoutes = new ArrayList<Route>();
-    }
+            testAirport1 = new Airport(1, "London Heathrow Airport", "London", "England",
+                    "LHR", "LOND", (float)51.470020, (float)-0.454295, 25, 1, 'U');
+            testAirport2 = new Airport(2, "Los Angeles Airport", "Los Angeles", "United States of America",
+                    "LAX", "LOSX", (float)33.94279, (float)-118.410042, 38, -7, 'U');
+            testAirport3 = new Airport(3, "Tokyo Haneda Airport", "Tokyo", "Japan",
+                    "HND", "HNDA", (float)35.5494, (float)139.7798, 11, 9, 'A');
+            testAirport4 = new Airport(4, "Amsterdam Airport Schipol", "Amsterdam", "Netherlands",
+                    "AMS", "AMSD", (float)52.3105, (float)4.7683, -3, 1, 'A');
+            testAirport5 = new Airport(5, "Hong Kong Airport", "Hong Kong", "Hong Kong",
+                    "HKG", "HGKG", (float)22.3080, (float)113.9185, 9, 8, 'A');
+            testAirports = new ArrayList<Airport>();
+            actualAirports = new ArrayList<Airport>();
 
-    private Connection databaseConnection;
-    private int databaseRowsAirline;
-    private int databaseRowsAirport;
-    private int databaseRowsRoute;
-    @Before @Ignore
-    public void getDatabaseRowsCount() {
-        try {
-            Statement stmt = this.databaseConnection.createStatement();
-            databaseRowsAirline = stmt.executeQuery("SELECT COUNT(*) FROM airline").getInt(0);
-            databaseRowsAirport = stmt.executeQuery("SELECT COUNT(*) FROM airport").getInt(0);
-            databaseRowsRoute = stmt.executeQuery("SELECT COUNT(*) FROM route").getInt(0);
-            System.out.println("-----");
-            System.out.println(databaseRowsAirline);
-            System.out.println(databaseRowsAirport);
-            System.out.println(databaseRowsRoute);
-            System.out.println("-----");
-        } catch (Exception e) { System.out.println(e.getMessage());
-        System.out.println("Nelp");}
-
+            testRoute1 = new Route(testAirline1.getAirlineID(), testAirline1.getName(), testAirport1.getName(), testAirport1.getAirportID(),
+                    testAirport2.getName(), testAirport2.getAirportID(), ' ', 0, "CR2");
+            testRoute2 = new Route(testAirline2.getAirlineID(), testAirline2.getName(), testAirport3.getName(), testAirport3.getAirportID(),
+                    testAirport4.getName(), testAirport4.getAirportID(), ' ', 0, "CR2");
+            testRoute3 = new Route(testAirline3.getAirlineID(), testAirline3.getName(), testAirport5.getName(), testAirport5.getAirportID(),
+                    testAirport1.getName(), testAirport1.getAirportID(), ' ', 0, "A81");
+            testRoute4 = new Route(testAirline4.getAirlineID(), testAirline4.getName(), testAirport2.getName(), testAirport2.getAirportID(),
+                    testAirport3.getName(), testAirport4.getAirportID(), ' ', 0, "AN4");
+            testRoute5 = new Route(testAirline5.getAirlineID(), testAirline5.getName(), testAirport4.getName(), testAirport4.getAirportID(),
+                    testAirport5.getName(), testAirport5.getAirportID(), ' ', 0, "142");
+            testRoutes = new ArrayList<Route>();
+            actualRoutes = new ArrayList<Route>();
+        }
     }
 
     @After
     public void checkNothingWasAddedToDatabase() {
-
+        try {
+            databaseConnection = DataHandler.GetInstance().GetConnection();
+            Statement stmt = this.databaseConnection.createStatement();
+            int afterDatabaseRowsAirline = stmt.executeQuery("SELECT COUNT(*) FROM airline").getInt(1);
+            int afterDatabaseRowsAirport = stmt.executeQuery("SELECT COUNT(*) FROM airport").getInt(1);
+            int afterDatabaseRowsRoute = stmt.executeQuery("SELECT COUNT(*) FROM route").getInt(1);
+            if (afterDatabaseRowsAirline != databaseRowsAirline ||
+                    afterDatabaseRowsAirport != databaseRowsAirport ||
+                    afterDatabaseRowsRoute != databaseRowsRoute) {
+                Assert.fail("Test case rows were added to the database. A test case needs to be fixed to prevent this!");
+            }
+        } catch (Exception e) { System.out.println(e.getMessage()); }
     }
-
 
     // For Flight Paths
     private RoutePath testRoutePath1;
