@@ -56,6 +56,26 @@ public class DatabaseHandlerTest {
         actualRoutes.clear();
     }
 
+    public void cleanUp(Object object) {
+        try {
+            if (object instanceof Airline) {
+                dataImport.DeleteAirline(((Airline) object).getAirlineID());
+            } else if (object instanceof Airport) {
+                System.out.println("YESSS");
+                dataImport.DeleteAirport(((Airport) object).getAirportID());
+            } else if (object instanceof Route) {
+                Route route = (Route) object;
+                dataImport.DeleteRoute(route.getAirlineID(), route.getSourceAirportID(), route.getDestinationAirportID());
+            }
+        } catch (Exception e) { System.out.println(e.getMessage()); }
+    }
+
+    public void cleanUp(ArrayList<Object> object) {
+        for (int i = 0; i < object.size(); i++) {
+            cleanUp(object);
+        }
+    }
+
     @Before
     public void InitialiseTest() {
         random = new Random();
@@ -131,6 +151,7 @@ public class DatabaseHandlerTest {
         testRoutePath1 = new RoutePath("HGKG", "LOND", coordinates1);
         actualRoutePaths = new ArrayList<RoutePath>();
 
+        /*
         try {
             dataImport.InsertAirport(testAirport1);
             dataImport.InsertAirport(testAirport2);
@@ -138,6 +159,7 @@ public class DatabaseHandlerTest {
             dataImport.InsertAirport(testAirport4);
             dataImport.InsertAirport(testAirport5);
         } catch (Exception e) { System.out.println(e.getMessage()); }
+         */
     }
 
     // For Holiday Plans
@@ -254,12 +276,14 @@ public class DatabaseHandlerTest {
             filters.add(filter);
             actualAirports = dataExport.FetchAirports(filters);
             testAirport1.SetAirportID(actualAirports.get(0).getAirportID());
-            System.out.println(actualAirports);
             Assert.assertEquals(testAirport1, actualAirports.get(0));
         } catch(Exception e) {
             Assert.fail(e.getMessage());
         }
+        cleanUp(testAirport1);
         fullClear();
+        System.out.println(dataExport.FetchAirports(filters));
+        System.out.println("HELP");
     }
 
     /**
@@ -268,21 +292,30 @@ public class DatabaseHandlerTest {
     @Test @Ignore
     public void TestInsertTwoAirports() {
         testAirports.add(testAirport1);
-        testAirports.add(testAirport2);
+        testAirports.add(testAirport3);
         try {
             for (Airport airport: testAirports) {
                 dataImport.InsertAirport(airport);
             }
-            Filter filter1 = new Filter(format("id_airport = %d", testAirport1.getAirportID()), "OR");
+            Filter filter1 = new Filter(format("icao = '%s'", testAirport1.getICAO()), "OR");
             filters.add(filter1);
-            Filter filter2 = new Filter(format("id_airport = %d", testAirport2.getAirportID()), "");
+            Filter filter2 = new Filter(format("icao = '%s'", testAirport3.getICAO()), "");
             filters.add(filter2);
             actualAirports = dataExport.FetchAirports(filters);
         } catch(Exception e) {
             Assert.fail(e.getMessage());
         }
+        testAirports.get(0).SetAirportID(actualAirports.get(0).getAirportID());
+        testAirports.get(1).SetAirportID(actualAirports.get(1).getAirportID());
         Collections.sort(testAirports);
         Collections.sort(actualAirports);
+
+        for (int j = 0; j < 2; j++) {
+            System.out.println(testAirports.get(j));
+            System.out.println(actualAirports.get(j));
+            System.out.println("_____________");
+        }
+
         for (int i = 0; i < 2; i++) {
             Assert.assertEquals(testAirports.get(i), actualAirports.get(i));
         }
