@@ -5,6 +5,9 @@ import org.junit.*;
 import seng202.team6.model.entities.*;
 import seng202.team6.model.user.HolidayPlan;
 
+import java.sql.Connection;
+import java.sql.Statement;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Random;
 import java.util.ArrayList;
@@ -61,7 +64,6 @@ public class DatabaseHandlerTest {
             if (object instanceof Airline) {
                 dataImport.DeleteAirline(((Airline) object).getAirlineID());
             } else if (object instanceof Airport) {
-                System.out.println("YESSS");
                 dataImport.DeleteAirport(((Airport) object).getAirportID());
             } else if (object instanceof Route) {
                 Route route = (Route) object;
@@ -70,9 +72,20 @@ public class DatabaseHandlerTest {
         } catch (Exception e) { System.out.println(e.getMessage()); }
     }
 
-    public void cleanUp(ArrayList<Object> object) {
-        for (int i = 0; i < object.size(); i++) {
-            cleanUp(object);
+    public void cleanUpListArl(ArrayList<Airline> objects) {
+        for (int i = 0; i < objects.size(); i++) {
+            cleanUp(objects.get(i));
+        }
+    }
+    public void cleanUpListApt(ArrayList<Airport> objects) {
+        System.out.println(objects.size());
+        for (int i = 0; i < objects.size(); i++) {
+            cleanUp(objects.get(i));
+        }
+    }
+    public void cleanUpListRte(ArrayList<Route> objects) {
+        for (int i = 0; i < objects.size(); i++) {
+            cleanUp(objects.get(i));
         }
     }
 
@@ -121,6 +134,32 @@ public class DatabaseHandlerTest {
                 testAirport5.getName(), testAirport5.getAirportID(), ' ', 0, "142");
         testRoutes = new ArrayList<Route>();
         actualRoutes = new ArrayList<Route>();
+    }
+
+    private Connection databaseConnection;
+    private int databaseRowsAirline;
+    private int databaseRowsAirport;
+    private int databaseRowsRoute;
+    @Before @Ignore
+    public void getDatabaseRowsCount() {
+        try {
+            Statement stmt = this.databaseConnection.createStatement();
+            databaseRowsAirline = stmt.executeQuery("SELECT COUNT(*) FROM airline").getInt(0);
+            databaseRowsAirport = stmt.executeQuery("SELECT COUNT(*) FROM airport").getInt(0);
+            databaseRowsRoute = stmt.executeQuery("SELECT COUNT(*) FROM route").getInt(0);
+            System.out.println("-----");
+            System.out.println(databaseRowsAirline);
+            System.out.println(databaseRowsAirport);
+            System.out.println(databaseRowsRoute);
+            System.out.println("-----");
+        } catch (Exception e) { System.out.println(e.getMessage());
+        System.out.println("Nelp");}
+
+    }
+
+    @After
+    public void checkNothingWasAddedToDatabase() {
+
     }
 
 
@@ -184,6 +223,7 @@ public class DatabaseHandlerTest {
             Assert.fail(e.getMessage());
         }
         Assert.assertEquals(testAirline1, actualAirlines.get(0));
+        cleanUp(testAirline1);
         fullClear();
     }
 
@@ -211,6 +251,7 @@ public class DatabaseHandlerTest {
         for (int i = 0; i < 2; i++) {
             Assert.assertEquals(testAirlines.get(i), actualAirlines.get(i));
         }
+        cleanUpListArl(testAirlines);
         fullClear();
     }
 
@@ -247,6 +288,7 @@ public class DatabaseHandlerTest {
         for (int i = 0; i < 5; i++) {
             Assert.assertEquals(testAirlines.get(i), actualAirlines.get(i));
         }
+        cleanUpListArl(testAirlines);
         fullClear();
     }
 
@@ -262,6 +304,7 @@ public class DatabaseHandlerTest {
         } catch (Exception e) {
             Assert.assertTrue(e instanceof Exception);
         }
+        cleanUp(testAirline1);
         fullClear();
     }
 
@@ -282,14 +325,12 @@ public class DatabaseHandlerTest {
         }
         cleanUp(testAirport1);
         fullClear();
-        System.out.println(dataExport.FetchAirports(filters));
-        System.out.println("HELP");
     }
 
     /**
      * Test inserting two airports into the database
      */
-    @Test @Ignore
+    @Test
     public void TestInsertTwoAirports() {
         testAirports.add(testAirport1);
         testAirports.add(testAirport3);
@@ -307,25 +348,18 @@ public class DatabaseHandlerTest {
         }
         testAirports.get(0).SetAirportID(actualAirports.get(0).getAirportID());
         testAirports.get(1).SetAirportID(actualAirports.get(1).getAirportID());
-        Collections.sort(testAirports);
-        Collections.sort(actualAirports);
-
-        for (int j = 0; j < 2; j++) {
-            System.out.println(testAirports.get(j));
-            System.out.println(actualAirports.get(j));
-            System.out.println("_____________");
-        }
 
         for (int i = 0; i < 2; i++) {
             Assert.assertEquals(testAirports.get(i), actualAirports.get(i));
         }
+        cleanUpListApt(testAirports);
         fullClear();
     }
 
     /**
      * Test inserting five airports in the database
      */
-    @Test @Ignore
+    @Test
     public void TestInsertFiveAirports() {
         testAirports.add(testAirport1);
         testAirports.add(testAirport2);
@@ -336,25 +370,30 @@ public class DatabaseHandlerTest {
             for (Airport airport: testAirports) {
                 dataImport.InsertAirport(airport);
             }
-            Filter filter1 = new Filter(format("id_airport = %d", testAirport1.getAirportID()), "OR");
+            Filter filter1 = new Filter(format("icao = '%s'", testAirport1.getICAO()), "OR");
             filters.add(filter1);
-            Filter filter2 = new Filter(format("id_airport = %d", testAirport2.getAirportID()), "OR");
+            Filter filter2 = new Filter(format("icao = '%s'", testAirport2.getICAO()), "OR");
             filters.add(filter2);
-            Filter filter3 = new Filter(format("id_airport = %d", testAirport3.getAirportID()), "OR");
+            Filter filter3 = new Filter(format("icao = '%s'", testAirport3.getICAO()), "OR");
             filters.add(filter3);
-            Filter filter4 = new Filter(format("id_airport = %d", testAirport4.getAirportID()), "OR");
+            Filter filter4 = new Filter(format("icao = '%s'", testAirport4.getICAO()), "OR");
             filters.add(filter4);
-            Filter filter5 = new Filter(format("id_airport = %d", testAirport5.getAirportID()), "");
+            Filter filter5 = new Filter(format("icao = '%s'", testAirport5.getICAO()), "");
             filters.add(filter5);
             actualAirports = dataExport.FetchAirports(filters);
         } catch(Exception e) {
             Assert.fail(e.getMessage());
         }
-        Collections.sort(testAirports);
-        Collections.sort(actualAirports);
+        testAirports.get(0).SetAirportID(actualAirports.get(0).getAirportID());
+        testAirports.get(1).SetAirportID(actualAirports.get(1).getAirportID());
+        testAirports.get(2).SetAirportID(actualAirports.get(2).getAirportID());
+        testAirports.get(3).SetAirportID(actualAirports.get(3).getAirportID());
+        testAirports.get(4).SetAirportID(actualAirports.get(4).getAirportID());
+
         for (int i = 0; i < 5; i++) {
             Assert.assertEquals(testAirports.get(i), actualAirports.get(i));
         }
+        cleanUpListApt(testAirports);
         fullClear();
     }
 
@@ -370,6 +409,7 @@ public class DatabaseHandlerTest {
         } catch (Exception e) {
             Assert.assertTrue(e instanceof Exception);
         }
+        cleanUp(testAirport1);
         fullClear();
     }
 
@@ -389,6 +429,7 @@ public class DatabaseHandlerTest {
             Assert.fail(e.getMessage());
         }
         Assert.assertEquals(testRoute1, actualRoutes.get(0));
+        cleanUp(testRoute1);
         fullClear();
     }
 
@@ -420,6 +461,7 @@ public class DatabaseHandlerTest {
         for (int i = 0; i < 2; i++) {
             Assert.assertEquals(testRoutes.get(i), actualRoutes.get(i));
         }
+        cleanUpListRte(testRoutes);
         fullClear();
     }
 
@@ -467,6 +509,7 @@ public class DatabaseHandlerTest {
         for (int i = 0; i < 5; i++) {
             Assert.assertEquals(testRoutes.get(i), actualRoutes.get(i));
         }
+        cleanUpListRte(testRoutes);
         fullClear();
     }
 
@@ -488,6 +531,7 @@ public class DatabaseHandlerTest {
         }
         testAirline1.SetName("VirginBlue");
         assertEquals(testAirline1, actualAirlines.get(0));
+        cleanUp(testAirline1);
         fullClear();
     }
 
@@ -523,6 +567,7 @@ public class DatabaseHandlerTest {
         for (int i = 0; i < 2; i++) {
             assertEquals(testAirlines.get(i), actualAirlines.get(i));
         }
+        cleanUpListArl(testAirlines);
         fullClear();
     }
 
@@ -576,6 +621,7 @@ public class DatabaseHandlerTest {
         for (int i = 0; i < 5; i++) {
             assertEquals(testAirlines.get(i), actualAirlines.get(i));
         }
+        cleanUpListArl(testAirlines);
         fullClear();
     }
 
@@ -594,6 +640,7 @@ public class DatabaseHandlerTest {
             String message = "No parameters to update were provided!";
             assertEquals(message, e.getMessage());
         }
+        cleanUp(testAirline1);
         fullClear();
     }
 
@@ -612,6 +659,7 @@ public class DatabaseHandlerTest {
             String message = "The provided IATA was not two characters long!";
             assertEquals(message, e.getMessage());
         }
+        cleanUp(testAirline1);
         fullClear();
     }
 
@@ -630,6 +678,7 @@ public class DatabaseHandlerTest {
             String message = "The provided IATA was not two characters long!";
             assertEquals(message, e.getMessage());
         }
+        cleanUp(testAirline1);
         fullClear();
     }
 
@@ -648,6 +697,7 @@ public class DatabaseHandlerTest {
             String message = "The provided ICAO was not three characters long!";
             assertEquals(message, e.getMessage());
         }
+        cleanUp(testAirline1);
         fullClear();
     }
 
@@ -666,6 +716,7 @@ public class DatabaseHandlerTest {
             String message = "The provided ICAO was not three characters long!";
             assertEquals(message, e.getMessage());
         }
+        cleanUp(testAirline1);
         fullClear();
     }
 
@@ -673,14 +724,16 @@ public class DatabaseHandlerTest {
     /**
      * Test updating one airport within the database
      */
+    //TODO URGENT!!! Fix airport update and delete tests with auto-increment
     @Test @Ignore
     public void TestUpdateOneAirport() {
         try {
             dataImport.InsertAirport(testAirport1);} catch (Exception e) {Assert.fail(e.getMessage());}
+            //testAirport1.SetAirportID(actualAirports.get(0).getAirportID());
         try {
             dataImport.UpdateAirport(testAirport1.getAirportID(), "Alpha", null, null, null, null,
                     null, null, null, null, null);
-            Filter filter = new Filter(format("id_airport = %d", testAirport1.getAirportID()), "");
+            Filter filter = new Filter(format("icao = '%s'", testAirport1.getICAO()), "");
             filters.add(filter);
             actualAirports = dataExport.FetchAirports(filters);
         } catch (Exception e) {
@@ -688,6 +741,7 @@ public class DatabaseHandlerTest {
         }
         testAirport1.SetName("Alpha");
         assertEquals(testAirport1, actualAirports.get(0));
+        cleanUp(testAirport1);
         fullClear();
     }
 
@@ -723,6 +777,7 @@ public class DatabaseHandlerTest {
         for (int i = 0; i < 2; i++) {
             assertEquals(testAirports.get(i), actualAirports.get(i));
         }
+        cleanUpListApt(testAirports);
         fullClear();
     }
 
@@ -776,6 +831,7 @@ public class DatabaseHandlerTest {
         for (int i = 0; i < 5; i++) {
             assertEquals(testAirports.get(i), actualAirports.get(i));
         }
+        cleanUpListApt(testAirports);
         fullClear();
     }
 
@@ -794,6 +850,7 @@ public class DatabaseHandlerTest {
             String message = "No parameters to update were provided!";
             assertEquals(message, e.getMessage());
         }
+        cleanUp(testAirport1);
         fullClear();
     }
 
@@ -812,6 +869,7 @@ public class DatabaseHandlerTest {
             String message = "The provided IATA was not three characters long!";
             assertEquals(message, e.getMessage());
         }
+        cleanUp(testAirport1);
         fullClear();
     }
 
@@ -830,6 +888,7 @@ public class DatabaseHandlerTest {
             String message = "The provided IATA was not three characters long!";
             assertEquals(message, e.getMessage());
         }
+        cleanUp(testAirport1);
         fullClear();
     }
 
@@ -848,6 +907,7 @@ public class DatabaseHandlerTest {
             String message = "The provided ICAO was not four characters long!";
             assertEquals(message, e.getMessage());
         }
+        cleanUp(testAirport1);
         fullClear();
     }
 
@@ -866,6 +926,7 @@ public class DatabaseHandlerTest {
             String message = "The provided ICAO was not four characters long!";
             assertEquals(message, e.getMessage());
         }
+        cleanUp(testAirport1);
         fullClear();
     }
 
@@ -888,6 +949,7 @@ public class DatabaseHandlerTest {
         }
         testRoute1.SetStops(5);
         assertEquals(testRoute1, actualRoutes.get(0));
+        cleanUp(testRoute1);
         fullClear();
     }
 
@@ -925,6 +987,7 @@ public class DatabaseHandlerTest {
         for (int i = 0; i < 2; i++) {
             assertEquals(testRoutes.get(i), actualRoutes.get(i));
         }
+        cleanUpListRte(testRoutes);
         fullClear();
     }
 
@@ -983,6 +1046,7 @@ public class DatabaseHandlerTest {
         for (int i = 0; i < 2; i++) {
             assertEquals(testRoutes.get(i), actualRoutes.get(i));
         }
+        cleanUpListRte(testRoutes);
         fullClear();
     }
 
@@ -1001,6 +1065,7 @@ public class DatabaseHandlerTest {
             String message = "No parameters to update were provided!";
             assertEquals(message, e.getMessage());
         }
+        cleanUp(testRoute1);
         fullClear();
     }
     //TODO Should add more tests for UpdateRoute, as newAirline and NewAirports are not tested
@@ -1019,6 +1084,7 @@ public class DatabaseHandlerTest {
         } catch (Exception e) {Assert.fail(e.getMessage());}
         actualAirlines = dataExport.FetchAirlines(filters);
         assertTrue(actualAirlines.isEmpty());
+        cleanUp(testAirline1);
         fullClear();
     }
 
@@ -1044,6 +1110,7 @@ public class DatabaseHandlerTest {
         } catch (Exception e) {Assert.fail(e.getMessage());}
         actualAirlines = dataExport.FetchAirlines(filters);
         assertTrue(actualAirlines.isEmpty());
+        cleanUpListArl(testAirlines);
         fullClear();
     }
 
@@ -1081,6 +1148,7 @@ public class DatabaseHandlerTest {
         } catch (Exception e) {Assert.fail(e.getMessage());}
         actualAirlines = dataExport.FetchAirlines(filters);
         assertTrue(actualAirlines.isEmpty());
+        cleanUpListArl(testAirlines);
         fullClear();
     }
 
@@ -1112,6 +1180,7 @@ public class DatabaseHandlerTest {
         } catch (Exception e) {Assert.fail(e.getMessage());}
         actualAirports = dataExport.FetchAirports(filters);
         assertTrue(actualAirports.isEmpty());
+        cleanUp(testAirport1);
         fullClear();
     }
 
@@ -1137,6 +1206,7 @@ public class DatabaseHandlerTest {
         } catch (Exception e) {Assert.fail(e.getMessage());}
         actualAirports = dataExport.FetchAirports(filters);
         assertTrue(actualAirports.isEmpty());
+        cleanUpListApt(testAirports);
         fullClear();
     }
 
@@ -1174,6 +1244,7 @@ public class DatabaseHandlerTest {
         } catch (Exception e) {Assert.fail(e.getMessage());}
         actualAirports = dataExport.FetchAirports(filters);
         assertTrue(actualAirports.isEmpty());
+        cleanUpListApt(testAirports);
         fullClear();
     }
 
@@ -1206,6 +1277,7 @@ public class DatabaseHandlerTest {
         } catch (Exception e) {Assert.fail(e.getMessage());}
         actualRoutes = dataExport.FetchRoutes(filters);
         assertTrue(actualRoutes.isEmpty());
+        cleanUp(testRoute1);
         fullClear();
     }
 
@@ -1233,6 +1305,7 @@ public class DatabaseHandlerTest {
         } catch (Exception e) {Assert.fail(e.getMessage());}
         actualRoutes = dataExport.FetchRoutes(filters);
         assertTrue(actualRoutes.isEmpty());
+        cleanUpListRte(testRoutes);
         fullClear();
     }
 
@@ -1275,6 +1348,7 @@ public class DatabaseHandlerTest {
         } catch (Exception e) {Assert.fail(e.getMessage());}
         actualRoutes = dataExport.FetchRoutes(filters);
         assertTrue(actualRoutes.isEmpty());
+        cleanUpListRte(testRoutes);
         fullClear();
     }
 
@@ -1294,6 +1368,7 @@ public class DatabaseHandlerTest {
         } catch (Exception e) {
             Assert.assertTrue(e instanceof Exception);
         }
+        cleanUp(testRoute1);
         fullClear();
     }
 
@@ -1313,6 +1388,7 @@ public class DatabaseHandlerTest {
         } catch (Exception e) {
             Assert.assertTrue(e instanceof Exception);
         }
+        cleanUp(testRoute1);
         fullClear();
     }
 
@@ -1332,6 +1408,7 @@ public class DatabaseHandlerTest {
         } catch (Exception e) {
             Assert.assertTrue(e instanceof Exception);
         }
+        cleanUp(testRoute1);
         fullClear();
     }
 
