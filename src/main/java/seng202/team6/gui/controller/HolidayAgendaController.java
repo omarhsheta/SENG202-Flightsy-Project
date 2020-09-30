@@ -24,11 +24,11 @@ import java.util.ResourceBundle;
 public class HolidayAgendaController implements Initializable {
 
     ArrayList<HolidayPlan> holidays = new ArrayList<>();
-    private String selectedHoliday;
 
     @FXML
     private ChoiceBox<String> holidaySelectChoiceBox = new ChoiceBox<>();
-    private String currSelectedHoliday;
+    private int selectedHolidayIndex;
+
     @FXML
     private VBox eventsVBox;
 
@@ -41,10 +41,9 @@ public class HolidayAgendaController implements Initializable {
     private WebEngine webEngine;
     private final String mapHTML = "/map/main.html";
     private MapHelper mapHelper;
+    private boolean finishedLoading = false;
 
     private static HolidayAgendaController Instance;
-
-
 
     /**
      * Singleton method to get the HolidayAgenda
@@ -57,6 +56,11 @@ public class HolidayAgendaController implements Initializable {
         return Instance;
     }
 
+    public ChoiceBox<String> GetHolidaySelectChoiceBox() {
+        return this.holidaySelectChoiceBox;
+    }
+
+
     /**
      * Called when this FXML page is loaded
      */
@@ -64,7 +68,10 @@ public class HolidayAgendaController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Instance = this;
         holidaySelectChoiceBox.getSelectionModel().selectedItemProperty().addListener(
-                (ObservableValue<? extends String> observable, String oldValue, String newValue) -> changeHoliday());
+                (ObservableValue<? extends String> observable, String oldValue, String newValue) ->
+                        ChangeHoliday(holidaySelectChoiceBox.getSelectionModel().getSelectedIndex()));
+
+        //Temporary
         holidays.add(new HolidayPlan("Holiday 1"));
         holidays.add(new HolidayPlan("Holiday 2"));
         holidays.add(new HolidayPlan("Holiday 3"));
@@ -73,6 +80,9 @@ public class HolidayAgendaController implements Initializable {
         for (HolidayPlan holiday: holidays) {
             holidaySelectChoiceBox.getItems().add(holiday.getName());
         }
+        holidaySelectChoiceBox.getSelectionModel().select(0);
+        //End Temporary
+
         webEngine = webView2.getEngine();
         webEngine.load(getClass().getResource(mapHTML).toExternalForm());
 
@@ -89,7 +99,7 @@ public class HolidayAgendaController implements Initializable {
      * Called when WebEngine is finished loading
      */
     private void OnLoad() {
-        // to get index of tab selected
+        finishedLoading = true;
     }
 
     public ArrayList<HolidayPlan> getHolidays() {
@@ -98,58 +108,31 @@ public class HolidayAgendaController implements Initializable {
 
     /**
      * A method that is called every time the choicebox value changes. This method changes the holiday visible to the recently selected holiday
+     * @param index Index to swap to
      */
-    private void changeHoliday() {
-        selectedHoliday = holidaySelectChoiceBox.getValue();
-        int currHolidayIndex = getSelectedHolidayIndex();
-        int i = 0;
-        showHoliday(holidays.get(currHolidayIndex));
-    }
+    public void ChangeHoliday(int index) {
+        selectedHolidayIndex = index;
+        showHoliday(holidays.get(index));
 
-    /**
-     *
-     * @return selected holiday index from the holidaySelectChoiceBox
-     */
-    public int getSelectedHolidayIndex() {
-        int count = 0;
-        for (HolidayPlan holiday : holidays) {
-            if (selectedHoliday.equals(holiday.getName())) {
-                return count;
-            }
-            count++;
+        //If this is updated from another view
+        if (holidaySelectChoiceBox.getSelectionModel().getSelectedIndex() != selectedHolidayIndex) {
+            holidaySelectChoiceBox.getSelectionModel().select(selectedHolidayIndex);
         }
-        return -1;// Shouldn't get to this point
     }
 
     /**
-     * Called when the user wants to add a general event to their holiday. This method calls the addItinerary method in the selected holiday
-     * @param generalEvent General event to be added to the itineraries
+     * Add event to holiday
+     * @param <T> Event to add
      */
-    public void addItineraryToHoliday(General generalEvent) {
-        int currHolidayIndex = getSelectedHolidayIndex();
-        //int currHolidayIndex = holidaysTabPane.getSelectionModel().getSelectedIndex();
-        holidays.get(currHolidayIndex).addItinerary(generalEvent);
-        showHoliday(holidays.get(currHolidayIndex));
-    }
-
-    /**
-     * Called when the user wants to add a flight to their holiday. This method calls the addFlight method in the selected holiday
-     * @param flight Flight to be added to the flights
-     */
-    public void addFlightToHoliday(Flight flight) {
-        int currHolidayIndex = getSelectedHolidayIndex();
-        holidays.get(currHolidayIndex).addFlight(flight);
-        showHoliday(holidays.get(currHolidayIndex));
-    }
-
-    /**
-     * Called when the user wants to add a car trip to their holiday. This method calls the addCarTrip method in the selected holiday
-     * @param carTrip CarTrip to be added to the carTrips
-     */
-    public void addCarTripToHoliday(CarTrip carTrip) {
-        int currHolidayIndex = getSelectedHolidayIndex();
-        holidays.get(currHolidayIndex).addCarTrip(carTrip);
-        showHoliday(holidays.get(currHolidayIndex));
+    public <T extends Event> void AddToHoliday(T event) {
+        if (event.getClass() == General.class) {
+            holidays.get(selectedHolidayIndex).addItinerary((General) event);
+        } else if (event.getClass() == Flight.class) {
+            holidays.get(selectedHolidayIndex).addFlight((Flight) event);
+        } else if (event.getClass() == CarTrip.class) {
+            holidays.get(selectedHolidayIndex).addCarTrip((CarTrip) event);
+        }
+        showHoliday(holidays.get(selectedHolidayIndex));
     }
 
     /**
@@ -157,7 +140,9 @@ public class HolidayAgendaController implements Initializable {
      * sorted order by date and time.
      */
     private void showHoliday(HolidayPlan holiday) {
-        mapHelper.ClearAll();
+        if (finishedLoading) {
+            mapHelper.ClearAll();
+        }
         eventsVBox.getChildren().clear();
 
         ArrayList<Event> allEvents = new ArrayList<>();
@@ -186,8 +171,6 @@ public class HolidayAgendaController implements Initializable {
             mapHelper.DrawLineBetween(airports);
         }
     }
-
-
 
     /**
      * A method to create a new holiday

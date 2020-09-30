@@ -2,7 +2,6 @@ package seng202.team6.gui.controller.routefinder;
 
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -15,7 +14,6 @@ import seng202.team6.model.entities.Airport;
 import seng202.team6.model.entities.Route;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class FlightResultController extends ResultController {
 
@@ -27,15 +25,6 @@ public class FlightResultController extends ResultController {
 
     @FXML
     private Label airline;
-
-    @FXML
-    private Button showButton;
-
-    @FXML
-    private Button viewInfoButton;
-
-    @FXML
-    private Button holidayButton;
 
     private Route route;
 
