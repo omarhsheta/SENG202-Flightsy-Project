@@ -134,7 +134,7 @@ public class AddEventController implements Initializable {
     @FXML
     public void AddGeneral() {
         General generalEvent = CheckGeneralEvent();
-        HolidayAgendaController.GetInstance().addItineraryToHoliday(generalEvent);
+        HolidayAgendaController.GetInstance().AddToHoliday(generalEvent);
     }
 
     /**
@@ -143,7 +143,7 @@ public class AddEventController implements Initializable {
     @FXML
     public void AddCarTrip() {
         CarTrip carTrip = CheckCarTrip();
-        HolidayAgendaController.GetInstance().addCarTripToHoliday(carTrip);
+        HolidayAgendaController.GetInstance().AddToHoliday(carTrip);
     }
 
     @Override

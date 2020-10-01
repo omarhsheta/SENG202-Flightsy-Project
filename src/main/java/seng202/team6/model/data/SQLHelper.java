@@ -20,7 +20,7 @@ public class SQLHelper
     public static String ExtractQuery(String tableName, ArrayList<Filter> filters) {
         int limitVal = 500;
         if (filters == null || filters.size() == 0) {
-            return String.format("SELECT * FROM %s LIMIT %d;", tableName, limitVal);
+            return String.format("SELECT * FROM %s;", tableName);
         }
 
         StringBuilder builder = new StringBuilder();
@@ -33,8 +33,6 @@ public class SQLHelper
             builder.append(" ");
         }
         builder.append(filters.get(filters.size() - 1).GetFilter());
-        builder.append(String.format(" LIMIT %d;", limitVal));
-
         return builder.toString();
     }
 
@@ -77,9 +75,9 @@ public class SQLHelper
     }
 
     /**
-     *
-     * @param airports
-     * @return
+     * Creates SQL query for returning a list of airports
+     * @param airports An array list of airport objects
+     * @return An SQL query as a string
      */
     public static String GetAirportIDList(ArrayList<Airport> airports) {
         if (airports.size() == 0) {

@@ -25,62 +25,62 @@
          <left>
             <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <top>
-               <Label alignment="CENTER" prefHeight="25.0" prefWidth="215.0" text="Filters" BorderPane.alignment="CENTER">
-                  <styleClass>
-                     <String fx:value="text-primary" />
-                     <String fx:value="h5" />
-                  </styleClass>
-               </Label>
+                  <Label alignment="CENTER" prefHeight="25.0" prefWidth="215.0" text="Filters" BorderPane.alignment="CENTER">
+                     <styleClass>
+                        <String fx:value="text-primary" />
+                        <String fx:value="h5" />
+                     </styleClass>
+                  </Label>
                </top>
                <center>
                   <Accordion maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
-                    <panes>
-                      <TitledPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Airport Filtering">
+                     <panes>
+                        <TitledPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Airport Filtering">
                            <content>
                               <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="100.0">
                                  <children>
-                                 <ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="495.0" prefWidth="198.0">
+                                    <ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="495.0" prefWidth="198.0">
                                        <content>
                                           <VBox fx:id="airportFilterBox" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="196.0">
                                              <children>
-                                             <Label alignment="CENTER" prefHeight="25.0" prefWidth="200.0" text="Airport ID" />
-                                             <FilterTextField filter="ID_AIRPORT LIKE '%%%s%%'" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="25.0">
+                                                <Label alignment="CENTER" prefHeight="25.0" prefWidth="200.0" text="Airport ID" />
+                                                <FilterTextField filter="ID_AIRPORT = '%s'" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="25.0">
                                                    <VBox.margin>
                                                       <Insets left="10.0" right="10.0" />
                                                    </VBox.margin>
                                                 </FilterTextField>
-                                             <Label alignment="CENTER" prefHeight="25.0" prefWidth="200.0" text="Airport Name" />
-                                             <FilterTextField filter="NAME LIKE '%%%s%%'" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="25.0">
+                                                <Label alignment="CENTER" prefHeight="25.0" prefWidth="200.0" text="Airport Name" />
+                                                <FilterTextField filter="NAME = '%s'" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="25.0">
                                                    <VBox.margin>
                                                       <Insets left="10.0" right="10.0" />
                                                    </VBox.margin>
                                                 </FilterTextField>
-                                             <Label alignment="CENTER" prefHeight="19.0" prefWidth="200.0" text="City" />
-                                             <FilterTextField filter="CITY LIKE '%%%s%%'" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="25.0">
+                                                <Label alignment="CENTER" prefHeight="19.0" prefWidth="200.0" text="City" />
+                                                <FilterTextField filter="CITY = '%s'" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="25.0">
                                                    <VBox.margin>
                                                       <Insets left="10.0" right="10.0" />
                                                    </VBox.margin>
                                                 </FilterTextField>
-                                             <Label alignment="CENTER" prefHeight="25.0" prefWidth="200.0" text="Country" />
-                                             <FilterTextField filter="COUNTRY LIKE '%%%s%%'" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="25.0">
+                                                <Label alignment="CENTER" prefHeight="25.0" prefWidth="200.0" text="Country" />
+                                                <FilterTextField filter="COUNTRY = '%s'" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="25.0">
                                                    <VBox.margin>
                                                       <Insets left="10.0" right="10.0" />
                                                    </VBox.margin>
                                                 </FilterTextField>
-                                             <Label alignment="CENTER" prefHeight="25.0" prefWidth="200.0" text="IATA" />
-                                             <FilterTextField filter="IATA LIKE '%%%s%%'" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="25.0">
+                                                <Label alignment="CENTER" prefHeight="25.0" prefWidth="200.0" text="IATA" />
+                                                <FilterTextField filter="IATA = '%s'" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="25.0">
                                                    <VBox.margin>
                                                       <Insets left="10.0" right="10.0" />
                                                    </VBox.margin>
                                                 </FilterTextField>
-                                             <Label alignment="CENTER" prefHeight="25.0" prefWidth="200.0" text="ICAO" />
-                                             <FilterTextField filter="ICAO LIKE '%%%s%%'" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="25.0">
+                                                <Label alignment="CENTER" prefHeight="25.0" prefWidth="200.0" text="ICAO" />
+                                                <FilterTextField filter="ICAO = '%s'" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="25.0">
                                                    <VBox.margin>
                                                       <Insets left="10.0" right="10.0" />
                                                    </VBox.margin>
                                                 </FilterTextField>
                                                 <Label alignment="CENTER" prefHeight="25.0" prefWidth="200.0" text="Timezone" />
-                                                <FilterTextField filter="TIMEZONE LIKE '%%%s%%'" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="25.0">
+                                                <FilterTextField filter="TIMEZONE = %s" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="25.0">
                                                    <VBox.margin>
                                                       <Insets left="10.0" right="10.0" />
                                                    </VBox.margin>
@@ -88,43 +88,43 @@
                                              </children>
                                           </VBox>
                                        </content>
-                                 </ScrollPane>
-                                 <Button fx:id="airportFilterButton" alignment="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#OnAirportFilterButtonClicked" prefHeight="25.0" prefWidth="108.0" text="Apply Filters">
-                                    <graphic>
-                                       <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                                          <image>
-                                             <Image url="@/icons/check-8x.png" />
-                                          </image>
-                                       </ImageView>
-                                    </graphic>
-                                    <styleClass>
-                                       <String fx:value="btn" />
-                                       <String fx:value="btn-sm" />
-                                       <String fx:value="btn-primary" />
-                                    </styleClass>
-                                 </Button>
+                                    </ScrollPane>
+                                    <Button fx:id="airportFilterButton" alignment="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#OnAirportFilterButtonClicked" prefHeight="25.0" prefWidth="108.0" text="Apply Filters">
+                                       <graphic>
+                                          <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@/icons/check-8x.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                       <styleClass>
+                                          <String fx:value="btn" />
+                                          <String fx:value="btn-sm" />
+                                          <String fx:value="btn-primary" />
+                                       </styleClass>
+                                    </Button>
                                  </children>
                               </VBox>
                            </content>
-                      </TitledPane>
-                      <TitledPane expanded="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Flight Filtering">
+                        </TitledPane>
+                        <TitledPane expanded="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Flight Filtering">
                            <content>
                               <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="100.0">
                                  <children>
-                                      <ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="495.0" prefWidth="198.0">
-                                          <content>
-                                              <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="196.0">
-                                                  <children>
+                                    <ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="495.0" prefWidth="198.0">
+                                       <content>
+                                          <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="196.0">
+                                             <children>
                                                 <VBox fx:id="flightFilterOriginBox">
                                                    <children>
                                                       <Label alignment="CENTER" prefHeight="25.0" prefWidth="200.0" text="Origin Airport ID" />
                                                       <FilterTextField filter="id_airport = %s" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="25.0" />
-                                                            <Label alignment="CENTER" prefHeight="25.0" prefWidth="200.0" text="Origin Airport Name" />
-                                                            <FilterTextField filter="NAME LIKE '%%%s%%'" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="25.0" />
+                                                      <Label alignment="CENTER" prefHeight="25.0" prefWidth="200.0" text="Origin Airport Name" />
+                                                      <FilterTextField filter="NAME = '%s'" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="25.0" />
                                                       <Label alignment="CENTER" prefHeight="25.0" prefWidth="200.0" text="Origin City" />
-                                                      <FilterTextField filter="CITY LIKE '%%%s%%'" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="25.0" />
+                                                      <FilterTextField filter="CITY = '%s'" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="25.0" />
                                                       <Label alignment="CENTER" prefHeight="25.0" prefWidth="200.0" text="Origin Country" />
-                                                      <FilterTextField filter="COUNTRY LIKE '%%%s%%'" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="25.0" />
+                                                      <FilterTextField filter="COUNTRY = '%s'" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="25.0" />
                                                    </children>
                                                    <VBox.margin>
                                                       <Insets left="10.0" right="10.0" />
@@ -140,11 +140,11 @@
                                                       <Label alignment="CENTER" prefHeight="25.0" prefWidth="200.0" text="Destination Airport ID" />
                                                       <FilterTextField filter="id_airport = %s" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="25.0" />
                                                       <Label alignment="CENTER" prefHeight="25.0" prefWidth="200.0" text="Destination Airport Name" />
-                                                      <FilterTextField filter="NAME LIKE '%%%s%%'" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="25.0" />
+                                                      <FilterTextField filter="NAME = '%s'" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="25.0" />
                                                       <Label alignment="CENTER" prefHeight="25.0" prefWidth="200.0" text="Destination City" />
-                                                      <FilterTextField filter="CITY LIKE '%%%s%%'" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="25.0" />
+                                                      <FilterTextField filter="CITY = '%s'" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="25.0" />
                                                       <Label alignment="CENTER" prefHeight="25.0" prefWidth="200.0" text="Destination Country" />
-                                                      <FilterTextField filter="COUNTRY LIKE '%%%s%%'" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="25.0" />
+                                                      <FilterTextField filter="COUNTRY = '%s'" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="25.0" />
                                                    </children>
                                                    <VBox.margin>
                                                       <Insets left="10.0" right="10.0" />
@@ -156,35 +156,35 @@
                                                       <Insets left="10.0" right="10.0" />
                                                    </VBox.margin>
                                                 </Slider>
-                                                  </children>
-                                              </VBox>
-                                          </content>
-                                      </ScrollPane>
-                                      <Button fx:id="flightFilterButton" alignment="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#OnFlightFilterButtonClicked" prefHeight="25.0" prefWidth="108.0" text="Apply Filters">
-                                         <graphic>
-                                            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                                               <image>
-                                                  <Image url="@/icons/check-8x.png" />
-                                               </image>
-                                            </ImageView>
-                                         </graphic>
-                                         <styleClass>
-                                              <String fx:value="btn" />
-                                              <String fx:value="btn-sm" />
-                                              <String fx:value="btn-primary" />
-                                          </styleClass>
-                                      </Button>
+                                             </children>
+                                          </VBox>
+                                       </content>
+                                    </ScrollPane>
+                                    <Button fx:id="flightFilterButton" alignment="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#OnFlightFilterButtonClicked" prefHeight="25.0" prefWidth="108.0" text="Apply Filters">
+                                       <graphic>
+                                          <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@/icons/check-8x.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                       <styleClass>
+                                          <String fx:value="btn" />
+                                          <String fx:value="btn-sm" />
+                                          <String fx:value="btn-primary" />
+                                       </styleClass>
+                                    </Button>
                                  </children>
                               </VBox>
                            </content>
-                      </TitledPane>
-                      <TitledPane expanded="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Route Filtering">
+                        </TitledPane>
+                        <TitledPane expanded="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Route Filtering">
                            <content>
                               <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="100.0">
                                  <children>
-                                      <ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="495.0" prefWidth="178.0">
-                                          <content>
-                                              <VBox fx:id="routeFilterBox" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="196.0">
+                                    <ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="495.0" prefWidth="178.0">
+                                       <content>
+                                          <VBox fx:id="routeFilterBox" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="196.0">
                                              <children>
                                                 <VBox fx:id="routeFilterOriginBox">
                                                    <children>
@@ -203,7 +203,7 @@
                                                             <Insets />
                                                          </VBox.margin>
                                                       </Label>
-                                                      <FilterTextField filter="NAME LIKE '%%%s%%'" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="200.0">
+                                                      <FilterTextField filter="NAME = '%s'" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="200.0">
                                                          <VBox.margin>
                                                             <Insets />
                                                          </VBox.margin>
@@ -213,7 +213,7 @@
                                                             <Insets />
                                                          </VBox.margin>
                                                       </Label>
-                                                      <FilterTextField filter="CITY LIKE '%%%s%%'" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="200.0">
+                                                      <FilterTextField filter="CITY = '%s'" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="200.0">
                                                          <VBox.margin>
                                                             <Insets />
                                                          </VBox.margin>
@@ -223,7 +223,7 @@
                                                             <Insets />
                                                          </VBox.margin>
                                                       </Label>
-                                                      <FilterTextField filter="COUNTRY LIKE '%%%s%%'" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="200.0">
+                                                      <FilterTextField filter="COUNTRY = '%s'" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="200.0">
                                                          <VBox.margin>
                                                             <Insets />
                                                          </VBox.margin>
@@ -255,7 +255,7 @@
                                                             <Insets />
                                                          </VBox.margin>
                                                       </Label>
-                                                      <FilterTextField filter="NAME LIKE '%%%s%%'" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="200.0">
+                                                      <FilterTextField filter="NAME = '%s'" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="200.0">
                                                          <VBox.margin>
                                                             <Insets />
                                                          </VBox.margin>
@@ -265,7 +265,7 @@
                                                             <Insets />
                                                          </VBox.margin>
                                                       </Label>
-                                                      <FilterTextField filter="CITY LIKE '%%%s%%'" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="200.0">
+                                                      <FilterTextField filter="CITY = '%s'" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="200.0">
                                                          <VBox.margin>
                                                             <Insets />
                                                          </VBox.margin>
@@ -275,7 +275,7 @@
                                                             <Insets />
                                                          </VBox.margin>
                                                       </Label>
-                                                      <FilterTextField filter="COUNTRY LIKE '%%%s%%'" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="200.0">
+                                                      <FilterTextField filter="COUNTRY = '%s'" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="200.0">
                                                          <VBox.margin>
                                                             <Insets />
                                                          </VBox.margin>
@@ -286,27 +286,27 @@
                                                    </VBox.margin>
                                                 </VBox>
                                              </children>
-                                              </VBox>
-                                          </content>
-                                      </ScrollPane>
-                                      <Button fx:id="routeFilterButton" alignment="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#OnRouteFilterButtonClicked" prefHeight="25.0" prefWidth="108.0" text="Apply Filters">
-                                         <graphic>
-                                            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                                               <image>
-                                                  <Image url="@/icons/check-8x.png" />
-                                               </image>
-                                            </ImageView>
-                                         </graphic>
-                                          <styleClass>
-                                              <String fx:value="btn" />
-                                              <String fx:value="btn-sm" />
-                                              <String fx:value="btn-primary" />
-                                          </styleClass>
-                                      </Button>
+                                          </VBox>
+                                       </content>
+                                    </ScrollPane>
+                                    <Button fx:id="routeFilterButton" alignment="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#OnRouteFilterButtonClicked" prefHeight="25.0" prefWidth="108.0" text="Apply Filters">
+                                       <graphic>
+                                          <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@/icons/check-8x.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                       <styleClass>
+                                          <String fx:value="btn" />
+                                          <String fx:value="btn-sm" />
+                                          <String fx:value="btn-primary" />
+                                       </styleClass>
+                                    </Button>
                                  </children>
                               </VBox>
                            </content>
-                      </TitledPane>
+                        </TitledPane>
                         <TitledPane expanded="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Analysis">
                            <content>
                               <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="100.0">
@@ -323,7 +323,7 @@
                                                             <Insets />
                                                          </VBox.margin>
                                                       </Label>
-                                                      <FilterTextField fx:id="distanceOriginAirportIATAField" filter="IATA LIKE '%%%s%%'" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="200.0">
+                                                      <FilterTextField fx:id="distanceOriginAirportIATAField" filter="IATA = '%s'" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="200.0">
                                                          <VBox.margin>
                                                             <Insets />
                                                          </VBox.margin>
@@ -333,7 +333,7 @@
                                                             <Insets />
                                                          </VBox.margin>
                                                       </Label>
-                                                      <FilterTextField fx:id="distanceDestAirportIATAField" filter="IATA LIKE '%%%s%%'" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="200.0">
+                                                      <FilterTextField fx:id="distanceDestAirportIATAField" filter="IATA = '%s'" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="200.0">
                                                          <VBox.margin>
                                                             <Insets />
                                                          </VBox.margin>
@@ -375,7 +375,7 @@
                               </VBox>
                            </content>
                         </TitledPane>
-                    </panes>
+                     </panes>
                   </Accordion>
                </center>
             </BorderPane>
