@@ -41,9 +41,9 @@ public class DataImportHandler {
      */
     public void InsertAirline(Airline airline) throws SQLException {
         Statement stmt = this.databaseConnection.createStatement();
-        String sql = format("INSERT INTO airline (id_airline, name, alias, iata, icao, callsign, country, " +
-                        "active) VALUES (\"%d\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%c\");",
-                airline.getAirlineID(), airline.getName(), airline.getAlias(), airline.getIATA(), airline.getICAO(),
+        String sql = format("INSERT INTO airline (name, alias, iata, icao, callsign, country, " +
+                        "active) VALUES (\"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%c\");",
+                airline.getName(), airline.getAlias(), airline.getIATA(), airline.getICAO(),
                 airline.getCallsign(), airline.getCountry(), airline.getActive()
         );
         if (stmt.executeUpdate(sql) <= 0) {
