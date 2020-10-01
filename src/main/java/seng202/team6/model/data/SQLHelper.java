@@ -33,6 +33,7 @@ public class SQLHelper
             builder.append(" ");
         }
         builder.append(filters.get(filters.size() - 1).GetFilter());
+        builder.append(";");
         return builder.toString();
     }
 
