@@ -39,18 +39,21 @@ public class HolidayPlanTest {
      */
     @Test
     public void TestJSONSerialize() {
-        String expected1 = "{\"name\":\"Testplan\",\"itineraries\":[],\"flights\":" +
-                "[{\"route\":{\"AirlineID\":10,\"Airline\":\"TestAirline\",\"SourceAirport\":\"AKL\"," +
-                "\"SourceAirportID\":50,\"DestinationAirport\":\"CHC\",\"DestinationAirportID\":60," +
-                "\"Codeshare\":\"N\",\"Stops\":0},\"arrivalDateTime\":{\"date\":{\"year\":2020,\"month\":6,\"day\":7},\"" +
-                "time\":{\"hour\":3,\"minute\":10,\"second\":0,\"nano\":0}},\"subFolder\":\"holidayview\"," +
-                "\"holidayFlightComponent\":\"holidayflight\",\"dateTime\":{\"date\":{\"year\":2000,\"month\":6,\"day\":6}," +
-                "\"time\":{\"hour\":0,\"minute\":0,\"second\":0,\"nano\":0}},\"Title\":\"Flight\"}]," +
-                "\"carTrips\":[{\"OriginCity\":\"Christchurch\",\"OriginCountry\":\"New Zealand\",\"DestinationCity\":\"California\"," +
-                "\"DestinationCountry\":\"United States\",\"dateTime\":{\"date\":{\"year\":5,\"month\":5,\"day\":5}," +
-                "\"time\":{\"hour\":10,\"minute\":10,\"second\":0,\"nano\":0}},\"Title\":\"Test\",\"Notes\":\"N\"}," +
-                "{\"OriginCity\":\"Christchurch\",\"OriginCountry\":\"New Zealand\",\"DestinationCity\":\"California\"," +
-                "\"DestinationCountry\":\"United States\",\"dateTime\":{\"date\":{\"year\":9,\"month\":4,\"day\":2}," +
+        String expected1 = "{\"name\":\"Testplan\",\"itineraries\":[],\"flights\":[{\"route\":{\"AirlineID\":10," +
+                "\"Airline\":\"TestAirline\",\"SourceAirport\":\"AKL\",\"SourceAirportID\":50," +
+                "\"DestinationAirport\":\"CHC\",\"DestinationAirportID\":60,\"Codeshare\":\"N\",\"Stops\":0}," +
+                "\"arrivalDateTime\":{\"date\":{\"year\":2020,\"month\":6,\"day\":7},\"time\":{\"hour\":3," +
+                "\"minute\":10,\"second\":0,\"nano\":0}},\"subFolder\":\"holidayview\"," +
+                "\"holidayFlightComponent\":\"holidayflight\",\"dateTime\":{\"date\":{\"year\":2000,\"month\":6," +
+                "\"day\":6},\"time\":{\"hour\":0,\"minute\":0,\"second\":0,\"nano\":0}},\"Title\":\"Flight\"}]," +
+                "\"carTrips\":[{\"OriginCity\":\"Christchurch\",\"OriginCountry\":\"New Zealand\"," +
+                "\"DestinationCity\":\"California\",\"DestinationCountry\":\"United States\"," +
+                "\"subFolder\":\"holidayview/eventbuttons\",\"holidayFlightComponent\":\"DriveBtn\"," +
+                "\"dateTime\":{\"date\":{\"year\":5,\"month\":5,\"day\":5},\"time\":{\"hour\":10,\"minute\":10," +
+                "\"second\":0,\"nano\":0}},\"Title\":\"Test\",\"Notes\":\"N\"},{\"OriginCity\":\"Christchurch\"," +
+                "\"OriginCountry\":\"New Zealand\",\"DestinationCity\":\"California\"," +
+                "\"DestinationCountry\":\"United States\",\"subFolder\":\"holidayview/eventbuttons\"," +
+                "\"holidayFlightComponent\":\"DriveBtn\",\"dateTime\":{\"date\":{\"year\":9,\"month\":4,\"day\":2}," +
                 "\"time\":{\"hour\":1,\"minute\":10,\"second\":0,\"nano\":0}},\"Title\":\"Trip2\"}]}";
 
         String expected2 = "{\"name\":\"Hi\",\"itineraries\":[{\"City\":\"Christchurch\",\"Country\":\"New Zealand\"," +
