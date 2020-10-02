@@ -217,47 +217,54 @@ public class DataExportHandler {
     }
 
     /**
-     * Finds the flight path row in the database and returns its directory
-     * @param sourceAirportID The source airport ID of the airport the flight path departs from
-     * @param destinationAirportID the destination airport ID of the airport the flight path arrives at
-     * @return The directory associated with the route path object
+     * Inserts the holiday plan object's directory location into the database
+     * @param name the name of the holiday plan object in the array of holiday plans
+     * @param directory the directory in which the holiday plan object resides
      */
-    public String FetchFlightPaths(int sourceAirportID, int destinationAirportID) throws SQLException {
-        String query = format("SELECT directory FROM flight_path WHERE AirportSourceID = %d AND DestinationSourceID = %d",
-                sourceAirportID, destinationAirportID);
+    public void InsertHolidayPlan(String name, String directory) throws SQLException {
+        String sql = format("INSERT INTO holiday_plan (name, directory), VALUES ('%s', '%s')", name, directory);
         Statement stmt = this.databaseConnection.createStatement();
-        String directory = stmt.executeQuery(query).getString("directory");
-        if (directory == null) {
-            throw new SQLException("No flight path directory was found");
+        if (stmt.executeUpdate(sql) <= 0) {
+            throw new SQLException("The holiday plan was not inserted into the database");
         }
-        return directory;
     }
 
     /**
-     * Finds the flight path row in the database and returns its directory
-     * @param routePath the route path object
-     * @return The directory associated with the route path object
+     * Updates the holiday plan in the database with a new location for the object
+     * @param name the primary key
+     * @param newName the new name
+     * @param newDirectory the new directory in which the holiday plan object will reside
      */
-    public String FetchFlightPaths(RoutePath routePath) throws SQLException{
-        ArrayList<Integer> airportIDsPair = new ArrayList<Integer>(2);
-        airportIDsPair = getAirportIDsFromRoutePath2(routePath);
-        int sourceAirportID = airportIDsPair.get(0);
-        int destinationAirportID = airportIDsPair.get(1);
-        return FetchFlightPaths(sourceAirportID, destinationAirportID);
+    public void UpdateHolidayPlan(String name, String newName, String newDirectory) throws SQLException, Exception{
+        String setSQL = "";
+        if (newDirectory == null || newDirectory.isEmpty()) {
+            setSQL += format("directory = '%s', ", newDirectory);
+        }
+        if (newName != null && !newName.isEmpty()) {
+            setSQL += format("name = '%s', ", newName);
+        }
+        if (setSQL.length() > 0) {
+            setSQL = setSQL.substring(0, setSQL.length() - 1);
+        } else {
+            throw new Exception("No parameters to update were provided!");
+        }
+
+        String sql = format("UPDATE holiday_path SET %s WHERE name = '%s'", setSQL, name);
+        Statement stmt = this.databaseConnection.createStatement();
+        if (stmt.executeUpdate(sql) <= 0) {
+            throw new SQLException("The holiday plan in the database was not updated");
+        }
     }
 
     /**
-     * Retrieves the directory of the holiday plan object from the database
-     * @param filters Query filters
-     * @return the directory of the holiday plan object
+     * Deletes the holiday plan entry from the database
+     * @param name the name of the holiday
      */
-    public String FetchHolidayPlan(ArrayList<Filter> filters) throws SQLException{
-        String query = SQLHelper.ExtractQuery("holiday_plan", filters);
+    public void DeleteHolidayPlan(String name) throws SQLException{
+        String sql = format("DELETE FROM holiday_plan WHERE index_holiday = '%s'", name);
         Statement stmt = this.databaseConnection.createStatement();
-        String directory = stmt.executeQuery(query).getString("directory");
-        if (directory == null) {
-            throw new SQLException("No flight path directory was found");
+        if (stmt.executeUpdate(sql) <= 0) {
+            throw new SQLException("Nothing was deleted");
         }
-        return directory;
     }
 }
