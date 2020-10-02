@@ -64,7 +64,7 @@
                                     <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="17.0" prefWidth="62.0" text="8:20am" textAlignment="RIGHT" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                                     <ImageView fitHeight="30.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                                        <image>
-                                          <Image url="@assets/plane.png" />
+                                          <Image url="@../assets/plane.png" />
                                        </image>
                                     </ImageView>
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="h3" text="CHC" textAlignment="CENTER" wrappingWidth="55.01220703125" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
@@ -105,7 +105,7 @@
                                     <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="17.0" prefWidth="62.0" text="8:20am" textAlignment="RIGHT" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                                     <ImageView fitHeight="30.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                                        <image>
-                                          <Image url="@assets/plane.png" />
+                                          <Image url="@../assets/plane.png" />
                                        </image>
                                     </ImageView>
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="h3" text="WLG" textAlignment="CENTER" wrappingWidth="55.01220703125" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
@@ -145,7 +145,7 @@
                                     <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="17.0" prefWidth="115.0" text="1:30pm - 2:30pm" textAlignment="RIGHT" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="TOP" />
                                     <ImageView fitHeight="73.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                                        <image>
-                                          <Image url="@assets/car.png" />
+                                          <Image url="@../assets/car.png" />
                                        </image>
                                     </ImageView>
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="123 Short Street" wrappingWidth="158.21875" GridPane.columnSpan="2" />
@@ -184,7 +184,7 @@
                                     <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="17.0" prefWidth="111.0" text="7:00pm - 9:30pm" textAlignment="RIGHT" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="TOP" />
                                     <ImageView fitHeight="35.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                                        <image>
-                                          <Image url="@assets/calendar.png" />
+                                          <Image url="@../assets/calendar.png" />
                                        </image>
                                     </ImageView>
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="The name of the event" wrappingWidth="158.21875" GridPane.columnSpan="2" />
@@ -219,7 +219,7 @@
                                     <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="17.0" prefWidth="111.0" text="7:00pm - 9:30pm" textAlignment="RIGHT" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="TOP" />
                                     <ImageView fitHeight="35.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                                        <image>
-                                          <Image url="@assets/calendar.png" />
+                                          <Image url="@../assets/calendar.png" />
                                        </image>
                                     </ImageView>
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="The name of the event" wrappingWidth="158.21875" GridPane.columnSpan="2" />
@@ -254,7 +254,7 @@
                                     <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="17.0" prefWidth="111.0" text="7:00pm - 9:30pm" textAlignment="RIGHT" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="TOP" />
                                     <ImageView fitHeight="35.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                                        <image>
-                                          <Image url="@assets/calendar.png" />
+                                          <Image url="@../assets/calendar.png" />
                                        </image>
                                     </ImageView>
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="The name of the event" wrappingWidth="158.21875" GridPane.columnSpan="2" />
@@ -289,7 +289,7 @@
                                     <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="17.0" prefWidth="111.0" text="7:00pm - 9:30pm" textAlignment="RIGHT" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="TOP" />
                                     <ImageView fitHeight="35.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                                        <image>
-                                          <Image url="@assets/calendar.png" />
+                                          <Image url="@../assets/calendar.png" />
                                        </image>
                                     </ImageView>
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="The name of the event" wrappingWidth="158.21875" GridPane.columnSpan="2" />

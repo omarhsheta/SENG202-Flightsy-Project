@@ -22,11 +22,9 @@ import seng202.team6.model.events.Flight;
 import seng202.team6.model.events.General;
 import seng202.team6.model.user.HolidayPlan;
 
-import javax.swing.event.ChangeListener;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -198,7 +196,7 @@ public class HolidayAgendaController implements Initializable {
         popUp.initModality(Modality.APPLICATION_MODAL);
         Parent root = FXMLLoader.load(
                 Objects.requireNonNull(
-                        getClass().getClassLoader().getResource("addevent.fxml")
+                        getClass().getClassLoader().getResource("holidayview/addevent.fxml")
                 )
         );
         Scene popUpScene = new Scene(root);

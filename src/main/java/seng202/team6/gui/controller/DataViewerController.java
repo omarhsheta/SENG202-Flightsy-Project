@@ -143,7 +143,7 @@ public class DataViewerController implements Initializable
         popUp.initModality(Modality.APPLICATION_MODAL);
         Parent root = FXMLLoader.load(
                 Objects.requireNonNull(
-                        getClass().getClassLoader().getResource("addrow.fxml")
+                        getClass().getClassLoader().getResource("dataviewer/addrow.fxml")
                 )
         );
         Scene popUpScene = new Scene(root);
