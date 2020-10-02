@@ -12,8 +12,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Text?>
 
-
-<Button minHeight="-Infinity" mnemonicParsing="false" prefHeight="76.0" prefWidth="230.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<Button minHeight="-Infinity" mnemonicParsing="false" prefHeight="90.0" prefWidth="230.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <graphic>
       <GridPane>
          <columnConstraints>
@@ -37,6 +36,24 @@
             </ImageView>
             <Text fx:id="Des" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="h3" text="Des" textAlignment="CENTER" wrappingWidth="55.01220703125" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
             <Text fx:id="Src" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="h3" text="Src" textAlignment="CENTER" wrappingWidth="55.01220703125" />
+            <Button fx:id="DeleteBtn" mnemonicParsing="false" style="-fx-background-color: transparent;" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.valignment="TOP">
+               <graphic>
+                  <ImageView fitHeight="17.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true" rotate="45.0">
+                     <image>
+                        <Image url="@../../icons/plus-8x.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <padding>
+                  <Insets top="-1.0" />
+               </padding>
+               <GridPane.margin>
+                  <Insets left="1.0" right="3.0" />
+               </GridPane.margin>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </Button>
          </children>
       </GridPane>
    </graphic>

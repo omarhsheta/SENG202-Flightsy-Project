@@ -12,7 +12,6 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Text?>
 
-
 <Pane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.team6.gui.controller.holidayview.eventbuttons.DriveBtnController">
    <children>
       <Button minHeight="90.0" mnemonicParsing="false" prefWidth="230.0">
@@ -21,6 +20,7 @@
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="90.0" minWidth="10.0" prefWidth="53.0" />
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="112.0" minWidth="10.0" prefWidth="110.0" />
+                  <ColumnConstraints />
                   <ColumnConstraints />
                </columnConstraints>
                <rowConstraints>
@@ -42,6 +42,18 @@
                         <Insets top="5.0" />
                      </GridPane.margin>
                   </Text>
+                  <Button fx:id="DeleteBtn" mnemonicParsing="false" style="-fx-background-color: transparent;" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.valignment="TOP">
+                     <graphic>
+                        <ImageView fitHeight="17.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true" rotate="45.0">
+                           <image>
+                              <Image url="@../../icons/plus-8x.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <padding>
+                        <Insets top="-1.0" />
+                     </padding>
+                  </Button>
                </children>
             </GridPane>
          </graphic>
