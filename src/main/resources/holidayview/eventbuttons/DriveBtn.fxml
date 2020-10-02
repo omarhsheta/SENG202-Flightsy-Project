@@ -46,7 +46,7 @@
                      <graphic>
                         <ImageView fitHeight="17.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true" rotate="45.0">
                            <image>
-                              <Image url="@../../icons/plus-8x.png" />
+                              <Image url="@/icons/plus-8x.png" />
                            </image>
                         </ImageView>
                      </graphic>

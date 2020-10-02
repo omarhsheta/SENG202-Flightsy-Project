@@ -1,6 +1,11 @@
 package seng202.team6.model.events;
 
 import javafx.scene.layout.Pane;
+import javafx.util.Pair;
+import seng202.team6.gui.controller.holidayview.eventbuttons.GeneralBtnController;
+import seng202.team6.gui.helper.NodeHelper;
+
+import java.time.format.DateTimeFormatter;
 
 /**
  * This class is for more general events
@@ -9,6 +14,9 @@ public class General extends Event {
 
     String City;
     String Country;
+
+    private final String subFolder = "holidayview/eventbuttons";
+    private final String ButtonComponent = "GeneralBtn";
 
     /**
      * Constructor for the General Event class
@@ -32,9 +40,21 @@ public class General extends Event {
      */
     @Override
     public Pane toPane() {
-        Pane returnPane = null;
-        //Create pane for General event
-        //Look at the Flight.java toPane() method for details on how to do this
-        return returnPane;
+
+        Pane newGeneralEventPane = null;
+        try {
+            Pair<Pane, GeneralBtnController> pair = NodeHelper.LoadNode(subFolder, ButtonComponent);
+            newGeneralEventPane = pair.getKey();
+            GeneralBtnController btnController = pair.getValue();
+
+            String timePattern = "hh:mm a";
+            String datePattern = "dd/MM/yyyy";
+            btnController.setData(this.Title,
+                    dateTime.format(DateTimeFormatter.ofPattern(timePattern)),
+                    dateTime.format(DateTimeFormatter.ofPattern(datePattern)), this);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return newGeneralEventPane;
     }
 }
