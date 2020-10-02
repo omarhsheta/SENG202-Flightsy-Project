@@ -199,7 +199,6 @@ public class DataExportHandler {
      * @return an array list of size two where the first element is the source airport ID and the second element is the
      * destination airport ID
      */
-    //!!!THIS IS A DUPLICATE METHOD FROM DataExportHandler, CANNOT FIND A WAY AROUND THE STATIC METHOD YET!!!
     public ArrayList<Integer> getAirportIDsFromRoutePath2(RoutePath routePath) throws SQLException{
         String sourceAirportICAO = routePath.GetSource();
         String destinationAirportICAO = routePath.GetDestination();
@@ -249,11 +248,11 @@ public class DataExportHandler {
 
     /**
      * Retrieves the directory of the holiday plan object from the database
-     * @param holidayPlanIndex the index of the holiday plan object in the array of holiday plans
+     * @param filters Query filters
      * @return the directory of the holiday plan object
      */
-    public String FetchHolidayPlan(int holidayPlanIndex) throws SQLException{
-        String query = format("SELECT directory FROM holiday_plan WHERE index_holiday_plan = %s", holidayPlanIndex);
+    public String FetchHolidayPlan(ArrayList<Filter> filters) throws SQLException{
+        String query = SQLHelper.ExtractQuery("holiday_plan", filters);
         Statement stmt = this.databaseConnection.createStatement();
         String directory = stmt.executeQuery(query).getString("directory");
         if (directory == null) {
