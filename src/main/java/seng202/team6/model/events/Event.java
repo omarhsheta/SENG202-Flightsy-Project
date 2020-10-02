@@ -7,9 +7,9 @@ import java.time.*;
  * The Abstract class event has three subclasses; General, Flight, and CarTrip
  */
 public abstract class Event {
-    LocalDateTime dateTime;
-    String Title;
-    String Notes;
+    protected LocalDateTime dateTime;
+    protected String Title;
+    protected String Notes;
 
     /**
      * Constructor of the abstract class Event

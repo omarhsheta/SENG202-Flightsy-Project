@@ -1,6 +1,12 @@
 package seng202.team6.model.events;
 
 import javafx.scene.layout.Pane;
+import javafx.util.Pair;
+import seng202.team6.gui.controller.holidayview.HolidayFlightController;
+import seng202.team6.gui.controller.holidayview.eventbuttons.DriveBtnController;
+import seng202.team6.gui.helper.NodeHelper;
+
+import java.time.format.DateTimeFormatter;
 
 /**
  * This class is for car trip plans
@@ -10,6 +16,9 @@ public class CarTrip extends Event {
     String OriginCountry;
     String DestinationCity;
     String DestinationCountry;
+
+    private final String subFolder = "holidayview/eventbuttons";
+    private final String holidayFlightComponent = "DriveBtn";
 
     /**
      * Constructor for the subclass CarTrip
@@ -49,14 +58,23 @@ public class CarTrip extends Event {
     }
 
     /**
-     * A method that makes a Pane for the car trip event
+     * A method that makes a Pane for the flight event
      * @return Pane object to be added to the holiday GUI
      */
     @Override
     public Pane toPane() {
-        Pane returnPane = null;
-        //Create pane for General event
-        //Look at the Flight.java toPane() method for details on how to do this
-        return returnPane;
+
+        Pane newFlightPane = null;
+        try {
+            Pair<Pane, DriveBtnController> pair = NodeHelper.LoadNode(subFolder, holidayFlightComponent);
+            newFlightPane = pair.getKey();
+            DriveBtnController btnController = pair.getValue();
+            btnController.setData(this.Title,
+                    String.format("%d:%d", this.dateTime.getHour(), this.dateTime.getMinute()),
+                    this.dateTime.toString(), this.DestinationCity, this);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return newFlightPane;
     }
 }
