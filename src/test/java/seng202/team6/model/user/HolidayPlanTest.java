@@ -38,7 +38,6 @@ public class HolidayPlanTest {
     /**
      * Test serializing holiday plan to json
      */
-    @Test
     @Ignore
     public void TestJSONSerialize() {
         String expected1 = "{\"name\":\"Testplan\",\"itineraries\":[],\"flights\":[{\"route\":{\"AirlineID\":10," +
