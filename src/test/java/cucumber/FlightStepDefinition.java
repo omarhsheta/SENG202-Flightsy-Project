@@ -7,13 +7,8 @@ import io.cucumber.junit.Cucumber;
 import io.cucumber.junit.CucumberOptions;
 import org.junit.runner.RunWith;
 
-<<<<<<< HEAD
 @RunWith(Cucumber.class)
 @CucumberOptions(glue="seng202-team6/src/test/resources/cucumber/Flight.feature", //MAY NEED TO TINKER WITH THAT DELETE ME IF FIXED OK BYE NOW
-=======
-//@RunWith(Cucumber.class)
-@CucumberOptions(glue="seng202-team6/src/test/java/cucumber", //MAY NEED TO TINKER WITH THAT DELETE ME IF FIXED OK BYE NOW
->>>>>>> origin/dev
         plugin = {"pretty", "html:target/cucumber.html"},snippets = CucumberOptions.SnippetType.CAMELCASE)
 public class FlightStepDefinition {
 
