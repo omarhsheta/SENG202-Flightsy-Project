@@ -1,6 +1,5 @@
 package seng202.team6.model.data;
 
-import javafx.util.Pair;
 import org.junit.*;
 import seng202.team6.model.entities.*;
 import seng202.team6.model.user.HolidayPlan;
@@ -8,17 +7,12 @@ import seng202.team6.model.user.HolidayPlan;
 import java.sql.Connection;
 import java.sql.Statement;
 import java.util.Collections;
-import java.util.Random;
 import java.util.ArrayList;
 
 import static java.lang.String.format;
-import static java.lang.String.join;
 import static org.junit.Assert.*;
 
 public class DatabaseHandlerTest {
-    private Random random;
-    private int randomBound = 10000000;
-
     private DataImportHandler dataImport;
     private DataExportHandler dataExport;
 
@@ -97,7 +91,6 @@ public class DatabaseHandlerTest {
     public void InitialiseTest() {
         if (!setup) {
             setup = true;
-            random = new Random();
             dataImport = DataImportHandler.GetInstance();
             dataExport = DataExportHandler.GetInstance();
             filters = new ArrayList<Filter>();
@@ -165,44 +158,6 @@ public class DatabaseHandlerTest {
                 Assert.fail("Test case rows were added to the database. A test case needs to be fixed to prevent this!");
             }
         } catch (Exception e) { System.out.println(e.getMessage()); }
-    }
-
-    // For Flight Paths
-    private RoutePath testRoutePath1;
-    private RoutePath testRoutePath2;
-    private RoutePath testRoutePath3;
-    private RoutePath testRoutePath4;
-    private RoutePath testRoutePath5;
-    private ArrayList<RoutePath> actualRoutePaths;
-
-    @Before
-    public void InitialiseFlightPathTest() {
-        ArrayList<Pair<Double, Double>> coordinates1 = new ArrayList<Pair<Double, Double>>();
-        coordinates1.add(new Pair <Double,Double> (1.11111, 1.22222));
-        testRoutePath1 = new RoutePath("LOND", "LOSX", coordinates1);
-        ArrayList<Pair<Double, Double>> coordinates2 = new ArrayList<Pair<Double, Double>>();
-        coordinates2.add(new Pair <Double,Double> (2.33333, 2.44444));
-        testRoutePath1 = new RoutePath("LOSX", "HNDA", coordinates1);
-        ArrayList<Pair<Double, Double>> coordinates3 = new ArrayList<Pair<Double, Double>>();
-        coordinates3.add(new Pair <Double,Double> (3.55555, 3.66666));
-        testRoutePath1 = new RoutePath("HNDA", "AMSD", coordinates1);
-        ArrayList<Pair<Double, Double>> coordinates4 = new ArrayList<Pair<Double, Double>>();
-        coordinates4.add(new Pair <Double,Double> (4.77777, 4.88888));
-        testRoutePath1 = new RoutePath("AMSD", "HGKG", coordinates1);
-        ArrayList<Pair<Double, Double>> coordinates5 = new ArrayList<Pair<Double, Double>>();
-        coordinates5.add(new Pair <Double,Double> (5.99999, 5.00009));
-        testRoutePath1 = new RoutePath("HGKG", "LOND", coordinates1);
-        actualRoutePaths = new ArrayList<RoutePath>();
-
-        /*
-        try {
-            dataImport.InsertAirport(testAirport1);
-            dataImport.InsertAirport(testAirport2);
-            dataImport.InsertAirport(testAirport3);
-            dataImport.InsertAirport(testAirport4);
-            dataImport.InsertAirport(testAirport5);
-        } catch (Exception e) { System.out.println(e.getMessage()); }
-         */
     }
 
     // For Holiday Plans
@@ -1453,11 +1408,7 @@ public class DatabaseHandlerTest {
      */
     @Test @Ignore
     public void TestInsertOneFlightPath() {
-        try {
-            dataImport.InsertFlightPath(testRoutePath1, "/RoutePath/Objects/");
-        } catch (Exception e) {
-            Assert.fail(e.getMessage());
-        }
+
     }
 
     /**
