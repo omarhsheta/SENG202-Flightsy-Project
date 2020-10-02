@@ -30,18 +30,18 @@
             <Label fx:id="Time" alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="17.0" prefWidth="111.0" text="Time" textAlignment="RIGHT" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="TOP" />
             <ImageView fitHeight="35.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                <image>
-                  <Image url="@../../assets/calendar.png" />
+                  <Image url="@/assets/calendar.png" />
                </image>
             </ImageView>
             <Text fx:id="Title" strokeType="OUTSIDE" strokeWidth="0.0" text="Title" wrappingWidth="158.21875" GridPane.columnSpan="2">
                <GridPane.margin>
                   <Insets top="3.0" />
                </GridPane.margin></Text>
-            <Button fx:id="DeleteBtn" mnemonicParsing="false" style="-fx-background-color: transparent;" GridPane.columnIndex="4" GridPane.halignment="LEFT" GridPane.valignment="TOP">
+            <Button fx:id="DeleteBtn" mnemonicParsing="false" style="-fx-background-color: white;" GridPane.columnIndex="4" GridPane.halignment="LEFT" GridPane.valignment="TOP">
                <graphic>
                   <ImageView fitHeight="17.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true" rotate="45.0">
                      <image>
-                        <Image url="@../../icons/plus-8x.png" />
+                        <Image url="@/icons/plus-8x.png" />
                      </image>
                   </ImageView>
                </graphic>

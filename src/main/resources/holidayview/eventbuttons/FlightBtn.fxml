@@ -31,7 +31,7 @@
             <Label fx:id="DesTime" alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="17.0" prefWidth="62.0" text="DesTime" textAlignment="RIGHT" GridPane.columnIndex="2" GridPane.rowIndex="1" />
             <ImageView fitHeight="30.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                <image>
-                  <Image url="@../../assets/plane.png" />
+                  <Image url="@/assets/plane.png" />
                </image>
             </ImageView>
             <Text fx:id="Des" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="h3" text="Des" textAlignment="CENTER" wrappingWidth="55.01220703125" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
@@ -40,7 +40,7 @@
                <graphic>
                   <ImageView fitHeight="17.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true" rotate="45.0">
                      <image>
-                        <Image url="@../../icons/plus-8x.png" />
+                        <Image url="@/icons/plus-8x.png" />
                      </image>
                   </ImageView>
                </graphic>
