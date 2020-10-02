@@ -1,18 +1,11 @@
 package seng202.team6.gui.controller.holidayview.eventbuttons;
 
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
-import javafx.util.Pair;
-import seng202.team6.gui.controller.holidayview.FlightEventInformationController;
 import seng202.team6.gui.controller.routefinder.ResultController;
-import seng202.team6.gui.helper.NodeHelper;
-import seng202.team6.model.entities.Route;
 import seng202.team6.model.events.CarTrip;
-import seng202.team6.model.events.Flight;
 
 public class DriveBtnController extends ResultController {
 
@@ -22,18 +15,18 @@ public class DriveBtnController extends ResultController {
     @FXML
     Label Time, Date;
 
-    CarTrip carTrip;
+    @FXML
+    Button DeleteBtn;
 
-//    private final String subFolder = "eventbuttons";
-//    private final String viewFlightInfoComponent = "DriveBtn";
+    CarTrip carTrip;
 
     /**
      * Sets the data of the FXML component as well as links the component to a CarTrip object.
-     * @param title
-     * @param time
-     * @param date
-     * @param dCity
-     * @param carTrip
+     * @param title CarTrip title
+     * @param time CarTrip Time of departure
+     * @param date CarTrip Date
+     * @param dCity CarTrip Departure city
+     * @param carTrip CarTrip object
      */
     public void setData(String title, String time, String date, String dCity, CarTrip carTrip) {
         Title.setText(title);
@@ -43,6 +36,4 @@ public class DriveBtnController extends ResultController {
 
         this.carTrip = carTrip;
     }
-
-
 }

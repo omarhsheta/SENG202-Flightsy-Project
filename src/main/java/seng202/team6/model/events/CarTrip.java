@@ -2,10 +2,8 @@ package seng202.team6.model.events;
 
 import javafx.scene.layout.Pane;
 import javafx.util.Pair;
-import seng202.team6.gui.controller.holidayview.HolidayFlightController;
 import seng202.team6.gui.controller.holidayview.eventbuttons.DriveBtnController;
 import seng202.team6.gui.helper.NodeHelper;
-
 import java.time.format.DateTimeFormatter;
 
 /**
@@ -18,7 +16,7 @@ public class CarTrip extends Event {
     String DestinationCountry;
 
     private final String subFolder = "holidayview/eventbuttons";
-    private final String holidayFlightComponent = "DriveBtn";
+    private final String DriveButtonComponent = "DriveBtn";
 
     /**
      * Constructor for the subclass CarTrip
@@ -58,23 +56,27 @@ public class CarTrip extends Event {
     }
 
     /**
-     * A method that makes a Pane for the flight event
+     * A method that makes a Pane for the cartrip event
      * @return Pane object to be added to the holiday GUI
      */
     @Override
     public Pane toPane() {
 
-        Pane newFlightPane = null;
+        Pane newCarTripPane = null;
         try {
-            Pair<Pane, DriveBtnController> pair = NodeHelper.LoadNode(subFolder, holidayFlightComponent);
-            newFlightPane = pair.getKey();
+            Pair<Pane, DriveBtnController> pair = NodeHelper.LoadNode(subFolder, DriveButtonComponent);
+            newCarTripPane = pair.getKey();
             DriveBtnController btnController = pair.getValue();
+
+            String timePattern = "hh:mm a";
+            String datePattern = "dd/MM/yyyy";
             btnController.setData(this.Title,
-                    String.format("%d:%d", this.dateTime.getHour(), this.dateTime.getMinute()),
-                    this.dateTime.toString(), this.DestinationCity, this);
+                    dateTime.format(DateTimeFormatter.ofPattern(timePattern)),
+                    dateTime.format(DateTimeFormatter.ofPattern(datePattern)),
+                    this.DestinationCity, this);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        return newFlightPane;
+        return newCarTripPane;
     }
 }
