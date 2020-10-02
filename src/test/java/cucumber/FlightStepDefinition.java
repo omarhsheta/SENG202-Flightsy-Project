@@ -1,9 +1,15 @@
+package cucumber;
+
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
+import io.cucumber.junit.Cucumber;
 import io.cucumber.junit.CucumberOptions;
 import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(features="resources/cucumber", glue="")
-public class FlightsStepDefinition {
+public class FlightStepDefinition {
 
     @Given("the user {String} has ${int} total flights")
     public void NumOfFlights(String userName, int currentFlights) {
@@ -17,7 +23,7 @@ public class FlightsStepDefinition {
 
 
     @Then("the user {String} has ${int} total flights")
-    public void NumOfFlights(String userName, int currentFlights) {
+    public void UpdatedNumOfFlights(String userName, int currentFlights) {
         throw new io.cucumber.java.PendingException();
     }
 
