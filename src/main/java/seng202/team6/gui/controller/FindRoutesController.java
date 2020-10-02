@@ -134,15 +134,16 @@ public class FindRoutesController implements Initializable
         ArrayList<Filter> destinationFilters = FilterTextField.ExtractFilters(flightFilterDestinationTextFields);
 
         Pair<ArrayList<Airport>, ArrayList<Airport>> airports = Airport.GetSourceAndDestinations(originFilters, destinationFilters);
-        ArrayList<Route> routes = DataExportHandler.GetInstance().FetchRoutes(airports.getKey(), airports.getValue(), (int)maxStopsSlider.getValue());
+
+        //ArrayList<Route> routes = DataExportHandler.GetInstance().FetchRoutes(airports.getKey(), airports.getValue(), (int)maxStopsSlider.getValue());
 
         try {
-            for (Route route : routes) {
-                Pair<BorderPane, FlightResultController> pair = NodeHelper.LoadNode(subFolder, flightResultComponent);
-                resultsPane.getChildren().add(pair.getKey());
-                FlightResultController resultController = pair.getValue();
-                resultController.SetFlight(route);
-            }
+            //for (Route route : routes) {
+            //    Pair<BorderPane, FlightResultController> pair = NodeHelper.LoadNode(subFolder, flightResultComponent);
+            //    resultsPane.getChildren().add(pair.getKey());
+            //    FlightResultController resultController = pair.getValue();
+            //    resultController.SetFlight(route);
+            //}
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -159,16 +160,16 @@ public class FindRoutesController implements Initializable
         ArrayList<Filter> destinationFilters = FilterTextField.ExtractFilters(routeFilterDestinationTextFields);
 
         Pair<ArrayList<Airport>, ArrayList<Airport>> airports = Airport.GetSourceAndDestinations(originFilters, destinationFilters);
-        ArrayList<RoutePath> paths = DataExportHandler.GetInstance().FetchRoutePaths(airports.getKey(), airports.getValue());
+        //ArrayList<RoutePath> paths = DataExportHandler.GetInstance().FetchRoutePaths(airports.getKey(), airports.getValue());
 
 
         try {
-            for (RoutePath path : paths) {
-                Pair<BorderPane, FlightPathResultController> pair = NodeHelper.LoadNode(subFolder, routeResultComponent);
-                resultsPane.getChildren().add(pair.getKey());
-                FlightPathResultController resultController = pair.getValue();
-                resultController.SetRoutePath(path);
-            }
+            //for (RoutePath path : paths) {
+                //Pair<BorderPane, FlightPathResultController> pair = NodeHelper.LoadNode(subFolder, routeResultComponent);
+                //resultsPane.getChildren().add(pair.getKey());
+                //FlightPathResultController resultController = pair.getValue();
+                //resultController.SetRoutePath(path);
+            //}
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
