@@ -10,10 +10,10 @@ Feature: HolidayPlan
     When the user names the holiday plan "Gr3at H0l1day"
     Then the holiday plan name is "Gr3at H0l1day"
 
-  Scenario: Create holiday plan with invalid name that is too long
-    Given the holiday plan "This is Gonna Be The Best Holiday Ever" does not exist
-    When the user names the holiday plan "This is Gonna Be The Best Holiday"
-    Then the holiday plan name is ""
+#  Scenario: Create holiday plan with invalid name that is too long
+#    Given the holiday plan "This is Gonna Be The Best Holiday Ever" does not exist
+#    When the user names the holiday plan "This is Gonna Be The Best Holiday"
+#    Then the holiday plan name is ""
 #
 #  Scenario: Create holiday plan with invalid name including characters
 #    Given the holiday plan "F!j! Holiday" does not exist
