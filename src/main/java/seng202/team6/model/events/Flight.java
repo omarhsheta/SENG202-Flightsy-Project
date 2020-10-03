@@ -2,7 +2,7 @@ package seng202.team6.model.events;
 
 import javafx.scene.layout.Pane;
 import javafx.util.Pair;
-import seng202.team6.gui.controller.holidayview.HolidayFlightController;
+import seng202.team6.gui.controller.holidayview.eventbuttons.FlightBtnController;
 import seng202.team6.gui.helper.NodeHelper;
 import seng202.team6.model.entities.Route;
 
@@ -16,8 +16,8 @@ public class Flight extends Event {
     Route route;
     LocalDateTime arrivalDateTime;
 
-    private final String subFolder = "holidayview";
-    private final String holidayFlightComponent = "holidayflight";
+    private final String subFolder = "holidayview/eventbuttons";
+    private final String holidayFlightComponent = "FlightBtn";
 
     /**
      * Constructor for the Flight class
@@ -59,18 +59,17 @@ public class Flight extends Event {
      */
     @Override
     public Pane toPane() {
-        String deptTime = super.getDateTime().format(DateTimeFormatter.ofPattern("HH:mm"));
-        String deptDate = super.getDateTime().format(DateTimeFormatter.ofPattern("dd-MM-yyy"));
+        String deptTime = super.getDateTime().format(DateTimeFormatter.ofPattern("hh:mm a"));
+        String deptDate = super.getDateTime().format(DateTimeFormatter.ofPattern("dd/MM/yyy"));
 
-        String destTime = arrivalDateTime.format(DateTimeFormatter.ofPattern("HH:mm"));
-        String destDate = arrivalDateTime.format(DateTimeFormatter.ofPattern("dd-MM-yyy"));
+        String destTime = arrivalDateTime.format(DateTimeFormatter.ofPattern("hh:mm a"));
 
         Pane newFlightPane = null;
         try {
-            Pair<Pane, HolidayFlightController> pair = NodeHelper.LoadNode(subFolder, holidayFlightComponent);
+            Pair<Pane, FlightBtnController> pair = NodeHelper.LoadNode(subFolder, holidayFlightComponent);
             newFlightPane = pair.getKey();
-            HolidayFlightController flightController = pair.getValue();
-            flightController.setData(deptTime, destTime, deptDate, destDate, this, route);
+            FlightBtnController flightController = pair.getValue();
+            flightController.setData(deptTime, deptDate, destTime, this, route);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

@@ -15,9 +15,6 @@ public class DriveBtnController extends ResultController {
     @FXML
     Label Time, Date;
 
-    @FXML
-    Button DeleteBtn;
-
     CarTrip carTrip;
 
     /**

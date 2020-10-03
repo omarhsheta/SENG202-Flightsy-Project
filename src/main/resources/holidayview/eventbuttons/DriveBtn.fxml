@@ -42,18 +42,6 @@
                         <Insets top="5.0" />
                      </GridPane.margin>
                   </Text>
-                  <Button fx:id="DeleteBtn" mnemonicParsing="false" style="-fx-background-color: transparent;" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.valignment="TOP">
-                     <graphic>
-                        <ImageView fitHeight="17.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true" rotate="45.0">
-                           <image>
-                              <Image url="@/icons/plus-8x.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                     <padding>
-                        <Insets top="-1.0" />
-                     </padding>
-                  </Button>
                </children>
             </GridPane>
          </graphic>

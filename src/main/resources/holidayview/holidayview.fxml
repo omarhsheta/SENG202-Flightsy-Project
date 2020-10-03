@@ -60,7 +60,7 @@
                   </Button>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                      <children>
-                        <Button fx:id="newHolidayButton" mnemonicParsing="false" onMouseClicked="#OnNewHolidayButtonClicked" prefWidth="100.0" text="New Holiday">
+                        <Button fx:id="newHolidayButton" mnemonicParsing="false" onMouseClicked="#OnNewHolidayButtonClicked" prefHeight="27.0" prefWidth="108.0" text="New Holiday">
                            <styleClass>
                               <String fx:value="btn" />
                               <String fx:value="btn-primary" />
@@ -81,6 +81,9 @@
                      </children>
                   </HBox>
                </children>
+               <VBox.margin>
+                  <Insets bottom="20.0" />
+               </VBox.margin>
             </VBox>
          </children>
       </VBox>

@@ -15,9 +15,6 @@ public class GeneralBtnController extends ResultController {
     @FXML
     Label Time, Date;
 
-    @FXML
-    Button DeleteBtn;
-
     General generalEvent;
 
     /**

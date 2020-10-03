@@ -9,62 +9,50 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Text?>
 
-<Button minHeight="-Infinity" mnemonicParsing="false" prefHeight="90.0" prefWidth="230.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
-   <graphic>
-      <GridPane>
-         <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-         </columnConstraints>
-         <rowConstraints>
-            <RowConstraints maxHeight="42.0" minHeight="10.0" prefHeight="37.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="38.0" minHeight="10.0" prefHeight="18.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="26.0" minHeight="10.0" prefHeight="16.0" vgrow="SOMETIMES" />
-         </rowConstraints>
-         <children>
-            <Label fx:id="SrcTime" text="SrcTime" GridPane.columnSpan="2" GridPane.rowIndex="1" />
-            <Label fx:id="SrcDate" text="SrcDate" GridPane.columnSpan="2" GridPane.rowIndex="2" />
-            <Label fx:id="DesTime" alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="17.0" prefWidth="62.0" text="DesTime" textAlignment="RIGHT" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-            <ImageView fitHeight="30.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-               <image>
-                  <Image url="@/assets/plane.png" />
-               </image>
-            </ImageView>
-            <Text fx:id="Des" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="h3" text="Des" textAlignment="CENTER" wrappingWidth="55.01220703125" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-            <Text fx:id="Src" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="h3" text="Src" textAlignment="CENTER" wrappingWidth="55.01220703125" />
-            <Button fx:id="DeleteBtn" mnemonicParsing="false" style="-fx-background-color: transparent;" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.valignment="TOP">
-               <graphic>
-                  <ImageView fitHeight="17.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true" rotate="45.0">
+
+<Pane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.team6.gui.controller.holidayview.eventbuttons.FlightBtnController">
+   <children>
+      <Button minHeight="-Infinity" mnemonicParsing="false" onAction="#OnViewInfoButtonClicked" prefHeight="90.0" prefWidth="230.0">
+         <graphic>
+            <GridPane>
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints maxHeight="42.0" minHeight="10.0" prefHeight="37.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="38.0" minHeight="10.0" prefHeight="18.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="26.0" minHeight="10.0" prefHeight="16.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <Label fx:id="SrcTime" text="SrcTime" GridPane.columnSpan="2" GridPane.rowIndex="1" />
+                  <Label fx:id="SrcDate" text="SrcDate" GridPane.columnSpan="2" GridPane.rowIndex="2" />
+                  <Label fx:id="DesTime" alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="17.0" prefWidth="62.0" text="DesTime" textAlignment="RIGHT" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <ImageView fitHeight="30.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <image>
-                        <Image url="@/icons/plus-8x.png" />
+                        <Image url="@/assets/plane.png" />
                      </image>
                   </ImageView>
-               </graphic>
-               <padding>
-                  <Insets top="-1.0" />
-               </padding>
-               <GridPane.margin>
-                  <Insets left="1.0" right="3.0" />
-               </GridPane.margin>
-               <opaqueInsets>
-                  <Insets />
-               </opaqueInsets>
-            </Button>
-         </children>
-      </GridPane>
-   </graphic>
-   <padding>
-      <Insets top="5.0" />
-   </padding>
-   <cursor>
-      <Cursor fx:constant="HAND" />
-   </cursor>
-   <styleClass>
-      <String fx:value="btn-default" />
-      <String fx:value="btn" />
-   </styleClass>
-</Button>
+                  <Text fx:id="Des" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="h3" text="Des" textAlignment="CENTER" wrappingWidth="55.01220703125" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                  <Text fx:id="Src" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="h3" text="Src" textAlignment="CENTER" wrappingWidth="55.01220703125" />
+               </children>
+            </GridPane>
+         </graphic>
+         <padding>
+            <Insets top="5.0" />
+         </padding>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <styleClass>
+            <String fx:value="btn-default" />
+            <String fx:value="btn" />
+         </styleClass>
+      </Button>
+   </children>
+</Pane>

@@ -9,25 +9,16 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.util.Pair;
 import seng202.team6.gui.controller.HolidayAgendaController;
-import seng202.team6.gui.controller.holidayview.HolidayFlightController;
-import seng202.team6.gui.helper.NodeHelper;
 import seng202.team6.model.entities.Route;
 import seng202.team6.model.events.Flight;
 import seng202.team6.model.user.HolidayHelper;
 
 import java.net.URL;
-import java.sql.Time;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.ResourceBundle;
 
 
