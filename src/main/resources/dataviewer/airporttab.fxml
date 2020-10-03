@@ -24,7 +24,7 @@
                   <String fx:value="h5" />
                </styleClass>
             </Label>
-            <ScrollPane layoutY="27.0" prefHeight="417.0" prefWidth="214.0">
+            <ScrollPane hbarPolicy="NEVER" layoutY="27.0" prefHeight="417.0" prefWidth="214.0">
                <content>
                   <Pane fx:id="filterPane" prefHeight="685.0" prefWidth="198.0">
                      <children>

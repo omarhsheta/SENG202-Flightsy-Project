@@ -16,7 +16,7 @@
    <left>
       <Pane prefHeight="470.0" prefWidth="214.0" BorderPane.alignment="CENTER">
          <children>
-            <ScrollPane layoutY="27.0" prefHeight="459.0" prefWidth="214.0">
+            <ScrollPane hbarPolicy="NEVER" layoutY="27.0" prefHeight="459.0" prefWidth="214.0">
                <content>
                   <Pane fx:id="filterPane" prefHeight="510.0" prefWidth="198.0">
                      <children>
