@@ -8,9 +8,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="256.0" prefWidth="372.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.team6.gui.controller.holidayview.eventbuttons.FlightEventInformationController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="256.0" prefWidth="372.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.team6.gui.controller.holidayview.eventbuttons.CarTripEventInformationController">
    <top>
-      <Text fx:id="titleInfo" strokeType="OUTSIDE" strokeWidth="0.0" text="Information about Flight: " textAlignment="CENTER" BorderPane.alignment="CENTER">
+      <Text fx:id="titleInfo" strokeType="OUTSIDE" strokeWidth="0.0" text="Title" textAlignment="CENTER" BorderPane.alignment="CENTER">
          <font>
             <Font size="15.0" />
          </font>
@@ -22,32 +22,22 @@
    <center>
       <VBox prefHeight="200.0" prefWidth="352.0" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
-            <Text fx:id="airportInfo" strokeType="OUTSIDE" strokeWidth="0.0" text="Airport to Airport">
+            <Text fx:id="Time" strokeType="OUTSIDE" strokeWidth="0.0" text="Time">
                <font>
                   <Font size="14.0" />
                </font>
             </Text>
-            <Text fx:id="locationInfo" strokeType="OUTSIDE" strokeWidth="0.0" text="City, Country to City, Country">
+            <Text fx:id="leaving" strokeType="OUTSIDE" strokeWidth="0.0" text="Leaving">
                <font>
                   <Font size="14.0" />
                </font>
             </Text>
-            <Text fx:id="distanceInfo" strokeType="OUTSIDE" strokeWidth="0.0" text="Distance: ">
+            <Text fx:id="destination" strokeType="OUTSIDE" strokeWidth="0.0" text="To">
                <font>
                   <Font size="14.0" />
                </font>
             </Text>
-            <Text fx:id="aircraftInfo" strokeType="OUTSIDE" strokeWidth="0.0" text="Aircraft: ">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Text>
-            <Text fx:id="departureDateTimeInfo" strokeType="OUTSIDE" strokeWidth="0.0" text="Depart at">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Text>
-            <Text fx:id="arrivalDateTimeInfo" strokeType="OUTSIDE" strokeWidth="0.0" text="Arrive at">
+            <Text fx:id="notes" strokeType="OUTSIDE" strokeWidth="0.0" text="Notes" wrappingWidth="340.0">
                <font>
                   <Font size="14.0" />
                </font>

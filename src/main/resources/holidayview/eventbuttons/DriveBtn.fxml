@@ -14,7 +14,7 @@
 
 <Pane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.team6.gui.controller.holidayview.eventbuttons.DriveBtnController">
    <children>
-      <Button minHeight="90.0" mnemonicParsing="false" prefWidth="230.0">
+      <Button minHeight="90.0" mnemonicParsing="false" onAction="#OnViewInfoButtonClicked" prefWidth="230.0">
          <graphic>
             <GridPane prefHeight="89.0" prefWidth="159.0">
                <columnConstraints>

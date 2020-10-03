@@ -2,9 +2,7 @@ package seng202.team6.gui.controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Slider;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.WebEngine;
@@ -44,6 +42,12 @@ public class FindRoutesController implements Initializable
     private VBox airportFilterBox;
     private ArrayList<FilterTextField> airportFilterTextFields;
     private final String airportResultComponent = "airportresult";
+
+    @FXML
+    private TitledPane defaultTab;
+
+    @FXML
+    private Accordion accordion;
 
     //Flight filtering
     @FXML
@@ -86,6 +90,7 @@ public class FindRoutesController implements Initializable
 
         controller = new MapHelper(webEngine);
         ResultController.SetMap(controller);
+        accordion.setExpandedPane(defaultTab);
 
         //Grab all text filter components
         airportFilterTextFields = NodeHelper.GetAllNodes(airportFilterBox);

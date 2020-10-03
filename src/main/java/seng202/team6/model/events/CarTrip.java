@@ -15,6 +15,8 @@ public class CarTrip extends Event {
     String DestinationCity;
     String DestinationCountry;
 
+//    public String Title, Note;
+
     private final String subFolder = "holidayview/eventbuttons";
     private final String DriveButtonComponent = "DriveBtn";
 
@@ -23,20 +25,22 @@ public class CarTrip extends Event {
      * @param D Any integer from 1 to 31
      * @param M Any integer from 1 to 12
      * @param Y Any integer from 2000 to 2099
-     * @param T Any String with descriptive title
-     * @param N Any String with additional information about the event
+     * @param title Any String with descriptive title
+     * @param note Any String with additional information about the event
      * @param OCity Origin City
      * @param OCountry Origin Country
      * @param DCity Destination City
      * @param DCountry Destination Country
      */
-    public CarTrip(int D, int M, int Y, int newHour, int newMinute,  String T, String N, String OCity,
+    public CarTrip(int D, int M, int Y, int newHour, int newMinute,  String title, String note, String OCity,
             String OCountry, String DCity, String DCountry) {
-        super(D, M, Y, newHour, newMinute, T, N);
+        super(D, M, Y, newHour, newMinute, title, note);
         OriginCity = OCity;
         OriginCountry = OCountry;
         DestinationCity = DCity;
         DestinationCountry = DCountry;
+        Title = title;
+        Notes = note;
     }
 
     /**
@@ -49,10 +53,26 @@ public class CarTrip extends Event {
 
     /**
      *
+     * @return The origin country
+     */
+    public String getOCountry() {
+        return OriginCountry;
+    }
+
+    /**
+     *
      * @return The destination city
      */
     public String getDCity() {
         return DestinationCity;
+    }
+
+    /**
+     *
+     * @return The destination country
+     */
+    public String getDCountry() {
+        return DestinationCountry;
     }
 
     /**

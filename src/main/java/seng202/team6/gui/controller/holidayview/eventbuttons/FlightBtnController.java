@@ -2,18 +2,15 @@ package seng202.team6.gui.controller.holidayview.eventbuttons;
 
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Pair;
-import seng202.team6.gui.controller.holidayview.FlightEventInformationController;
 import seng202.team6.gui.controller.routefinder.ResultController;
 import seng202.team6.gui.helper.NodeHelper;
 import seng202.team6.model.entities.Route;
 import seng202.team6.model.events.Flight;
-import seng202.team6.model.events.General;
 
 public class FlightBtnController extends ResultController {
 
@@ -61,6 +58,7 @@ public class FlightBtnController extends ResultController {
             flightEventInformationController.setRoute(this.flightRoute);
             flightEventInformationController.setFlight(this.flightEvent);
             Scene viewFlightInfoScene = new Scene(infoBorderPane);
+            viewFlightInfoScene.getStylesheets().add("org/kordamp/bootstrapfx/bootstrapfx.css");
             Stage newStage = new Stage();
             newStage.setTitle(String.format("%s to %s", this.flightRoute.getSourceAirport(), this.flightRoute.getDestinationAirport()));
             newStage.setScene(viewFlightInfoScene);

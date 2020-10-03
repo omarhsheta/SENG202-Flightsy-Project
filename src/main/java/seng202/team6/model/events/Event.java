@@ -34,6 +34,22 @@ public abstract class Event {
     }
 
     /**
+     *
+     * @return The Title of the event
+     */
+    public String getTitle() {
+        return Title;
+    }
+
+    /**
+     *
+     * @return The Notes of the event
+     */
+    public String getNotes() {
+        return Notes;
+    }
+
+    /**
      * A method that makes a Pane for the event
      * This method is only a filler as the children classes should all have @Override'ed this method
      * @return Pane object to be added to the holiday GUI

@@ -4,6 +4,7 @@ import javafx.scene.layout.Pane;
 import javafx.util.Pair;
 import seng202.team6.gui.controller.holidayview.eventbuttons.GeneralBtnController;
 import seng202.team6.gui.helper.NodeHelper;
+import seng202.team6.model.entities.Route;
 
 import java.time.format.DateTimeFormatter;
 
@@ -32,6 +33,22 @@ public class General extends Event {
         super(D, M, Y, newHour, newMinute, T, N);
         City = nCity;
         Country = nCountry;
+    }
+
+    /**
+     * Getter method to return the City of the event
+     * @return The City of the event
+     */
+    public String getCity() {
+        return City;
+    }
+
+    /**
+     * Getter method to return the Country of the event
+     * @return The Country of the event
+     */
+    public String getCountry() {
+        return Country;
     }
 
     /**

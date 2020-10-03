@@ -1,4 +1,4 @@
-package seng202.team6.gui.controller.holidayview;
+package seng202.team6.gui.controller.holidayview.eventbuttons;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -71,7 +71,7 @@ public class FlightEventInformationController {
         } else {
             deptDayEnd = "th";
         }
-        String deptTime = flight.getDateTime().format(DateTimeFormatter.ofPattern("HH:mm"));
+        String deptTime = flight.getDateTime().format(DateTimeFormatter.ofPattern("hh:mm a"));
         departureDateTimeInfo.setText(String.format("Depart %s %d%s %s, %d at %s", deptDayOfWeek, flight.getDateTime().getDayOfMonth(), deptDayEnd, deptMonth, flight.getDateTime().getYear(), deptTime));
 
 
@@ -87,7 +87,7 @@ public class FlightEventInformationController {
         } else {
             arrivalDayEnd = "th";
         }
-        String arrivalTime = flight.getArrivalDateTime().format(DateTimeFormatter.ofPattern("HH:mm"));
+        String arrivalTime = flight.getArrivalDateTime().format(DateTimeFormatter.ofPattern("hh:mm a"));
         arrivalDateTimeInfo.setText(String.format("Arrive %s %d%s %s, %d at %s", destDayOfWeek, flight.getArrivalDateTime().getDayOfMonth(), arrivalDayEnd, destMonth, flight.getArrivalDateTime().getYear(), arrivalTime));
     }
 
