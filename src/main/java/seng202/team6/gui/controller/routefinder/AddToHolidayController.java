@@ -90,6 +90,7 @@ public class AddToHolidayController implements Initializable {
         holidayChoiceBox.getSelectionModel().selectedItemProperty().addListener(
                 (ObservableValue<? extends String> observable, String oldValue, String newValue) ->
                         controller.ChangeHoliday(holidayChoiceBox.getSelectionModel().getSelectedIndex()));
+        holidayChoiceBox.getSelectionModel().select(controller.GetHolidaySelectChoiceBox().getSelectionModel().getSelectedItem());
     }
 
     private void ShowError(String message) {

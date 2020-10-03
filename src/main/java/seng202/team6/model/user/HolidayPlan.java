@@ -16,7 +16,7 @@ public class HolidayPlan implements JSONSerializable {
     private ArrayList<Flight> flights = new ArrayList<>(); //Should not exceed 30
     private ArrayList<CarTrip> carTrips = new ArrayList<>();
 
-    private boolean isInDatabase = false;
+    private boolean isInDatabase;
 
     /**
      * Constructor for the holiday plan
@@ -36,6 +36,7 @@ public class HolidayPlan implements JSONSerializable {
             DataHandler.GetInstance().WriteDataFile(filename, this.ToJson());
             if (!isInDatabase) {
                 DataImportHandler.GetInstance().InsertHolidayPlan(name, filename);
+                isInDatabase = true;
             }
         } catch (Exception e) {
             System.out.println("Failed to save new holiday. \n" + e.toString());

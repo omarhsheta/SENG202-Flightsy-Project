@@ -17,7 +17,6 @@ import javafx.scene.web.WebView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Pair;
-import seng202.team6.gui.controller.holidayview.FlightEventInformationController;
 import seng202.team6.gui.controller.holidayview.NewHolidayController;
 import seng202.team6.gui.helper.NodeHelper;
 import seng202.team6.model.MapHelper;
@@ -107,10 +106,12 @@ public class HolidayAgendaController implements Initializable {
         finishedLoading = true;
         mapHelper.ClearAll();
         /* Show flights on map */
-        for (Flight flight : holidays.get(selectedHolidayIndex).getFlights()) {
-            ArrayList<Airport> airports = flight.getRoute().GetAirports();
-            mapHelper.DrawAirportMarks(airports);
-            mapHelper.DrawLineBetween(airports);
+        if (holidays.size() > 0) {
+            for (Flight flight : holidays.get(selectedHolidayIndex).getFlights()) {
+                ArrayList<Airport> airports = flight.getRoute().GetAirports();
+                mapHelper.DrawAirportMarks(airports);
+                mapHelper.DrawLineBetween(airports);
+            }
         }
     }
 
@@ -160,6 +161,12 @@ public class HolidayAgendaController implements Initializable {
      * @param name Name of holiday
      */
     public void CreateNewHoliday(String name) {
+        for (HolidayPlan plan : holidays) {
+            if (plan.getName().equals(name)) {
+                System.out.println("Failed to create holiday, name already taken.");
+                return;
+            }
+        }
         HolidayPlan plan = new HolidayPlan(name);
         plan.SaveHoliday();
         holidays.add(plan);
@@ -172,6 +179,10 @@ public class HolidayAgendaController implements Initializable {
      * @param <T> Event to add
      */
     public <T extends Event> void AddToHoliday(T event) {
+        if (holidays.size() == 0) {
+            return;
+        }
+
         HolidayPlan holiday = holidays.get(selectedHolidayIndex);
         if (event.getClass() == General.class) {
             holiday.addItinerary((General) event);
