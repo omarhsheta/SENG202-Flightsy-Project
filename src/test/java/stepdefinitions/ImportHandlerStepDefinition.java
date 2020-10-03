@@ -11,11 +11,16 @@ import seng202.team6.model.entities.Airline;
 import seng202.team6.model.entities.Airport;
 import seng202.team6.model.entities.Route;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 public class ImportHandlerStepDefinition {
     private DataImportHandler dataImportHandler = DataImportHandler.GetInstance();
     private DataExportHandler dataExportHandler = DataExportHandler.GetInstance();
+    private Connection databaseConnection;
 
 
 
@@ -37,53 +42,54 @@ public class ImportHandlerStepDefinition {
     private String sourceName;
 
 
-    @Given("A user {string} selects an airport to import")
-    public void aUserSelectsAnAirportToImport(String user) throws Throwable {
+    @Given("A user selects an airport to import")
+    public void aUserSelectsAnAirportToImport() {
         selectedAirport = testAirport1;
     }
 
-    @Given("A user {string} names the airport {string}")
-    public void aUserNamesTheImportedAirport(String user, String airportName) throws Throwable {
+    @Given("A user names the airport {string}")
+    public void aUserNamesTheImportedAirport(String airportName) {
         this.airportName = airportName;
         selectedAirport.SetName(airportName);
     }
 
-    @When("A user {string} imports the selected airport")
-    public void aUserImportsTheSelectedAirport(String user) throws Throwable {
+    @When("A user imports the selected airport")
+    public void aUserImportsTheSelectedAirport() throws Throwable {
         dataImportHandler.InsertAirport(selectedAirport);
     }
 
     @Then("{string} exists in the list of airports")
-    public void existsInTheListOfAirports(String airportName) throws Throwable {
+    public void existsInTheListOfAirports(String airportName) {
         ArrayList<Filter> filters = new ArrayList<>();
-        filters.add(new Filter(String.format("NAME = %s", airportName), null));
+        filters.add(new Filter(String.format("NAME = '%s'", airportName), null));
+        System.out.println(filters.get(0).GetFilter());
         ArrayList<Airport> fetchedAirports = dataExportHandler.FetchAirports(filters);
         Assert.assertTrue(fetchedAirports.size() > 0);
     }
 
-    @Given("A user {string} selects an airline to import")
-    public void aUserSelectsAnAirlineToImport(String user) throws Throwable {
+    @Given("A user selects an airline to import")
+    public void aUserSelectsAnAirlineToImport() {
         selectedAirline = testAirline1;
     }
 
-    @Given("A user {string} names the airline {string}")
-    public void aUserNamesTheImportedAirline(String user, String airlineName) throws Throwable {
+    @Given("A user names the airline {string}")
+    public void aUserNamesTheImportedAirline(String airlineName) {
         this.airlineName = airlineName;
         selectedAirline.SetName(airlineName);
 
     }
 
-    @When("A user {string} imports the selected airline")
-    public void aUserImportsTheSelectedAirline(String user) throws Throwable {
+    @When("A user imports the selected airline")
+    public void aUserImportsTheSelectedAirline() throws Throwable {
         dataImportHandler.InsertAirline(selectedAirline);
     }
 
 
 
     @Then("{string} exists in the list of airlines")
-    public void existsInTheListOfAirlines(String airlineName) throws Throwable {
+    public void existsInTheListOfAirlines(String airlineName) {
         ArrayList<Filter> filters = new ArrayList<>();
-        filters.add(new Filter(String.format("NAME = %s", airlineName), null));
+        filters.add(new Filter(String.format("NAME = '%s'", airlineName), null));
         ArrayList<Airline> fetchedAirlines = dataExportHandler.FetchAirlines(filters);
         Assert.assertTrue(fetchedAirlines.size() > 0);
     }
@@ -95,8 +101,8 @@ public class ImportHandlerStepDefinition {
         dataImportHandler.InsertAirport(testAirport1);
     }
 
-    @When("A user {string} imports a route between {string} and {string} airports")
-    public void aUserImportsARouteBetweenRouteBetweenAndAirports(String user, String sourceName, String destName) throws Throwable {
+    @When("A user imports a route between {string} and {string} airports")
+    public void aUserImportsARouteBetweenRouteBetweenAndAirports(String sourceName, String destName) throws Throwable {
         this.sourceName = sourceName;
         this.destName = destName;
 
@@ -108,10 +114,14 @@ public class ImportHandlerStepDefinition {
     }
 
     @Then("A route between {string} and {string} airports exists in the list of routes")
-    public void aRouteBetweenAndAirportsExistsInTheListOfRoutes(String sourceName, String destName) throws Throwable {
+    public void aRouteBetweenAndAirportsExistsInTheListOfRoutes(String sourceName, String destName) throws SQLException {
         ArrayList<Filter> filters = new ArrayList<>();
-        filters.add(new Filter(String.format("SOURCE_AIRPORT = %s", sourceName), "AND"));
-        filters.add(new Filter(String.format("DESTNATION_AIRPORT = %s", destName), null));
+        Statement stmt = this.databaseConnection.createStatement();
+        ResultSet srcCode = stmt.executeQuery(String.format("SELECT iata from airport_script where name = '%s'", sourceName));
+        ResultSet dstCode = stmt.executeQuery(String.format("SELECT iata from airport_script where name = '%s'", destName));
+        System.out.println(srcCode);
+        filters.add(new Filter(String.format("source_airport = '%s'", sourceName), " AND "));
+        filters.add(new Filter(String.format("destination_airport = '%s'", destName), null));
         ArrayList<Route> fetchedRoutes = dataExportHandler.FetchRoutes(filters);
         Assert.assertTrue(fetchedRoutes.size() > 0);
     }
