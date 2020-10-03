@@ -14,22 +14,22 @@ public class HolidayPlanStepDefinition {
     String holidayName;
     
 
-    @Given("^the holiday plan \"([^\"]*)\" does not exist$")
+    @Given("the holiday plan {string} does not exist")
     public void theHolidayPlanDoesNotExist(String holidayName) throws Throwable {
         holidayAgendaController.GetHolidays().removeAll(holidayAgendaController.GetHolidays());
     }
 
-    @When("^the user names the holiday plan \"([^\"]*)\"$")
+    @When("the user names the holiday plan {string}")
     public void theUserNamesTheHolidayPlan(String holidayName) throws Throwable {
         holidayAgendaController.CreateNewHoliday(holidayName);
     }
 
-    @Then("^the holiday plan name is \"([^\"]*)\"$")
+    @Then("the holiday plan name is {string}")
     public void theHolidayPlanNameIs(String holidayName) throws Throwable {
         Assert.assertEquals(holidayName, holidayAgendaController.GetHolidays().get(0).getName());
     }
 
-    @Given("^the user \"([^\"]*)\" has (\\d+) holiday plans$")
+    @Given("the user {string} has {int} holiday plans")
     public void theUserHasHolidayPlans(String user, int numHolidays) throws Throwable {
         this.numHolidays = numHolidays;
         holidayAgendaController.GetHolidays().removeAll(holidayAgendaController.GetHolidays());
@@ -40,12 +40,12 @@ public class HolidayPlanStepDefinition {
         }
     }
 
-    @When("^the user \"([^\"]*)\" creates a holiday plan$")
+    @When("the user {string} creates a holiday plan")
     public void theUserCreatesAHolidayPlan(String user) throws Throwable {
         holidayAgendaController.CreateNewHoliday("New Holiday");
     }
 
-    @Then("^the user \"([^\"]*)\" now has (\\d+) holiday plans$")
+    @Then("the user {string} now has {int} holiday plans")
     public void theUserNowHasHolidayPlans(String user, int numHolidays) throws Throwable {
         this.numHolidays = numHolidays;
         Assert.assertEquals(numHolidays, holidayAgendaController.GetHolidays().size());

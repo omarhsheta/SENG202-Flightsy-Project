@@ -37,23 +37,23 @@ public class ImportHandlerStepDefinition {
     private String sourceName;
 
 
-    @Given("^A user \"([^\"]*)\" selects an airport to import$")
+    @Given("A user {string} selects an airport to import")
     public void aUserSelectsAnAirportToImport(String user) throws Throwable {
         selectedAirport = testAirport1;
     }
 
-    @Given("^A user \"([^\"]*)\" names the airport \"([^\"]*)\"$")
+    @Given("A user {string} names the airport {string}")
     public void aUserNamesTheImportedAirport(String user, String airportName) throws Throwable {
         this.airportName = airportName;
         selectedAirport.SetName(airportName);
     }
 
-    @When("^A user \"([^\"]*)\" imports the selected airport$")
+    @When("A user {string} imports the selected airport")
     public void aUserImportsTheSelectedAirport(String user) throws Throwable {
         dataImportHandler.InsertAirport(selectedAirport);
     }
 
-    @Then("^\"([^\"]*)\" exists in the list of airports$")
+    @Then("{string} exists in the list of airports")
     public void existsInTheListOfAirports(String airportName) throws Throwable {
         ArrayList<Filter> filters = new ArrayList<>();
         filters.add(new Filter(String.format("NAME = %s", airportName), null));
@@ -61,26 +61,26 @@ public class ImportHandlerStepDefinition {
         Assert.assertTrue(fetchedAirports.size() > 0);
     }
 
-    @Given("^A user \"([^\"]*)\" selects an airline to import$")
+    @Given("A user {string} selects an airline to import")
     public void aUserSelectsAnAirlineToImport(String user) throws Throwable {
         selectedAirline = testAirline1;
     }
 
-    @Given("^A user \"([^\"]*)\" names the airline \"([^\"]*)\"$")
+    @Given("A user {string} names the airline {string}")
     public void aUserNamesTheImportedAirline(String user, String airlineName) throws Throwable {
         this.airlineName = airlineName;
         selectedAirline.SetName(airlineName);
 
     }
 
-    @When("^A user \"([^\"]*)\" imports the selected airline$")
+    @When("A user {string} imports the selected airline")
     public void aUserImportsTheSelectedAirline(String user) throws Throwable {
         dataImportHandler.InsertAirline(selectedAirline);
     }
 
 
 
-    @Then("^\"([^\"]*)\" exists in the list of airlines$")
+    @Then("{string} exists in the list of airlines")
     public void existsInTheListOfAirlines(String airlineName) throws Throwable {
         ArrayList<Filter> filters = new ArrayList<>();
         filters.add(new Filter(String.format("NAME = %s", airlineName), null));
@@ -88,14 +88,14 @@ public class ImportHandlerStepDefinition {
         Assert.assertTrue(fetchedAirlines.size() > 0);
     }
 
-    @Given("^\"([^\"]*)\" exists within the list of airports$")
+    @Given("{string} exists within the list of airports")
     public void existsWithinTheListOfAirports(String airportName) throws Throwable {
         this.airportName = airportName;
         testAirport1.SetName(airportName);
         dataImportHandler.InsertAirport(testAirport1);
     }
 
-    @When("^A user \"([^\"]*)\" imports a route between \"([^\"]*)\" and \"([^\"]*)\" airports$")
+    @When("A user {string} imports a route between {string} and {string} airports")
     public void aUserImportsARouteBetweenRouteBetweenAndAirports(String user, String sourceName, String destName) throws Throwable {
         this.sourceName = sourceName;
         this.destName = destName;
@@ -107,7 +107,7 @@ public class ImportHandlerStepDefinition {
         dataImportHandler.InsertRoute(testRoute2);
     }
 
-    @Then("^A route between \"([^\"]*)\" and \"([^\"]*)\" airports exists in the list of routes$")
+    @Then("A route between {string} and {string} airports exists in the list of routes")
     public void aRouteBetweenAndAirportsExistsInTheListOfRoutes(String sourceName, String destName) throws Throwable {
         ArrayList<Filter> filters = new ArrayList<>();
         filters.add(new Filter(String.format("SOURCE_AIRPORT = %s", sourceName), "AND"));
