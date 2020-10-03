@@ -47,6 +47,19 @@ public class DatabaseHandlerTest {
     private int databaseRowsAirport;
     private int databaseRowsRoute;
 
+    private HolidayPlan testHolidayPlan1;
+    private HolidayPlan testHolidayPlan2;
+    private HolidayPlan testHolidayPlan3;
+    private HolidayPlan testHolidayPlan4;
+    private HolidayPlan testHolidayPlan5;
+    private String testDirectory1;
+    private String testDirectory2;
+    private String testDirectory3;
+    private String testDirectory4;
+    private String testDirectory5;
+    private ArrayList<HolidayPlan> testHolidayPlans;
+    private ArrayList<HolidayPlan> actualHolidayPlans;
+
     public void fullClear() {
         filters.clear();
         testAirlines.clear();
@@ -55,6 +68,8 @@ public class DatabaseHandlerTest {
         actualAirports.clear();
         testRoutes.clear();
         actualRoutes.clear();
+        testHolidayPlans.clear();
+        actualHolidayPlans.clear();
     }
 
     public void cleanUp(Object object) {
@@ -66,6 +81,8 @@ public class DatabaseHandlerTest {
             } else if (object instanceof Route) {
                 Route route = (Route) object;
                 dataImport.DeleteRoute(route.getAirlineID(), route.getSourceAirportID(), route.getDestinationAirportID());
+            } else if (object instanceof HolidayPlan) {
+                dataImport.DeleteHolidayPlan(((HolidayPlan) object).getName());
             }
         } catch (Exception e) { System.out.println(e.getMessage()); }
     }
@@ -81,6 +98,11 @@ public class DatabaseHandlerTest {
         }
     }
     public void cleanUpListRte(ArrayList<Route> objects) {
+        for (int i = 0; i < objects.size(); i++) {
+            cleanUp(objects.get(i));
+        }
+    }
+    public void cleanUpListHpl(ArrayList<HolidayPlan> objects) {
         for (int i = 0; i < objects.size(); i++) {
             cleanUp(objects.get(i));
         }
@@ -141,6 +163,20 @@ public class DatabaseHandlerTest {
                     testAirport5.getName(), testAirport5.getAirportID(), ' ', 0, "142");
             testRoutes = new ArrayList<Route>();
             actualRoutes = new ArrayList<Route>();
+
+            testHolidayPlan1 = new HolidayPlan("Fiji Getaway");
+            testHolidayPlan2 = new HolidayPlan("Japannnnnnn");
+            testHolidayPlan3 = new HolidayPlan("Los Angeles Banger");
+            testHolidayPlan4 = new HolidayPlan("Nelson Sunny Summer");
+            testHolidayPlan5 = new HolidayPlan("Vietnam Street Food Getaway");
+            testDirectory1 = "/holiday/plans/whatwearedoing/";
+            testDirectory2 = "/test/";
+            testDirectory3 = "/homework/holidayplans/";
+            testDirectory4 = "/help/please/";
+            testDirectory5 = "/plans/";
+            testHolidayPlans = new ArrayList<HolidayPlan>();
+            actualHolidayPlans = new ArrayList<HolidayPlan>();
+
         }
     }
 
@@ -159,14 +195,6 @@ public class DatabaseHandlerTest {
             }
         } catch (Exception e) { System.out.println(e.getMessage()); }
     }
-
-    // For Holiday Plans
-    private HolidayPlan testHolidayPlan1;
-    private HolidayPlan testHolidayPlan2;
-    private HolidayPlan testHolidayPlan3;
-    private HolidayPlan testHolidayPlan4;
-    private HolidayPlan testHolidayPlan5;
-    private ArrayList<HolidayPlan> actualHolidayPlans;
 
     /**
      * Test inserting one airline into the database
@@ -1539,12 +1567,24 @@ public class DatabaseHandlerTest {
 
     }
 
+
+
     /**
      * Test inserting one holiday plan
      */
     @Test @Ignore
     public void TestInsertOneHolidayPlan() {
-
+        try {
+            dataImport.InsertHolidayPlan(testHolidayPlan1.getName(), testDirectory1);
+            Filter filter = new Filter(format("name = '%s'", testHolidayPlan1.getName()), "");
+            filters.add(filter);
+            actualHolidayPlans = dataExport.FetchHolidayPlanObjects(filters);
+        } catch(Exception e) {
+            Assert.fail(e.getMessage());
+        }
+        Assert.assertEquals(testHolidayPlan1.getName(), actualHolidayPlans.get(0).getName());
+        cleanUp(testHolidayPlan1);
+        fullClear();
     }
 
     /**

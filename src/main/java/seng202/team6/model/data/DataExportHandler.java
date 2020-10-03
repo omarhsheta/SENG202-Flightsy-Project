@@ -4,6 +4,7 @@ import seng202.team6.model.entities.Airline;
 import seng202.team6.model.entities.Airport;
 import seng202.team6.model.entities.Route;
 import seng202.team6.model.entities.RoutePath;
+import seng202.team6.model.user.HolidayPlan;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -122,6 +123,22 @@ public class DataExportHandler {
         return paths;
     }
 
+    /**
+     * Extract list of plans from result set
+     * @param resultSet Results from query
+     * @return List of holiday plans
+     * @throws SQLException SQLException
+     */
+    private ArrayList<HolidayPlan> ExtractHolidayPlans(ResultSet resultSet) throws SQLException {
+        ArrayList<HolidayPlan> holidayPlans = new ArrayList<>();
+        while (resultSet.next()) {
+            String directory = resultSet.getString("directory");
+            String json = DataHandler.GetInstance().ReadDataFile(directory);
+            HolidayPlan holidayPlan = HolidayPlan.FromJSON(json);
+            holidayPlans.add(holidayPlan);
+        }
+        return holidayPlans;
+    }
 
     /**
      * Select and return all the Airline tuples in the SQLite database.
@@ -256,6 +273,43 @@ public class DataExportHandler {
         }
     }
 
+    /**
+     * Fetches the holiday plan entry from the database
+     * @param filters Filters on fetch
+     */
+    public ArrayList<HolidayPlan> FetchHolidayPlanObjects(ArrayList<Filter> filters) throws SQLException {
+        String query = SQLHelper.ExtractQuery("holiday_plan", filters);
+        try {
+            Statement stmt = this.databaseConnection.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            return ExtractHolidayPlans(rs);
+        } catch (Exception ignored) {
+            return null;
+        }
+    }
+
+    /**
+     * Fetches the holiday plan entry from the database
+     * @param filters Filters on fetch
+     */
+    public ArrayList<String> FetchHolidayPlans(ArrayList<Filter> filters) throws SQLException {
+        String query = SQLHelper.ExtractQuery("holiday_plan", filters);
+        try {
+            Statement stmt = this.databaseConnection.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            ArrayList<String> directories = new ArrayList<>();
+            while (rs.next()) {
+                String dir = rs.getString("directory");
+                if (dir != null) {
+                    directories.add(dir);
+                }
+            }
+            return directories;
+
+        } catch (Exception ignored) {
+            return null;
+        }
+    }
 
     /**
      * Finds the source and destination airport IDs based off the respective airport's ICAOs
@@ -329,29 +383,6 @@ public class DataExportHandler {
         Statement stmt = this.databaseConnection.createStatement();
         if (stmt.executeUpdate(sql) <= 0) {
             throw new SQLException("Nothing was deleted");
-        }
-    }
-
-    /**
-     * Fetches the holiday plan entry from the database
-     * @param filters Filters on fetch
-     */
-    public ArrayList<String> FetchHolidayPlans(ArrayList<Filter> filters) throws SQLException {
-        String query = SQLHelper.ExtractQuery("holiday_plan", filters);
-        try {
-            Statement stmt = this.databaseConnection.createStatement();
-            ResultSet rs = stmt.executeQuery(query);
-            ArrayList<String> directories = new ArrayList<>();
-            while (rs.next()) {
-                String dir = rs.getString("directory");
-                if (dir != null) {
-                    directories.add(dir);
-                }
-            }
-            return directories;
-
-        } catch (Exception ignored) {
-            return null;
         }
     }
 }
