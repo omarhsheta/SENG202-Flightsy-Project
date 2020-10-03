@@ -24,14 +24,14 @@ Feature: HolidayPlan
   Scenario: A user creates a holiday plan
     Given the user "Subaru" has 0 holiday plans
     When the user "Subaru" creates a holiday plan
-    Then the user "Subaru" has 1 holiday plans
+    Then the user "Subaru" now has 1 holiday plans
 
   Scenario: A user creates a holiday plan whilst already having four
     Given the user "Love" has 4 holiday plans
     When the user "Love" creates a holiday plan
-    Then the user "Love" has 5 holiday plans
+    Then the user "Love" now has 5 holiday plans
 
   Scenario: A user creates a holiday plan unsuccessfully whilst already having five
     Given the user "Emilia" has 5 holiday plans
     When the user "Emilia" creates a holiday plan
-    Then the user "Emilia" has 5 holiday plans
+    Then the user "Emilia" now has 5 holiday plans
