@@ -23,7 +23,7 @@ public class HolidayPlan implements JSONSerializable {
      * @param newName the name of the new HolidayPlan
      */
     public HolidayPlan(String newName) {
-        name = newName;
+        name = newName.replaceAll("[^a-zA-Z0-9 ]", "");
     }
 
     /**

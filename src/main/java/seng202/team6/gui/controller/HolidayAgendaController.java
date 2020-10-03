@@ -174,17 +174,22 @@ public class HolidayAgendaController implements Initializable {
      * @param name Name of holiday
      */
     public void CreateNewHoliday(String name) {
-        for (HolidayPlan plan : holidays) {
-            if (plan.getName().equals(name)) {
+        HolidayPlan plan = new HolidayPlan(name);
+        String planName = plan.getName();
+        if (planName.isBlank() || planName.isEmpty()) {
+            return;
+        }
+
+        for (HolidayPlan oldPlans : holidays) {
+            if (oldPlans.getName().equals(planName)) {
                 System.out.println("Failed to create holiday, name already taken.");
                 return;
             }
         }
-        HolidayPlan plan = new HolidayPlan(name);
         plan.SaveHoliday();
         holidays.add(plan);
-        holidaySelectChoiceBox.getItems().add(name);
-        holidaySelectChoiceBox.getSelectionModel().select(name);
+        holidaySelectChoiceBox.getItems().add(planName);
+        holidaySelectChoiceBox.getSelectionModel().select(planName);
     }
 
     /**
