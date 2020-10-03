@@ -62,7 +62,6 @@ public class ImportHandlerStepDefinition {
     public void existsInTheListOfAirports(String airportName) {
         ArrayList<Filter> filters = new ArrayList<>();
         filters.add(new Filter(String.format("NAME = '%s'", airportName), null));
-        System.out.println(filters.get(0).GetFilter());
         ArrayList<Airport> fetchedAirports = dataExportHandler.FetchAirports(filters);
         Assert.assertTrue(fetchedAirports.size() > 0);
     }
@@ -114,14 +113,16 @@ public class ImportHandlerStepDefinition {
     }
 
     @Then("A route between {string} and {string} airports exists in the list of routes")
-    public void aRouteBetweenAndAirportsExistsInTheListOfRoutes(String sourceName, String destName) throws SQLException {
+    public void aRouteBetweenAndAirportsExistsInTheListOfRoutes(String sourceName, String destName) {
+
+        ArrayList<Filter> filterSrc = new ArrayList<>();
+        ArrayList<Filter> filterDst = new ArrayList<>();
         ArrayList<Filter> filters = new ArrayList<>();
-        Statement stmt = this.databaseConnection.createStatement();
-        ResultSet srcCode = stmt.executeQuery(String.format("SELECT iata from airport_script where name = '%s'", sourceName));
-        ResultSet dstCode = stmt.executeQuery(String.format("SELECT iata from airport_script where name = '%s'", destName));
-        System.out.println(srcCode);
-        filters.add(new Filter(String.format("source_airport = '%s'", sourceName), " AND "));
-        filters.add(new Filter(String.format("destination_airport = '%s'", destName), null));
+        filterSrc.add(new Filter(String.format("NAME = '%s'", sourceName), null));
+        filterDst.add(new Filter(String.format("NAME = '%s'", destName), null));
+        String srcCode = dataExportHandler.FetchAirports(filterSrc).get(0).getIATA();
+        String dstCode = dataExportHandler.FetchAirports(filterDst).get(0).getIATA();
+        filters.add(new Filter(String.format("source_airport = '%s' AND destination_airport = '%s'", srcCode, dstCode), null));
         ArrayList<Route> fetchedRoutes = dataExportHandler.FetchRoutes(filters);
         Assert.assertTrue(fetchedRoutes.size() > 0);
     }

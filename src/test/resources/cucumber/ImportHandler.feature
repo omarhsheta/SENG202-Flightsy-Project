@@ -17,4 +17,4 @@ Feature: ImportHandler
     Given "Heathrow" exists within the list of airports
     Given "Kingsford Smith" exists within the list of airports
     When A user imports a route between "Heathrow" and "Kingsford Smith" airports
-    Then A route between "Heathrow" and "Kingsford Smith" airports exists in the list of routes
+    Then A route between "Heathrow" and "Hamburg" airports exists in the list of routes
