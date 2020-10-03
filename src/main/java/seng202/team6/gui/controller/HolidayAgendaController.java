@@ -22,6 +22,7 @@ import seng202.team6.gui.helper.NodeHelper;
 import seng202.team6.model.MapHelper;
 import seng202.team6.model.data.DataExportHandler;
 import seng202.team6.model.data.DataHandler;
+import seng202.team6.model.data.DataImportHandler;
 import seng202.team6.model.entities.Airport;
 import seng202.team6.model.events.CarTrip;
 import seng202.team6.model.events.Event;
@@ -100,6 +101,20 @@ public class HolidayAgendaController implements Initializable {
     }
 
     /**
+     * Method to reset the combo box items on the view
+     */
+    private void RepopulateComboBox() {
+        holidaySelectChoiceBox.getItems().clear();
+        for (HolidayPlan holiday : holidays) {
+            holidaySelectChoiceBox.getItems().add(holiday.getName());
+        }
+
+        if (holidays.size() > 0) {
+            holidaySelectChoiceBox.getSelectionModel().select(0);
+        }
+    }
+
+    /**
      * Called when WebEngine is finished loading
      */
     private void OnLoad() {
@@ -107,7 +122,7 @@ public class HolidayAgendaController implements Initializable {
         mapHelper.ClearAll();
         /* Show flights on map */
         if (holidays.size() > 0) {
-            for (Flight flight : holidays.get(selectedHolidayIndex).getFlights()) {
+            for (Flight flight : holidays.get(selectedHolidayIndex).GetFlights()) {
                 ArrayList<Airport> airports = flight.getRoute().GetAirports();
                 mapHelper.DrawAirportMarks(airports);
                 mapHelper.DrawLineBetween(airports);
@@ -115,7 +130,7 @@ public class HolidayAgendaController implements Initializable {
         }
     }
 
-    public ArrayList<HolidayPlan> getHolidays() {
+    public ArrayList<HolidayPlan> GetHolidays() {
         return holidays;
     }
 
@@ -125,7 +140,11 @@ public class HolidayAgendaController implements Initializable {
      */
     public void ChangeHoliday(int index) {
         selectedHolidayIndex = index;
-        showHoliday(holidays.get(index));
+        if (index < 0) {
+            return;
+        }
+
+        ShowHoliday(holidays.get(index));
 
         //If this is updated from another view
         if (holidaySelectChoiceBox.getSelectionModel().getSelectedIndex() != selectedHolidayIndex) {
@@ -147,13 +166,7 @@ public class HolidayAgendaController implements Initializable {
             System.out.println("Failed to load holidays.");
         }
 
-        for (HolidayPlan holiday : holidays) {
-            holidaySelectChoiceBox.getItems().add(holiday.getName());
-        }
-
-        if (holidays.size() > 0) {
-            holidaySelectChoiceBox.getSelectionModel().select(0);
-        }
+        RepopulateComboBox();
     }
 
     /**
@@ -185,27 +198,27 @@ public class HolidayAgendaController implements Initializable {
 
         HolidayPlan holiday = holidays.get(selectedHolidayIndex);
         if (event.getClass() == General.class) {
-            holiday.addItinerary((General) event);
+            holiday.AddItinerary((General) event);
         } else if (event.getClass() == Flight.class) {
-            holiday.addFlight((Flight) event);
+            holiday.AddFlight((Flight) event);
         } else if (event.getClass() == CarTrip.class) {
-            holiday.addCarTrip((CarTrip) event);
+            holiday.AddCarTrip((CarTrip) event);
         }
         holiday.SaveHoliday();
-        showHoliday(holiday);
+        ShowHoliday(holiday);
     }
 
     /**
      * A method for displaying the holidays events in the GUI. This method appends Panes of the events to a VBox is
      * sorted order by date and time.
      */
-    private void showHoliday(HolidayPlan holiday) {
+    private void ShowHoliday(HolidayPlan holiday) {
         eventsVBox.getChildren().clear();
 
         ArrayList<Event> allEvents = new ArrayList<>();
-        allEvents.addAll(holiday.getItineraries());
-        allEvents.addAll(holiday.getFlights());
-        allEvents.addAll(holiday.getCarTrips());
+        allEvents.addAll(holiday.GetItineraries());
+        allEvents.addAll(holiday.GetFlights());
+        allEvents.addAll(holiday.GetCarTrips());
 
         Event earliestEvent = null;
         int numEvents = allEvents.size();
@@ -227,7 +240,7 @@ public class HolidayAgendaController implements Initializable {
         if (finishedLoading) {
             mapHelper.ClearAll();
             /* Show flights on map */
-            for (Flight flight : holiday.getFlights()) {
+            for (Flight flight : holiday.GetFlights()) {
                 ArrayList<Airport> airports = flight.getRoute().GetAirports();
                 mapHelper.DrawAirportMarks(airports);
                 mapHelper.DrawLineBetween(airports);
@@ -238,6 +251,7 @@ public class HolidayAgendaController implements Initializable {
     /**
      * A method to create a new holiday
      */
+    @FXML
     public void OnNewHolidayButtonClicked() throws IOException {
         Stage popUp = new Stage();
         popUp.initModality(Modality.APPLICATION_MODAL);
@@ -272,5 +286,29 @@ public class HolidayAgendaController implements Initializable {
         popUpScene.getStylesheets().add("org/kordamp/bootstrapfx/bootstrapfx.css");
         popUp.setScene(popUpScene);
         popUp.show();
+    }
+
+    /**
+     * Called when the user wishes to delete the currently selected holiday
+     */
+    @FXML
+    public void OnDeleteEventButtonClicked() {
+        if (holidays.size() == 0 || holidaySelectChoiceBox.getSelectionModel().isEmpty()) {
+            return;
+        }
+        HolidayPlan selected = holidays.get(selectedHolidayIndex);
+        String name = selected.getName();
+        holidays.remove(selected);
+
+        try {
+            DataImportHandler.GetInstance().DeleteHolidayPlan(name);
+            DataHandler.GetInstance().DeleteDataFile(name + ".json");
+        } catch (Exception e) {
+            System.out.println("Failed to delete holiday from database. \n" + e.toString());
+        }
+
+        eventsVBox.getChildren().clear();
+        holidaySelectChoiceBox.getSelectionModel().clearSelection();
+        RepopulateComboBox();
     }
 }

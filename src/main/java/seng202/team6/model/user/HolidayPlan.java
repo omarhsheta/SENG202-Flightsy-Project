@@ -16,7 +16,7 @@ public class HolidayPlan implements JSONSerializable {
     private ArrayList<Flight> flights = new ArrayList<>(); //Should not exceed 30
     private ArrayList<CarTrip> carTrips = new ArrayList<>();
 
-    private boolean isInDatabase;
+    private boolean isInDatabase = false;
 
     /**
      * Constructor for the holiday plan
@@ -24,7 +24,6 @@ public class HolidayPlan implements JSONSerializable {
      */
     public HolidayPlan(String newName) {
         name = newName;
-        isInDatabase = false;
     }
 
     /**
@@ -33,11 +32,11 @@ public class HolidayPlan implements JSONSerializable {
     public void SaveHoliday() {
         String filename = name + ".json";
         try {
-            DataHandler.GetInstance().WriteDataFile(filename, this.ToJson());
             if (!isInDatabase) {
                 DataImportHandler.GetInstance().InsertHolidayPlan(name, filename);
                 isInDatabase = true;
             }
+            DataHandler.GetInstance().WriteDataFile(filename, this.ToJson());
         } catch (Exception e) {
             System.out.println("Failed to save new holiday. \n" + e.toString());
         }
@@ -90,7 +89,7 @@ public class HolidayPlan implements JSONSerializable {
      *
      * @return the itineraries for the holiday
      */
-    public ArrayList<General> getItineraries() {
+    public ArrayList<General> GetItineraries() {
         return itineraries;
     }
 
@@ -98,7 +97,7 @@ public class HolidayPlan implements JSONSerializable {
      *
      * @return the flights for the holiday
      */
-    public ArrayList<Flight> getFlights() {
+    public ArrayList<Flight> GetFlights() {
         return flights;
     }
 
@@ -106,7 +105,7 @@ public class HolidayPlan implements JSONSerializable {
      *
      * @return the car trips for the holiday
      */
-    public ArrayList<CarTrip> getCarTrips() {
+    public ArrayList<CarTrip> GetCarTrips() {
         return carTrips;
     }
 
@@ -114,7 +113,7 @@ public class HolidayPlan implements JSONSerializable {
      * Adds a General event to the itineraries ArrayList
      * @param generalEvent general Event to add to the itinerary
      */
-    public void addItinerary(General generalEvent) {
+    public void AddItinerary(General generalEvent) {
         itineraries.add(generalEvent);
     }
 
@@ -122,7 +121,7 @@ public class HolidayPlan implements JSONSerializable {
      * Adds a Flight to the flights ArrayList
      * @param flight Flight to add to the flights
      */
-    public void addFlight(Flight flight) {
+    public void AddFlight(Flight flight) {
         flights.add(flight);
     }
 
@@ -130,7 +129,7 @@ public class HolidayPlan implements JSONSerializable {
      * Adds a CarTrip to the carTrips ArrayList
      * @param carTrip CarTrip to add to the carTrips
      */
-    public void addCarTrip(CarTrip carTrip) {
+    public void AddCarTrip(CarTrip carTrip) {
         carTrips.add(carTrip);
     }
 }

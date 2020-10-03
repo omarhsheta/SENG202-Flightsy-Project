@@ -473,10 +473,10 @@ public class DataImportHandler {
 
     /**
      * Deletes the holiday plan entry from the database
-     * @param holidayPlanIndex the index of the holiday plan object in the array of holiday plans
+     * @param name the name/key of the holiday plan object in the array of holiday plans
      */
-    public void DeleteHolidayPlan(String holidayPlanIndex) throws SQLException {
-        String sql = format("DELETE FROM holiday_plan WHERE index_holiday = '%s'", holidayPlanIndex);
+    public void DeleteHolidayPlan(String name) throws SQLException {
+        String sql = format("DELETE FROM holiday_plan WHERE name = '%s'", name);
         Statement stmt = this.databaseConnection.createStatement();
         if (stmt.executeUpdate(sql) <= 0) {
             throw new SQLException("Nothing was deleted");

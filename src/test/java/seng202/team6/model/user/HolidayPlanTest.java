@@ -20,18 +20,18 @@ public class HolidayPlanTest {
         plan1 = new HolidayPlan("Testplan");
         plan2 = new HolidayPlan("Hi");
 
-        plan1.addCarTrip(new CarTrip(5, 5, 5, 10, 10, "Test", "N",
+        plan1.AddCarTrip(new CarTrip(5, 5, 5, 10, 10, "Test", "N",
                 "Christchurch", "New Zealand", "California", "United States"));
 
-        plan1.addCarTrip(new CarTrip(2, 4, 9, 1, 10, "Trip2", null,
+        plan1.AddCarTrip(new CarTrip(2, 4, 9, 1, 10, "Trip2", null,
                 "Christchurch", "New Zealand", "California", "United States"));
 
-        plan1.addFlight(new Flight(6, 6, 2000, 0, 0, 7, 6,
+        plan1.AddFlight(new Flight(6, 6, 2000, 0, 0, 7, 6,
                 2020, 3, 10, "Flight", null,
                 new Route(10, "TestAirline", "AKL", 50,
                         "CHC", 60, 'N', 0, null)));
 
-        plan2.addItinerary(new General(10, 2, 0, 10, 59, "General", "No",
+        plan2.AddItinerary(new General(10, 2, 0, 10, 59, "General", "No",
                 "Christchurch", "New Zealand"));
     }
 
@@ -85,9 +85,9 @@ public class HolidayPlanTest {
 
         assertNotNull(deserialized);
 
-        assertEquals(2, deserialized.getCarTrips().size());
-        assertEquals(1, deserialized.getFlights().size());
-        assertEquals(0, deserialized.getItineraries().size());
+        assertEquals(2, deserialized.GetCarTrips().size());
+        assertEquals(1, deserialized.GetFlights().size());
+        assertEquals(0, deserialized.GetItineraries().size());
 
         assertEquals("Testplan", deserialized.getName());
 
@@ -99,9 +99,9 @@ public class HolidayPlanTest {
 
         assertNotNull(deserialized);
 
-        assertEquals(0, deserialized2.getCarTrips().size());
-        assertEquals(0, deserialized2.getFlights().size());
-        assertEquals(1, deserialized2.getItineraries().size());
+        assertEquals(0, deserialized2.GetCarTrips().size());
+        assertEquals(0, deserialized2.GetFlights().size());
+        assertEquals(1, deserialized2.GetItineraries().size());
 
         assertEquals("Hi", deserialized2.getName());
     }
