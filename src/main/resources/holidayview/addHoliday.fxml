@@ -5,10 +5,10 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.Pane?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="133.0" prefWidth="270.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="133.0" prefWidth="270.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.team6.gui.controller.holidayview.NewHolidayController">
    <children>
-      <TextField fx:id="HolidayName" layoutX="55.0" layoutY="53.0" promptText="Fiji 2020" />
-      <Button fx:id="AddBtn" layoutX="115.0" layoutY="92.0" mnemonicParsing="false" text="Add" />
+      <TextField fx:id="nameField" layoutX="55.0" layoutY="53.0" promptText="Fiji 2020" />
+      <Button onMouseClicked="#OnCreateNewHoliday" layoutX="115.0" layoutY="92.0" mnemonicParsing="false" text="Add" />
       <Label layoutX="67.0" layoutY="21.0" text="Enter your holidays name" />
    </children>
 </Pane>

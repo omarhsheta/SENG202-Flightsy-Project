@@ -105,6 +105,25 @@ public class DataExportHandler {
     }
 
     /**
+     * Extract list of paths from result set
+     * @param resultSet Results from query
+     * @return List of route paths
+     * @throws SQLException SQLException
+     */
+    private ArrayList<RoutePath> ExtractRoutePaths(ResultSet resultSet) throws SQLException {
+        ArrayList<RoutePath> paths = new ArrayList<>();
+        // Loop through the result set and create Airport objects from data
+        while (resultSet.next()) {
+            String directory = resultSet.getString("directory");
+            String json = DataHandler.GetInstance().ReadDataFile(directory);
+            RoutePath path = RoutePath.FromJSON(json);
+            paths.add(path);
+        }
+        return paths;
+    }
+
+
+    /**
      * Select and return all the Airline tuples in the SQLite database.
      * @param filters List of filters to apply to search query
      * @return List of airline objects
@@ -194,6 +213,51 @@ public class DataExportHandler {
     }
 
     /**
+     * Select and return all the Route tuples in the SQLite database.
+     * @param sourceAirports Source airport list
+     * @param destinationAirports Destination airport list
+     * @param maxStops Maximum stops the route has
+     * @return All routes that fit the database query
+     */
+    public ArrayList<Route> FetchRoutes(ArrayList<Airport> sourceAirports, ArrayList<Airport> destinationAirports, int maxStops) {
+        //This is big oof query, joining two tables
+        String query = String.format("SELECT * FROM route " +
+                        "JOIN (SELECT airport.iata FROM airport) " +
+                        "WHERE iata = route.source_airport " +
+                        "AND route.source_airport in (%s) AND route.destination_airport in (%s) " +
+                        "AND route.stops <= (%s);",
+                SQLHelper.GetAirportIATAList(sourceAirports), SQLHelper.GetAirportIATAList(destinationAirports), maxStops);
+        try {
+            Statement stmt = this.databaseConnection.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            return ExtractRoutes(rs);
+        } catch (Exception ignored) {
+            return null;
+        }
+    }
+
+    /**
+     * Select and return all the Route Paths in the SQLite database.
+     * @param sourceAirports Source airport list
+     * @param destinationAirports Destination airport list
+     * @return All Route paths that fit the database query
+     */
+    public ArrayList<RoutePath> FetchRoutePaths(ArrayList<Airport> sourceAirports, ArrayList<Airport> destinationAirports) {
+        String query = String.format("SELECT directory FROM flight_path " +
+                        "WHERE source_airport_id IN (%s) AND destination_airport_id IN (%s);",
+                SQLHelper.GetAirportIDList(sourceAirports), SQLHelper.GetAirportIDList(destinationAirports));
+        try {
+            Statement stmt = this.databaseConnection.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            return ExtractRoutePaths(rs);
+
+        } catch (Exception ignored) {
+            return null;
+        }
+    }
+
+
+    /**
      * Finds the source and destination airport IDs based off the respective airport's ICAOs
      * @param routePath the route path object
      * @return an array list of size two where the first element is the source airport ID and the second element is the
@@ -260,11 +324,34 @@ public class DataExportHandler {
      * Deletes the holiday plan entry from the database
      * @param name the name of the holiday
      */
-    public void DeleteHolidayPlan(String name) throws SQLException{
+    public void DeleteHolidayPlan(String name) throws SQLException {
         String sql = format("DELETE FROM holiday_plan WHERE index_holiday = '%s'", name);
         Statement stmt = this.databaseConnection.createStatement();
         if (stmt.executeUpdate(sql) <= 0) {
             throw new SQLException("Nothing was deleted");
+        }
+    }
+
+    /**
+     * Fetches the holiday plan entry from the database
+     * @param filters Filters on fetch
+     */
+    public ArrayList<String> FetchHolidayPlans(ArrayList<Filter> filters) throws SQLException {
+        String query = SQLHelper.ExtractQuery("holiday_plan", filters);
+        try {
+            Statement stmt = this.databaseConnection.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            ArrayList<String> directories = new ArrayList<>();
+            while (rs.next()) {
+                String dir = rs.getString("directory");
+                if (dir != null) {
+                    directories.add(dir);
+                }
+            }
+            return directories;
+
+        } catch (Exception ignored) {
+            return null;
         }
     }
 }

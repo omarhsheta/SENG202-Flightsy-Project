@@ -24,31 +24,38 @@ public class MainGUI extends Application {
      * Resources to load
      */
     private final String[] resourceFXML = new String[] {
-            "holidayview",
-            "routefinderview",
-            "dataviewer"
+            "holidayview/holidayview",
+            "routefinder/routefinderview",
+            "dataviewer/dataviewer"
     };
 
     /**
      * Main startup of GUI
      * @param primaryStage Autopassed variable from GUI Constructor
-     * @throws IOException Thrown if .fxml files can't be found
      */
     @Override
-    public void start(Stage primaryStage) throws IOException {
+    public void start(Stage primaryStage) {
         //Root pane is borderpane, top is menubar, center is each pane
         BorderPane rootPane = new BorderPane();
-        Node menuBar = FXMLLoader.load(getClass().getResource("/" + this.menubarFXML + ".fxml"));
-        rootPane.setTop(menuBar);
+        try {
+            Node menuBar = FXMLLoader.load(getClass().getResource("/" + this.menubarFXML + ".fxml"));
+            rootPane.setTop(menuBar);
+        } catch (Exception e) {
+            System.out.println("Failed to load menubar, \n" + e.toString());
+        }
 
         //Instantiate WindowHandler singleton
         new WindowHandler(rootPane);
 
         //Load each FXML class once to have fast response time rather than on the fly.
         //MAYBE CHANGE if loading heavy classes
-        for (String resource : this.resourceFXML) {
-            Node source = FXMLLoader.load(getClass().getResource("/" + resource + ".fxml"));
-            WindowHandler.GetInstance().AddWindow(resource, source);
+        try {
+            for (String resource : this.resourceFXML) {
+                Node source = FXMLLoader.load(getClass().getResource("/" + resource + ".fxml"));
+                WindowHandler.GetInstance().AddWindow(resource, source);
+            }
+        } catch (Exception e) {
+            System.out.println("Failed to load FXML window, \n" + e.toString());
         }
 
         //Set primaryScene to a new scene with rootPane as main content
@@ -68,7 +75,7 @@ public class MainGUI extends Application {
         primaryStage.setScene(primaryScene);
 
         //Set active window
-        WindowHandler.GetInstance().SetActiveWindow("holidayview");
+        WindowHandler.GetInstance().SetActiveWindow("holidayview/holidayview");
         primaryStage.show();
     }
 }

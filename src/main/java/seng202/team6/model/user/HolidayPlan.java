@@ -1,12 +1,12 @@
 package seng202.team6.model.user;
 
 import com.google.gson.Gson;
+import seng202.team6.model.data.DataHandler;
+import seng202.team6.model.data.DataImportHandler;
 import seng202.team6.model.events.CarTrip;
 import seng202.team6.model.events.Flight;
 import seng202.team6.model.events.General;
 import seng202.team6.model.interfaces.JSONSerializable;
-import java.util.Random;
-
 
 import java.util.ArrayList;
 
@@ -16,12 +16,30 @@ public class HolidayPlan implements JSONSerializable {
     private ArrayList<Flight> flights = new ArrayList<>(); //Should not exceed 30
     private ArrayList<CarTrip> carTrips = new ArrayList<>();
 
+    private boolean isInDatabase = false;
+
     /**
      * Constructor for the holiday plan
      * @param newName the name of the new HolidayPlan
      */
     public HolidayPlan(String newName) {
         name = newName;
+        isInDatabase = false;
+    }
+
+    /**
+     * Save holiday into database
+     */
+    public void SaveHoliday() {
+        String filename = name + ".json";
+        try {
+            DataHandler.GetInstance().WriteDataFile(filename, this.ToJson());
+            if (!isInDatabase) {
+                DataImportHandler.GetInstance().InsertHolidayPlan(name, filename);
+            }
+        } catch (Exception e) {
+            System.out.println("Failed to save new holiday. \n" + e.toString());
+        }
     }
 
     /**
@@ -41,19 +59,6 @@ public class HolidayPlan implements JSONSerializable {
     public String ToJson() {
         Gson gson = new Gson();
         return gson.toJson(this);
-    }
-
-    /**
-     * This method should be called when the user is adding a new flight to their HolidayPlan.
-     * It should also check if it is below 30 before appending the flight to the array, and it should
-     * check that the flight that is about to be appended is not in the array.
-     * @param flight The flight that is to be added to the array Flights
-     */
-    public void FlightAppend(Flight flight) {
-        if (flights.size() < 30) {
-            flights.add(flight);
-            System.out.println(String.format("%s to %s", flight.getRoute().getDestinationAirport(), flight.getRoute().getSourceAirport()));
-        }
     }
 
     /**

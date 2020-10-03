@@ -9,12 +9,20 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Pair;
+import seng202.team6.gui.controller.holidayview.FlightEventInformationController;
+import seng202.team6.gui.controller.holidayview.NewHolidayController;
+import seng202.team6.gui.helper.NodeHelper;
 import seng202.team6.model.MapHelper;
+import seng202.team6.model.data.DataExportHandler;
+import seng202.team6.model.data.DataHandler;
 import seng202.team6.model.entities.Airport;
 import seng202.team6.model.events.CarTrip;
 import seng202.team6.model.events.Event;
@@ -78,17 +86,7 @@ public class HolidayAgendaController implements Initializable {
                 (ObservableValue<? extends String> observable, String oldValue, String newValue) ->
                         ChangeHoliday(holidaySelectChoiceBox.getSelectionModel().getSelectedIndex()));
 
-        //Temporary
-        holidays.add(new HolidayPlan("Holiday 1"));
-        holidays.add(new HolidayPlan("Holiday 2"));
-        holidays.add(new HolidayPlan("Holiday 3"));
-        holidays.add(new HolidayPlan("Holiday 4"));
-        holidays.add(new HolidayPlan("Holiday 5"));
-        for (HolidayPlan holiday: holidays) {
-            holidaySelectChoiceBox.getItems().add(holiday.getName());
-        }
-        holidaySelectChoiceBox.getSelectionModel().select(0);
-        //End Temporary
+        LoadHolidays();
 
         webEngine = webView2.getEngine();
         webEngine.load(getClass().getResource(mapHTML).toExternalForm());
@@ -107,6 +105,13 @@ public class HolidayAgendaController implements Initializable {
      */
     private void OnLoad() {
         finishedLoading = true;
+        mapHelper.ClearAll();
+        /* Show flights on map */
+        for (Flight flight : holidays.get(selectedHolidayIndex).getFlights()) {
+            ArrayList<Airport> airports = flight.getRoute().GetAirports();
+            mapHelper.DrawAirportMarks(airports);
+            mapHelper.DrawLineBetween(airports);
+        }
     }
 
     public ArrayList<HolidayPlan> getHolidays() {
@@ -128,18 +133,55 @@ public class HolidayAgendaController implements Initializable {
     }
 
     /**
+     * Load holidays from the database
+     */
+    public void LoadHolidays() {
+        try {
+            ArrayList<String> holidayFiles = DataExportHandler.GetInstance().FetchHolidayPlans(null);
+            for (String dir : holidayFiles) {
+                HolidayPlan plan = HolidayPlan.FromJSON(DataHandler.GetInstance().ReadDataFile(dir));
+                holidays.add(plan);
+            }
+        } catch (Exception e) {
+            System.out.println("Failed to load holidays.");
+        }
+
+        for (HolidayPlan holiday : holidays) {
+            holidaySelectChoiceBox.getItems().add(holiday.getName());
+        }
+
+        if (holidays.size() > 0) {
+            holidaySelectChoiceBox.getSelectionModel().select(0);
+        }
+    }
+
+    /**
+     * Create a new holiday
+     * @param name Name of holiday
+     */
+    public void CreateNewHoliday(String name) {
+        HolidayPlan plan = new HolidayPlan(name);
+        plan.SaveHoliday();
+        holidays.add(plan);
+        holidaySelectChoiceBox.getItems().add(name);
+        holidaySelectChoiceBox.getSelectionModel().select(name);
+    }
+
+    /**
      * Add event to holiday
      * @param <T> Event to add
      */
     public <T extends Event> void AddToHoliday(T event) {
+        HolidayPlan holiday = holidays.get(selectedHolidayIndex);
         if (event.getClass() == General.class) {
-            holidays.get(selectedHolidayIndex).addItinerary((General) event);
+            holiday.addItinerary((General) event);
         } else if (event.getClass() == Flight.class) {
-            holidays.get(selectedHolidayIndex).addFlight((Flight) event);
+            holiday.addFlight((Flight) event);
         } else if (event.getClass() == CarTrip.class) {
-            holidays.get(selectedHolidayIndex).addCarTrip((CarTrip) event);
+            holiday.addCarTrip((CarTrip) event);
         }
-        showHoliday(holidays.get(selectedHolidayIndex));
+        holiday.SaveHoliday();
+        showHoliday(holiday);
     }
 
     /**
@@ -147,9 +189,6 @@ public class HolidayAgendaController implements Initializable {
      * sorted order by date and time.
      */
     private void showHoliday(HolidayPlan holiday) {
-        if (finishedLoading) {
-            mapHelper.ClearAll();
-        }
         eventsVBox.getChildren().clear();
 
         ArrayList<Event> allEvents = new ArrayList<>();
@@ -166,24 +205,41 @@ public class HolidayAgendaController implements Initializable {
                     earliestEvent = event;
                 }
             }
+            if (earliestEvent == null) {
+                continue;
+            }
             eventsVBox.getChildren().add(earliestEvent.toPane());
             allEvents.remove(earliestEvent);
             earliestEvent = null;
         }
 
-        /* Show flights on map */
-        for (Flight flight: holiday.getFlights()) {
-            ArrayList<Airport> airports = flight.getRoute().GetAirports();
-            mapHelper.DrawAirportMarks(airports);
-            mapHelper.DrawLineBetween(airports);
+        if (finishedLoading) {
+            mapHelper.ClearAll();
+            /* Show flights on map */
+            for (Flight flight : holiday.getFlights()) {
+                ArrayList<Airport> airports = flight.getRoute().GetAirports();
+                mapHelper.DrawAirportMarks(airports);
+                mapHelper.DrawLineBetween(airports);
+            }
         }
     }
 
     /**
      * A method to create a new holiday
      */
-    public void OnNewHolidayButtonClicked() {
-        System.out.println("Not implemented yet");
+    public void OnNewHolidayButtonClicked() throws IOException {
+        Stage popUp = new Stage();
+        popUp.initModality(Modality.APPLICATION_MODAL);
+        Pair<BorderPane, NewHolidayController> pair = NodeHelper.LoadNode("holidayview", "addHoliday");
+        Pane pane = pair.getKey();
+        NewHolidayController controller = pair.getValue();
+        //Set variables
+        popUp.setTitle("Add Holiday");
+        Scene popUpScene = new Scene(pane);
+        popUpScene.getStylesheets().add("org/kordamp/bootstrapfx/bootstrapfx.css");
+        popUp.setScene(popUpScene);
+        controller.SetStage(popUp);
+        popUp.show();
     }
 
     /**

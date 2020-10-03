@@ -433,12 +433,12 @@ public class DataImportHandler {
 
     /**
      * Inserts the holiday plan object's directory location into the database
-     * @param holidayPlanIndex the index of the holiday plan object in the array of holiday plans
+     * @param name the name of the holiday plan object
      * @param directory the directory in which the holiday plan object resides
      */
-    public void InsertHolidayPlan(String holidayPlanIndex, String name, String directory) throws SQLException {
-        String sql = format("INSERT INTO holiday_plan (index_holiday_plan, name, directory), VALUES ('%s', '%s', '%s')",
-                holidayPlanIndex, name, directory);
+    public void InsertHolidayPlan(String name, String directory) throws SQLException {
+        String sql = format("INSERT INTO holiday_plan VALUES ('%s', '%s')",
+                name, directory);
         Statement stmt = this.databaseConnection.createStatement();
         if (stmt.executeUpdate(sql) <= 0) {
             throw new SQLException("The holiday plan was not inserted into the database");
@@ -450,7 +450,7 @@ public class DataImportHandler {
      * @param holidayPlanIndex the index of the holiday plan object in the array of holiday plans
      * @param newDirectory the new directory in which the holiday plan object will reside
      */
-    public void UpdateHolidayPlan(String holidayPlanIndex, String newName, String newDirectory) throws SQLException, Exception{
+    public void UpdateHolidayPlan(String holidayPlanIndex, String newName, String newDirectory) throws Exception {
         String setSQL = "";
         if (newDirectory == null || newDirectory.isEmpty()) {
             setSQL += format("directory = %s, ", newDirectory);
@@ -475,7 +475,7 @@ public class DataImportHandler {
      * Deletes the holiday plan entry from the database
      * @param holidayPlanIndex the index of the holiday plan object in the array of holiday plans
      */
-    public void DeleteHolidayPlan(String holidayPlanIndex) throws SQLException{
+    public void DeleteHolidayPlan(String holidayPlanIndex) throws SQLException {
         String sql = format("DELETE FROM holiday_plan WHERE index_holiday = '%s'", holidayPlanIndex);
         Statement stmt = this.databaseConnection.createStatement();
         if (stmt.executeUpdate(sql) <= 0) {

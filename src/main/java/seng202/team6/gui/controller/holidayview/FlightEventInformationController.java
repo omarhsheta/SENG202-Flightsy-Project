@@ -46,13 +46,6 @@ public class FlightEventInformationController {
     double distance;
 
     /**
-     * Called when this FXML page is loaded
-     */
-    public void initialize() {
-
-    }
-
-    /**
      * Called to populate the flightinformation FXML file with information about the flight.
      */
     public void populateInfo() {
@@ -67,9 +60,9 @@ public class FlightEventInformationController {
 
 
         String deptDayOfWeek = flight.getDateTime().getDayOfWeek().toString();
-        deptDayOfWeek = deptDayOfWeek.substring(0, 1) + deptDayOfWeek.substring(1).toLowerCase();
+        deptDayOfWeek = deptDayOfWeek.charAt(0) + deptDayOfWeek.substring(1).toLowerCase();
         String deptMonth = flight.getDateTime().getMonth().toString();
-        deptMonth = deptMonth.substring(0, 1) + deptMonth.substring(1).toLowerCase();
+        deptMonth = deptMonth.charAt(0) + deptMonth.substring(1).toLowerCase();
         String deptDayEnd;
         if (flight.getDateTime().getDayOfMonth() == 2 || flight.getDateTime().getDayOfMonth() == 3) {
             deptDayEnd = "rd";
@@ -83,9 +76,9 @@ public class FlightEventInformationController {
 
 
         String destDayOfWeek = flight.getArrivalDateTime().getDayOfWeek().toString();
-        destDayOfWeek = destDayOfWeek.substring(0, 1) + destDayOfWeek.substring(1).toLowerCase();
+        destDayOfWeek = destDayOfWeek.charAt(0) + destDayOfWeek.substring(1).toLowerCase();
         String destMonth = flight.getArrivalDateTime().getMonth().toString();
-        destMonth = destMonth.substring(0, 1) + destMonth.substring(1).toLowerCase();
+        destMonth = destMonth.charAt(0) + destMonth.substring(1).toLowerCase();
         String arrivalDayEnd;
         if (flight.getArrivalDateTime().getDayOfMonth() == 2 || flight.getArrivalDateTime().getDayOfMonth() == 3) {
             arrivalDayEnd = "rd";
