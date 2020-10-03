@@ -16,7 +16,7 @@ public class MainGUI extends Application {
      */
     private final String GUI_TITLE = "Flightsy - Travel Planner";
     private final int MIN_WIDTH = 1200;
-    private final int MIN_HEIGHT = 700;
+    private final int MIN_HEIGHT = 715;
 
     private final String menubarFXML = "menubar";
 
