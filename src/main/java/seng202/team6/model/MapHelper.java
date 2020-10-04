@@ -43,7 +43,7 @@ public class MapHelper
         String JSFunction = "PlaceRouteLines(%s);";
         ArrayList<Pair<Float, Float>> positions = new ArrayList<>();
         for (Airport airport : airports) {
-            positions.add(new Pair<>(airport.GetLatitude(), airport.GetLongitude()));
+            positions.add(new Pair<>(airport.getLatitude(), airport.getLongitude()));
         }
         String line = PositionsToArray(positions);
         if (!line.equals("")) {

@@ -58,13 +58,13 @@ public class Airline implements Comparable<Airline> {
         Airline airlineObject = (Airline)obj;
 
 
-        return this.AirlineID == airlineObject.GetAirlineID() && Objects.equals(this.Name, airlineObject.GetName())
-                && Objects.equals(this.Alias, airlineObject.GetAlias()) && Objects.equals(this.IATA, airlineObject.GetIATA())
-                && Objects.equals(this.ICAO, airlineObject.GetICAO()) && Objects.equals(this.Callsign, airlineObject.GetCallsign())
-                && Objects.equals(this.Country, airlineObject.getCountry()) && this.Active == airlineObject.GetActive();
+        return this.AirlineID == airlineObject.getAirlineID() && Objects.equals(this.Name, airlineObject.getName())
+                && Objects.equals(this.Alias, airlineObject.getAlias()) && Objects.equals(this.IATA, airlineObject.getIATA())
+                && Objects.equals(this.ICAO, airlineObject.getICAO()) && Objects.equals(this.Callsign, airlineObject.getCallsign())
+                && Objects.equals(this.Country, airlineObject.getCountry()) && this.Active == airlineObject.getActive();
     }
 
-    public int GetAirlineID() {
+    public int getAirlineID() {
         return AirlineID;
     }
 
@@ -72,7 +72,7 @@ public class Airline implements Comparable<Airline> {
         AirlineID = airlineID;
     }
 
-    public String GetName() {
+    public String getName() {
         return Name;
     }
 
@@ -80,7 +80,7 @@ public class Airline implements Comparable<Airline> {
         Name = name;
     }
 
-    public String GetAlias() {
+    public String getAlias() {
         return Alias;
     }
 
@@ -88,7 +88,7 @@ public class Airline implements Comparable<Airline> {
         Alias = alias;
     }
 
-    public String GetIATA() {
+    public String getIATA() {
         return IATA;
     }
 
@@ -96,7 +96,7 @@ public class Airline implements Comparable<Airline> {
         this.IATA = IATA;
     }
 
-    public String GetICAO() {
+    public String getICAO() {
         return ICAO;
     }
 
@@ -104,7 +104,7 @@ public class Airline implements Comparable<Airline> {
         this.ICAO = ICAO;
     }
 
-    public String GetCallsign() {
+    public String getCallsign() {
         return Callsign;
     }
 
@@ -120,7 +120,7 @@ public class Airline implements Comparable<Airline> {
         Country = country;
     }
 
-    public Character GetActive() {
+    public Character getActive() {
         return Active;
     }
 

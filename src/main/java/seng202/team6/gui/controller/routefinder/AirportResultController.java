@@ -29,10 +29,10 @@ public class AirportResultController extends ResultController {
      */
     public void SetAirport(Airport airportResult) {
         this.airport = airportResult;
-        airportLabel.setText(airportResult.GetName());
-        city.setText(String.format("City: %s", airportResult.GetCity()));
-        country.setText(String.format("Country: %s", airportResult.GetCountry()));
-        airportInfo.setText(String.format("IATA: %s | ICAO: %s", airportResult.GetIATA(), airportResult.GetICAO()));
+        airportLabel.setText(airportResult.getName());
+        city.setText(String.format("City: %s", airportResult.getCity()));
+        country.setText(String.format("Country: %s", airportResult.getCountry()));
+        airportInfo.setText(String.format("IATA: %s | ICAO: %s", airportResult.getIATA(), airportResult.getICAO()));
     }
 
     /**
@@ -46,6 +46,6 @@ public class AirportResultController extends ResultController {
             return;
         }
 
-        mapHelper.GoTo(airport.GetLatitude(), airport.GetLongitude());
+        mapHelper.GoTo(airport.getLatitude(), airport.getLongitude());
     }
 }
