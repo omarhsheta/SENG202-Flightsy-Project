@@ -6,7 +6,6 @@ import seng202.team6.model.entities.Route;
 import java.time.LocalDateTime;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
 
 public class FlightTest {
     @Test

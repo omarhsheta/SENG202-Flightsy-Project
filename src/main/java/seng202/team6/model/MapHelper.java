@@ -3,7 +3,6 @@ package seng202.team6.model;
 import javafx.scene.web.WebEngine;
 import javafx.util.Pair;
 import seng202.team6.model.entities.Airport;
-import seng202.team6.model.entities.Route;
 import seng202.team6.model.entities.RoutePath;
 import seng202.team6.model.interfaces.IMapDrawable;
 

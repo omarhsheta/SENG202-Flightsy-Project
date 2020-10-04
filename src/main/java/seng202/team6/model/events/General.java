@@ -4,7 +4,6 @@ import javafx.scene.layout.Pane;
 import javafx.util.Pair;
 import seng202.team6.gui.controller.holidayview.eventbuttons.GeneralBtnController;
 import seng202.team6.gui.helper.NodeHelper;
-import seng202.team6.model.entities.Route;
 
 import java.time.format.DateTimeFormatter;
 

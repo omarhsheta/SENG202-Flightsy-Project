@@ -1,6 +1,5 @@
 package seng202.team6.model.events;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import java.time.LocalDateTime;

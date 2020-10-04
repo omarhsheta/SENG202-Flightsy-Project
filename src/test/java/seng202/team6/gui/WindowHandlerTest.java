@@ -3,7 +3,6 @@ package seng202.team6.gui;
 import javafx.scene.layout.Pane;
 import org.junit.Before;
 import org.junit.Test;
-import seng202.team6.gui.WindowHandler;
 
 import static org.junit.Assert.assertEquals;
 

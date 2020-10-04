@@ -2,7 +2,6 @@ package seng202.team6.model.data;
 
 import org.junit.*;
 import seng202.team6.model.entities.*;
-import seng202.team6.model.user.HolidayPlan;
 
 import java.sql.Connection;
 import java.sql.Statement;

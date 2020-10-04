@@ -1,13 +1,10 @@
 package seng202.team6.model.data;
 
-import seng202.team6.gui.controller.AddRowController;
 import seng202.team6.model.entities.Airline;
 import seng202.team6.model.entities.Airport;
 import seng202.team6.model.entities.Route;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Set;
 
 public class AddRowHandler {
