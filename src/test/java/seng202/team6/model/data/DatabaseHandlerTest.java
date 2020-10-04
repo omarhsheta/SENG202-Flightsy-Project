@@ -47,19 +47,6 @@ public class DatabaseHandlerTest {
     private int databaseRowsAirport;
     private int databaseRowsRoute;
 
-    private HolidayPlan testHolidayPlan1;
-    private HolidayPlan testHolidayPlan2;
-    private HolidayPlan testHolidayPlan3;
-    private HolidayPlan testHolidayPlan4;
-    private HolidayPlan testHolidayPlan5;
-    private String testDirectory1;
-    private String testDirectory2;
-    private String testDirectory3;
-    private String testDirectory4;
-    private String testDirectory5;
-    private ArrayList<HolidayPlan> testHolidayPlans;
-    private ArrayList<HolidayPlan> actualHolidayPlans;
-
     public void fullClear() {
         filters.clear();
         testAirlines.clear();
@@ -68,8 +55,6 @@ public class DatabaseHandlerTest {
         actualAirports.clear();
         testRoutes.clear();
         actualRoutes.clear();
-        testHolidayPlans.clear();
-        actualHolidayPlans.clear();
     }
 
     public void cleanUp(Object object) {
@@ -81,8 +66,6 @@ public class DatabaseHandlerTest {
             } else if (object instanceof Route) {
                 Route route = (Route) object;
                 dataImport.DeleteRoute(route.getAirlineID(), route.getSourceAirportID(), route.getDestinationAirportID());
-            } else if (object instanceof HolidayPlan) {
-                dataImport.DeleteHolidayPlan(((HolidayPlan) object).getName());
             }
         } catch (Exception e) { System.out.println(e.getMessage()); }
     }
@@ -98,11 +81,6 @@ public class DatabaseHandlerTest {
         }
     }
     public void cleanUpListRte(ArrayList<Route> objects) {
-        for (int i = 0; i < objects.size(); i++) {
-            cleanUp(objects.get(i));
-        }
-    }
-    public void cleanUpListHpl(ArrayList<HolidayPlan> objects) {
         for (int i = 0; i < objects.size(); i++) {
             cleanUp(objects.get(i));
         }
@@ -1056,7 +1034,6 @@ public class DatabaseHandlerTest {
         cleanUp(testRoute1);
         fullClear();
     }
-    //TODO Should add more tests for UpdateRoute, as newAirline and NewAirports are not tested
 
     /**
      * Test deleting an airline in the database

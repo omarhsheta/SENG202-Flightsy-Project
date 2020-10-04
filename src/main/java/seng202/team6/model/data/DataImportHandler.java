@@ -220,16 +220,16 @@ public class DataImportHandler {
      * @param AirlineID The ID of the Airline undertaking the route and one of the primary keys for route
      * @param SourceAirportID The ID of the airport the route will depart from and one of the primary keys for route
      * @param DestinationAirportID The ID of the airport the route will arrive at and one of the primary keys for route
-     * @param newAirlineID The new ID of the airline undertaking the route
-     * @param newSourceAirportID The new ID of the airport the route will depart from
-     * @param newDestinationAirportID The new ID of the airport the route will arrive at
+     * @param newAirline The new airline object
+     * @param newSourceAirport The new source airport object
+     * @param newDestinationAirport The new destination object
      * @param Codeshare A character stating whether the route is a codeshare
      * @param Stops The number of stops the route has
      * @param Equipment A three character code for plane types
      * @throws SQLException Throws an SQLException when the update query is invalid
      */
-    public void UpdateRoute(int AirlineID, int SourceAirportID, int DestinationAirportID, Integer newAirlineID,
-                            Integer newSourceAirportID, Integer newDestinationAirportID, Character Codeshare,
+    public void UpdateRoute(int AirlineID, int SourceAirportID, int DestinationAirportID, Airline newAirline,
+                            Airport newSourceAirport, Airport newDestinationAirport, Character Codeshare,
                             Integer Stops, String Equipment) throws Exception {
         Statement stmt = this.databaseConnection.createStatement();
 
@@ -237,29 +237,29 @@ public class DataImportHandler {
 
         ArrayList<Filter> filters = new ArrayList<Filter>();
         try {
-            if (newAirlineID != null) {
-                Filter filter1 = new Filter(format("id_airline = %d", newAirlineID), "");
+            if (newAirline != null) {
+                Filter filter1 = new Filter(format("icao = '%s'", newAirline.getICAO()), "");
                 filters.add(filter1);
-                Airline newAirline = DataExportHandler.GetInstance().FetchAirlines(filters).get(0);
+                Airline newAirlineDB = DataExportHandler.GetInstance().FetchAirlines(filters).get(0);
                 filters.clear();
-                setSQL += format("id_airline = %d,", newAirline.getAirlineID());
-                setSQL += format("airline = '%s',", newAirline.getICAO());
+                setSQL += format("id_airline = %d,", newAirlineDB.getAirlineID());
+                setSQL += format("airline = '%s',", newAirlineDB.getICAO());
             }
-            if (newSourceAirportID != null) {
-                Filter filter2 = new Filter(format("id_airport", newSourceAirportID), "");
+            if (newSourceAirport != null) {
+                Filter filter2 = new Filter(format("icao = '%s'", newSourceAirport.getICAO()), "");
                 filters.add(filter2);
-                Airport newSourceAirport = DataExportHandler.GetInstance().FetchAirports(filters).get(0);
+                Airport newSourceAirportDB = DataExportHandler.GetInstance().FetchAirports(filters).get(0);
                 filters.clear();
-                setSQL += format("source_airport_id = %d,", newSourceAirport.getAirportID());
-                setSQL += format("source_airport = '%s',", newSourceAirport.getICAO());
+                setSQL += format("source_airport_id = %d,", newSourceAirportDB.getAirportID());
+                setSQL += format("source_airport = '%s',", newSourceAirportDB.getICAO());
             }
-            if (newDestinationAirportID != null) {
-                Filter filter3 = new Filter(format("id_airport", newDestinationAirportID), "");
+            if (newDestinationAirport != null) {
+                Filter filter3 = new Filter(format("icao = '%s'", newDestinationAirport.getICAO()), "");
                 filters.add(filter3);
-                Airport newDestinationAirport = DataExportHandler.GetInstance().FetchAirports(filters).get(0);
+                Airport newDestinationAirportDB = DataExportHandler.GetInstance().FetchAirports(filters).get(0);
                 filters.clear();
-                setSQL += format("destination_airport_id = %d,", newDestinationAirport.getAirportID());
-                setSQL += format("destination_airport = '%s',", newDestinationAirport.getICAO());
+                setSQL += format("destination_airport_id = %d,", newDestinationAirportDB.getAirportID());
+                setSQL += format("destination_airport = '%s',", newDestinationAirportDB.getICAO());
             }
         } catch (Exception e) { e.getMessage(); }
 
