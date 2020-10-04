@@ -45,6 +45,7 @@ public class HolidayPlan implements JSONSerializable {
     /**
      * Constructor for turning object from JSON
      * @param json JSON String
+     * @return HolidayPlan object
      */
     public static HolidayPlan FromJSON(String json) {
         Gson gson = new Gson();
@@ -71,6 +72,8 @@ public class HolidayPlan implements JSONSerializable {
      * @param N Any String with additional information about the event
      * @param nCity The city where the general event is taking place
      * @param nCountry The country where the general event is taking place
+     * @param newHour Hour
+     * @param newMinute Minute
      */
     public void ItineraryAppend(General General, int D, int M, int Y, int newHour, int newMinute, String T, String N, String nCity, String nCountry) {
         General = new General(D, M, Y, newHour, newMinute, T, N, nCity, nCountry);

@@ -27,6 +27,7 @@ public class RoutePath implements IMapDrawable, JSONSerializable {
     /**
      * Constructor for turning object from JSON
      * @param json JSON String
+     * @return RoutePath object
      */
     public static RoutePath FromJSON(String json) {
         Gson gson = new Gson();

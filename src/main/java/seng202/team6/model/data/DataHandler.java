@@ -103,6 +103,7 @@ public class DataHandler {
     /**
      * Try delete file from data folder
      * @param filename File to delete
+     * @return Boolean on whether was successful or not
      */
     public boolean DeleteDataFile(String filename) {
         File newFile = new File(GetDataFolder(), filename);

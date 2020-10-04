@@ -27,6 +27,8 @@ public class General extends Event {
      * @param N Any String with additional information about the event
      * @param nCity The city where the general event is taking place
      * @param nCountry The country where the general event is taking place
+     * @param newHour Hour
+     * @param newMinute Minute
      */
     public General(int D, int M, int Y, int newHour, int newMinute, String T, String N, String nCity, String nCountry) {
         super(D, M, Y, newHour, newMinute, T, N);

@@ -278,8 +278,9 @@ public class DataExportHandler {
     /**
      * Fetches the holiday plan entry from the database
      * @param filters Filters on fetch
+     * @return ArrayList of holiday plans
      */
-    public ArrayList<HolidayPlan> FetchHolidayPlanObjects(ArrayList<Filter> filters) throws SQLException {
+    public ArrayList<HolidayPlan> FetchHolidayPlanObjects(ArrayList<Filter> filters){
         String query = SQLHelper.ExtractQuery("holiday_plan", filters);
         ArrayList<HolidayPlan> fetchedHolidayPlans = new ArrayList<HolidayPlan>();
         try {
@@ -294,8 +295,9 @@ public class DataExportHandler {
     /**
      * Fetches the holiday plan entry from the database
      * @param filters Filters on fetch
+     * @return Arraylsit of string directories
      */
-    public ArrayList<String> FetchHolidayPlans(ArrayList<Filter> filters) throws SQLException {
+    public ArrayList<String> FetchHolidayPlans(ArrayList<Filter> filters) {
         String query = SQLHelper.ExtractQuery("holiday_plan", filters);
         ArrayList<String> directories = new ArrayList<>();
         try {
@@ -318,6 +320,7 @@ public class DataExportHandler {
      * @param routePath the route path object
      * @return an array list of size two where the first element is the source airport ID and the second element is the
      * destination airport ID
+     * @throws SQLException when something went wrong in the database
      */
     public ArrayList<Integer> getAirportIDsFromRoutePath2(RoutePath routePath) throws SQLException{
         String sourceAirportICAO = routePath.GetSource();
@@ -340,6 +343,7 @@ public class DataExportHandler {
      * Inserts the holiday plan object's directory location into the database
      * @param name the name of the holiday plan object in the array of holiday plans
      * @param directory the directory in which the holiday plan object resides
+     * @throws SQLException when something went wrong in the database
      */
     public void InsertHolidayPlan(String name, String directory) throws SQLException {
         String sql = format("INSERT INTO holiday_plan (name, directory), VALUES ('%s', '%s')", name, directory);
