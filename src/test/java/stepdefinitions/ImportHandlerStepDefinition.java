@@ -12,6 +12,7 @@ import seng202.team6.model.entities.Airport;
 import seng202.team6.model.entities.Route;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class ImportHandlerStepDefinition {
@@ -25,10 +26,8 @@ public class ImportHandlerStepDefinition {
             "test", "test", "test", 't');
     private Airport testAirport1 = new Airport(-1, "Name", "City", "Country",
             "IATA", "ICAO", (float) 0, (float) 0, 0, 1, 'U');
-    private Route testRoute1 = new Route(9999, "test", "test", 9999,
-            "test", 99999, 'Y', 0, "test");
-    private Route testRoute2 = new Route(9999, "test", "test", 9999,
-            "test", 99999, 'Y', 0, "test");
+    private Route testRoute1 = new Route(-1, "test", "test", -1,
+            "test", -2, 'Y', 0, "test");
 
     private String user;
     private String airportName;
@@ -61,6 +60,12 @@ public class ImportHandlerStepDefinition {
         filters.add(new Filter(String.format("NAME = '%s'", airportName), null));
         ArrayList<Airport> fetchedAirports = dataExportHandler.FetchAirports(filters);
         Assert.assertTrue(fetchedAirports.size() > 0);
+
+        try {
+            dataImportHandler.DeleteAirport(testAirport1.getAirportID());
+        } catch (SQLException ignored) {
+            //Airport does not exist
+        }
     }
 
     @Given("A user selects an airline to import")
@@ -77,7 +82,16 @@ public class ImportHandlerStepDefinition {
 
     @When("A user imports the selected airline")
     public void aUserImportsTheSelectedAirline() throws Throwable {
-        dataImportHandler.InsertAirline(selectedAirline);
+        boolean inserted = false;
+        while(!inserted) {
+            try {
+                dataImportHandler.InsertAirline(selectedAirline);
+                inserted = true;
+            } catch (SQLException e) {
+                // Duplicate data, decrement ID
+                selectedAirline.SetAirlineID(selectedAirline.getAirlineID() - 1);
+            }
+        }
     }
 
 
@@ -88,13 +102,31 @@ public class ImportHandlerStepDefinition {
         filters.add(new Filter(String.format("NAME = '%s'", airlineName), null));
         ArrayList<Airline> fetchedAirlines = dataExportHandler.FetchAirlines(filters);
         Assert.assertTrue(fetchedAirlines.size() > 0);
+
+        try {
+            dataImportHandler.DeleteAirline(testAirline1.getAirlineID());
+        } catch (SQLException ignored) {
+            //Airline does not exist
+        }
     }
 
     @Given("{string} exists within the list of airports")
     public void existsWithinTheListOfAirports(String airportName) throws Throwable {
         this.airportName = airportName;
         testAirport1.SetName(airportName);
-        dataImportHandler.InsertAirport(testAirport1);
+
+        boolean inserted = false;
+        while(!inserted) {
+            try {
+                dataImportHandler.InsertAirport(testAirport1);
+                inserted = true;
+            } catch (SQLException e) {
+                // Duplicate data, decrement ID until unique
+                testAirport1.SetAirportID(testAirport1.getAirportID() - 1);
+            }
+        }
+
+
     }
 
     @When("A user imports a route between {string} and {string} airports")
@@ -103,10 +135,19 @@ public class ImportHandlerStepDefinition {
         this.destName = destName;
 
         testRoute1.SetDestinationAirport(destName);
-        testRoute2.SetSourceAirport(sourceName);
+        testRoute1.SetSourceAirport(sourceName);
 
-        dataImportHandler.InsertRoute(testRoute1);
-        dataImportHandler.InsertRoute(testRoute2);
+        boolean inserted = false;
+        while(!inserted) {
+            try {
+                dataImportHandler.InsertRoute(testRoute1);
+                inserted = true;
+            } catch (SQLException e) {
+                // Duplicate data, decrement ID until unique
+                testRoute1.SetAirlineID(testRoute1.getAirlineID() - 1);
+            }
+        }
+
     }
 
     @Then("A route between {string} and {string} airports exists in the list of routes")
@@ -122,5 +163,11 @@ public class ImportHandlerStepDefinition {
         filters.add(new Filter(String.format("source_airport = '%s' AND destination_airport = '%s'", srcCode, dstCode), null));
         ArrayList<Route> fetchedRoutes = dataExportHandler.FetchRoutes(filters);
         Assert.assertTrue(fetchedRoutes.size() > 0);
+
+        try {
+            dataImportHandler.DeleteRoute(testRoute1.getAirlineID(), testRoute1.getSourceAirportID(), testRoute1.getDestinationAirportID());
+        } catch (SQLException ignored) {
+            //Route does not exist
+        }
     }
 }

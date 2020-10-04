@@ -9,9 +9,8 @@ import seng202.team6.model.user.HolidayPlan;
 
 public class HolidayPlanStepDefinition {
 
-    int numHolidays;
-//    HolidayAgendaController holidayAgendaController = HolidayAgendaController.GetInstance();
-    HolidayPlan temp;
+
+    HolidayPlan holidayPlan;
     String holidayName;
     
 
@@ -24,12 +23,12 @@ public class HolidayPlanStepDefinition {
     @When("the user names the holiday plan {string}")
     public void theUserNamesTheHolidayPlan(String holidayName) throws Throwable {
 //        holidayAgendaController.CreateNewHoliday(holidayName);
-        temp = new HolidayPlan(holidayName);
+        holidayPlan = new HolidayPlan(holidayName);
     }
 
     @Then("the holiday plan name is {string}")
     public void theHolidayPlanNameIs(String holidayName) throws Throwable {
-        Assert.assertEquals(holidayName, temp.getName());
+        Assert.assertEquals(holidayName, holidayPlan.getName());
     }
 
 //    @Given("the user {string} has {int} holiday plans")
