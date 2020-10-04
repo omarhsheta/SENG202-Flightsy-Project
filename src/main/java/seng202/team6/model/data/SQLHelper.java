@@ -49,9 +49,9 @@ public class SQLHelper
 
         StringBuilder list = new StringBuilder();
         for (int i = 0; i < airports.size() - 1; i++) {
-            list.append(String.format("'%s', ", airports.get(i).getIATA()));
+            list.append(String.format("'%s', ", airports.get(i).GetIATA()));
         }
-        list.append(String.format("'%s'", airports.get(airports.size() - 1).getIATA()));
+        list.append(String.format("'%s'", airports.get(airports.size() - 1).GetIATA()));
 
         return list.toString();
     }
@@ -68,9 +68,9 @@ public class SQLHelper
 
         StringBuilder list = new StringBuilder();
         for (int i = 0; i < airports.size() - 1; i++) {
-            list.append(String.format("'%s', ", airports.get(i).getICAO()));
+            list.append(String.format("'%s', ", airports.get(i).GetICAO()));
         }
-        list.append(String.format("'%s'", airports.get(airports.size() - 1).getICAO()));
+        list.append(String.format("'%s'", airports.get(airports.size() - 1).GetICAO()));
 
         return list.toString();
     }
@@ -87,9 +87,9 @@ public class SQLHelper
 
         StringBuilder list = new StringBuilder();
         for (int i = 0; i < airports.size() - 1; i++) {
-            list.append(String.format("'%s', ", airports.get(i).getAirportID()));
+            list.append(String.format("'%s', ", airports.get(i).GetAirportID()));
         }
-        list.append(String.format("'%s'", airports.get(airports.size() - 1).getAirportID()));
+        list.append(String.format("'%s'", airports.get(airports.size() - 1).GetAirportID()));
 
         return list.toString();
     }

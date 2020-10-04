@@ -4,7 +4,6 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
-import seng202.team6.gui.controller.HolidayAgendaController;
 import seng202.team6.model.user.HolidayPlan;
 
 public class HolidayPlanStepDefinition {
@@ -28,7 +27,7 @@ public class HolidayPlanStepDefinition {
 
     @Then("the holiday plan name is {string}")
     public void theHolidayPlanNameIs(String holidayName) throws Throwable {
-        Assert.assertEquals(holidayName, holidayPlan.getName());
+        Assert.assertEquals(holidayName, holidayPlan.GetName());
     }
 
 //    @Given("the user {string} has {int} holiday plans")

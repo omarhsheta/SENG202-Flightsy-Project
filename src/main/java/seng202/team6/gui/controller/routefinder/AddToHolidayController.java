@@ -103,7 +103,7 @@ public class AddToHolidayController implements Initializable {
      */
     @FXML
     private void OnAddToHolidayButtonClicked() {
-        String title = String.format("%s to %s", route.getSourceAirport(), route.getDestinationAirport());
+        String title = String.format("%s to %s", route.GetSourceAirport(), route.GetDestinationAirport());
         String notes = "";
 
         int dDay, dMonth, dYear, dHour, dMinute;

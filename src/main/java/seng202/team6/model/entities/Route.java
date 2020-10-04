@@ -60,18 +60,18 @@ public class Route implements Comparable<Route> {
 
         Route routeObject = (Route)obj;
 
-        return this.AirlineID == routeObject.getAirlineID()
-                && Objects.equals(this.Airline, routeObject.getAirline())
-                && Objects.equals(this.SourceAirport, routeObject.getSourceAirport())
-                && this.SourceAirportID == routeObject.getSourceAirportID()
-                && Objects.equals(this.DestinationAirport, routeObject.getDestinationAirport())
-                && this.DestinationAirportID == routeObject.getDestinationAirportID()
-                && this.Codeshare == routeObject.getCodeshare()
-                && this.Stops == routeObject.getStops()
-                && Objects.equals(this.Equipment, routeObject.getEquipment());
+        return this.AirlineID == routeObject.GetAirlineID()
+                && Objects.equals(this.Airline, routeObject.GetAirline())
+                && Objects.equals(this.SourceAirport, routeObject.GetSourceAirport())
+                && this.SourceAirportID == routeObject.GetSourceAirportID()
+                && Objects.equals(this.DestinationAirport, routeObject.GetDestinationAirport())
+                && this.DestinationAirportID == routeObject.GetDestinationAirportID()
+                && this.Codeshare == routeObject.GetCodeshare()
+                && this.Stops == routeObject.GetStops()
+                && Objects.equals(this.Equipment, routeObject.GetEquipment());
     }
 
-    public int getAirlineID() {
+    public int GetAirlineID() {
         return AirlineID;
     }
 
@@ -79,7 +79,7 @@ public class Route implements Comparable<Route> {
         AirlineID = airlineID;
     }
 
-    public String getAirline() {
+    public String GetAirline() {
         return Airline;
     }
 
@@ -87,7 +87,7 @@ public class Route implements Comparable<Route> {
         Airline = airline;
     }
 
-    public String getSourceAirport() {
+    public String GetSourceAirport() {
         return SourceAirport;
     }
 
@@ -95,7 +95,7 @@ public class Route implements Comparable<Route> {
         SourceAirport = sourceAirport;
     }
 
-    public int getSourceAirportID() {
+    public int GetSourceAirportID() {
         return SourceAirportID;
     }
 
@@ -103,7 +103,7 @@ public class Route implements Comparable<Route> {
         SourceAirportID = sourceAirportID;
     }
 
-    public String getDestinationAirport() {
+    public String GetDestinationAirport() {
         return DestinationAirport;
     }
 
@@ -111,7 +111,7 @@ public class Route implements Comparable<Route> {
         DestinationAirport = destinationAirport;
     }
 
-    public int getDestinationAirportID() {
+    public int GetDestinationAirportID() {
         return DestinationAirportID;
     }
 
@@ -119,7 +119,7 @@ public class Route implements Comparable<Route> {
         DestinationAirportID = destinationAirportID;
     }
 
-    public Character getCodeshare() {
+    public Character GetCodeshare() {
         return Codeshare;
     }
 
@@ -127,7 +127,7 @@ public class Route implements Comparable<Route> {
         Codeshare = codeshare;
     }
 
-    public int getStops() {
+    public int GetStops() {
         return Stops;
     }
 
@@ -135,7 +135,7 @@ public class Route implements Comparable<Route> {
         Stops = stops;
     }
 
-    public String getEquipment() {
+    public String GetEquipment() {
         return Equipment;
     }
 

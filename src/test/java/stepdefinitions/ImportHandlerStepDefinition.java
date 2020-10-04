@@ -62,7 +62,7 @@ public class ImportHandlerStepDefinition {
         Assert.assertTrue(fetchedAirports.size() > 0);
 
         try {
-            dataImportHandler.DeleteAirport(testAirport1.getAirportID());
+            dataImportHandler.DeleteAirport(testAirport1.GetAirportID());
         } catch (SQLException ignored) {
             //Airport does not exist
         }
@@ -89,7 +89,7 @@ public class ImportHandlerStepDefinition {
                 inserted = true;
             } catch (SQLException e) {
                 // Duplicate data, decrement ID
-                selectedAirline.SetAirlineID(selectedAirline.getAirlineID() - 1);
+                selectedAirline.SetAirlineID(selectedAirline.GetAirlineID() - 1);
             }
         }
     }
@@ -104,7 +104,7 @@ public class ImportHandlerStepDefinition {
         Assert.assertTrue(fetchedAirlines.size() > 0);
 
         try {
-            dataImportHandler.DeleteAirline(testAirline1.getAirlineID());
+            dataImportHandler.DeleteAirline(testAirline1.GetAirlineID());
         } catch (SQLException ignored) {
             //Airline does not exist
         }
@@ -122,7 +122,7 @@ public class ImportHandlerStepDefinition {
                 inserted = true;
             } catch (SQLException e) {
                 // Duplicate data, decrement ID until unique
-                testAirport1.SetAirportID(testAirport1.getAirportID() - 1);
+                testAirport1.SetAirportID(testAirport1.GetAirportID() - 1);
             }
         }
 
@@ -144,7 +144,7 @@ public class ImportHandlerStepDefinition {
                 inserted = true;
             } catch (SQLException e) {
                 // Duplicate data, decrement ID until unique
-                testRoute1.SetAirlineID(testRoute1.getAirlineID() - 1);
+                testRoute1.SetAirlineID(testRoute1.GetAirlineID() - 1);
             }
         }
 
@@ -158,14 +158,14 @@ public class ImportHandlerStepDefinition {
         ArrayList<Filter> filters = new ArrayList<>();
         filterSrc.add(new Filter(String.format("NAME = '%s'", sourceName), null));
         filterDst.add(new Filter(String.format("NAME = '%s'", destName), null));
-        String srcCode = dataExportHandler.FetchAirports(filterSrc).get(0).getIATA();
-        String dstCode = dataExportHandler.FetchAirports(filterDst).get(0).getIATA();
+        String srcCode = dataExportHandler.FetchAirports(filterSrc).get(0).GetIATA();
+        String dstCode = dataExportHandler.FetchAirports(filterDst).get(0).GetIATA();
         filters.add(new Filter(String.format("source_airport = '%s' AND destination_airport = '%s'", srcCode, dstCode), null));
         ArrayList<Route> fetchedRoutes = dataExportHandler.FetchRoutes(filters);
         Assert.assertTrue(fetchedRoutes.size() > 0);
 
         try {
-            dataImportHandler.DeleteRoute(testRoute1.getAirlineID(), testRoute1.getSourceAirportID(), testRoute1.getDestinationAirportID());
+            dataImportHandler.DeleteRoute(testRoute1.GetAirlineID(), testRoute1.GetSourceAirportID(), testRoute1.GetDestinationAirportID());
         } catch (SQLException ignored) {
             //Route does not exist
         }

@@ -81,7 +81,7 @@ public class HolidayPlan implements JSONSerializable {
      *
      * @return the holiday name
      */
-    public String getName() {
+    public String GetName() {
         return name;
     }
 

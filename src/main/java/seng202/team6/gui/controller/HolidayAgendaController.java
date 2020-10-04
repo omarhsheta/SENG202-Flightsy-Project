@@ -106,7 +106,7 @@ public class HolidayAgendaController implements Initializable {
     private void RepopulateComboBox() {
         holidaySelectChoiceBox.getItems().clear();
         for (HolidayPlan holiday : holidays) {
-            holidaySelectChoiceBox.getItems().add(holiday.getName());
+            holidaySelectChoiceBox.getItems().add(holiday.GetName());
         }
 
         if (holidays.size() > 0) {
@@ -175,13 +175,13 @@ public class HolidayAgendaController implements Initializable {
      */
     public void CreateNewHoliday(String name) {
         HolidayPlan plan = new HolidayPlan(name);
-        String planName = plan.getName();
+        String planName = plan.GetName();
         if (planName.isBlank() || planName.isEmpty()) {
             return;
         }
 
         for (HolidayPlan oldPlans : holidays) {
-            if (oldPlans.getName().equals(planName)) {
+            if (oldPlans.GetName().equals(planName)) {
                 System.out.println("Failed to create holiday, name already taken.");
                 return;
             }
@@ -302,7 +302,7 @@ public class HolidayAgendaController implements Initializable {
             return;
         }
         HolidayPlan selected = holidays.get(selectedHolidayIndex);
-        String name = selected.getName();
+        String name = selected.GetName();
         holidays.remove(selected);
 
         try {

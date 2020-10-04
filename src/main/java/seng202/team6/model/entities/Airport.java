@@ -68,12 +68,12 @@ public class Airport implements IMapDrawable, Comparable<Airport> {
 
         Airport airportObject = (Airport)obj;
 
-        return this.AirportID == airportObject.getAirportID() && Objects.equals(this.Name, airportObject.getName())
-                && Objects.equals(this.City, airportObject.getCity()) && Objects.equals(this.Country, airportObject.getCountry())
-                && Objects.equals(this.IATA, airportObject.getIATA()) && Objects.equals(this.ICAO, airportObject.getICAO())
-                && this.Latitude == airportObject.getLatitude() && this.Longitude == airportObject.getLongitude()
-                && this.Altitude == airportObject.getAltitude() && this.Timezone == airportObject.getTimezone()
-                && this.DST == airportObject.getDST();
+        return this.AirportID == airportObject.GetAirportID() && Objects.equals(this.Name, airportObject.GetName())
+                && Objects.equals(this.City, airportObject.GetCity()) && Objects.equals(this.Country, airportObject.GetCountry())
+                && Objects.equals(this.IATA, airportObject.GetIATA()) && Objects.equals(this.ICAO, airportObject.GetICAO())
+                && this.Latitude == airportObject.GetLatitude() && this.Longitude == airportObject.GetLongitude()
+                && this.Altitude == airportObject.GetAltitude() && this.Timezone == airportObject.GetTimezone()
+                && this.DST == airportObject.GetDST();
     }
 
     /**
@@ -99,9 +99,9 @@ public class Airport implements IMapDrawable, Comparable<Airport> {
                         "name: \"%s\", country: \"%s\", city: \"%s\", " +
                         "iata: \"%s\", icao: \"%s\", alt: %d, tz: %f",
 
-                this.getLatitude(), this.getLongitude(), this.getName(),
-                this.getCountry(), this.getCity(), this.getIATA(), this.getICAO(),
-                this.getAltitude(), this.getTimezone());
+                this.GetLatitude(), this.GetLongitude(), this.GetName(),
+                this.GetCountry(), this.GetCity(), this.GetIATA(), this.GetICAO(),
+                this.GetAltitude(), this.GetTimezone());
     }
 
     /**
@@ -117,7 +117,7 @@ public class Airport implements IMapDrawable, Comparable<Airport> {
         return new Pair<>(sourceAirports, destinationAirports);
     }
 
-    public int getAirportID() {
+    public int GetAirportID() {
         return AirportID;
     }
 
@@ -125,7 +125,7 @@ public class Airport implements IMapDrawable, Comparable<Airport> {
         AirportID = airportID;
     }
 
-    public String getName() {
+    public String GetName() {
         return Name;
     }
 
@@ -133,7 +133,7 @@ public class Airport implements IMapDrawable, Comparable<Airport> {
         Name = name;
     }
 
-    public String getCity() {
+    public String GetCity() {
         return City;
     }
 
@@ -141,7 +141,7 @@ public class Airport implements IMapDrawable, Comparable<Airport> {
         City = city;
     }
 
-    public String getCountry() {
+    public String GetCountry() {
         return Country;
     }
 
@@ -149,7 +149,7 @@ public class Airport implements IMapDrawable, Comparable<Airport> {
         Country = country;
     }
 
-    public String getIATA() {
+    public String GetIATA() {
         return IATA;
     }
 
@@ -157,7 +157,7 @@ public class Airport implements IMapDrawable, Comparable<Airport> {
         this.IATA = IATA;
     }
 
-    public String getICAO() {
+    public String GetICAO() {
         return ICAO;
     }
 
@@ -165,7 +165,7 @@ public class Airport implements IMapDrawable, Comparable<Airport> {
         this.ICAO = ICAO;
     }
 
-    public float getLatitude() {
+    public float GetLatitude() {
         return Latitude;
     }
 
@@ -173,7 +173,7 @@ public class Airport implements IMapDrawable, Comparable<Airport> {
         Latitude = latitude;
     }
 
-    public float getLongitude() {
+    public float GetLongitude() {
         return Longitude;
     }
 
@@ -181,7 +181,7 @@ public class Airport implements IMapDrawable, Comparable<Airport> {
         Longitude = longitude;
     }
 
-    public int getAltitude() {
+    public int GetAltitude() {
         return Altitude;
     }
 
@@ -189,7 +189,7 @@ public class Airport implements IMapDrawable, Comparable<Airport> {
         Altitude = altitude;
     }
 
-    public float getTimezone() {
+    public float GetTimezone() {
         return Timezone;
     }
 
@@ -197,7 +197,7 @@ public class Airport implements IMapDrawable, Comparable<Airport> {
         Timezone = timezone;
     }
 
-    public char getDST() {
+    public char GetDST() {
         return DST;
     }
 

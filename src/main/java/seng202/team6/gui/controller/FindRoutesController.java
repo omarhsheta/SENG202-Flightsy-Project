@@ -205,7 +205,7 @@ public class FindRoutesController implements Initializable
             Pair<BorderPane, AnalysisDistanceController> pair = NodeHelper.LoadNode(subFolder, analysisDistanceResultComponent);
             resultsPane.getChildren().add(pair.getKey());
             AnalysisDistanceController resultController = pair.getValue();
-            String title = String.format("%s to %s", sourceAirport.getIATA(), destAirport.getIATA());
+            String title = String.format("%s to %s", sourceAirport.GetIATA(), destAirport.GetIATA());
             String destText = String.format("%.2f km", distance);
             //Display Distance
             resultController.SetInfo(title, destText);

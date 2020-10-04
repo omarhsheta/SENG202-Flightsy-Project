@@ -89,7 +89,7 @@ public class HolidayPlanTest {
         assertEquals(1, deserialized.GetFlights().size());
         assertEquals(0, deserialized.GetItineraries().size());
 
-        assertEquals("Testplan", deserialized.getName());
+        assertEquals("Testplan", deserialized.GetName());
 
         String json2 = "{\"name\":\"Hi\",\"itineraries\":[{\"City\":\"Christchurch\",\"Country\":\"New Zealand\"," +
                 "\"dateTime\":{\"date\":{\"year\":0,\"month\":2,\"day\":10},\"time\":{\"hour\":10,\"minute\":59,\"second\":0,\"nano\":0}}," +
@@ -103,6 +103,6 @@ public class HolidayPlanTest {
         assertEquals(0, deserialized2.GetFlights().size());
         assertEquals(1, deserialized2.GetItineraries().size());
 
-        assertEquals("Hi", deserialized2.getName());
+        assertEquals("Hi", deserialized2.GetName());
     }
 }
