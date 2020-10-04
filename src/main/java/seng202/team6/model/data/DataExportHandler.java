@@ -147,13 +147,14 @@ public class DataExportHandler {
      */
     public ArrayList<Airline> FetchAirlines(ArrayList<Filter> filters) {
         String query = SQLHelper.ExtractQuery("airline", filters);
+        ArrayList<Airline> fetchedAirlines = new ArrayList<Airline>();
         try {
             Statement stmt = this.databaseConnection.createStatement();
-            ResultSet rs = stmt.executeQuery(query);
-            return ExtractAirlines(rs);
-        } catch (Exception ignored) {
-            return null;
+            fetchedAirlines = ExtractAirlines(stmt.executeQuery(query));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
+        return fetchedAirlines;
     }
 
     /**
@@ -164,6 +165,7 @@ public class DataExportHandler {
      */
     public ArrayList<Airport> FetchAirports(ArrayList<Filter> filters, String sortType) {
         ArrayList<Airport> airports = new ArrayList<>();
+        ArrayList<Airport> fetchedAirports = new ArrayList<Airport>();
 
         StringBuilder builder = new StringBuilder();
         builder.append("SELECT count(a.id_airport), a.id_airport, a.name, a.city, a.country, a.iata, a.icao, " +
@@ -183,18 +185,16 @@ public class DataExportHandler {
             builder.append(filters.get(filters.size() - 1).GetFilter());
             builder.append("\n");
         }
-
         builder.append(format("GROUP BY a.id_airport\nORDER BY count(a.id_airport) %s;", sortType));
 
         String query = builder.toString();
-
         try {
             Statement stmt = this.databaseConnection.createStatement();
-            ResultSet rs = stmt.executeQuery(query);
-            return ExtractAirports(rs);
-        } catch (Exception ignored) {
-            return null;
+            fetchedAirports =  ExtractAirports(stmt.executeQuery(query));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
+        return fetchedAirports;
     }
 
     /**
@@ -204,13 +204,14 @@ public class DataExportHandler {
      */
     public ArrayList<Airport> FetchAirports(ArrayList<Filter> filters) {
         String query = SQLHelper.ExtractQuery("airport", filters);
+        ArrayList<Airport> fetchedAirports = new ArrayList<Airport>();
         try {
             Statement stmt = this.databaseConnection.createStatement();
-            ResultSet rs = stmt.executeQuery(query);
-            return ExtractAirports(rs);
-        } catch (Exception ignored) {
-            return null;
+            fetchedAirports = ExtractAirports(stmt.executeQuery(query));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
+        return fetchedAirports;
     }
 
     /**
@@ -220,13 +221,14 @@ public class DataExportHandler {
      */
     public ArrayList<Route> FetchRoutes(ArrayList<Filter> filters) {
         String query = SQLHelper.ExtractQuery("route", filters);
+        ArrayList<Route> fetchedRoutes = new ArrayList<Route>();
         try {
             Statement stmt = this.databaseConnection.createStatement();
-            ResultSet rs = stmt.executeQuery(query);
-            return ExtractRoutes(rs);
-        } catch (Exception ignored) {
-            return null;
+            fetchedRoutes = ExtractRoutes(stmt.executeQuery(query));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
+        return fetchedRoutes;
     }
 
     /**
@@ -237,7 +239,7 @@ public class DataExportHandler {
      * @return All routes that fit the database query
      */
     public ArrayList<Route> FetchRoutes(ArrayList<Airport> sourceAirports, ArrayList<Airport> destinationAirports, int maxStops) {
-        //This is big oof query, joining two tables
+        ArrayList<Route> fetchedRoutes = new ArrayList<Route>();
         String query = String.format("SELECT * FROM route " +
                         "JOIN (SELECT airport.iata FROM airport) " +
                         "WHERE iata = route.source_airport " +
@@ -246,11 +248,11 @@ public class DataExportHandler {
                 SQLHelper.GetAirportIATAList(sourceAirports), SQLHelper.GetAirportIATAList(destinationAirports), maxStops);
         try {
             Statement stmt = this.databaseConnection.createStatement();
-            ResultSet rs = stmt.executeQuery(query);
-            return ExtractRoutes(rs);
-        } catch (Exception ignored) {
-            return null;
+            fetchedRoutes = ExtractRoutes(stmt.executeQuery(query));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
+        return fetchedRoutes;
     }
 
     /**
@@ -260,17 +262,17 @@ public class DataExportHandler {
      * @return All Route paths that fit the database query
      */
     public ArrayList<RoutePath> FetchRoutePaths(ArrayList<Airport> sourceAirports, ArrayList<Airport> destinationAirports) {
+        ArrayList<RoutePath> fetchedRoutePaths = new ArrayList<RoutePath>();
         String query = String.format("SELECT directory FROM flight_path " +
                         "WHERE source_airport_id IN (%s) AND destination_airport_id IN (%s);",
                 SQLHelper.GetAirportIDList(sourceAirports), SQLHelper.GetAirportIDList(destinationAirports));
         try {
             Statement stmt = this.databaseConnection.createStatement();
-            ResultSet rs = stmt.executeQuery(query);
-            return ExtractRoutePaths(rs);
-
-        } catch (Exception ignored) {
-            return null;
+            fetchedRoutePaths = ExtractRoutePaths(stmt.executeQuery(query));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
+        return fetchedRoutePaths;
     }
 
     /**
@@ -279,13 +281,14 @@ public class DataExportHandler {
      */
     public ArrayList<HolidayPlan> FetchHolidayPlanObjects(ArrayList<Filter> filters) throws SQLException {
         String query = SQLHelper.ExtractQuery("holiday_plan", filters);
+        ArrayList<HolidayPlan> fetchedHolidayPlans = new ArrayList<HolidayPlan>();
         try {
             Statement stmt = this.databaseConnection.createStatement();
-            ResultSet rs = stmt.executeQuery(query);
-            return ExtractHolidayPlans(rs);
-        } catch (Exception ignored) {
-            return null;
+            fetchedHolidayPlans = ExtractHolidayPlans(stmt.executeQuery(query));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
+        return fetchedHolidayPlans;
     }
 
     /**
@@ -294,21 +297,20 @@ public class DataExportHandler {
      */
     public ArrayList<String> FetchHolidayPlans(ArrayList<Filter> filters) throws SQLException {
         String query = SQLHelper.ExtractQuery("holiday_plan", filters);
+        ArrayList<String> directories = new ArrayList<>();
         try {
             Statement stmt = this.databaseConnection.createStatement();
             ResultSet rs = stmt.executeQuery(query);
-            ArrayList<String> directories = new ArrayList<>();
             while (rs.next()) {
                 String dir = rs.getString("directory");
                 if (dir != null) {
                     directories.add(dir);
                 }
             }
-            return directories;
-
-        } catch (Exception ignored) {
-            return null;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
+        return directories;
     }
 
     /**
@@ -344,45 +346,6 @@ public class DataExportHandler {
         Statement stmt = this.databaseConnection.createStatement();
         if (stmt.executeUpdate(sql) <= 0) {
             throw new SQLException("The holiday plan was not inserted into the database");
-        }
-    }
-
-    /**
-     * Updates the holiday plan in the database with a new location for the object
-     * @param name the primary key
-     * @param newName the new name
-     * @param newDirectory the new directory in which the holiday plan object will reside
-     */
-    public void UpdateHolidayPlan(String name, String newName, String newDirectory) throws SQLException, Exception{
-        String setSQL = "";
-        if (newDirectory == null || newDirectory.isEmpty()) {
-            setSQL += format("directory = '%s', ", newDirectory);
-        }
-        if (newName != null && !newName.isEmpty()) {
-            setSQL += format("name = '%s', ", newName);
-        }
-        if (setSQL.length() > 0) {
-            setSQL = setSQL.substring(0, setSQL.length() - 1);
-        } else {
-            throw new Exception("No parameters to update were provided!");
-        }
-
-        String sql = format("UPDATE holiday_path SET %s WHERE name = '%s'", setSQL, name);
-        Statement stmt = this.databaseConnection.createStatement();
-        if (stmt.executeUpdate(sql) <= 0) {
-            throw new SQLException("The holiday plan in the database was not updated");
-        }
-    }
-
-    /**
-     * Deletes the holiday plan entry from the database
-     * @param name the name of the holiday
-     */
-    public void DeleteHolidayPlan(String name) throws SQLException {
-        String sql = format("DELETE FROM holiday_plan WHERE index_holiday = '%s'", name);
-        Statement stmt = this.databaseConnection.createStatement();
-        if (stmt.executeUpdate(sql) <= 0) {
-            throw new SQLException("Nothing was deleted");
         }
     }
 }
