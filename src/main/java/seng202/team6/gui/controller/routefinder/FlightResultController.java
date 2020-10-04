@@ -38,18 +38,18 @@ public class FlightResultController extends ResultController {
      */
     public void SetFlight(Route resultRoute) {
         this.route = resultRoute;
-        flight.setText(String.format("%s to %s", resultRoute.GetSourceAirport(), resultRoute.GetDestinationAirport()));
+        flight.setText(String.format("%s to %s", resultRoute.getSourceAirport(), resultRoute.getDestinationAirport()));
         distance.setText(String.format("Distance: %.2f", GetDistance()));
         airline.setText(GetAirlineName());
     }
 
     private String GetAirlineName() {
         ArrayList<Filter> filters = new ArrayList<>();
-        filters.add(new Filter(String.format("ID_AIRLINE = %s", route.GetAirlineID()), null));
+        filters.add(new Filter(String.format("ID_AIRLINE = %s", route.getAirlineID()), null));
         String airlineName;
         try {
             Airline routeAirline = DataExportHandler.GetInstance().FetchAirlines(filters).get(0);
-            airlineName = routeAirline.GetName();
+            airlineName = routeAirline.getName();
         } catch (Exception e) {
             airlineName = null;
         }
@@ -76,8 +76,8 @@ public class FlightResultController extends ResultController {
      */
     private ArrayList<Airport> GetAirports() {
         ArrayList<Filter> filters = new ArrayList<>();
-        filters.add(new Filter(String.format("ID_AIRPORT = %d", route.GetSourceAirportID()), "OR"));
-        filters.add(new Filter(String.format("ID_AIRPORT = %d", route.GetDestinationAirportID()), null));
+        filters.add(new Filter(String.format("ID_AIRPORT = %d", route.getSourceAirportID()), "OR"));
+        filters.add(new Filter(String.format("ID_AIRPORT = %d", route.getDestinationAirportID()), null));
         return DataExportHandler.GetInstance().FetchAirports(filters);
     }
 
@@ -111,7 +111,7 @@ public class FlightResultController extends ResultController {
             flightInfoController.setRoute(route);
             Scene viewFlightInfoScene = new Scene(infoBorderPane);
             Stage newStage = new Stage();
-            newStage.setTitle(String.format("%s to %s", route.GetSourceAirport(), route.GetDestinationAirport()));
+            newStage.setTitle(String.format("%s to %s", route.getSourceAirport(), route.getDestinationAirport()));
             newStage.setScene(viewFlightInfoScene);
             newStage.show();
             flightInfoController.setStage(newStage);
