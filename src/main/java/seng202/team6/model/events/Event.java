@@ -55,7 +55,6 @@ public abstract class Event {
      * @return Pane object to be added to the holiday GUI
      */
     public Pane toPane() {
-        //Implimented in children classes
         Pane newPane = null;
         return newPane;
     }

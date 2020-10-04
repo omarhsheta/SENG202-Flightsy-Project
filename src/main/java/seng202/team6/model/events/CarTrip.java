@@ -15,8 +15,6 @@ public class CarTrip extends Event {
     String DestinationCity;
     String DestinationCountry;
 
-//    public String Title, Note;
-
     private final String subFolder = "holidayview/eventbuttons";
     private final String DriveButtonComponent = "DriveBtn";
 

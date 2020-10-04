@@ -59,7 +59,7 @@ public class RoutePath implements IMapDrawable, JSONSerializable {
     public String ConvertToJavascriptString() {
         StringBuilder string = new StringBuilder();
 
-        //This ones a bit weird, if the list is 1 long then should return without '{' and '}'
+        //If the list is 1 long then should return without '{' and '}'
         string.append(String.format("lat: %f, lng: %f", coordinates.get(0).getKey(), coordinates.get(0).getValue()));
         if (coordinates.size() > 1) {
             string.append("},"); //Else size > 1 then append "}," then add all the other points
