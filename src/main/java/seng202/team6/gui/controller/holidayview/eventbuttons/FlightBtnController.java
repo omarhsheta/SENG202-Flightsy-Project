@@ -35,8 +35,8 @@ public class FlightBtnController extends ResultController {
      */
     public void setData(String srcTime, String srcDate, String desTime, Flight flightEvent,
                         Route route) {
-        Des.setText(route.GetDestinationAirport());
-        Src.setText(route.GetSourceAirport());
+        Des.setText(route.getDestinationAirport());
+        Src.setText(route.getSourceAirport());
         SrcTime.setText(srcTime);
         SrcDate.setText(srcDate);
         DesTime.setText(desTime);
@@ -60,7 +60,7 @@ public class FlightBtnController extends ResultController {
             Scene viewFlightInfoScene = new Scene(infoBorderPane);
             viewFlightInfoScene.getStylesheets().add("org/kordamp/bootstrapfx/bootstrapfx.css");
             Stage newStage = new Stage();
-            newStage.setTitle(String.format("%s to %s", this.flightRoute.GetSourceAirport(), this.flightRoute.GetDestinationAirport()));
+            newStage.setTitle(String.format("%s to %s", this.flightRoute.getSourceAirport(), this.flightRoute.getDestinationAirport()));
             newStage.setScene(viewFlightInfoScene);
             newStage.show();
             flightEventInformationController.setStage(newStage);

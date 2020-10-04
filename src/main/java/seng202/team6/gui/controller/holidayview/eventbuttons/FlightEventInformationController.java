@@ -52,11 +52,11 @@ public class FlightEventInformationController {
         setAirports();
         distance = originAirport.GetDistance(destAirport);
 
-        titleInfo.setText(String.format("Information about flight: %s to %s", originAirport.GetIATA(), destAirport.GetIATA()));
-        airportInfo.setText(String.format("%s to %s", originAirport.GetName(), destAirport.GetName()));
-        locationInfo.setText(String.format("%s, %s to %s, %s", originAirport.GetCity(), originAirport.GetCountry(), destAirport.GetCity(), destAirport.GetCountry()));
+        titleInfo.setText(String.format("Information about flight: %s to %s", originAirport.getIATA(), destAirport.getIATA()));
+        airportInfo.setText(String.format("%s to %s", originAirport.getName(), destAirport.getName()));
+        locationInfo.setText(String.format("%s, %s to %s, %s", originAirport.getCity(), originAirport.getCountry(), destAirport.getCity(), destAirport.getCountry()));
         distanceInfo.setText(String.format("Distance: %.2fkm", distance));
-        aircraftInfo.setText(String.format("Aircraft: %s", route.GetEquipment()));
+        aircraftInfo.setText(String.format("Aircraft: %s", route.getEquipment()));
 
 
         String deptDayOfWeek = flight.getDateTime().getDayOfWeek().toString();
@@ -113,10 +113,10 @@ public class FlightEventInformationController {
      */
     private void setAirports() {
         ArrayList<Filter> originFilters = new ArrayList<>();
-        originFilters.add(new Filter(String.format("ID_AIRPORT = %d", route.GetSourceAirportID()), null));
+        originFilters.add(new Filter(String.format("ID_AIRPORT = %d", route.getSourceAirportID()), null));
 
         ArrayList<Filter> destFilters = new ArrayList<>();
-        destFilters.add(new Filter(String.format("ID_AIRPORT = %d", route.GetDestinationAirportID()), null));
+        destFilters.add(new Filter(String.format("ID_AIRPORT = %d", route.getDestinationAirportID()), null));
 
         Pair<ArrayList<Airport>, ArrayList<Airport>> airports = Airport.GetSourceAndDestinations(originFilters, destFilters);
         ArrayList<Airport> originAirportList = airports.getKey();

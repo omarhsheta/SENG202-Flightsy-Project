@@ -34,12 +34,12 @@ public class Plane {
 
         Plane planeObj = (Plane)obj;
 
-        return Objects.equals(this.Name, planeObj.GetName())
-                && Objects.equals(this.IATA, planeObj.GetIATA())
-                && Objects.equals(this.ICAO, planeObj.GetICAO());
+        return Objects.equals(this.Name, planeObj.getName())
+                && Objects.equals(this.IATA, planeObj.getIATA())
+                && Objects.equals(this.ICAO, planeObj.getICAO());
     }
 
-    public String GetName() {
+    public String getName() {
         return Name;
     }
 
@@ -47,7 +47,7 @@ public class Plane {
         Name = name;
     }
 
-    public String GetIATA() {
+    public String getIATA() {
         return IATA;
     }
 
@@ -55,7 +55,7 @@ public class Plane {
         this.IATA = IATA;
     }
 
-    public String GetICAO() {
+    public String getICAO() {
         return ICAO;
     }
 

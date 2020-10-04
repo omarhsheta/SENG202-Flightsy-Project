@@ -43,8 +43,8 @@ public class DataImportHandler {
         Statement stmt = this.databaseConnection.createStatement();
         String sql = format("INSERT INTO airline (name, alias, iata, icao, callsign, country, " +
                         "active) VALUES (\"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%c\");",
-                airline.GetName(), airline.GetAlias(), airline.GetIATA(), airline.GetICAO(),
-                airline.GetCallsign(), airline.getCountry(), airline.GetActive()
+                airline.getName(), airline.getAlias(), airline.getIATA(), airline.getICAO(),
+                airline.getCallsign(), airline.getCountry(), airline.getActive()
         );
         if (stmt.executeUpdate(sql) <= 0) {
             throw new SQLException("The airline was not inserted into the database");
@@ -60,9 +60,9 @@ public class DataImportHandler {
         Statement stmt = this.databaseConnection.createStatement();
         String sql = format("INSERT INTO airport (name, city, country, iata, icao, latitude, longitude, altitude, timezone, dst)" +
                         "VALUES (\"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%f\", \"%f\", \"%d\", \"%f\", \"%c\");",
-                airport.GetName(), airport.GetCity(), airport.GetCountry(),
-                airport.GetIATA(), airport.GetICAO(), airport.GetLatitude(), airport.GetLongitude(), airport.GetAltitude(),
-                airport.GetTimezone(), airport.GetDST()
+                airport.getName(), airport.getCity(), airport.getCountry(),
+                airport.getIATA(), airport.getICAO(), airport.getLatitude(), airport.getLongitude(), airport.getAltitude(),
+                airport.getTimezone(), airport.getDST()
         );
         int pass = stmt.executeUpdate(sql);
         if (pass <= 0) {
@@ -80,9 +80,9 @@ public class DataImportHandler {
         String sql = format("INSERT INTO route (airline, id_airline, source_airport, source_airport_id, " +
                         "destination_airport, destination_airport_id, codeshare, stops, equipment)" +
                         "VALUES (\"%s\", \"%d\", \"%s\", \"%d\", \"%s\", \"%d\", \"%c\", \"%d\", \"%s\");",
-                route.GetAirline(), route.GetAirlineID(), route.GetSourceAirport(), route.GetSourceAirportID(),
-                route.GetDestinationAirport(), route.GetDestinationAirportID(), route.GetCodeshare(),
-                route.GetStops(), route.GetEquipment()
+                route.getAirline(), route.getAirlineID(), route.getSourceAirport(), route.getSourceAirportID(),
+                route.getDestinationAirport(), route.getDestinationAirportID(), route.getCodeshare(),
+                route.getStops(), route.getEquipment()
         );
         if (stmt.executeUpdate(sql) <= 0) {
             throw new SQLException("The route was not inserted into the database");
@@ -238,28 +238,28 @@ public class DataImportHandler {
         ArrayList<Filter> filters = new ArrayList<Filter>();
         try {
             if (newAirline != null) {
-                Filter filter1 = new Filter(format("icao = '%s'", newAirline.GetICAO()), "");
+                Filter filter1 = new Filter(format("icao = '%s'", newAirline.getICAO()), "");
                 filters.add(filter1);
                 Airline newAirlineDB = DataExportHandler.GetInstance().FetchAirlines(filters).get(0);
                 filters.clear();
-                setSQL += format("id_airline = %d,", newAirlineDB.GetAirlineID());
-                setSQL += format("airline = '%s',", newAirlineDB.GetICAO());
+                setSQL += format("id_airline = %d,", newAirlineDB.getAirlineID());
+                setSQL += format("airline = '%s',", newAirlineDB.getICAO());
             }
             if (newSourceAirport != null) {
-                Filter filter2 = new Filter(format("icao = '%s'", newSourceAirport.GetICAO()), "");
+                Filter filter2 = new Filter(format("icao = '%s'", newSourceAirport.getICAO()), "");
                 filters.add(filter2);
                 Airport newSourceAirportDB = DataExportHandler.GetInstance().FetchAirports(filters).get(0);
                 filters.clear();
-                setSQL += format("source_airport_id = %d,", newSourceAirportDB.GetAirportID());
-                setSQL += format("source_airport = '%s',", newSourceAirportDB.GetICAO());
+                setSQL += format("source_airport_id = %d,", newSourceAirportDB.getAirportID());
+                setSQL += format("source_airport = '%s',", newSourceAirportDB.getICAO());
             }
             if (newDestinationAirport != null) {
-                Filter filter3 = new Filter(format("icao = '%s'", newDestinationAirport.GetICAO()), "");
+                Filter filter3 = new Filter(format("icao = '%s'", newDestinationAirport.getICAO()), "");
                 filters.add(filter3);
                 Airport newDestinationAirportDB = DataExportHandler.GetInstance().FetchAirports(filters).get(0);
                 filters.clear();
-                setSQL += format("destination_airport_id = %d,", newDestinationAirportDB.GetAirportID());
-                setSQL += format("destination_airport = '%s',", newDestinationAirportDB.GetICAO());
+                setSQL += format("destination_airport_id = %d,", newDestinationAirportDB.getAirportID());
+                setSQL += format("destination_airport = '%s',", newDestinationAirportDB.getICAO());
             }
         } catch (Exception e) { e.getMessage(); }
 
