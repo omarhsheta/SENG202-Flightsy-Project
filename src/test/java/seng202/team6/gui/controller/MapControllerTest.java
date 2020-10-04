@@ -3,6 +3,7 @@ package seng202.team6.gui.controller;
 import javafx.util.Pair;
 import org.junit.Before;
 import org.junit.Test;
+import seng202.team6.model.MapHelper;
 import seng202.team6.model.entities.Airport;
 import seng202.team6.model.entities.RoutePath;
 import seng202.team6.model.interfaces.IMapDrawable;
@@ -15,11 +16,11 @@ import static org.junit.Assert.assertEquals;
  * Test file for MapController.java
  */
 public class MapControllerTest {
-    private MapController controller;
+    private MapHelper controller;
 
     @Before
     public void InitializeTest() {
-        controller = new MapController(null);
+        controller = new MapHelper(null);
     }
 
     /**

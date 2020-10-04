@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Text?>
+
+<Pane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.team6.gui.controller.holidayview.eventbuttons.DriveBtnController">
+   <children>
+      <Button minHeight="90.0" mnemonicParsing="false" onAction="#OnViewInfoButtonClicked" prefWidth="230.0">
+         <graphic>
+            <GridPane prefHeight="89.0" prefWidth="159.0">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="90.0" minWidth="10.0" prefWidth="53.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="112.0" minWidth="10.0" prefWidth="110.0" />
+                  <ColumnConstraints />
+                  <ColumnConstraints />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints maxHeight="42.0" minHeight="10.0" prefHeight="22.5" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="41.0" minHeight="18.0" prefHeight="34.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="32.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <Label fx:id="Date" text="Date" textAlignment="RIGHT" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
+                  <Label fx:id="Time" alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="17.0" prefWidth="115.0" text="Time" textAlignment="RIGHT" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="TOP" />
+                  <ImageView fitHeight="73.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@/assets/car.png" />
+                     </image>
+                  </ImageView>
+                  <Text fx:id="Title" strokeType="OUTSIDE" strokeWidth="0.0" text="Title" wrappingWidth="158.21875" GridPane.columnSpan="2" />
+                  <Text fx:id="DesCity" strokeType="OUTSIDE" strokeWidth="0.0" text="DesCity" wrappingWidth="157.21875" GridPane.columnSpan="2" GridPane.rowIndex="2">
+                     <GridPane.margin>
+                        <Insets top="5.0" />
+                     </GridPane.margin>
+                  </Text>
+               </children>
+            </GridPane>
+         </graphic>
+         <padding>
+            <Insets top="5.0" />
+         </padding>
+         <styleClass>
+            <String fx:value="btn-default" />
+            <String fx:value="btn" />
+         </styleClass>
+      </Button>
+   </children>
+</Pane>

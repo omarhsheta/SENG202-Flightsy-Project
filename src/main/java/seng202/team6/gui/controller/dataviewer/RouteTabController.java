@@ -4,7 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 import seng202.team6.gui.components.FilterTextField;
-import seng202.team6.model.data.DataHandler;
+import seng202.team6.model.data.DataExportHandler;
 import seng202.team6.model.data.Filter;
 import seng202.team6.model.entities.Route;
 
@@ -45,7 +45,7 @@ public class RouteTabController extends TabController<Route>
 
         ArrayList<Filter> filters = new ArrayList<>();
         filters.add(new Filter("SOURCE_AIRPORT = 'AKL'", null));
-        ArrayList<Route> filteredRoutes = DataHandler.GetInstance().FetchRoutes(filters);
+        ArrayList<Route> filteredRoutes = DataExportHandler.GetInstance().FetchRoutes(filters);
         table.getItems().addAll(filteredRoutes);
     }
 
@@ -71,7 +71,7 @@ public class RouteTabController extends TabController<Route>
 
         try {
             table.getItems().clear();
-            ArrayList<Route> filteredRoutes = dataHandler.FetchRoutes(filters);
+            ArrayList<Route> filteredRoutes = dataExport.FetchRoutes(filters);
             table.getItems().addAll(filteredRoutes);
         }
         catch (Exception ignored) {

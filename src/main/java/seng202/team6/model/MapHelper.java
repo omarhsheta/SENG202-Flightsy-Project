@@ -1,9 +1,8 @@
-package seng202.team6.gui.controller;
+package seng202.team6.model;
 
 import javafx.scene.web.WebEngine;
 import javafx.util.Pair;
 import seng202.team6.model.entities.Airport;
-import seng202.team6.model.entities.Route;
 import seng202.team6.model.entities.RoutePath;
 import seng202.team6.model.interfaces.IMapDrawable;
 
@@ -12,7 +11,7 @@ import java.util.ArrayList;
 /**
  * MapController class to interop between the Google maps API and Java
  */
-public class MapController
+public class MapHelper
 {
     private WebEngine mapEngine;
 
@@ -20,7 +19,7 @@ public class MapController
      * Constructor for MapController takes in map params
      * @param engine Map engine to use
      */
-    public MapController(WebEngine engine) {
+    public MapHelper(WebEngine engine) {
         this.mapEngine = engine;
     }
 
@@ -44,7 +43,7 @@ public class MapController
         String JSFunction = "PlaceRouteLines(%s);";
         ArrayList<Pair<Float, Float>> positions = new ArrayList<>();
         for (Airport airport : airports) {
-            positions.add(new Pair<>(airport.getLatitude(), airport.getLongitude()));
+            positions.add(new Pair<>(airport.GetLatitude(), airport.GetLongitude()));
         }
         String line = PositionsToArray(positions);
         if (!line.equals("")) {

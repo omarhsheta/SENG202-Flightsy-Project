@@ -2,7 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
@@ -10,8 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="191.0" prefWidth="338.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"  fx:controller="seng202.team6.gui.controller.routefinder.AddToHolidayController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="191.0" prefWidth="338.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.team6.gui.controller.routefinder.AddToHolidayController">
    <top>
       <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="H1" text="Add To Holiday" BorderPane.alignment="CENTER">
          <BorderPane.margin>
@@ -22,8 +21,9 @@
    <bottom>
       <HBox alignment="CENTER_RIGHT" prefHeight="39.0" prefWidth="500.0" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="addToHolidayButton" mnemonicParsing="false" text="Add to Holiday" onMouseClicked="#OnAddToHolidayButtonClicked" />
-            <Button fx:id="cancelButton" mnemonicParsing="false" text="cancel" onMouseClicked="#closeWindow">
+            <ChoiceBox fx:id="holidayChoiceBox" prefWidth="150.0" />
+            <Button fx:id="addToHolidayButton" mnemonicParsing="false" onMouseClicked="#OnAddToHolidayButtonClicked" text="Add to Holiday" />
+            <Button fx:id="cancelButton" mnemonicParsing="false" onMouseClicked="#closeWindow" text="cancel">
                <HBox.margin>
                   <Insets right="10.0" />
                </HBox.margin>
@@ -34,26 +34,38 @@
    <center>
       <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <left>
-            <VBox prefHeight="245.0" prefWidth="191.0" BorderPane.alignment="CENTER">
+            <VBox prefHeight="95.0" prefWidth="176.0" BorderPane.alignment="CENTER">
                <children>
                   <Label text="Departure Date" />
-                  <DatePicker fx:id="departureDatePicker"/>
-                  <Label text="arrival Date" />
-                  <DatePicker fx:id="arrivalDatePicker"/>
+                  <HBox prefHeight="17.0" prefWidth="309.0" spacing="5.0">
+                     <children>
+                        <TextField fx:id="deptDay" prefHeight="25.0" prefWidth="48.0" promptText="Day" />
+                        <TextField fx:id="deptMonth" prefHeight="25.0" prefWidth="57.0" promptText="Month" />
+                        <TextField fx:id="deptYear" prefHeight="25.0" prefWidth="45.0" promptText="Year" />
+                     </children>
+                  </HBox>
+                  <Label text="Arrival Date" />
+                  <HBox layoutX="10.0" layoutY="27.0" prefHeight="17.0" prefWidth="309.0" spacing="5.0">
+                     <children>
+                        <TextField fx:id="arrivalDay" prefHeight="25.0" prefWidth="48.0" promptText="Day" />
+                        <TextField fx:id="arrivalMonth" prefHeight="25.0" prefWidth="57.0" promptText="Month" />
+                        <TextField fx:id="arrivalYear" prefHeight="25.0" prefWidth="45.0" promptText="Year" />
+                     </children>
+                  </HBox>
                </children>
             </VBox>
          </left>
          <center>
-            <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+            <VBox prefHeight="200.0" prefWidth="122.0" BorderPane.alignment="CENTER">
                <children>
-                  <Label text="Departure Time" />
+                  <Label prefHeight="17.0" prefWidth="117.0" text="Departure Time (24hr)" />
                   <HBox prefHeight="17.0" prefWidth="309.0" spacing="5.0">
                      <children>
                         <TextField fx:id="deptHour" prefHeight="25.0" prefWidth="48.0" promptText="Hour" />
                         <TextField fx:id="deptMinute" prefHeight="25.0" prefWidth="57.0" promptText="Minute" />
                      </children>
                   </HBox>
-                  <Label text="arrival Time" />
+                  <Label text="Arrival Time (24hr)" />
                   <HBox prefHeight="17.0" prefWidth="309.0" spacing="5.0">
                      <children>
                         <TextField fx:id="arrivalHour" prefHeight="25.0" prefWidth="48.0" promptText="Hour" />
@@ -66,6 +78,9 @@
          <BorderPane.margin>
             <Insets left="20.0" right="20.0" />
          </BorderPane.margin>
+         <bottom>
+            <Text fx:id="infoText" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="294.13671875" BorderPane.alignment="CENTER" />
+         </bottom>
       </BorderPane>
    </center>
 </BorderPane>

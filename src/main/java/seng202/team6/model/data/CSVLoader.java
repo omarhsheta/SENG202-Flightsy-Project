@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class CSVLoader {
 
-    private DataHandler dataHandler = DataHandler.GetInstance();
+    private DataImportHandler dataImport = DataImportHandler.GetInstance();
 
     /**
      * Processes a row from a spreadsheet file and returns it as an ArrayList of Strings
@@ -135,8 +135,10 @@ public class CSVLoader {
             return false;
         }
 
-        if ((fields.get(7) == null) || (fields.get(7).length() != 1)) {
-            //Active field missing or not of char type
+        //Active field missing or not of char type
+        if (fields.get(7) == null) {
+            fields.set(7, "N");
+        } else if (fields.get(7).length() != 1) {
             return false;
         }
 
@@ -176,8 +178,12 @@ public class CSVLoader {
             return false;
         }
 
-        if ((fields.get(6) == null) || (fields.get(6).length() != 1)) {
+        if ((fields.get(6) == null) || (fields.get(6).equals(""))) {
+            //Missing field
             fields.set(6, "N");
+        } else if (fields.get(6).length() != 1) {
+            //Not a char
+            return false;
         }
 
         if (len == 8) {
@@ -189,16 +195,17 @@ public class CSVLoader {
 
 
     /**
-     * Processes a raw data file and returns an ArrayList of object type "Airport"
-     * @param path the location of the CSV/DAT file that contains raw data about Airports
+     * Processes a raw data file and returns an ArrayList of object type "Airline"
+     * @param path the location of the CSV/DAT file that contains raw data about Airlines
      */
-    public void ImportCSVAirports(String path) {
+    public void ImportCSVAirlines(String path) {
         ArrayList<ArrayList<String>> lines = ProcessCSVFile(path);
-        for (int i = 0; i < lines.size(); i++) {
-            ArrayList<String> entry = lines.get(i);
-            if (AirportEntryCheck(entry)) {
+        for (ArrayList<String> entry : lines) {
+            if (AirlineEntryCheck(entry)) {
                 try {
-                    dataHandler.InsertAirport(entry);
+                    Airline airline = new Airline(Integer.parseInt(entry.get(0)), entry.get(1), entry.get(2), entry.get(3),
+                            entry.get(4), entry.get(5), entry.get(6), entry.get(7).charAt(0));
+                    dataImport.InsertAirline(airline);
                 } catch (SQLException ignored) {
                     // Ignore duplicate entry
                 }
@@ -208,16 +215,18 @@ public class CSVLoader {
 
 
     /**
-     * Processes a raw data file and returns an ArrayList of object type "Airline"
-     * @param path the location of the CSV/DAT file that contains raw data about Airlines
+     * Processes a raw data file and returns an ArrayList of object type "Airport"
+     * @param path the location of the CSV/DAT file that contains raw data about Airports
      */
-    public void ImportCSVAirlines(String path) {
+    public void ImportCSVAirports(String path) {
         ArrayList<ArrayList<String>> lines = ProcessCSVFile(path);
-        for (int i = 0; i < lines.size(); i++) {
-            ArrayList<String> entry = lines.get(i);
-            if (AirlineEntryCheck(entry)) {
+        for (ArrayList<String> entry : lines) {
+            if (AirportEntryCheck(entry)) {
                 try {
-                    dataHandler.InsertAirline(entry);
+                    Airport airport = new Airport(Integer.parseInt(entry.get(0)), entry.get(1), entry.get(2), entry.get(3),
+                            entry.get(4), entry.get(5), Float.parseFloat(entry.get(6)), Float.parseFloat(entry.get(7)),
+                            Integer.parseInt(entry.get(8)), Integer.parseInt(entry.get(9)), entry.get(10).charAt(0));
+                    dataImport.InsertAirport(airport);
                 } catch (SQLException ignored) {
                     // Ignore duplicate entry
                 }
@@ -235,7 +244,10 @@ public class CSVLoader {
         for (ArrayList<String> entry : lines) {
             if (RouteEntryCheck(entry)) {
                 try {
-                    dataHandler.InsertRoute(entry);
+                    Route route = new Route(Integer.parseInt(entry.get(1)), entry.get(0), entry.get(2),
+                            Integer.parseInt(entry.get(3)), entry.get(4), Integer.parseInt(entry.get(5)),
+                            entry.get(6).charAt(0), Integer.parseInt(entry.get(7)), entry.get(8));
+                    dataImport.InsertRoute(route);
                 } catch (SQLException ignored) {
                     // Ignore duplicate entry
                 }
@@ -248,9 +260,8 @@ public class CSVLoader {
     /**
      * Convert CSV file to a RoutePath object
      * @param path File path to CSV file
-     * @return RoutePath object with coordinate data from file
      */
-    public RoutePath GetCSVRoutePath(String path) {
+    public void ImportCSVRoutePath(String path) {
         ArrayList<ArrayList<String>> lines = ProcessCSVFile(path);
         ArrayList<Pair<Double, Double>> coordinates = new ArrayList<>();
         int lastInd = lines.size() - 1;
@@ -278,7 +289,14 @@ public class CSVLoader {
             }
             coordinates.add(point);
         }
-        return new RoutePath(source, destination, coordinates);
+        RoutePath route = new RoutePath(source, destination, coordinates);
+        String filename = String.format("%sto%s.json", source, destination);
+        DataHandler.GetInstance().WriteDataFile(filename, route.ToJson());
+        try {
+            dataImport.InsertFlightPath(route, filename);
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+        }
     }
 
 }

@@ -1,5 +1,12 @@
 package seng202.team6.model.events;
 
+import javafx.scene.layout.Pane;
+import javafx.util.Pair;
+import seng202.team6.gui.controller.holidayview.eventbuttons.GeneralBtnController;
+import seng202.team6.gui.helper.NodeHelper;
+
+import java.time.format.DateTimeFormatter;
+
 /**
  * This class is for more general events
  */
@@ -7,6 +14,9 @@ public class General extends Event {
 
     String City;
     String Country;
+
+    private final String subFolder = "holidayview/eventbuttons";
+    private final String ButtonComponent = "GeneralBtn";
 
     /**
      * Constructor for the General Event class
@@ -18,9 +28,49 @@ public class General extends Event {
      * @param nCity The city where the general event is taking place
      * @param nCountry The country where the general event is taking place
      */
-    public General(int D, int M, int Y, String T, String N, String nCity, String nCountry) {
-        super(D, M, Y, T, N);
+    public General(int D, int M, int Y, int newHour, int newMinute, String T, String N, String nCity, String nCountry) {
+        super(D, M, Y, newHour, newMinute, T, N);
         City = nCity;
         Country = nCountry;
+    }
+
+    /**
+     * Getter method to return the City of the event
+     * @return The City of the event
+     */
+    public String getCity() {
+        return City;
+    }
+
+    /**
+     * Getter method to return the Country of the event
+     * @return The Country of the event
+     */
+    public String getCountry() {
+        return Country;
+    }
+
+    /**
+     * A method that makes a Pane for the General event
+     * @return Pane object to be added to the holiday GUI
+     */
+    @Override
+    public Pane toPane() {
+
+        Pane newGeneralEventPane = null;
+        try {
+            Pair<Pane, GeneralBtnController> pair = NodeHelper.LoadNode(subFolder, ButtonComponent);
+            newGeneralEventPane = pair.getKey();
+            GeneralBtnController btnController = pair.getValue();
+
+            String timePattern = "hh:mm a";
+            String datePattern = "dd/MM/yyyy";
+            btnController.setData(this.Title,
+                    dateTime.format(DateTimeFormatter.ofPattern(timePattern)),
+                    dateTime.format(DateTimeFormatter.ofPattern(datePattern)), this);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return newGeneralEventPane;
     }
 }

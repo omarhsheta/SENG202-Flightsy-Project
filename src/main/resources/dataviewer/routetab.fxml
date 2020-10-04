@@ -6,13 +6,13 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
 <?import seng202.team6.gui.components.FilterTextField?>
 
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.image.Image?>
-<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.team6.gui.controller.dataviewer.RouteTabController">
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="595.0" prefWidth="987.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seng202.team6.gui.controller.dataviewer.RouteTabController">
    <left>
       <Pane prefHeight="470.0" prefWidth="214.0" BorderPane.alignment="CENTER">
          <children>
@@ -22,9 +22,9 @@
                   <String fx:value="h5" />
                </styleClass>
             </Label>
-            <ScrollPane layoutY="27.0" prefHeight="402.0" prefWidth="214.0">
+            <ScrollPane hbarPolicy="NEVER" layoutY="27.0" prefHeight="459.0" prefWidth="214.0">
                <content>
-                  <Pane fx:id="filterPane" prefHeight="600.0" prefWidth="198.0">
+                  <Pane fx:id="filterPane" prefHeight="566.0" prefWidth="198.0">
                      <children>
                         <FilterTextField filter="AIRLINE = '%s'" layoutX="25.0" layoutY="39.0" />
                         <Label layoutX="25.0" layoutY="14.0" prefHeight="25.0" prefWidth="148.0" text="Airline" />
@@ -48,11 +48,11 @@
                   </Pane>
                </content>
             </ScrollPane>
-            <Button layoutX="53.0" layoutY="444.0" mnemonicParsing="false" onMouseClicked="#OnFilterButtonClicked" prefHeight="25.0" prefWidth="108.0" text="Apply Filters">
+            <Button layoutX="53.0" layoutY="500.0" mnemonicParsing="false" onMouseClicked="#OnFilterButtonClicked" prefHeight="25.0" prefWidth="108.0" text="Apply Filters">
                <graphic>
                   <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="/icons/check-8x.png" />
+                        <Image url="@/icons/check-8x.png" />
                      </image>
                   </ImageView>
                </graphic>

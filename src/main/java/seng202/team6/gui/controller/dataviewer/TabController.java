@@ -6,7 +6,7 @@ import javafx.scene.Node;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.Pane;
 import seng202.team6.gui.components.FilterTextField;
-import seng202.team6.model.data.DataHandler;
+import seng202.team6.model.data.DataExportHandler;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -19,7 +19,7 @@ public abstract class TabController<T> implements Initializable {
     @FXML
     protected TableView<T> table;
 
-    protected DataHandler dataHandler;
+    protected DataExportHandler dataExport;
 
     @FXML
     protected Pane filterPane;
@@ -32,7 +32,7 @@ public abstract class TabController<T> implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        dataHandler = DataHandler.GetInstance();
+        dataExport = DataExportHandler.GetInstance();
         SetCellFactories();
         //Grab all text filter components
         for (Node node : filterPane.getChildren()) {

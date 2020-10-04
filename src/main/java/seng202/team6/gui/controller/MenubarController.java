@@ -22,10 +22,10 @@ public class MenubarController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
     {
-        flightPlannerButton.setOnMouseClicked(x -> WindowHandler.GetInstance().SetActiveWindow("holidayview"));
+        flightPlannerButton.setOnMouseClicked(x -> WindowHandler.GetInstance().SetActiveWindow("holidayview/holidayview"));
 
-        tripsButton.setOnMouseClicked(x -> WindowHandler.GetInstance().SetActiveWindow("routefinderview"));
+        tripsButton.setOnMouseClicked(x -> WindowHandler.GetInstance().SetActiveWindow("routefinder/routefinderview"));
 
-        dataButton.setOnMouseClicked(x -> WindowHandler.GetInstance().SetActiveWindow("dataviewer"));
+        dataButton.setOnMouseClicked(x -> WindowHandler.GetInstance().SetActiveWindow("dataviewer/dataviewer"));
     }
 }

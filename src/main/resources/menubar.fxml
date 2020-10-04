@@ -18,7 +18,7 @@
       </HBox.margin>
    </ImageView>
     <Pane prefWidth="122.0" visible="false" HBox.hgrow="ALWAYS" />
-    <Button fx:id="flightPlannerButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="35.0" prefWidth="135.0" text="Flight Planner" textAlignment="CENTER" visible="false">
+    <Button fx:id="flightPlannerButton" alignment="CENTER" defaultButton="true" mnemonicParsing="false" prefHeight="35.0" prefWidth="150.0" text="Holiday Planner" textAlignment="CENTER">
     <styleClass>
        <String fx:value="btn" />
        <String fx:value="btn-primary" />
@@ -27,8 +27,15 @@
       <HBox.margin>
          <Insets bottom="5.0" top="5.0" />
       </HBox.margin>
+      <graphic>
+         <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@icons/pin-8x.png" />
+            </image>
+         </ImageView>
+      </graphic>
     </Button>
-    <Button fx:id="tripsButton" alignment="CENTER" contentDisplay="LEFT" defaultButton="true" mnemonicParsing="false" prefHeight="35.0" prefWidth="135.0" text="Trips" textAlignment="CENTER">
+    <Button fx:id="tripsButton" alignment="CENTER" contentDisplay="LEFT" mnemonicParsing="false" prefHeight="35.0" prefWidth="135.0" text="Trips" textAlignment="CENTER">
     <graphic>
         <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
             <image>
@@ -39,7 +46,7 @@
     <styleClass>
        <String fx:value="btn" />
        <String fx:value="btn-primary" />
-         <String fx:value="first" />
+         <String fx:value="middle" />
     </styleClass>
       <HBox.margin>
          <Insets bottom="5.0" top="5.0" />

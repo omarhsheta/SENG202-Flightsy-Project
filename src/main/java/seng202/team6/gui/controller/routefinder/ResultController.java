@@ -1,18 +1,18 @@
 package seng202.team6.gui.controller.routefinder;
 
-import seng202.team6.gui.controller.MapController;
+import seng202.team6.model.MapHelper;
 
 /**
  * Base class for results
  */
 public class ResultController {
-    protected static MapController mapController;
+    protected static MapHelper mapHelper;
 
     /**
      * Set map that result links to
      * @param controller MapController object
      */
-    public static void SetMap(MapController controller) {
-        mapController = controller;
+    public static void SetMap(MapHelper controller) {
+        mapHelper = controller;
     }
 }

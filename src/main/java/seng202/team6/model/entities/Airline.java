@@ -4,6 +4,11 @@ import java.util.Objects;
 
 import static java.lang.String.format;
 
+/**
+ * Airline class
+ * Do not change the getters from being lowercase i.e 'getName()' as
+ * this is required for the table view.
+ */
 public class Airline implements Comparable<Airline> {
 
     int AirlineID;
@@ -53,13 +58,13 @@ public class Airline implements Comparable<Airline> {
         Airline airlineObject = (Airline)obj;
 
 
-        return this.AirlineID == airlineObject.getAirlineID() && Objects.equals(this.Name, airlineObject.getName())
-                && Objects.equals(this.Alias, airlineObject.getAlias()) && Objects.equals(this.IATA, airlineObject.getIATA())
-                && Objects.equals(this.ICAO, airlineObject.getICAO()) && Objects.equals(this.Callsign, airlineObject.getCallsign())
-                && Objects.equals(this.Country, airlineObject.getCountry()) && this.Active == airlineObject.getActive();
+        return this.AirlineID == airlineObject.GetAirlineID() && Objects.equals(this.Name, airlineObject.GetName())
+                && Objects.equals(this.Alias, airlineObject.GetAlias()) && Objects.equals(this.IATA, airlineObject.GetIATA())
+                && Objects.equals(this.ICAO, airlineObject.GetICAO()) && Objects.equals(this.Callsign, airlineObject.GetCallsign())
+                && Objects.equals(this.Country, airlineObject.getCountry()) && this.Active == airlineObject.GetActive();
     }
 
-    public int getAirlineID() {
+    public int GetAirlineID() {
         return AirlineID;
     }
 
@@ -67,7 +72,7 @@ public class Airline implements Comparable<Airline> {
         AirlineID = airlineID;
     }
 
-    public String getName() {
+    public String GetName() {
         return Name;
     }
 
@@ -75,7 +80,7 @@ public class Airline implements Comparable<Airline> {
         Name = name;
     }
 
-    public String getAlias() {
+    public String GetAlias() {
         return Alias;
     }
 
@@ -83,7 +88,7 @@ public class Airline implements Comparable<Airline> {
         Alias = alias;
     }
 
-    public String getIATA() {
+    public String GetIATA() {
         return IATA;
     }
 
@@ -91,7 +96,7 @@ public class Airline implements Comparable<Airline> {
         this.IATA = IATA;
     }
 
-    public String getICAO() {
+    public String GetICAO() {
         return ICAO;
     }
 
@@ -99,7 +104,7 @@ public class Airline implements Comparable<Airline> {
         this.ICAO = ICAO;
     }
 
-    public String getCallsign() {
+    public String GetCallsign() {
         return Callsign;
     }
 
@@ -115,7 +120,7 @@ public class Airline implements Comparable<Airline> {
         Country = country;
     }
 
-    public Character getActive() {
+    public Character GetActive() {
         return Active;
     }
 

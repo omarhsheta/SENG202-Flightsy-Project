@@ -18,6 +18,7 @@ public class SQLHelper
      * @return SQL String query.
      */
     public static String ExtractQuery(String tableName, ArrayList<Filter> filters) {
+        int limitVal = 500;
         if (filters == null || filters.size() == 0) {
             return String.format("SELECT * FROM %s;", tableName);
         }
@@ -32,8 +33,7 @@ public class SQLHelper
             builder.append(" ");
         }
         builder.append(filters.get(filters.size() - 1).GetFilter());
-        builder.append(';');
-
+        builder.append(";");
         return builder.toString();
     }
 
@@ -49,9 +49,9 @@ public class SQLHelper
 
         StringBuilder list = new StringBuilder();
         for (int i = 0; i < airports.size() - 1; i++) {
-            list.append(String.format("'%s', ", airports.get(i).getIATA()));
+            list.append(String.format("'%s', ", airports.get(i).GetIATA()));
         }
-        list.append(String.format("'%s'", airports.get(airports.size() - 1).getIATA()));
+        list.append(String.format("'%s'", airports.get(airports.size() - 1).GetIATA()));
 
         return list.toString();
     }
@@ -68,10 +68,30 @@ public class SQLHelper
 
         StringBuilder list = new StringBuilder();
         for (int i = 0; i < airports.size() - 1; i++) {
-            list.append(String.format("'%s', ", airports.get(i).getICAO()));
+            list.append(String.format("'%s', ", airports.get(i).GetICAO()));
         }
-        list.append(String.format("'%s'", airports.get(airports.size() - 1).getICAO()));
+        list.append(String.format("'%s'", airports.get(airports.size() - 1).GetICAO()));
 
         return list.toString();
     }
+
+    /**
+     * Creates SQL query for returning a list of airports
+     * @param airports An array list of airport objects
+     * @return An SQL query as a string
+     */
+    public static String GetAirportIDList(ArrayList<Airport> airports) {
+        if (airports.size() == 0) {
+            return "";
+        }
+
+        StringBuilder list = new StringBuilder();
+        for (int i = 0; i < airports.size() - 1; i++) {
+            list.append(String.format("'%s', ", airports.get(i).GetAirportID()));
+        }
+        list.append(String.format("'%s'", airports.get(airports.size() - 1).GetAirportID()));
+
+        return list.toString();
+    }
+
 }

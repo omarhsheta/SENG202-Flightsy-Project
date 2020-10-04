@@ -39,6 +39,7 @@ public class WindowHandler {
      * Constructor to ensure only one object,
      * This ensures singleton pattern not violated.
      * Silently fail if multiple WindowHandlers instantiated.
+     * @param parent Parent node object windowhandler works on
      */
     public WindowHandler(BorderPane parent) {
         if (Instance != null) {

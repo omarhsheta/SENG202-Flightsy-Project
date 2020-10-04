@@ -6,7 +6,7 @@ import javafx.scene.control.Button;
 
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import seng202.team6.model.data.DataHandler;
+import javafx.util.Pair;
 import seng202.team6.model.data.Filter;
 import seng202.team6.model.entities.Airport;
 import seng202.team6.model.entities.Route;
@@ -36,8 +36,6 @@ public class FlightInformationController {
 
     private Stage stage;
 
-    DataHandler dataHandler;
-
     Airport originAirport;
     Airport destAirport;
     double distance;
@@ -46,7 +44,7 @@ public class FlightInformationController {
      * Called when this FXML page is loaded
      */
     public void initialize() {
-        dataHandler = DataHandler.GetInstance();
+
     }
 
     /**
@@ -56,11 +54,11 @@ public class FlightInformationController {
         setAirports();
         distance = originAirport.GetDistance(destAirport);
 
-        titleInfo.setText(String.format("Information about flight: %s to %s", originAirport.getIATA(), destAirport.getIATA()));
-        airportInfo.setText(String.format("%s to %s", originAirport.getName(), destAirport.getName()));
-        locationInfo.setText(String.format("%s, %s to %s, %s", originAirport.getCity(), originAirport.getCountry(), destAirport.getCity(), destAirport.getCountry()));
+        titleInfo.setText(String.format("Information about flight: %s to %s", originAirport.GetIATA(), destAirport.GetIATA()));
+        airportInfo.setText(String.format("%s to %s", originAirport.GetName(), destAirport.GetName()));
+        locationInfo.setText(String.format("%s, %s to %s, %s", originAirport.GetCity(), originAirport.GetCountry(), destAirport.GetCity(), destAirport.GetCountry()));
         distanceInfo.setText(String.format("Distance: %.2fkm", distance));
-        aircraftInfo.setText(String.format("Aircraft: %s", route.getEquipment()));
+        aircraftInfo.setText(String.format("Aircraft: %s", route.GetEquipment()));
     }
 
     /**
@@ -76,15 +74,15 @@ public class FlightInformationController {
      * sourceAirportID and destinationAirportID to query the database and get the airports.
      */
     private void setAirports() {
-        Filter originFilter = new Filter(String.format("ID_AIRPORT = %d", route.getSourceAirportID()), null);
         ArrayList<Filter> originFilters = new ArrayList<>();
-        originFilters.add(originFilter);
-        ArrayList<Airport> originAirportList = dataHandler.FetchAirports(originFilters);
+        originFilters.add(new Filter(String.format("ID_AIRPORT = %d", route.GetSourceAirportID()), null));
 
-        Filter destFilter = new Filter(String.format("ID_AIRPORT = %d", route.getDestinationAirportID()), null);
         ArrayList<Filter> destFilters = new ArrayList<>();
-        destFilters.add(destFilter);
-        ArrayList<Airport> destAirportList = dataHandler.FetchAirports(destFilters);
+        destFilters.add(new Filter(String.format("ID_AIRPORT = %d", route.GetDestinationAirportID()), null));
+
+        Pair<ArrayList<Airport>, ArrayList<Airport>> airports = Airport.GetSourceAndDestinations(originFilters, destFilters);
+        ArrayList<Airport> originAirportList = airports.getKey();
+        ArrayList<Airport> destAirportList = airports.getValue();
 
         // Only ever one airport as the filter is for the primary key, unless something went wrong...
         if (originAirportList.size() == 1 && destAirportList.size() == 1)

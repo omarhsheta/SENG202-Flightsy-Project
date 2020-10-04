@@ -2,14 +2,14 @@ package seng202.team6.gui.controller.routefinder;
 
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 import seng202.team6.gui.helper.NodeHelper;
-import seng202.team6.model.data.DataHandler;
+import seng202.team6.model.data.DataExportHandler;
 import seng202.team6.model.data.Filter;
+import seng202.team6.model.entities.Airline;
 import seng202.team6.model.entities.Airport;
 import seng202.team6.model.entities.Route;
 
@@ -24,13 +24,7 @@ public class FlightResultController extends ResultController {
     private Label distance;
 
     @FXML
-    private Button showButton;
-
-    @FXML
-    private Button viewInfoButton;
-
-    @FXML
-    private Button holidayButton;
+    private Label airline;
 
     private Route route;
 
@@ -44,8 +38,23 @@ public class FlightResultController extends ResultController {
      */
     public void SetFlight(Route resultRoute) {
         this.route = resultRoute;
-        flight.setText(String.format("%s to %s", resultRoute.getSourceAirport(), resultRoute.getDestinationAirport()));
+        flight.setText(String.format("%s to %s", resultRoute.GetSourceAirport(), resultRoute.GetDestinationAirport()));
         distance.setText(String.format("Distance: %.2f", GetDistance()));
+        airline.setText(GetAirlineName());
+    }
+
+    private String GetAirlineName() {
+        ArrayList<Filter> filters = new ArrayList<>();
+        filters.add(new Filter(String.format("ID_AIRLINE = %s", route.GetAirlineID()), null));
+        String airlineName;
+        try {
+            Airline routeAirline = DataExportHandler.GetInstance().FetchAirlines(filters).get(0);
+            airlineName = routeAirline.GetName();
+        } catch (Exception e) {
+            airlineName = null;
+        }
+
+        return airlineName;
     }
 
     /**
@@ -67,9 +76,9 @@ public class FlightResultController extends ResultController {
      */
     private ArrayList<Airport> GetAirports() {
         ArrayList<Filter> filters = new ArrayList<>();
-        filters.add(new Filter(String.format("ID_AIRPORT = %d", route.getSourceAirportID()), "OR"));
-        filters.add(new Filter(String.format("ID_AIRPORT = %d", route.getDestinationAirportID()), null));
-        return DataHandler.GetInstance().FetchAirports(filters);
+        filters.add(new Filter(String.format("ID_AIRPORT = %d", route.GetSourceAirportID()), "OR"));
+        filters.add(new Filter(String.format("ID_AIRPORT = %d", route.GetDestinationAirportID()), null));
+        return DataExportHandler.GetInstance().FetchAirports(filters);
     }
 
     /**
@@ -79,14 +88,14 @@ public class FlightResultController extends ResultController {
     @FXML
     private void OnViewButtonClicked()
     {
-        if (mapController == null) {
+        if (mapHelper == null) {
             return;
         }
 
-        mapController.ClearAll();
+        mapHelper.ClearAll();
         ArrayList<Airport> airports = GetAirports();
-        mapController.DrawAirportMarks(airports);
-        mapController.DrawLineBetween(airports);
+        mapHelper.DrawAirportMarks(airports);
+        mapHelper.DrawLineBetween(airports);
     }
 
     /**
@@ -102,7 +111,7 @@ public class FlightResultController extends ResultController {
             flightInfoController.setRoute(route);
             Scene viewFlightInfoScene = new Scene(infoBorderPane);
             Stage newStage = new Stage();
-            newStage.setTitle(String.format("%s to %s", route.getSourceAirport(), route.getDestinationAirport()));
+            newStage.setTitle(String.format("%s to %s", route.GetSourceAirport(), route.GetDestinationAirport()));
             newStage.setScene(viewFlightInfoScene);
             newStage.show();
             flightInfoController.setStage(newStage);
