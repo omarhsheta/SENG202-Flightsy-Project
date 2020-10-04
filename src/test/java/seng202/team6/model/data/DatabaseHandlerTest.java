@@ -377,7 +377,7 @@ public class DatabaseHandlerTest {
     /**
      * Test inserting one route into the database
      */
-    @Test @Ignore
+    @Test
     public void TestInsertOneRoute() {
         try {
             dataImport.InsertRoute(testRoute1);
@@ -397,7 +397,7 @@ public class DatabaseHandlerTest {
     /**
      * Test inserting two routes into the database
      */
-    @Test @Ignore
+    @Test
     public void TestInsertTwoRoutes() {
         testRoutes.add(testRoute1);
         testRoutes.add(testRoute2);
@@ -935,7 +935,7 @@ public class DatabaseHandlerTest {
     /**
      * Test updating a route within the database
      */
-    @Test @Ignore
+    @Test
     public void TestUpdateOneRoute() {
         try {
             dataImport.InsertRoute(testRoute1);} catch (Exception e) {Assert.fail(e.getMessage());}
@@ -958,7 +958,7 @@ public class DatabaseHandlerTest {
     /**
      * Test updating two routes within the database
      */
-    @Test @Ignore
+    @Test
     public void TestUpdateTwoRoutes() {
         testRoutes.add(testRoute1);
         testRoutes.add(testRoute2);
@@ -996,7 +996,7 @@ public class DatabaseHandlerTest {
     /**
      * Test updating five routes within the database
      */
-    @Test @Ignore
+    @Test
     public void TestUpdateFiveRoutes() {
         testRoutes.add(testRoute1);
         testRoutes.add(testRoute2);
@@ -1055,7 +1055,7 @@ public class DatabaseHandlerTest {
     /**
      * Test updating a route with empty parameters (should throw exception) within the database
      */
-    @Test @Ignore
+    @Test
     public void TestUpdateRouteEmpty() {
         try {
             dataImport.InsertRoute(testRoute1);} catch (Exception e) {Assert.fail(e.getMessage());}
@@ -1283,7 +1283,7 @@ public class DatabaseHandlerTest {
     /**
      * Test deleting one route in the database
      */
-    @Test @Ignore
+    @Test
     public void TestDeleteOneRoute() {
         try {
             dataImport.InsertRoute(testRoute1);} catch (Exception e) {Assert.fail(e.getMessage());}
@@ -1302,7 +1302,7 @@ public class DatabaseHandlerTest {
     /**
      * Test deleting two routes in the database
      */
-    @Test @Ignore
+    @Test
     public void TestDeleteTwoRoutes() {
         testRoutes.add(testRoute1);
         testRoutes.add(testRoute2);
@@ -1330,7 +1330,7 @@ public class DatabaseHandlerTest {
     /**
      * Test deleting five routes in the database
      */
-    @Test @Ignore
+    @Test
     public void TestDeleteFiveRoutes() {
         testRoutes.add(testRoute1);
         testRoutes.add(testRoute2);
@@ -1373,7 +1373,7 @@ public class DatabaseHandlerTest {
     /**
      * Test deleting a route with an invalid ID in the database
      */
-    @Test @Ignore
+    @Test
     public void TestDeleteRouteInvalidAirlineID() {
         try {
             dataImport.InsertRoute(testRoute1);} catch (Exception e) {Assert.fail(e.getMessage());}
@@ -1393,7 +1393,7 @@ public class DatabaseHandlerTest {
     /**
      * Test deleting a route with an invalid source airport ID in the database
      */
-    @Test @Ignore
+    @Test
     public void TestDeleteRouteInvalidSourceID() {
         try {
             dataImport.InsertRoute(testRoute1);} catch (Exception e) {Assert.fail(e.getMessage());}
@@ -1413,7 +1413,7 @@ public class DatabaseHandlerTest {
     /**
      * Test deleting a route with an invalid destination airport ID in the database
      */
-    @Test @Ignore
+    @Test
     public void TestDeleteRouteInvalidDestinationID() {
         try {
             dataImport.InsertRoute(testRoute1);} catch (Exception e) {Assert.fail(e.getMessage());}
