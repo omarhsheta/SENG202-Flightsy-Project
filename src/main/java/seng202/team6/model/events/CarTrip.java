@@ -29,6 +29,8 @@ public class CarTrip extends Event {
      * @param OCountry Origin Country
      * @param DCity Destination City
      * @param DCountry Destination Country
+     * @param newHour Hour
+     * @param newMinute Minute
      */
     public CarTrip(int D, int M, int Y, int newHour, int newMinute,  String title, String note, String OCity,
             String OCountry, String DCity, String DCountry) {

@@ -278,6 +278,7 @@ public class DataExportHandler {
     /**
      * Fetches the holiday plan entry from the database
      * @param filters Filters on fetch
+     * @return ArrayList of holiday plans
      */
     public ArrayList<HolidayPlan> FetchHolidayPlanObjects(ArrayList<Filter> filters){
         String query = SQLHelper.ExtractQuery("holiday_plan", filters);
@@ -294,6 +295,7 @@ public class DataExportHandler {
     /**
      * Fetches the holiday plan entry from the database
      * @param filters Filters on fetch
+     * @return Arraylsit of string directories
      */
     public ArrayList<String> FetchHolidayPlans(ArrayList<Filter> filters) {
         String query = SQLHelper.ExtractQuery("holiday_plan", filters);

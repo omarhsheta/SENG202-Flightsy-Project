@@ -32,6 +32,7 @@ public class FlightBtnController extends ResultController {
      * @param srcDate Flight Source date
      * @param desTime Flight destination time
      * @param flightEvent Flight object
+     * @param route Route object
      */
     public void setData(String srcTime, String srcDate, String desTime, Flight flightEvent,
                         Route route) {

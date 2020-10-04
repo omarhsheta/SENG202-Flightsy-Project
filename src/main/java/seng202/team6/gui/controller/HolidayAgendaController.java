@@ -194,6 +194,7 @@ public class HolidayAgendaController implements Initializable {
 
     /**
      * Add event to holiday
+     * @param event Event to add
      * @param <T> Event to add
      */
     public <T extends Event> void AddToHoliday(T event) {
@@ -255,6 +256,7 @@ public class HolidayAgendaController implements Initializable {
 
     /**
      * A method to create a new holiday
+     * @throws IOException IOException
      */
     @FXML
     public void OnNewHolidayButtonClicked() throws IOException {

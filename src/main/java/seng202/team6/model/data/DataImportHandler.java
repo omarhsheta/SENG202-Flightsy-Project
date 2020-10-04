@@ -331,6 +331,7 @@ public class DataImportHandler {
      * @param routePath the route path object
      * @return an array list of size two where the first element is the source airport ID and the second element is the
      * destination airport ID
+     * @throws SQLException SQLException
      */
     public ArrayList<Integer> GetAirportIDsFromRoutePath(RoutePath routePath) throws SQLException{
         String sourceAirportICAO = routePath.GetSource();
@@ -355,6 +356,7 @@ public class DataImportHandler {
      * Inserts a flight path into the database
      * @param routePath the route path object, also known as the flight path
      * @param directory The local directory the flight path object is stored at
+     * @throws SQLException SQLException
      */
     public void InsertFlightPath(RoutePath routePath, String directory) throws SQLException {
         ArrayList<Integer> airportIDsPair = new ArrayList<Integer>(2);
@@ -374,6 +376,7 @@ public class DataImportHandler {
      * @param sourceAirportID The source airport ID of the airport the flight path departs from
      * @param destinationAirportID the destination airport ID of the airport the flight path arrives at
      * @param newDirectory The new directory the RoutePath object will be stored
+     * @throws SQLException SQLException
      */
     public void UpdateFlightPath(int sourceAirportID, int destinationAirportID, String newDirectory) throws SQLException,
             Exception {
@@ -392,6 +395,7 @@ public class DataImportHandler {
      * Updates the directory of the flight path in the database
      * @param routePath the route path object
      * @param newDirectory The new directory the RoutePath object will be stored
+     * @throws SQLException SQLException
      */
     public void UpdateFlightPath(RoutePath routePath, String newDirectory) throws SQLException, Exception {
         ArrayList<Integer> airportIDsPair = new ArrayList<Integer>(2);
@@ -407,6 +411,7 @@ public class DataImportHandler {
      * Deletes the flight path in the database
      * @param sourceAirportID The source airport ID of the airport the flight path departs from
      * @param destinationAirportID the destination airport ID of the airport the flight path arrives at
+     * @throws SQLException SQLException
      */
     public void DeleteFlightPath(int sourceAirportID, int destinationAirportID) throws SQLException {
         Statement stmt = this.databaseConnection.createStatement();
@@ -420,6 +425,7 @@ public class DataImportHandler {
     /**
      * Deletes the flight path in the database
      * @param routePath routePath the route path object
+     * @throws SQLException SQLException
      */
     public void DeleteFlightPath(RoutePath routePath) throws SQLException {
         ArrayList<Integer> airportIDsPair = new ArrayList<Integer>(2);
@@ -435,6 +441,7 @@ public class DataImportHandler {
      * Inserts the holiday plan object's directory location into the database
      * @param name the name of the holiday plan object
      * @param directory the directory in which the holiday plan object resides
+     * @throws SQLException SQLException
      */
     public void InsertHolidayPlan(String name, String directory) throws SQLException {
         String sql = format("INSERT INTO holiday_plan VALUES ('%s', '%s')",
@@ -449,6 +456,8 @@ public class DataImportHandler {
      * Updates the holiday plan in the database with a new location for the object
      * @param holidayPlanIndex the index of the holiday plan object in the array of holiday plans
      * @param newDirectory the new directory in which the holiday plan object will reside
+     * @param newName New name of holiday plan
+     * @throws Exception Exception
      */
     public void UpdateHolidayPlan(String holidayPlanIndex, String newName, String newDirectory) throws Exception {
         String setSQL = "";
@@ -474,6 +483,7 @@ public class DataImportHandler {
     /**
      * Deletes the holiday plan entry from the database
      * @param name the name/key of the holiday plan object in the array of holiday plans
+     * @throws SQLException SQLException
      */
     public void DeleteHolidayPlan(String name) throws SQLException {
         String sql = format("DELETE FROM holiday_plan WHERE name = '%s'", name);

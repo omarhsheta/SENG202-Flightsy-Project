@@ -30,6 +30,10 @@ public class Flight extends Event {
      * @param T Any String with descriptive title
      * @param N Any String with additional information about the event
      * @param route Route of the flight
+     * @param deptHour Dept Hour
+     * @param deptMinute Dept Minute
+     * @param destHour Destination Hour
+     * @param destMinute Dest minute
      */
     public Flight(int deptDay, int deptMonth, int deptYear, int deptHour, int deptMinute, int destDay, int destMonth, int destYear, int destHour, int destMinute, String T, String N, Route route) {
         super(deptDay, deptMonth, deptYear, deptHour, deptMinute, T, N);
